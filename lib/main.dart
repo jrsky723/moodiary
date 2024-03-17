@@ -17,8 +17,12 @@ class Moodiary extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xFF1FBF88),
         colorScheme: ColorScheme.fromSwatch(
-          backgroundColor: Colors.green.shade100,
+          backgroundColor: Colors.green.shade50,
           primarySwatch: Colors.grey,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.green.shade50,
+          elevation: 0,
         ),
       ),
       builder: (context, child) {
@@ -41,7 +45,7 @@ class Moodiary extends StatelessWidget {
           child: child ?? const SizedBox(),
         );
       },
-      home: const MainNavigationScreen(tab: 'home'),
+      home: const MainNavigationScreen(tab: 'calendar'),
     );
   }
 }
