@@ -15,6 +15,7 @@ class Moodiary extends StatelessWidget {
     return MaterialApp(
       title: 'Moodiary',
       theme: ThemeData(
+        dialogBackgroundColor: Colors.white,
         primaryColor: const Color(0xFF1FBF88),
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: Colors.green.shade50,
