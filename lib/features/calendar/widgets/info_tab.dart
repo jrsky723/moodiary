@@ -91,10 +91,10 @@ class _InfoTapState extends State<InfoTab> {
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: Sizes.size52,
                 child: VerticalDivider(
-                  color: Colors.black,
+                  color: Colors.grey.shade600,
                 ),
               ),
               Flexible(
@@ -102,15 +102,24 @@ class _InfoTapState extends State<InfoTab> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    child: const Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FaIcon(
-                          FontAwesomeIcons.babyCarriage,
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.grey.shade300,
+                              radius: 12,
+                            ),
+                            Gaps.h5,
+                            CircleAvatar(
+                              backgroundColor: Colors.grey.shade300,
+                              radius: 12,
+                            ),
+                          ],
                         ),
-                        Gaps.h10,
-                        FaIcon(
-                          FontAwesomeIcons.baby,
-                        ),
+                        Gaps.v5,
+                        const Text("오늘 날씨는 굉장히 화창하고 좋았습니다."),
                       ],
                     ),
                   ),
