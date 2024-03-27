@@ -77,14 +77,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 _selectedDate.month >= _now.month)) {
           return;
         }
-        _selectedDate = DateTime(
-            _selectedDate.year, _selectedDate.month + 1, _selectedDate.day);
+        _selectedDate = DateTime(_selectedDate.year, _selectedDate.month + 1);
       } else {
         if (_selectedDate.year == 2000 && _selectedDate.month == 1) {
           return;
         }
-        _selectedDate = DateTime(
-            _selectedDate.year, _selectedDate.month - 1, _selectedDate.day);
+        _selectedDate = DateTime(_selectedDate.year, _selectedDate.month - 1);
       }
       _days =
           _generateDaysForYearMonth(_selectedDate.year, _selectedDate.month);
