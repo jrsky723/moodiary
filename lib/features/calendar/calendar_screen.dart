@@ -6,6 +6,7 @@ import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/widgets/info_tab.dart';
+import 'package:moodiary/features/calendar/search_screen.dart';
 import 'package:moodiary/features/calendar/widgets/year_month_select_dialog.dart';
 import 'package:moodiary/utils.dart';
 
@@ -116,7 +117,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
-                  onPressed: () {},
+                  onPressed: () {
+                    // open search screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
