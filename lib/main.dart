@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/common/main_navigation_screen.dart';
+import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/theme/navigation_theme.dart';
 
@@ -16,10 +17,9 @@ class Moodiary extends StatelessWidget {
       title: 'Moodiary',
       theme: ThemeData(
         dialogBackgroundColor: Colors.white,
-        primaryColor: const Color(0xFF1FBF88),
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: Colors.green.shade50,
-          primarySwatch: Colors.grey,
+          primarySwatch: customPrimarySwatch,
         ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.green.shade50,
