@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/calendar/widgets/info_tab.dart';
 import 'package:moodiary/features/calendar/widgets/year_month_select_dialog.dart';
 import 'package:moodiary/utils.dart';
 
@@ -66,6 +67,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   void _changeMonth(bool isNext) {
+    // 달이 한번에 한번씩 바뀌게 하기 위해서
     if (_monthChanging) return;
     _monthChanging = true;
     setState(() {
@@ -75,12 +77,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 _selectedDate.month >= _now.month)) {
           return;
         }
-        _selectedDate = DateTime(_selectedDate.year, _selectedDate.month + 1);
+        _selectedDate = DateTime(
+            _selectedDate.year, _selectedDate.month + 1, _selectedDate.day);
       } else {
         if (_selectedDate.year == 2000 && _selectedDate.month == 1) {
           return;
         }
-        _selectedDate = DateTime(_selectedDate.year, _selectedDate.month - 1);
+        _selectedDate = DateTime(
+            _selectedDate.year, _selectedDate.month - 1, _selectedDate.day);
       }
       _days =
           _generateDaysForYearMonth(_selectedDate.year, _selectedDate.month);
@@ -127,8 +131,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
             SliverToBoxAdapter(
               child: _buildCalendar(),
             ),
-            const SliverToBoxAdapter(
-              child: Gaps.v32,
+            SliverToBoxAdapter(
+              child: InfoTab(
+                image: Image.asset('assets/images/expressionless.png').image,
+                date: _selectedDate.day,
+              ),
             ),
           ],
         ),
