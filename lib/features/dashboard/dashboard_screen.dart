@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:moodiary/constants/date.dart';
-import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -64,32 +63,40 @@ class _DashboardScreenState extends State<DashboardScreen>
     });
 
     DateTime? picked = await showModalBottomSheet<DateTime>(
+      clipBehavior: Clip.antiAlias,
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: 300,
-          padding: const EdgeInsets.all(Sizes.size16),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "${_isMonthly ? '월' : '연도'} 선택하기",
-                    style: const TextStyle(
-                      fontSize: Sizes.size16,
-                      fontWeight: FontWeight.w600,
-                    ),
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                surfaceTintColor: Colors.transparent,
+                leading: const SizedBox(),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ],
+                title: Text(
+                  "${_isMonthly ? '월' : '연도'} 선택하기",
+                  style: const TextStyle(
+                    fontSize: Sizes.size16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                centerTitle: true,
+                pinned: true,
               ),
-              Gaps.v16,
-              Expanded(
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: itemCount,
-                  itemExtent: itemExtent,
-                  itemBuilder: (BuildContext context, int index) {
+              SliverFixedExtentList(
+                itemExtent: itemExtent,
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
                     final int year = _isMonthly
                         ? index < _now.month
                             ? _now.year
@@ -100,12 +107,14 @@ class _DashboardScreenState extends State<DashboardScreen>
 
                     return ListTile(
                       shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(Sizes.size8)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Sizes.size8),
+                        ),
                       ),
-                      tileColor: index == selectedIndex
-                          ? Theme.of(context).primaryColor.withOpacity(0.1)
-                          : null,
+                      tileColor: Colors.white,
+                      selected: index == selectedIndex,
+                      selectedTileColor:
+                          Theme.of(context).primaryColor.withOpacity(0.1),
                       title: Text(
                         _isMonthly ? '$year년 $month월' : '$year년',
                         style: const TextStyle(fontSize: Sizes.size16),
@@ -115,6 +124,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       },
                     );
                   },
+                  childCount: itemCount,
                 ),
               ),
             ],
