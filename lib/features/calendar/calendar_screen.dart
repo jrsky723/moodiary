@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/calendar/widgets/info_tab.dart';
+import 'package:moodiary/features/calendar/widgets/info_container.dart';
 import 'package:moodiary/features/calendar/search_screen.dart';
 import 'package:moodiary/features/calendar/widgets/year_month_select_dialog.dart';
 import 'package:moodiary/generated/l10n.dart';
@@ -166,7 +166,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: _buildCalendar(),
             ),
             SliverToBoxAdapter(
-              child: InfoTab(
+              child: InfoContainer(
                 image: Image.asset('assets/images/expressionless.png').image,
                 date: _selectedDate.day,
               ),
