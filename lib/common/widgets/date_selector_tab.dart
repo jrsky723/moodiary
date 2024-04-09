@@ -16,7 +16,12 @@ class DateSelectorTab extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(text),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: Sizes.size16,
+              ),
+            ),
             const Icon(Icons.arrow_drop_down),
           ],
         ),
