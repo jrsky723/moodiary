@@ -24,8 +24,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   int _monthlyYear = DateTime.now().year;
   int _monthlyMonth = DateTime.now().month;
   int _yearlyYear = DateTime.now().year;
-  final List<MoodEntry> _moodEntries =
-      generateMoodEntries(DateTime.now().add(const Duration(days: -31)), 31);
+  late List<MoodEntry> _monthlyMoodEntries = [];
+  late List<MoodEntry> _yearlyMoodEntries = [];
+  late List<MoodEntry> _modeYearlyMoodEntries = [];
 
   @override
   void initState() {
@@ -41,12 +42,34 @@ class _DashboardScreenState extends State<DashboardScreen>
         _isMonthly = _tabController?.index == 0;
       });
     });
+    _monthlyMoodEntries = generateMonthlyMoodEntries();
+    _yearlyMoodEntries = generateYearlyMoodEntries();
+    _modeYearlyMoodEntries = modeYearlyMoodEntries(
+      _yearlyMoodEntries,
+      _yearlyYear,
+    );
   }
 
   @override
   void dispose() {
     _tabController?.dispose();
     super.dispose();
+  }
+
+  List<MoodEntry> generateMonthlyMoodEntries() {
+    return generateMoodEntries(
+      DateTime(_monthlyYear, _monthlyMonth),
+      _isMonthly
+          ? daysInMonth(_monthlyYear, _monthlyMonth)
+          : daysInYear(_yearlyYear),
+    );
+  }
+
+  List<MoodEntry> generateYearlyMoodEntries() {
+    return generateMoodEntries(
+      DateTime(_yearlyYear, 1),
+      365,
+    );
   }
 
   Future<void> _onDateSelectorTap() async {
@@ -142,14 +165,22 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
 
     if (picked != null) {
-      setState(() {
-        if (_isMonthly) {
-          _monthlyYear = picked.year;
-          _monthlyMonth = picked.month;
-        } else {
-          _yearlyYear = picked.year;
-        }
-      });
+      setState(
+        () {
+          if (_isMonthly) {
+            _monthlyYear = picked.year;
+            _monthlyMonth = picked.month;
+            _monthlyMoodEntries = generateMonthlyMoodEntries();
+          } else {
+            _yearlyYear = picked.year;
+            _yearlyMoodEntries = generateYearlyMoodEntries();
+            _modeYearlyMoodEntries = modeYearlyMoodEntries(
+              _yearlyMoodEntries,
+              _yearlyYear,
+            );
+          }
+        },
+      );
     }
   }
 
@@ -164,14 +195,14 @@ class _DashboardScreenState extends State<DashboardScreen>
             Tab(text: '연간'),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size20,
-          ),
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              Column(
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+              ),
+              child: Column(
                 children: [
                   DateSelectorTab(
                     text: "$_monthlyYear년 $_monthlyMonth월",
@@ -180,27 +211,46 @@ class _DashboardScreenState extends State<DashboardScreen>
                   Gaps.v32,
                   MoodChartCard(
                     title: "기분 흐름",
-                    content: MoodFlowChart(moodEntries: _moodEntries),
+                    content: MoodFlowChart(
+                        moodEntries: _monthlyMoodEntries, isMonthly: true),
                   ),
                   Gaps.v32,
                   MoodChartCard(
                     title: "기분 분포",
                     content: MoodDistChart(
-                      moodEntries: _moodEntries,
+                      moodEntries: _monthlyMoodEntries,
                     ),
                   ),
                 ],
               ),
-              Column(
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+              ),
+              child: Column(
                 children: [
                   DateSelectorTab(
                     text: "$_yearlyYear년",
                     onTap: _onDateSelectorTap,
                   ),
+                  Gaps.v32,
+                  MoodChartCard(
+                    title: "기분 흐름",
+                    content: MoodFlowChart(
+                        moodEntries: _modeYearlyMoodEntries, isMonthly: false),
+                  ),
+                  Gaps.v32,
+                  MoodChartCard(
+                    title: "기분 분포",
+                    content: MoodDistChart(
+                      moodEntries: _yearlyMoodEntries,
+                    ),
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

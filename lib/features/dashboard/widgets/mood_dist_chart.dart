@@ -40,7 +40,6 @@ class MoodDistChart extends StatelessWidget {
         final width = constraints.maxWidth;
         final legendWidth = width / 8;
         final barChartWidth = (width - legendWidth);
-        final barChartHeight = height;
         final chartHeight = height * 0.9;
         final textHeight = height * 0.1;
 
@@ -68,11 +67,14 @@ class MoodDistChart extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-              '가장 많이 기록한 감정: ${getMostFrequentMood().label}',
-              style: const TextStyle(
-                fontSize: Sizes.size10,
-                fontWeight: FontWeight.bold,
+            SizedBox(
+              height: textHeight,
+              child: Text(
+                '가장 많이 기록한 감정: ${getMostFrequentMood().label}',
+                style: const TextStyle(
+                  fontSize: Sizes.size12,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

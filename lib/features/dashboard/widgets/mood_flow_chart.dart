@@ -6,8 +6,13 @@ import 'package:moodiary/features/dashboard/painters/line_chart_painter.dart';
 
 class MoodFlowChart extends StatelessWidget {
   final List<MoodEntry> moodEntries;
+  final bool isMonthly;
 
-  const MoodFlowChart({super.key, required this.moodEntries});
+  const MoodFlowChart({
+    super.key,
+    required this.moodEntries,
+    required this.isMonthly,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +38,13 @@ class MoodFlowChart extends StatelessWidget {
             CustomPaint(
               painter: LineChartPainter(
                 moodEntries: moodEntries,
+                isMonthly: isMonthly,
               ),
               child: SizedBox(
                 width: lineChartWidth,
                 height: lineChartHeight,
               ),
             ),
-            const CustomPaint(),
           ],
         );
       },
