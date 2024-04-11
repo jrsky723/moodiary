@@ -59,8 +59,22 @@ extension MoodExtension on Mood {
         return Colors.black;
     }
   }
+  // from methods
 
-  static Mood fromIndex(int index) {
-    return Mood.values[index];
+  static Mood fromScore(int score) {
+    switch (score) {
+      case 5:
+        return Mood.veryHappy;
+      case 4:
+        return Mood.happy;
+      case 3:
+        return Mood.neutral;
+      case 2:
+        return Mood.sad;
+      case 1:
+        return Mood.verySad;
+      default:
+        return Mood.neutral;
+    }
   }
 }
