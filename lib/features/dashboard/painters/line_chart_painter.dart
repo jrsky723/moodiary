@@ -6,11 +6,18 @@ import 'package:moodiary/painter_utils.dart';
 
 class LineChartPainter extends CustomPainter {
   final List<MoodEntry> moodEntries;
+  final bool isMonthly;
 
-  LineChartPainter({required this.moodEntries});
+  LineChartPainter({
+    required this.moodEntries,
+    required this.isMonthly,
+  });
 
-  @override
-  void paint(Canvas canvas, Size size) {
+  void drawMoodLines({
+    required List<MoodEntry> moodEntries,
+    required Canvas canvas,
+    required Size size,
+  }) {
     const minScore = 1;
     const maxScore = 5;
     // 각 점을 연결하는 선에 그라데이션 적용
@@ -48,27 +55,41 @@ class LineChartPainter extends CustomPainter {
 
       canvas.drawLine(startPoint, endPoint, gradient);
     }
+  }
 
-    // 5일마다 날짜 및 세로선 그리기
+  void drawVerticalLines({
+    required int interval,
+    required Canvas canvas,
+    required Size size,
+  }) {
     final linePaint = Paint()
       ..color = Colors.grey.withOpacity(0.3)
       ..strokeWidth = 2;
 
+    for (int i = 0; i < moodEntries.length; i += interval) {
+      final x = size.width * i / moodEntries.length;
+      final start = Offset(x, 0);
+      final end = Offset(x, size.height);
+      drawDottedVerticalLine(canvas, start, end, linePaint);
+    }
+  }
+
+  void drawText({
+    required int interval,
+    required Canvas canvas,
+    required Size size,
+    required bool isMonthly,
+  }) {
     final textPainter = TextPainter(
       textDirection: TextDirection.ltr,
     );
 
-    const dayInterval = 5;
-    for (int i = 0; i < moodEntries.length; i += dayInterval) {
-      final x = (size.width / (moodEntries.length - 1)) * i;
-      final start = Offset(x, 0);
-      final end = Offset(x, size.height);
-      drawDottedVerticalLine(canvas, start, end, linePaint);
-
+    for (int i = 0; i < moodEntries.length; i += interval) {
+      final x = size.width * i / moodEntries.length;
       // date text Example: 01/01
-
-      final dateText =
-          "${moodEntries[i].date.month}/${moodEntries[i].date.day}";
+      final dateText = isMonthly
+          ? "${moodEntries[i].date.month}/${moodEntries[i].date.day}"
+          : "${moodEntries[i].date.month}";
       textPainter.text = TextSpan(
         text: dateText,
         style: const TextStyle(
@@ -93,5 +114,40 @@ class LineChartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    drawMoodLines(
+      moodEntries: moodEntries,
+      canvas: canvas,
+      size: size,
+    );
+
+    if (isMonthly) {
+      drawVerticalLines(
+        interval: 5,
+        canvas: canvas,
+        size: size,
+      );
+      drawText(
+        interval: 5,
+        canvas: canvas,
+        size: size,
+        isMonthly: isMonthly,
+      );
+    } else {
+      drawVerticalLines(
+        interval: 1,
+        canvas: canvas,
+        size: size,
+      );
+      drawText(
+        interval: 1,
+        canvas: canvas,
+        size: size,
+        isMonthly: isMonthly,
+      );
+    }
   }
 }
