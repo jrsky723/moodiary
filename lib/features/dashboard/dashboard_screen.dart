@@ -3,8 +3,10 @@ import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/dashboard/mood_flow_chart.dart';
+import 'package:moodiary/features/dashboard/widgets/mood_dist_chart.dart';
+import 'package:moodiary/features/dashboard/widgets/mood_flow_chart.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
+import 'package:moodiary/features/dashboard/widgets/mood_chart_card.dart';
 import 'package:moodiary/utils.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -176,7 +178,17 @@ class _DashboardScreenState extends State<DashboardScreen>
                     onTap: _onDateSelectorTap,
                   ),
                   Gaps.v32,
-                  MoodFlowChart(moodEntries: _moodEntries),
+                  MoodChartCard(
+                    title: "기분 흐름",
+                    content: MoodFlowChart(moodEntries: _moodEntries),
+                  ),
+                  Gaps.v32,
+                  MoodChartCard(
+                    title: "기분 분포",
+                    content: MoodDistChart(
+                      moodEntries: _moodEntries,
+                    ),
+                  ),
                 ],
               ),
               Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/mood.dart';
+import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 import 'package:moodiary/painter_utils.dart';
 
@@ -72,7 +73,7 @@ class LineChartPainter extends CustomPainter {
         text: dateText,
         style: const TextStyle(
           color: Colors.grey,
-          fontSize: 12,
+          fontSize: Sizes.size12,
         ),
       );
       textPainter.layout(
