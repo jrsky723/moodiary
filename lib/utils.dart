@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/mood.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 
@@ -32,15 +33,18 @@ int daysInMonth(int year, int month) {
 }
 
 int daysInYear(int year) {
-  return DateTime(year + 1, 0, 0).day;
+  DateTime firstDay = DateTime(year, 1, 1);
+  DateTime lastDay = DateTime(year + 1, 1, 1);
+  return lastDay.difference(firstDay).inDays;
 }
 
 List<MoodEntry> modeYearlyMoodEntries(
   List<MoodEntry> moodEntries,
-  int year,
 ) {
-  final List<MoodEntry> yearlyMoodEntries = [];
+  final List<MoodEntry> monthlyMoodModes = [];
   // 매달 기분 점수 최빈값 계산, 예상 리스트 아이템 수 12
+
+  int year = moodEntries[0].date.year;
 
   final Map<int, List<Mood>> monthMoods = {
     for (int i = 1; i <= 12; i++) i: [],
@@ -67,10 +71,10 @@ List<MoodEntry> modeYearlyMoodEntries(
       }
     }
 
-    yearlyMoodEntries.add(MoodEntry(
+    monthlyMoodModes.add(MoodEntry(
       date: DateTime(year, i),
       mood: mostFrequentMood,
     ));
   }
-  return yearlyMoodEntries;
+  return monthlyMoodModes;
 }

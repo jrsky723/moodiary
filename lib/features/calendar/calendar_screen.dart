@@ -81,7 +81,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         }
         _selectedDate = DateTime(_selectedDate.year, _selectedDate.month + 1);
       } else {
-        if (_selectedDate.year == minYear && _selectedDate.month == 1) {
+        if (_selectedDate.year == Date.minYear && _selectedDate.month == 1) {
           return;
         }
         _selectedDate = DateTime(_selectedDate.year, _selectedDate.month - 1);
@@ -187,7 +187,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: Opacity(
                 opacity: 0.8,
                 child: Text(
-                  weekDays[index],
+                  Date.weekDays[index],
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400,
