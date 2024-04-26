@@ -42,7 +42,7 @@ class _YearMonthSelectDialogState extends State<YearMonthSelectDialog> {
         child: Text(
           '언제로 이동할까요?',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: Sizes.size16,
             fontWeight: FontWeight.w500,
           ),
         ),

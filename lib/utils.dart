@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:moodiary/constants/mood.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 
+import 'package:flutter/material.dart';
+
 bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
@@ -76,4 +78,8 @@ List<MoodEntry> modeYearlyMoodEntries(
     ));
   }
   return monthlyMoodModes;
+}
+
+bool isDarkMode(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark;
 }

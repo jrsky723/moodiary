@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/utils.dart';
 
 class ScrollDialog extends StatefulWidget {
   final String itemText;
@@ -39,6 +40,7 @@ class _ScrollDialogState extends State<ScrollDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     double itemHeight = Sizes.size48;
     int visibleItems = 3;
     return Expanded(
@@ -76,8 +78,11 @@ class _ScrollDialogState extends State<ScrollDialog> {
                     '${widget.startNumber + index}${widget.itemText}',
                     style: TextStyle(
                       fontSize: 16,
-                      color:
-                          index == _selectedIndex ? Colors.black : Colors.grey,
+                      color: index == _selectedIndex
+                          ? (isDark ? Colors.white : Colors.black)
+                          : (isDark
+                              ? Colors.grey.shade600
+                              : Colors.grey.shade500),
                     ),
                   ),
                 ),
