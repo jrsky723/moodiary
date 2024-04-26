@@ -289,7 +289,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 ? Colors.white
                                 : isSelected
                                     ? Theme.of(context).primaryColor
-                                    : Colors.grey.shade700,
+                                    : isDarkMode(context)
+                                        ? Colors.grey.shade400
+                                        : Colors.grey.shade700,
                           ),
                         ),
                       ),
