@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/utils.dart';
 
+enum ScrollDialogMode { year, month }
+
 class ScrollDialog extends StatefulWidget {
-  final String itemText;
+  final ScrollDialogMode mode;
   final int startNumber, endNumber, initialItemIndex;
   final void Function(int) onSelectedItemChanged;
 
@@ -12,7 +15,7 @@ class ScrollDialog extends StatefulWidget {
     required this.startNumber,
     required this.endNumber,
     required this.initialItemIndex,
-    required this.itemText,
+    required this.mode,
     required this.onSelectedItemChanged,
   });
 
@@ -43,6 +46,7 @@ class _ScrollDialogState extends State<ScrollDialog> {
     final isDark = isDarkMode(context);
     double itemHeight = Sizes.size48;
     int visibleItems = 3;
+    DateTime now = DateTime.now();
     return Expanded(
       child: SizedBox(
         height: itemHeight * visibleItems,
@@ -75,7 +79,14 @@ class _ScrollDialogState extends State<ScrollDialog> {
                     ),
                   ),
                   child: Text(
-                    '${widget.startNumber + index}${widget.itemText}',
+                    // '${widget.startNumber + index}${widget.itemText}',
+                    widget.mode == ScrollDialogMode.year
+                        ? DateFormat.y().format(
+                            DateTime(widget.startNumber + index, 1, 1),
+                          ) // 연도
+                        : DateFormat.MMM().format(
+                            DateTime(now.year, widget.startNumber + index, 1),
+                          ), // 월
                     style: TextStyle(
                       fontSize: 16,
                       color: index == _selectedIndex

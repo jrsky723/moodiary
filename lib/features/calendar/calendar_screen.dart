@@ -3,12 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/common/widgets/date_selector_tab.dart';
+import 'package:intl/intl.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/widgets/info_tab.dart';
 import 'package:moodiary/features/calendar/search_screen.dart';
 import 'package:moodiary/features/calendar/widgets/year_month_select_dialog.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -126,7 +128,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               centerTitle: true,
               pinned: true,
               surfaceTintColor: Colors.transparent,
-              title: const Text('Calendar'),
+              title: Text(S.of(context).calendar),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.today),
@@ -176,9 +178,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Row _buildWeekdays(BuildContext context) {
+    final DateTime sunday =
+        DateTime.now().subtract(Duration(days: _now.weekday));
     return Row(
       children: List.generate(
-        7,
+        DateTime.daysPerWeek,
         (index) {
           return Expanded(
             child: Container(
@@ -187,7 +191,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: Opacity(
                 opacity: 0.8,
                 child: Text(
-                  Date.weekDays[index],
+                  DateFormat.E().format(sunday.add(Duration(days: index))),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400,
