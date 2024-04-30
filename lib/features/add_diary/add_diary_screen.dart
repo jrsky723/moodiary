@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:moodiary/common/widgets/circle_avatar.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
-import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/add_diary/widgets/daily_list.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
+import 'package:moodiary/features/add_diary/widgets/emtion_list.dart';
+import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
+import 'package:moodiary/features/add_diary/widgets/people_list.dart';
+import 'package:moodiary/features/add_diary/widgets/sleep_time_picker.dart';
 
 class AddDiaryScreen extends StatefulWidget {
   const AddDiaryScreen({super.key});
@@ -15,6 +19,81 @@ class AddDiaryScreen extends StatefulWidget {
 }
 
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
+  late final ScrollController _scrollController;
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  DateTime? bedtime;
+  DateTime? wakeTime;
+
+  void _pickTime({required bool isBedTime}) {
+    DatePicker.showTimePicker(
+      context,
+      showTitleActions: true,
+      onConfirm: (date) {
+        setState(() {
+          if (isBedTime) {
+            bedtime = date;
+          } else {
+            wakeTime = date;
+          }
+        });
+      },
+      currentTime: DateTime.now(),
+      locale: LocaleType.en,
+    );
+  }
+
+  void _openTimePicker() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("시간 선택"),
+          content: SizedBox(
+            height: 200, // 다이얼로그 크기 조절
+            child: Column(
+              children: [
+                ElevatedButton(
+                  child: const Text("취침 시각 선택"),
+                  onPressed: () => _pickTime(isBedTime: true),
+                ),
+                ElevatedButton(
+                  child: const Text("기상 시각 선택"),
+                  onPressed: () => _pickTime(isBedTime: false),
+                ),
+                if (bedtime != null)
+                  Text("취침 시각: ${bedtime!.hour}시 ${bedtime!.minute}분"),
+                if (wakeTime != null)
+                  Text("기상 시각: ${wakeTime!.hour}시 ${wakeTime!.minute}"),
+              ],
+            ),
+          ),
+        );
+      },
+      barrierColor: Colors.black54, // 배경 어둡게 처리
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,85 +132,31 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         ),
       ),
       body: CustomScrollView(
+        controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(
             child: DiaryContainer(
               crossAxisAlignment: CrossAxisAlignment.center,
               text: "어떤 하루였나요?",
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SCircleAvatar(),
-                  SCircleAvatar(),
-                  SCircleAvatar(),
-                  SCircleAvatar(),
-                  SCircleAvatar(),
-                ],
-              ),
+              child: DailyList(),
             ),
           ),
           SliverToBoxAdapter(
             child: DiaryContainer(
               text: "감정",
-              child: GridView.builder(
-                padding: const EdgeInsets.all(
-                  Sizes.size10,
-                ),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  childAspectRatio: 11 / 10,
-                ),
-                itemCount: 16,
-                itemBuilder: (BuildContext context, int index) {
-                  // Replace this with your CircleAvatar widget
-                  return Column(
-                    children: [
-                      const SCircleAvatar(),
-                      Gaps.v2,
-                      Text(
-                        emotions[index],
-                        style: const TextStyle(
-                          fontSize: Sizes.size12,
-                        ),
-                      ),
-                    ],
-                  );
-                },
+              child: EmotionList(
+                items: emotions,
+                crossAxisCount: 4,
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: DiaryContainer(
               text: "사람",
-              child: GridView.builder(
-                padding: const EdgeInsets.all(
-                  Sizes.size10,
-                ),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  childAspectRatio: 11 / 10,
-                ),
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  // Replace this with your CircleAvatar widget
-                  return Column(
-                    children: [
-                      const SCircleAvatar(),
-                      Gaps.v2,
-                      Text(
-                        people[index],
-                        style: const TextStyle(
-                          fontSize: Sizes.size12,
-                        ),
-                      ),
-                    ],
-                  );
-                },
+              child: PeopleList(
+                items: people,
+                crossAxisCount: 5,
               ),
             ),
           ),
@@ -139,31 +164,8 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
             child: DiaryContainer(
               text: "수면",
               child: Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 1,
-                    backgroundColor: Colors.grey.shade300,
-                    foregroundColor: Colors.grey.shade500,
-                    surfaceTintColor: Colors.grey.shade100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size5,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "수면을 기록해주세요",
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                    ],
-                  ),
+                child: SleepDialog(
+                  context: context,
                 ),
               ),
             ),
@@ -196,36 +198,24 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: DiaryContainer(
-              text: "수면",
+              text: "오늘의 사진",
               child: Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 1,
-                    backgroundColor: Colors.grey.shade300,
-                    foregroundColor: Colors.grey.shade500,
-                    surfaceTintColor: Colors.grey.shade100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size5,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "수면을 기록해주세요",
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: ImagePickerButton(),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+                vertical: Sizes.size10,
+              ),
+              alignment: Alignment.bottomRight,
+              child: InkWell(
+                onTap: () => _scrollToTop(),
+                child: const Text("맨 위로"),
               ),
             ),
           ),

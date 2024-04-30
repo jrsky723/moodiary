@@ -40,7 +40,7 @@ class DiaryContainer extends StatelessWidget {
                 left: 5,
                 right: 5,
                 top: 5,
-                bottom: 15,
+                bottom: 5,
               ),
               child: Text(
                 text,
