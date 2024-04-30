@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/models/diary_entry.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -112,7 +113,7 @@ class _SearchScreenState extends State<SearchScreen> {
               horizontal: Sizes.size20,
               vertical: 0,
             ),
-            hintText: 'Diary Search',
+            hintText: S.of(context).diarySearchHint,
             filled: true,
             fillColor: isDark ? Colors.grey.shade800 : Colors.green.shade100,
             border: OutlineInputBorder(

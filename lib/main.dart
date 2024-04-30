@@ -8,6 +8,8 @@ import 'package:moodiary/features/settings/view_models/settings_view_model.dart'
 import 'package:moodiary/theme/navigation_theme.dart';
 import 'package:moodiary/theme/switch_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +33,17 @@ class Moodiary extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
+    S.load(Locale(settings.isEnglish ? 'en' : 'ko'));
     return MaterialApp(
       title: 'Moodiary',
       themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
         textTheme: Typography.blackMountainView,
         brightness: Brightness.light,
