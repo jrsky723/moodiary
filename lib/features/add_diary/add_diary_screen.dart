@@ -5,9 +5,8 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/settings_screen.dart';
 import 'package:moodiary/features/add_diary/widgets/daily_list.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
-import 'package:moodiary/features/add_diary/widgets/emtion_list.dart';
+import 'package:moodiary/features/add_diary/widgets/multi_select_list.dart';
 import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
-import 'package:moodiary/features/add_diary/widgets/people_list.dart';
 import 'package:moodiary/features/add_diary/widgets/sleep_time_picker.dart';
 
 class AddDiaryScreen extends StatefulWidget {
@@ -19,12 +18,65 @@ class AddDiaryScreen extends StatefulWidget {
 
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
   late final ScrollController _scrollController;
+  DateTime _selectedDate = DateTime.now();
+
+  String _selectedWeekday() {
+    switch (_selectedDate.weekday) {
+      case 1:
+        return "월요일";
+      case 2:
+        return "화요일";
+      case 3:
+        return "수요일";
+      case 4:
+        return "목요일";
+      case 5:
+        return "금요일";
+      case 6:
+        return "토요일";
+      case 7:
+        return "일요일";
+      default:
+        return "";
+    }
+  }
 
   void _scrollToTop() {
     _scrollController.animateTo(
       0,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
+    );
+  }
+
+  void _showDatePickerDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('날짜선택'),
+        content: SizedBox(
+          // You might want to adjust the height depending on your needs or screen size
+          height: 400,
+          width: double.maxFinite,
+          child: CalendarDatePicker(
+            initialDate: _selectedDate,
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2030),
+            onDateChanged: (newDate) {
+              _selectedDate = newDate;
+            },
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              setState(() {});
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -61,7 +113,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
             Row(
               children: [
                 Text(
-                  '4월 3일 수요일',
+                  '${_selectedDate.month}월 ${_selectedDate.day}일 ${_selectedWeekday()}',
                   style: TextStyle(
                     fontSize: Sizes.size16,
                     color: Colors.grey.shade900,
@@ -72,13 +124,15 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                   icon: FontAwesomeIcons.caretDown,
                   size: Sizes.size16,
                   color: Colors.grey.shade900,
+                  onTap: () => _showDatePickerDialog(context),
                 ),
               ],
             ),
             pInfoButton(
-              icon: FontAwesomeIcons.arrowLeft,
-              size: Sizes.size20,
+              icon: FontAwesomeIcons.floppyDisk,
+              size: Sizes.size24,
               color: Colors.grey.shade600,
+              onTap: () => print("저장"),
             ),
           ],
         ),
@@ -97,7 +151,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           SliverToBoxAdapter(
             child: DiaryContainer(
               text: "감정",
-              child: EmotionList(
+              child: MultiSelectList(
                 items: emotions,
                 crossAxisCount: 4,
               ),
@@ -106,9 +160,9 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           SliverToBoxAdapter(
             child: DiaryContainer(
               text: "사람",
-              child: PeopleList(
+              child: MultiSelectList(
                 items: people,
-                crossAxisCount: 5,
+                crossAxisCount: 4,
               ),
             ),
           ),

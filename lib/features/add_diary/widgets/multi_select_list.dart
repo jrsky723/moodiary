@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/common/widgets/circle_avatar.dart';
 import 'package:moodiary/constants/gaps.dart';
+import 'package:moodiary/constants/sizes.dart';
 
-class PeopleList extends StatefulWidget {
+class MultiSelectList extends StatefulWidget {
   final List<String> items;
   final int crossAxisCount;
-  const PeopleList({
+  const MultiSelectList({
     super.key,
     required this.items,
     required this.crossAxisCount,
   });
+
   @override
-  _PeopleListState createState() => _PeopleListState();
+  MultiSelectListState createState() => MultiSelectListState();
 }
 
-class _PeopleListState extends State<PeopleList> {
+class MultiSelectListState extends State<MultiSelectList> {
   Set<int> selectedIndexes = <int>{}; // 선택된 인덱스들을 저장하는 Set
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      padding: const EdgeInsets.all(
+        Sizes.size10,
+      ),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -41,6 +46,8 @@ class _PeopleListState extends State<PeopleList> {
           child: Column(
             children: [
               Container(
+                padding: const EdgeInsets.all(2), // Space for the border
+
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -56,7 +63,7 @@ class _PeopleListState extends State<PeopleList> {
               Text(
                 widget.items[index],
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: Sizes.size12,
                 ),
               ),
             ],
