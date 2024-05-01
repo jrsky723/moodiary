@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
+  static String m0(label) => "가장 많이 기록한 감정: ${label}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
@@ -31,7 +33,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "englishModeSubtitle":
             MessageLookupByLibrary.simpleMessage("언어를 영어로 전환합니다."),
         "englishModeTitle": MessageLookupByLibrary.simpleMessage("영어 모드"),
+        "happy": MessageLookupByLibrary.simpleMessage("행복함"),
+        "monthlyMoodDistTitle":
+            MessageLookupByLibrary.simpleMessage("월간 기분 분포"),
+        "monthlyMoodFlowTitle":
+            MessageLookupByLibrary.simpleMessage("월간 기분 흐름"),
+        "monthlyTab": MessageLookupByLibrary.simpleMessage("월간"),
+        "montlyDateSelectTitle": MessageLookupByLibrary.simpleMessage("월 선택하기"),
+        "mostFrequentMoodText": m0,
+        "normal": MessageLookupByLibrary.simpleMessage("보통"),
+        "sad": MessageLookupByLibrary.simpleMessage("슬픔"),
         "selectMonthYear": MessageLookupByLibrary.simpleMessage("연도 및 월 선택"),
-        "settings": MessageLookupByLibrary.simpleMessage("설정")
+        "settings": MessageLookupByLibrary.simpleMessage("설정"),
+        "unknown": MessageLookupByLibrary.simpleMessage("알 수 없음"),
+        "veryHappy": MessageLookupByLibrary.simpleMessage("매우 행복함"),
+        "verySad": MessageLookupByLibrary.simpleMessage("매우 슬픔"),
+        "yearlyDateSelectTitle":
+            MessageLookupByLibrary.simpleMessage("연도 선택하기"),
+        "yearlyMoodDistTitle": MessageLookupByLibrary.simpleMessage("연간 기분 분포"),
+        "yearlyMoodFlowTitle": MessageLookupByLibrary.simpleMessage("연간 기분 흐름"),
+        "yearlyTab": MessageLookupByLibrary.simpleMessage("연간")
       };
 }

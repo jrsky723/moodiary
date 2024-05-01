@@ -149,6 +149,156 @@ class S {
       args: [],
     );
   }
+
+  /// `Monthly`
+  String get monthlyTab {
+    return Intl.message(
+      'Monthly',
+      name: 'monthlyTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yearly`
+  String get yearlyTab {
+    return Intl.message(
+      'Yearly',
+      name: 'yearlyTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Mood Flow`
+  String get monthlyMoodFlowTitle {
+    return Intl.message(
+      'Monthly Mood Flow',
+      name: 'monthlyMoodFlowTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Mood Distribution`
+  String get monthlyMoodDistTitle {
+    return Intl.message(
+      'Monthly Mood Distribution',
+      name: 'monthlyMoodDistTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yearly Mood Flow`
+  String get yearlyMoodFlowTitle {
+    return Intl.message(
+      'Yearly Mood Flow',
+      name: 'yearlyMoodFlowTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yearly Mood Distribution`
+  String get yearlyMoodDistTitle {
+    return Intl.message(
+      'Yearly Mood Distribution',
+      name: 'yearlyMoodDistTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Most frequently recorded emotion: {label}`
+  String mostFrequentMoodText(Object label) {
+    return Intl.message(
+      'Most frequently recorded emotion: $label',
+      name: 'mostFrequentMoodText',
+      desc: '',
+      args: [label],
+    );
+  }
+
+  /// `Very Happy`
+  String get veryHappy {
+    return Intl.message(
+      'Very Happy',
+      name: 'veryHappy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Happy`
+  String get happy {
+    return Intl.message(
+      'Happy',
+      name: 'happy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal`
+  String get normal {
+    return Intl.message(
+      'Normal',
+      name: 'normal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sad`
+  String get sad {
+    return Intl.message(
+      'Sad',
+      name: 'sad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Very Sad`
+  String get verySad {
+    return Intl.message(
+      'Very Sad',
+      name: 'verySad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get unknown {
+    return Intl.message(
+      'Unknown',
+      name: 'unknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Month`
+  String get montlyDateSelectTitle {
+    return Intl.message(
+      'Select Month',
+      name: 'montlyDateSelectTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Year`
+  String get yearlyDateSelectTitle {
+    return Intl.message(
+      'Select Year',
+      name: 'yearlyDateSelectTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
