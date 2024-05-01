@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/features/calendar/calendar_screen.dart';
+import 'package:moodiary/features/dashboard/dashboard_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   final String tab;
@@ -36,9 +37,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const Center(
-              child: Text("Dashboard"),
-            ),
+            child: DashboardScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
