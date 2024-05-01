@@ -62,6 +62,11 @@ class Moodiary extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        tabBarTheme: const TabBarTheme(
+          labelColor: customPrimarySwatch,
+          unselectedLabelColor: Colors.black,
+          dividerColor: Colors.white,
+        ),
       ),
       darkTheme: ThemeData.dark().copyWith(
         textTheme: Typography.whiteMountainView,
@@ -84,6 +89,11 @@ class Moodiary extends ConsumerWidget {
         ),
         listTileTheme: const ListTileThemeData(
           textColor: Colors.white,
+        ),
+        tabBarTheme: const TabBarTheme(
+          labelColor: customPrimarySwatch,
+          unselectedLabelColor: Colors.white,
+          dividerColor: Colors.black,
         ),
       ),
       builder: (context, child) {
