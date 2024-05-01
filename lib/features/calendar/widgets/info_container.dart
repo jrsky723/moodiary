@@ -23,8 +23,8 @@ class _InfoTapState extends State<InfoContainer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(
+        Padding(
+          padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size14,
           ),
           child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DiaryContainer extends StatelessWidget {
+class DiaryContainer extends StatefulWidget {
   final Widget child;
   final String text;
   final CrossAxisAlignment crossAxisAlignment;
@@ -10,6 +11,19 @@ class DiaryContainer extends StatelessWidget {
     this.text = "Empty",
     this.crossAxisAlignment = CrossAxisAlignment.start,
   });
+
+  @override
+  State<DiaryContainer> createState() => _DiaryContainerState();
+}
+
+class _DiaryContainerState extends State<DiaryContainer> {
+  bool isShow = true;
+
+  void onBlankButton() {
+    setState(() {
+      isShow = !isShow;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +47,7 @@ class DiaryContainer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: crossAxisAlignment,
+          crossAxisAlignment: widget.crossAxisAlignment,
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -42,11 +56,23 @@ class DiaryContainer extends StatelessWidget {
                 top: 5,
                 bottom: 5,
               ),
-              child: Text(
-                text,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.text,
+                  ),
+                  IconButton(
+                    onPressed: onBlankButton,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.chevronDown,
+                      size: 12,
+                    ),
+                  ),
+                ],
               ),
             ),
-            child,
+            isShow ? widget.child : const SizedBox(),
           ],
         ),
       ),

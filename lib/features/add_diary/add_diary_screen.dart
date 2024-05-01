@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/add_diary/settings_screen.dart';
 import 'package:moodiary/features/add_diary/widgets/daily_list.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
 import 'package:moodiary/features/add_diary/widgets/emtion_list.dart';
@@ -29,61 +28,8 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
     );
   }
 
-  DateTime? bedtime;
-  DateTime? wakeTime;
-
-  void _pickTime({required bool isBedTime}) {
-    DatePicker.showTimePicker(
-      context,
-      showTitleActions: true,
-      onConfirm: (date) {
-        setState(() {
-          if (isBedTime) {
-            bedtime = date;
-          } else {
-            wakeTime = date;
-          }
-        });
-      },
-      currentTime: DateTime.now(),
-      locale: LocaleType.en,
-    );
-  }
-
-  void _openTimePicker() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("시간 선택"),
-          content: SizedBox(
-            height: 200, // 다이얼로그 크기 조절
-            child: Column(
-              children: [
-                ElevatedButton(
-                  child: const Text("취침 시각 선택"),
-                  onPressed: () => _pickTime(isBedTime: true),
-                ),
-                ElevatedButton(
-                  child: const Text("기상 시각 선택"),
-                  onPressed: () => _pickTime(isBedTime: false),
-                ),
-                if (bedtime != null)
-                  Text("취침 시각: ${bedtime!.hour}시 ${bedtime!.minute}분"),
-                if (wakeTime != null)
-                  Text("기상 시각: ${wakeTime!.hour}시 ${wakeTime!.minute}"),
-              ],
-            ),
-          ),
-        );
-      },
-      barrierColor: Colors.black54, // 배경 어둡게 처리
-    );
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scrollController = ScrollController();
   }
@@ -103,8 +49,14 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           children: [
             pInfoButton(
               icon: FontAwesomeIcons.gear,
-              size: Sizes.size24,
+              size: Sizes.size20,
               color: Colors.grey.shade600,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsScreen()));
+              },
             ),
             Row(
               children: [
@@ -124,8 +76,8 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
               ],
             ),
             pInfoButton(
-              icon: FontAwesomeIcons.xmark,
-              size: Sizes.size24,
+              icon: FontAwesomeIcons.arrowLeft,
+              size: Sizes.size20,
               color: Colors.grey.shade600,
             ),
           ],
