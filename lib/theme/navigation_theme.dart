@@ -8,7 +8,7 @@ NavigationBarThemeData navigationBarThemeData(BuildContext context) {
   return NavigationBarThemeData(
     height: Sizes.size64,
     elevation: 0,
-    backgroundColor: isDark ? Colors.grey.shade900 : Colors.green.shade50,
+    backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
     indicatorColor: Colors.transparent,
     overlayColor: MaterialStateProperty.resolveWith(
       (states) => Colors.transparent,

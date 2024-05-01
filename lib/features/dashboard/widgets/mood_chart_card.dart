@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/utils.dart';
 
 class MoodChartCard extends StatelessWidget {
   final String title;
@@ -21,7 +22,7 @@ class MoodChartCard extends StatelessWidget {
         vertical: Sizes.size20,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode(context) ? Colors.black : Colors.white,
         borderRadius: BorderRadius.circular(Sizes.size16),
       ),
       child: Column(
