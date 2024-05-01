@@ -155,7 +155,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             SliverToBoxAdapter(
               child: DateSelectorTab(
-                text: '${_selectedDate.year}년 ${_selectedDate.month}월',
+                text: DateFormat.yMMMM().format(_selectedDate),
                 onTap: _onDateSelectorTap,
               ),
             ),

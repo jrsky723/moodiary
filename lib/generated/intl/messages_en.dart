@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(label) => "Most frequently recorded emotion: ${label}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
@@ -33,8 +35,29 @@ class MessageLookup extends MessageLookupByLibrary {
             "Change the language to English"),
         "englishModeTitle":
             MessageLookupByLibrary.simpleMessage("English Mode"),
+        "happy": MessageLookupByLibrary.simpleMessage("Happy"),
+        "monthlyMoodDistTitle":
+            MessageLookupByLibrary.simpleMessage("Monthly Mood Distribution"),
+        "monthlyMoodFlowTitle":
+            MessageLookupByLibrary.simpleMessage("Monthly Mood Flow"),
+        "monthlyTab": MessageLookupByLibrary.simpleMessage("Monthly"),
+        "montlyDateSelectTitle":
+            MessageLookupByLibrary.simpleMessage("Select Month"),
+        "mostFrequentMoodText": m0,
+        "normal": MessageLookupByLibrary.simpleMessage("Normal"),
+        "sad": MessageLookupByLibrary.simpleMessage("Sad"),
         "selectMonthYear":
             MessageLookupByLibrary.simpleMessage("Select Month & Year"),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings")
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+        "veryHappy": MessageLookupByLibrary.simpleMessage("Very Happy"),
+        "verySad": MessageLookupByLibrary.simpleMessage("Very Sad"),
+        "yearlyDateSelectTitle":
+            MessageLookupByLibrary.simpleMessage("Select Year"),
+        "yearlyMoodDistTitle":
+            MessageLookupByLibrary.simpleMessage("Yearly Mood Distribution"),
+        "yearlyMoodFlowTitle":
+            MessageLookupByLibrary.simpleMessage("Yearly Mood Flow"),
+        "yearlyTab": MessageLookupByLibrary.simpleMessage("Yearly")
       };
 }

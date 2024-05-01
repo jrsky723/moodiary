@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/features/dashboard/monthly_dashboard.dart';
 import 'package:moodiary/features/dashboard/yearly_dashboard.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -35,9 +36,9 @@ class _DashboardScreenState extends State<DashboardScreen>
       child: Scaffold(
         appBar: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: '월간'),
-            Tab(text: '연간'),
+          tabs: [
+            Tab(text: S.of(context).monthlyTab),
+            Tab(text: S.of(context).yearlyTab),
           ],
         ),
         body: TabBarView(

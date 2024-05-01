@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
@@ -8,6 +9,7 @@ import 'package:moodiary/features/dashboard/widgets/mood_chart_card.dart';
 import 'package:moodiary/features/dashboard/widgets/mood_dist_chart.dart';
 import 'package:moodiary/features/dashboard/widgets/mood_flow_chart.dart';
 import 'package:moodiary/features/dashboard/widgets/show_date_selection_sheet.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
 class YearlyDashboard extends StatefulWidget {
@@ -84,18 +86,18 @@ class _YearlyDashboardState extends State<YearlyDashboard> {
         child: Column(
           children: [
             DateSelectorTab(
-              text: "$_selectedYear년",
+              text: DateFormat.y().format(DateTime(_selectedYear)),
               onTap: _onDateSelectorTap,
             ),
             Gaps.v32,
             MoodChartCard(
-              title: "연간 기분 흐름",
+              title: S.of(context).yearlyMoodFlowTitle,
               content: MoodFlowChart(
                   moodEntries: _monthlyMoodModes, isMonthly: false),
             ),
             Gaps.v32,
             MoodChartCard(
-              title: "연간 기분 분포",
+              title: S.of(context).yearlyMoodDistTitle,
               content: MoodDistChart(
                 moodEntries: _moodEntries,
               ),

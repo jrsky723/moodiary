@@ -8,5 +8,27 @@
   "darkModeTitle": "Dark mode",
   "englishModeTitle": "English Mode",
   "englishModeSubtitle": "Change the language to English",
-  "diarySearchHint": "Diary Search"
+  "diarySearchHint": "Diary Search",
+  "monthlyTab": "Monthly",
+  "yearlyTab": "Yearly",
+  "monthlyMoodFlowTitle": "Monthly Mood Flow",
+  "monthlyMoodDistTitle": "Monthly Mood Distribution",
+  "yearlyMoodFlowTitle": "Yearly Mood Flow",
+  "yearlyMoodDistTitle": "Yearly Mood Distribution",
+  "mostFrequentMoodText": "Most frequently recorded emotion: {label}",
+  "@mostFrequentMoodText": {
+    "variables": {
+      "label": {
+        "type": "string"
+      }
+    }
+  },
+  "veryHappy": "Very Happy",
+  "happy": "Happy",
+  "normal": "Normal",
+  "sad": "Sad",
+  "verySad": "Very Sad",
+  "unknown": "Unknown",
+  "montlyDateSelectTitle": "Select Month",
+  "yearlyDateSelectTitle": "Select Year"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 enum Mood {
   veryHappy,
@@ -9,20 +10,20 @@ enum Mood {
 }
 
 extension MoodExtension on Mood {
-  String get label {
+  String label(BuildContext context) {
     switch (this) {
       case Mood.veryHappy:
-        return "매우 행복함";
+        return S.of(context).veryHappy;
       case Mood.happy:
-        return "행복함";
+        return S.of(context).happy;
       case Mood.neutral:
-        return "보통";
+        return S.of(context).normal;
       case Mood.sad:
-        return "슬픔";
+        return S.of(context).sad;
       case Mood.verySad:
-        return "매우 슬픔";
+        return S.of(context).verySad;
       default:
-        return "알 수 없음";
+        return S.of(context).unknown;
     }
   }
 

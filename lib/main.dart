@@ -33,7 +33,6 @@ class Moodiary extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    S.load(Locale(settings.isEnglish ? 'en' : 'ko'));
     return MaterialApp(
       title: 'Moodiary',
       themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
@@ -43,6 +42,9 @@ class Moodiary extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      locale: settings.isEnglish
+          ? const Locale('en', 'US')
+          : const Locale('ko', 'KR'),
       supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
         textTheme: Typography.blackMountainView,
