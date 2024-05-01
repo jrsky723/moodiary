@@ -45,17 +45,16 @@ class _DiaryContainerState extends State<DiaryContainer> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(
+          left: 8,
+          right: 8,
+          bottom: 8,
+        ),
         child: Column(
           crossAxisAlignment: widget.crossAxisAlignment,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                left: 5,
-                right: 5,
-                top: 5,
-                bottom: 5,
-              ),
+              padding: const EdgeInsets.all(5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
