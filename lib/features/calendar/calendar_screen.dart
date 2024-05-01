@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
@@ -80,7 +81,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         }
         _selectedDate = DateTime(_selectedDate.year, _selectedDate.month + 1);
       } else {
-        if (_selectedDate.year == 2000 && _selectedDate.month == 1) {
+        if (_selectedDate.year == Date.minYear && _selectedDate.month == 1) {
           return;
         }
         _selectedDate = DateTime(_selectedDate.year, _selectedDate.month - 1);
@@ -88,6 +89,27 @@ class _CalendarScreenState extends State<CalendarScreen> {
       _days =
           _generateDaysForYearMonth(_selectedDate.year, _selectedDate.month);
     });
+  }
+
+  Future<void> _onDateSelectorTap() async {
+    DateTime? picked = await showDialog(
+      context: context,
+      builder: (context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: YearMonthSelectDialog(
+            selectedDate: _selectedDate,
+          ),
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+        _days = _generateDaysForYearMonth(picked.year, picked.month);
+      });
+    }
   }
 
   @override
@@ -130,7 +152,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ],
             ),
             SliverToBoxAdapter(
-              child: _buildYearMonthSelector(context),
+              child: DateSelectorTab(
+                text: '${_selectedDate.year}년 ${_selectedDate.month}월',
+                onTap: _onDateSelectorTap,
+              ),
             ),
             SliverToBoxAdapter(
               child: _buildWeekdays(context),
@@ -150,41 +175,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
-  GestureDetector _buildYearMonthSelector(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        DateTime? picked = await showDialog(
-          context: context,
-          builder: (context) {
-            return BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-              child: YearMonthSelectDialog(
-                selectedDate: _selectedDate,
-              ),
-            );
-          },
-        );
-
-        if (picked != null) {
-          setState(() {
-            _selectedDate = picked;
-            _days = _generateDaysForYearMonth(picked.year, picked.month);
-          });
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(Sizes.size8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('${_selectedDate.year}년 ${_selectedDate.month}월'),
-            const Icon(Icons.arrow_drop_down),
-          ],
-        ),
-      ),
-    );
-  }
-
   Row _buildWeekdays(BuildContext context) {
     return Row(
       children: List.generate(
@@ -197,7 +187,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               child: Opacity(
                 opacity: 0.8,
                 child: Text(
-                  WEEKDAYS[index],
+                  Date.weekDays[index],
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400,
