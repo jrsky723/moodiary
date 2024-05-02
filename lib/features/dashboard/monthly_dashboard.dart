@@ -79,29 +79,32 @@ class _MonthlyDashboardState extends State<MonthlyDashboard> {
         padding: const EdgeInsets.symmetric(
           horizontal: Sizes.size20,
         ),
-        child: Column(
-          children: [
-            DateSelectorTab(
-              text: DateFormat.yMMMM()
-                  .format(DateTime(_selectedYear, _selectedMonth)),
-              onTap: _onDateSelectorTap,
-            ),
-            Gaps.v32,
-            MoodChartCard(
-              title: S.of(context).monthlyMoodFlowTitle,
-              content: MoodFlowChart(
-                moodEntries: _moodEntries,
-                isMonthly: true,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              DateSelectorTab(
+                text: DateFormat.yMMMM()
+                    .format(DateTime(_selectedYear, _selectedMonth)),
+                onTap: _onDateSelectorTap,
               ),
-            ),
-            Gaps.v32,
-            MoodChartCard(
-              title: S.of(context).monthlyMoodDistTitle,
-              content: MoodDistChart(
-                moodEntries: _moodEntries,
+              Gaps.v32,
+              MoodChartCard(
+                title: S.of(context).monthlyMoodFlowTitle,
+                content: MoodFlowChart(
+                  moodEntries: _moodEntries,
+                  isMonthly: true,
+                ),
               ),
-            ),
-          ],
+              Gaps.v32,
+              MoodChartCard(
+                title: S.of(context).monthlyMoodDistTitle,
+                content: MoodDistChart(
+                  moodEntries: _moodEntries,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
