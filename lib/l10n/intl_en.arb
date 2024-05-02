@@ -1,0 +1,34 @@
+{
+  "calendar": "Calendar",
+  "selectMonthYear": "Select Month & Year",
+  "cancelBtn": "Cancel",
+  "confirmBtn": "Confirm",
+  "settings": "Settings",
+  "darkModeSubtitle": "Change to dark mode",
+  "darkModeTitle": "Dark mode",
+  "englishModeTitle": "English Mode",
+  "englishModeSubtitle": "Change the language to English",
+  "diarySearchHint": "Diary Search",
+  "monthlyTab": "Monthly",
+  "yearlyTab": "Yearly",
+  "monthlyMoodFlowTitle": "Monthly Mood Flow",
+  "monthlyMoodDistTitle": "Monthly Mood Distribution",
+  "yearlyMoodFlowTitle": "Yearly Mood Flow",
+  "yearlyMoodDistTitle": "Yearly Mood Distribution",
+  "mostFrequentMoodText": "Most frequently recorded emotion: {label}",
+  "@mostFrequentMoodText": {
+    "variables": {
+      "label": {
+        "type": "string"
+      }
+    }
+  },
+  "veryHappy": "Very Happy",
+  "happy": "Happy",
+  "normal": "Normal",
+  "sad": "Sad",
+  "verySad": "Very Sad",
+  "unknown": "Unknown",
+  "montlyDateSelectTitle": "Select Month",
+  "yearlyDateSelectTitle": "Select Year"
+}
