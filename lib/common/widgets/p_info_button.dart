@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/sizes.dart';
 
-class pInfoButton extends StatelessWidget {
+class InfoButton extends StatelessWidget {
   final IconData icon;
   final double? size;
   final Color? color;
   final Function()? onTap;
 
-  const pInfoButton({
+  const InfoButton({
     super.key,
     required this.icon,
     this.size = Sizes.size14,

@@ -299,6 +299,126 @@ class S {
       args: [],
     );
   }
+
+  /// `How was your day?`
+  String get howWasYourDay {
+    return Intl.message(
+      'How was your day?',
+      name: 'howWasYourDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion`
+  String get emotion {
+    return Intl.message(
+      'Emotion',
+      name: 'emotion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Person`
+  String get person {
+    return Intl.message(
+      'Person',
+      name: 'person',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sleep`
+  String get sleep {
+    return Intl.message(
+      'Sleep',
+      name: 'sleep',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diary`
+  String get diary {
+    return Intl.message(
+      'Diary',
+      name: 'diary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today's Photo`
+  String get todaysPhoto {
+    return Intl.message(
+      'Today\'s Photo',
+      name: 'todaysPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `go to top`
+  String get scrollToTop {
+    return Intl.message(
+      'go to top',
+      name: 'scrollToTop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your content here`
+  String get enterContentPrompt {
+    return Intl.message(
+      'Enter your content here',
+      name: 'enterContentPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a photo`
+  String get selectPhotoPrompt {
+    return Intl.message(
+      'Select a photo',
+      name: 'selectPhotoPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sleep Duration : {hours} hours {minutes} minutes`
+  String sleepDuration(Object hours, Object minutes) {
+    return Intl.message(
+      'Sleep Duration : $hours hours $minutes minutes',
+      name: 'sleepDuration',
+      desc: '',
+      args: [hours, minutes],
+    );
+  }
+
+  /// `bedtime`
+  String get bedtime {
+    return Intl.message(
+      'bedtime',
+      name: 'bedtime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `wake up time`
+  String get wakeUpTime {
+    return Intl.message(
+      'wake up time',
+      name: 'wakeUpTime',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

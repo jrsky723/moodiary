@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:moodiary/utils.dart';
 
 class DiaryContainer extends StatefulWidget {
   final Widget child;
@@ -34,7 +35,7 @@ class _DiaryContainerState extends State<DiaryContainer> {
       ),
       decoration: BoxDecoration(
         // Add this
-        color: Colors.grey.shade100,
+        color: isDarkMode(context) ? Colors.black : Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -63,9 +64,12 @@ class _DiaryContainerState extends State<DiaryContainer> {
                   ),
                   IconButton(
                     onPressed: onBlankButton,
-                    icon: const FaIcon(
+                    icon: FaIcon(
                       FontAwesomeIcons.chevronDown,
                       size: 12,
+                      color: isDarkMode(context)
+                          ? Colors.grey.shade500
+                          : Colors.black,
                     ),
                   ),
                 ],

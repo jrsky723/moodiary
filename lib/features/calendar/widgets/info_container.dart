@@ -23,16 +23,16 @@ class _InfoTapState extends State<InfoContainer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
+        const Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: Sizes.size14,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              pInfoButton(icon: FontAwesomeIcons.shareNodes),
-              pInfoButton(icon: FontAwesomeIcons.penToSquare),
-              pInfoButton(icon: FontAwesomeIcons.trashCan),
+              InfoButton(icon: FontAwesomeIcons.shareNodes),
+              InfoButton(icon: FontAwesomeIcons.penToSquare),
+              InfoButton(icon: FontAwesomeIcons.trashCan),
             ],
           ),
         ),

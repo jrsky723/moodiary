@@ -24,16 +24,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("확인"),
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("다크 모드"),
+        "diary": MessageLookupByLibrary.simpleMessage("일기"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("다이어리 검색"),
+        "emotion": MessageLookupByLibrary.simpleMessage("감정"),
         "englishModeSubtitle":
             MessageLookupByLibrary.simpleMessage("언어를 영어로 전환합니다."),
         "englishModeTitle": MessageLookupByLibrary.simpleMessage("영어 모드"),
+        "enterContentPrompt":
+            MessageLookupByLibrary.simpleMessage("내용을 입력해주세요"),
         "happy": MessageLookupByLibrary.simpleMessage("행복함"),
+        "howWasYourDay": MessageLookupByLibrary.simpleMessage("어떤 하루였나요?"),
         "monthlyMoodDistTitle":
             MessageLookupByLibrary.simpleMessage("월간 기분 분포"),
         "monthlyMoodFlowTitle":
@@ -42,12 +48,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "montlyDateSelectTitle": MessageLookupByLibrary.simpleMessage("월 선택하기"),
         "mostFrequentMoodText": m0,
         "normal": MessageLookupByLibrary.simpleMessage("보통"),
+        "person": MessageLookupByLibrary.simpleMessage("사람"),
         "sad": MessageLookupByLibrary.simpleMessage("슬픔"),
+        "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),
         "selectMonthYear": MessageLookupByLibrary.simpleMessage("연도 및 월 선택"),
+        "selectPhotoPrompt": MessageLookupByLibrary.simpleMessage("사진을 선택해주세요"),
         "settings": MessageLookupByLibrary.simpleMessage("설정"),
+        "sleep": MessageLookupByLibrary.simpleMessage("수면"),
+        "sleepDuration": MessageLookupByLibrary.simpleMessage("수면시간"),
+        "todaysPhoto": MessageLookupByLibrary.simpleMessage("오늘의 사진"),
         "unknown": MessageLookupByLibrary.simpleMessage("알 수 없음"),
         "veryHappy": MessageLookupByLibrary.simpleMessage("매우 행복함"),
         "verySad": MessageLookupByLibrary.simpleMessage("매우 슬픔"),
+        "wakeUpTime": MessageLookupByLibrary.simpleMessage("기상"),
         "yearlyDateSelectTitle":
             MessageLookupByLibrary.simpleMessage("연도 선택하기"),
         "yearlyMoodDistTitle": MessageLookupByLibrary.simpleMessage("연간 기분 분포"),
