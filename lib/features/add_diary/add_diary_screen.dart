@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/settings_screen.dart';
@@ -8,6 +9,8 @@ import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
 import 'package:moodiary/features/add_diary/widgets/multi_select_list.dart';
 import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
 import 'package:moodiary/features/add_diary/widgets/sleep_time_picker.dart';
+import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils.dart';
 
 class AddDiaryScreen extends StatefulWidget {
   const AddDiaryScreen({super.key});
@@ -19,27 +22,6 @@ class AddDiaryScreen extends StatefulWidget {
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
   late final ScrollController _scrollController;
   DateTime _selectedDate = DateTime.now();
-
-  String _selectedWeekday() {
-    switch (_selectedDate.weekday) {
-      case 1:
-        return "월요일";
-      case 2:
-        return "화요일";
-      case 3:
-        return "수요일";
-      case 4:
-        return "목요일";
-      case 5:
-        return "금요일";
-      case 6:
-        return "토요일";
-      case 7:
-        return "일요일";
-      default:
-        return "";
-    }
-  }
 
   void _scrollToTop() {
     _scrollController.animateTo(
@@ -53,10 +35,15 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('날짜선택'),
+        title: Text(
+          '날짜선택',
+          style: TextStyle(
+            color: isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
+          ),
+        ),
         content: SizedBox(
           // You might want to adjust the height depending on your needs or screen size
-          height: 400,
+          height: 200,
           width: double.maxFinite,
           child: CalendarDatePicker(
             initialDate: _selectedDate,
@@ -99,7 +86,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            pInfoButton(
+            InfoButton(
               icon: FontAwesomeIcons.gear,
               size: Sizes.size20,
               color: Colors.grey.shade600,
@@ -113,22 +100,25 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
             Row(
               children: [
                 Text(
-                  '${_selectedDate.month}월 ${_selectedDate.day}일 ${_selectedWeekday()}',
+                  DateFormat.MMMMEEEEd().format(_selectedDate),
                   style: TextStyle(
                     fontSize: Sizes.size16,
-                    color: Colors.grey.shade900,
+                    color: isDarkMode(context)
+                        ? Colors.grey.shade400
+                        : Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                pInfoButton(
+                InfoButton(
                   icon: FontAwesomeIcons.caretDown,
                   size: Sizes.size16,
-                  color: Colors.grey.shade900,
+                  color:
+                      isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
                   onTap: () => _showDatePickerDialog(context),
                 ),
               ],
             ),
-            pInfoButton(
+            InfoButton(
               icon: FontAwesomeIcons.floppyDisk,
               size: Sizes.size24,
               color: Colors.grey.shade600,
@@ -141,16 +131,16 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         slivers: [
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: DiaryContainer(
               crossAxisAlignment: CrossAxisAlignment.center,
-              text: "어떤 하루였나요?",
-              child: DailyList(),
+              text: S.of(context).howWasYourDay,
+              child: const DailyList(),
             ),
           ),
           SliverToBoxAdapter(
             child: DiaryContainer(
-              text: "감정",
+              text: S.of(context).emotion,
               child: MultiSelectList(
                 items: emotions,
                 crossAxisCount: 4,
@@ -159,7 +149,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           ),
           SliverToBoxAdapter(
             child: DiaryContainer(
-              text: "사람",
+              text: S.of(context).person,
               child: MultiSelectList(
                 items: people,
                 crossAxisCount: 4,
@@ -168,7 +158,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           ),
           SliverToBoxAdapter(
             child: DiaryContainer(
-              text: "수면",
+              text: S.of(context).sleep,
               child: Center(
                 child: SleepDialog(
                   context: context,
@@ -178,10 +168,12 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           ),
           SliverToBoxAdapter(
             child: DiaryContainer(
-              text: "일기",
+              text: S.of(context).diary,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: isDarkMode(context)
+                      ? Colors.grey.shade500
+                      : Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(
                     Sizes.size5,
                   ),
@@ -190,11 +182,11 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: TextField(
                     maxLines: 1,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "내용을 입력해주세요",
+                      hintText: S.of(context).enterContentPrompt,
                       hintStyle: TextStyle(
-                        color: Colors.grey,
+                        color: Colors.grey.shade800,
                         fontSize: Sizes.size14,
                       ),
                     ),
@@ -204,10 +196,10 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
               ),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: DiaryContainer(
-              text: "오늘의 사진",
-              child: Center(
+              text: S.of(context).todaysPhoto,
+              child: const Center(
                 child: ImagePickerButton(),
               ),
             ),
@@ -221,7 +213,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
               alignment: Alignment.bottomRight,
               child: InkWell(
                 onTap: () => _scrollToTop(),
-                child: const Text("맨 위로"),
+                child: Text(S.of(context).scrollToTop),
               ),
             ),
           ),

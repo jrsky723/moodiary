@@ -1,7 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:moodiary/features/add_diary/model/sleepTime.dart';
+import 'package:moodiary/constants/gaps.dart';
+import 'package:moodiary/features/add_diary/model/sleep_time.dart';
+import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils.dart';
 
 class SleepDialog extends StatefulWidget {
   final BuildContext context;
@@ -15,29 +18,29 @@ class _SleepDialogState extends State<SleepDialog> {
   SleepTime bedTime = SleepTime();
   SleepTime wakeTime = SleepTime();
 
-  int? totalHour;
-  int? totalMinute;
+  int totalHour = 0;
+  int totalMinute = 0;
 
   void _getTotaltime() {
-    int? bH = bedTime.Hour, wH = wakeTime.Hour;
+    int? bH = bedTime.hour, wH = wakeTime.hour;
     setState(() {
-      if (bedTime.Period == "PM") {
+      if (bedTime.period == "PM") {
         bH = bH! + 12;
       }
-      log("bedTime.Hour: $bH");
-      log("bM: $bedTime.Minute");
-      if (wakeTime.Period == "PM") {
+      log("bedTime.hour: $bH");
+      log("bM: $bedTime.minute");
+      if (wakeTime.period == "PM") {
         wH = wH! + 12;
       }
-      log("wakeTime.Hour: $wH");
-      log("wM: $wakeTime.Minute");
+      log("wakeTime.hour: $wH");
+      log("wM: $wakeTime.minute");
       totalHour = wH! - bH!;
-      totalMinute = wakeTime.Minute! - bedTime.Minute!;
-      if (totalMinute! < 0) {
-        totalHour = totalHour! - 1;
+      totalMinute = wakeTime.minute - bedTime.minute;
+      if (totalMinute < 0) {
+        totalHour = totalHour - 1;
       }
-      totalHour = totalHour! < 0 ? totalHour! + 24 : totalHour!;
-      totalMinute = totalMinute! < 0 ? totalMinute! + 60 : totalMinute!;
+      totalHour = totalHour < 0 ? totalHour + 24 : totalHour;
+      totalMinute = totalMinute < 0 ? totalMinute + 60 : totalMinute;
     });
   }
 
@@ -53,57 +56,52 @@ class _SleepDialogState extends State<SleepDialog> {
           title: Text(title),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              return Flex(
-                direction: Axis.horizontal,
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DropdownButton<String>(
-                        value: period,
-                        items: ['AM', 'PM'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            period = newValue!;
-                          });
-                        },
-                      ),
-                      DropdownButton<int>(
-                        value: hour,
-                        items: List<int>.generate(12, (index) => index + 1)
-                            .map((int value) {
-                          return DropdownMenuItem<int>(
-                            value: value,
-                            child: Text(value.toString()),
-                          );
-                        }).toList(),
-                        onChanged: (int? newValue) {
-                          setState(() {
-                            hour = newValue!;
-                          });
-                        },
-                      ),
-                      DropdownButton<int>(
-                        value: minute,
-                        items: List<int>.generate(60, (index) => index)
-                            .map((int value) {
-                          return DropdownMenuItem<int>(
-                            value: value,
-                            child: Text(value.toString().padLeft(2, '0')),
-                          );
-                        }).toList(),
-                        onChanged: (int? newValue) {
-                          setState(() {
-                            minute = newValue!;
-                          });
-                        },
-                      ),
-                    ],
+                  DropdownButton<String>(
+                    value: period,
+                    items: ['AM', 'PM'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        period = newValue!;
+                      });
+                    },
+                  ),
+                  DropdownButton<int>(
+                    value: hour! > 12 ? hour! - 12 : hour,
+                    items: List<int>.generate(12, (index) => index + 1)
+                        .map((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (int? newValue) {
+                      setState(() {
+                        hour = newValue!;
+                      });
+                    },
+                  ),
+                  DropdownButton<int>(
+                    value: minute,
+                    items: List<int>.generate(60, (index) => index)
+                        .map((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: Text(value.toString().padLeft(2, '0')),
+                      );
+                    }).toList(),
+                    onChanged: (int? newValue) {
+                      setState(() {
+                        minute = newValue!;
+                      });
+                    },
                   ),
                 ],
               );
@@ -112,26 +110,26 @@ class _SleepDialogState extends State<SleepDialog> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(S.of(context).cancelBtn),
             ),
             TextButton(
               onPressed: () {
                 setState(() {
                   // Update the state of the parent widget when the dialog closes.
                   if (isBedtime) {
-                    bedTime.Period = period;
-                    bedTime.Hour = hour;
-                    bedTime.Minute = minute;
+                    bedTime.period = period!;
+                    bedTime.hour = hour!;
+                    bedTime.minute = minute!;
                   } else {
-                    wakeTime.Period = period;
-                    wakeTime.Hour = hour;
-                    wakeTime.Minute = minute;
+                    wakeTime.period = period!;
+                    wakeTime.hour = hour!;
+                    wakeTime.minute = minute!;
                   }
                   _getTotaltime();
                 });
                 Navigator.of(context).pop();
               },
-              child: const Text('Set Time'),
+              child: Text(S.of(context).confirmBtn),
             ),
           ],
         );
@@ -143,37 +141,46 @@ class _SleepDialogState extends State<SleepDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (totalHour != 0 &&
-            totalMinute != 0 &&
-            totalHour != null &&
-            totalMinute != null)
-          Text("수면 시간: $totalHour시간 $totalMinute분"),
+        if (totalHour != 0 && totalMinute != 0)
+          Text(
+            S.of(context).sleepDuration(totalHour, totalMinute),
+            style: TextStyle(
+              color: isDarkMode(context) ? Colors.white : Colors.black,
+            ),
+          ),
+        Gaps.v4,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
                 ElevatedButton(
-                  onPressed: () => _showTimePickerDialog(true, "취침 시각",
-                      bedTime.Period, bedTime.Hour, bedTime.Minute),
+                  onPressed: () => _showTimePickerDialog(
+                      true,
+                      S.of(context).bedtime,
+                      bedTime.period,
+                      bedTime.hour,
+                      bedTime.minute),
                   style: ElevatedButton.styleFrom(
                     shadowColor: Colors.transparent,
-                    backgroundColor: Colors.grey.shade300,
+                    backgroundColor: isDarkMode(context)
+                        ? Colors.grey.shade500
+                        : Colors.grey.shade300,
                     surfaceTintColor: Colors.black,
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                   ),
                   child: Text(
                     formattedTime(
-                      bedTime.Period,
-                      bedTime.Hour,
-                      bedTime.Minute,
+                      bedTime.period,
+                      bedTime.hour,
+                      bedTime.minute,
                     ),
                     style: TextStyle(color: Colors.grey.shade800),
                   ),
                 ),
                 Text(
-                  "취침",
+                  S.of(context).bedtime,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey.shade600,
@@ -185,29 +192,35 @@ class _SleepDialogState extends State<SleepDialog> {
             Column(
               children: [
                 ElevatedButton(
-                  onPressed: () => _showTimePickerDialog(false, "기상 시각",
-                      wakeTime.Period, wakeTime.Hour, wakeTime.Minute),
+                  onPressed: () => _showTimePickerDialog(
+                      false,
+                      S.of(context).wakeUpTime,
+                      wakeTime.period,
+                      wakeTime.hour,
+                      wakeTime.minute),
                   style: ElevatedButton.styleFrom(
                     shadowColor: Colors.transparent,
-                    backgroundColor: Colors.grey.shade300,
+                    backgroundColor: isDarkMode(context)
+                        ? Colors.grey.shade500
+                        : Colors.grey.shade300,
                     surfaceTintColor: Colors.black,
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                   ),
                   child: Text(
                     formattedTime(
-                      wakeTime.Period,
-                      wakeTime.Hour,
-                      wakeTime.Minute,
+                      wakeTime.period,
+                      wakeTime.hour,
+                      wakeTime.minute,
                     ),
                     style: TextStyle(color: Colors.grey.shade800),
                   ),
                 ),
                 Text(
-                  "기상",
+                  S.of(context).wakeUpTime,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey.shade800,
+                    color: Colors.grey.shade600,
                     fontWeight: FontWeight.w800,
                   ),
                 ),

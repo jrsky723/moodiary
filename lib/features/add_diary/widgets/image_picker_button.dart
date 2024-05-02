@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils.dart';
 
 class ImagePickerButton extends StatefulWidget {
   const ImagePickerButton({super.key});
@@ -35,7 +37,8 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 1,
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor:
+            isDarkMode(context) ? Colors.grey.shade500 : Colors.grey.shade300,
         foregroundColor: Colors.grey.shade500,
         surfaceTintColor: Colors.grey.shade100,
         shape: RoundedRectangleBorder(
@@ -59,7 +62,7 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
                         size: 52, // Sizes.size52 대신에 리터럴 값 사용
                       ),
                       Text(
-                        "사진을 선택해주세요",
+                        S.of(context).selectPhotoPrompt,
                         style: TextStyle(
                           color: Colors.grey.shade700,
                         ),
