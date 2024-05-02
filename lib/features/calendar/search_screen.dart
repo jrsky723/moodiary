@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/models/diary_entry.dart';
+import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -96,13 +98,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         title: TextField(
           controller: _searchController,
           onChanged: _onSearchChanged,
           style: const TextStyle(
-            color: Colors.black,
             decorationThickness: 0,
           ),
           cursorColor: Colors.grey,
@@ -111,9 +113,9 @@ class _SearchScreenState extends State<SearchScreen> {
               horizontal: Sizes.size20,
               vertical: 0,
             ),
-            hintText: 'Diary Search',
+            hintText: S.of(context).diarySearchHint,
             filled: true,
-            fillColor: Colors.green.shade100,
+            fillColor: isDark ? Colors.grey.shade800 : Colors.green.shade100,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide.none,
@@ -123,7 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 : IconButton(
                     icon: Icon(
                       FontAwesomeIcons.xmark,
-                      color: Colors.grey.shade600,
+                      color:
+                          isDark ? Colors.grey.shade500 : Colors.grey.shade600,
                     ),
                     onPressed: _onClearPressed,
                   ),
@@ -140,14 +143,13 @@ class _SearchScreenState extends State<SearchScreen> {
               //   Routes.diaryDetail,
               //   arguments: item,
               // );
-              print('Tapped: ${item.title}');
             },
             title: highlightSearchResult(
               text: item.title,
               searchQuery: _searchController.text,
-              normalStyle: const TextStyle(
-                color: Colors.black,
+              normalStyle: TextStyle(
                 fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : Colors.black,
               ),
               highlightStyle: TextStyle(
                 color: Theme.of(context).primaryColor,
@@ -157,8 +159,8 @@ class _SearchScreenState extends State<SearchScreen> {
             subtitle: highlightSearchResult(
               text: item.description,
               searchQuery: _searchController.text,
-              normalStyle: const TextStyle(
-                color: Colors.black,
+              normalStyle: TextStyle(
+                color: isDark ? Colors.grey.shade500 : Colors.grey.shade600,
               ),
               highlightStyle: TextStyle(
                 color: Theme.of(context).primaryColor,

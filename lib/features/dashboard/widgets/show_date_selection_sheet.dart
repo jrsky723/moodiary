@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils.dart';
 
 Future<DateTime?> showDateSelectionSheet({
   required BuildContext context,
@@ -20,7 +24,8 @@ Future<DateTime?> showDateSelectionSheet({
           controller: scrollController,
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.white,
+              backgroundColor:
+                  isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
               surfaceTintColor: Colors.transparent,
               leading: const SizedBox(),
               actions: [
@@ -32,7 +37,9 @@ Future<DateTime?> showDateSelectionSheet({
                 ),
               ],
               title: Text(
-                isMonthly ? '월 선택하기' : '연도 선택하기',
+                isMonthly
+                    ? S.of(context).montlyDateSelectTitle
+                    : S.of(context).yearlyDateSelectTitle,
                 style: const TextStyle(
                   fontSize: Sizes.size16,
                   fontWeight: FontWeight.w600,
@@ -54,17 +61,17 @@ Future<DateTime?> showDateSelectionSheet({
                       isMonthly ? (now.month - index - 1) % 12 + 1 : 1;
 
                   return ListTile(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(Sizes.size8),
-                      ),
-                    ),
-                    tileColor: Colors.white,
+                    tileColor: isDarkMode(context)
+                        ? Colors.grey.shade900
+                        : Colors.white,
                     selected: index == selectedIndex,
-                    selectedTileColor:
-                        Theme.of(context).primaryColor.withOpacity(0.1),
+                    selectedTileColor: isDarkMode(context)
+                        ? customPrimarySwatch.shade900.withOpacity(1.0)
+                        : Theme.of(context).primaryColor.withOpacity(0.1),
                     title: Text(
-                      isMonthly ? '$year년 $month월' : '$year년',
+                      isMonthly
+                          ? DateFormat.yMMMM().format(DateTime(year, month))
+                          : year.toString(),
                       style: const TextStyle(fontSize: Sizes.size16),
                     ),
                     onTap: () {

@@ -4,6 +4,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 import 'package:moodiary/features/dashboard/painters/bar_chart_painter.dart';
 import 'package:moodiary/features/dashboard/painters/legend_painter.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class MoodDistChart extends StatelessWidget {
   final List<MoodEntry> moodEntries;
@@ -70,7 +71,9 @@ class MoodDistChart extends StatelessWidget {
             SizedBox(
               height: textHeight,
               child: Text(
-                '가장 많이 기록한 감정: ${getMostFrequentMood().label}',
+                S
+                    .of(context)
+                    .mostFrequentMoodText(getMostFrequentMood().label(context)),
                 style: const TextStyle(
                   fontSize: Sizes.size12,
                   fontWeight: FontWeight.bold,
