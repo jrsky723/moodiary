@@ -53,5 +53,6 @@
     }
   },
   "bedtime": "취침",
-  "wakeUpTime": "기상"
+  "wakeUpTime": "기상",
+  "selectMonthDay" : "월 및 일 선택"
 }
