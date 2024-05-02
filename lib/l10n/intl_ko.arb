@@ -41,13 +41,13 @@
   "scrollToTop": "맨위로",
   "enterContentPrompt" : "내용을 입력해주세요",
   "selectPhotoPrompt": "사진을 선택해주세요",
-  "sleepDuration": "수면시간 {hour}시간 {minute}분",
+  "sleepDuration": "수면시간 {hours}시간 {minutes}분",
   "@sleepDuration": {
     "variables": {
-      "hour": {
+      "hours": {
         "type": "number"
       },
-      "minute": {
+      "minutes": {
         "type": "number"
       }
     }
