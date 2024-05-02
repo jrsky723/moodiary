@@ -58,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "sad": MessageLookupByLibrary.simpleMessage("Sad"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
+        "selectMonthDay":
+            MessageLookupByLibrary.simpleMessage("Select Month & Day"),
         "selectMonthYear":
             MessageLookupByLibrary.simpleMessage("Select Month & Year"),
         "selectPhotoPrompt":

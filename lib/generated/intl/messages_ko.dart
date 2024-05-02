@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "person": MessageLookupByLibrary.simpleMessage("사람"),
         "sad": MessageLookupByLibrary.simpleMessage("슬픔"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),
+        "selectMonthDay": MessageLookupByLibrary.simpleMessage("월 및 일 선택"),
         "selectMonthYear": MessageLookupByLibrary.simpleMessage("연도 및 월 선택"),
         "selectPhotoPrompt": MessageLookupByLibrary.simpleMessage("사진을 선택해주세요"),
         "settings": MessageLookupByLibrary.simpleMessage("설정"),

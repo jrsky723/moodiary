@@ -53,5 +53,7 @@
     }
   },
   "bedtime": "bedtime",
-  "wakeUpTime": "wake up time"
+  "wakeUpTime": "wake up time",
+  "selectMonthDay": "Select Month & Day"
+
 }

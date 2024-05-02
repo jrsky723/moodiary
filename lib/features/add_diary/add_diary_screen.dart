@@ -36,7 +36,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          '날짜선택',
+          S.of(context).selectMonthDay,
           style: TextStyle(
             color: isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
           ),
@@ -57,10 +57,17 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              setState(() {});
               Navigator.of(context).pop();
             },
-            child: const Text('OK'),
+            child: Text(S.of(context).cancelBtn),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {});
+
+              Navigator.of(context).pop();
+            },
+            child: Text(S.of(context).confirmBtn),
           ),
         ],
       ),

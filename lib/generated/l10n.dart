@@ -419,6 +419,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Select Month & Day`
+  String get selectMonthDay {
+    return Intl.message(
+      'Select Month & Day',
+      name: 'selectMonthDay',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
