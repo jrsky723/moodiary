@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/settings_screen.dart';
+import 'package:moodiary/features/add_diary/widgets/custom_calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/daily_list.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
 import 'package:moodiary/features/add_diary/widgets/multi_select_list.dart';
@@ -42,10 +43,9 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           ),
         ),
         content: SizedBox(
-          // You might want to adjust the height depending on your needs or screen size
           height: 200,
           width: double.maxFinite,
-          child: CalendarDatePicker(
+          child: cCalendarDatePicker(
             initialDate: _selectedDate,
             firstDate: DateTime(2000),
             lastDate: DateTime(2030),
