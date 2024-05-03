@@ -24,8 +24,4 @@ class SleepTime {
   set minute(int value) {
     _minute = value;
   }
-
-  String get formattedTime {
-    return "$hour:${minute.toString().padLeft(2, '0')} $period";
-  }
 }

@@ -141,7 +141,7 @@ class _SleepDialogState extends State<SleepDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (totalHour != 0 && totalMinute != 0)
+        if (!(totalHour == 0 && totalMinute == 0))
           Text(
             S.of(context).sleepDuration(totalHour, totalMinute),
             style: TextStyle(
