@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moodiary/features/calendar/calendar_screen.dart';
 import 'package:moodiary/features/dashboard/dashboard_screen.dart';
 import 'package:moodiary/features/settings/settings_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
+  static const String routeName = 'MainNavigationScreen';
+  static const String path = "/:tab(calendar|dashboard|xxx|community|settings)";
+  static const String initialTab = 'calendar';
+
   final String tab;
 
   const MainNavigationScreen({
@@ -21,11 +26,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     'calendar',
     'dashboard',
     'xxx',
-    'store',
+    'community',
     'settings',
   ];
 
   late int _selectedIndex = _tabs.indexOf(widget.tab);
+
+  void _onDestinationSelected(int index) {
+    context.go('/${_tabs[index]}');
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +53,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             child: const DashboardScreen(),
           ),
           Offstage(
-            offstage: _selectedIndex != 2,
-            child: const Center(
-              child: Text('Progress'),
-            ),
-          ),
-          Offstage(
             offstage: _selectedIndex != 3,
             child: const Center(
-              child: Text("Store"),
+              child: Text("Community"),
             ),
           ),
           Offstage(
@@ -73,8 +79,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             label: 'Add Diary',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.store),
-            label: 'Store',
+            icon: FaIcon(FontAwesomeIcons.users),
+            label: 'Community',
           ),
           NavigationDestination(
             icon: FaIcon(FontAwesomeIcons.gear),
@@ -82,11 +88,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ],
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onDestinationSelected: _onDestinationSelected,
       ),
     );
   }
