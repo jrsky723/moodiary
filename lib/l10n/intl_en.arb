@@ -30,5 +30,30 @@
   "verySad": "Very Sad",
   "unknown": "Unknown",
   "montlyDateSelectTitle": "Select Month",
-  "yearlyDateSelectTitle": "Select Year"
+  "yearlyDateSelectTitle": "Select Year",
+
+  "howWasYourDay": "How was your day?",
+  "emotion": "Emotion",
+  "person": "Person",
+  "sleep": "Sleep",
+  "diary": "Diary",
+  "todaysPhoto": "Today's Photo",
+  "scrollToTop": "go to top",
+  "enterContentPrompt" : "Enter your content here",
+  "selectPhotoPrompt": "Select a photo",
+  "sleepDuration": "Sleep Duration : {hours} hours {minutes} minutes",
+  "@sleepDuration": {
+    "variables": {
+      "hours": {
+        "type": "number"
+      },
+      "minutes": {
+        "type": "number"
+      }
+    }
+  },
+  "bedtime": "bedtime",
+  "wakeUpTime": "wake up time",
+  "selectMonthDay": "Select Month & Day"
+
 }

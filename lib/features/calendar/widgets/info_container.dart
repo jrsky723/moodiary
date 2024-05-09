@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 
-class InfoTab extends StatefulWidget {
+class InfoContainer extends StatefulWidget {
   final ImageProvider image;
   final int date;
 
-  const InfoTab({
+  const InfoContainer({
     super.key,
     required this.image,
     required this.date,
   });
 
   @override
-  State<InfoTab> createState() => _InfoTapState();
+  State<InfoContainer> createState() => _InfoTapState();
 }
 
-class _InfoTapState extends State<InfoTab> {
+class _InfoTapState extends State<InfoContainer> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,9 +30,9 @@ class _InfoTapState extends State<InfoTab> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              pInfoButton(icon: FontAwesomeIcons.shareNodes),
-              pInfoButton(icon: FontAwesomeIcons.penToSquare),
-              pInfoButton(icon: FontAwesomeIcons.trashCan),
+              InfoButton(icon: FontAwesomeIcons.shareNodes),
+              InfoButton(icon: FontAwesomeIcons.penToSquare),
+              InfoButton(icon: FontAwesomeIcons.trashCan),
             ],
           ),
         ),
@@ -132,32 +133,3 @@ class _InfoTapState extends State<InfoTab> {
     );
   }
 }
-
-class pInfoButton extends StatelessWidget {
-  final IconData icon;
-  const pInfoButton({
-    super.key,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size10,
-      ),
-      child: GestureDetector(
-        onTap: () {},
-        child: FaIcon(
-          icon,
-          size: Sizes.size14,
-          color: Colors.grey.shade700,
-        ),
-      ),
-    );
-  }
-}
-
-// Vertical Divider 작동 안됨 있긴한데 안보임
-// gestureDetector 를 이용해서 클릭하면 reverse되어서 뒤에는 글이 앞에는 이모지 보이게 설정 
-//  + text overflow되면 아이콘 만들어서 펼치기 기능 가능하도록 설정(optional)
