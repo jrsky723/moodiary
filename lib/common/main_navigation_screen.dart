@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:moodiary/features/add_diary/add_diary_screen.dart';
 import 'package:moodiary/features/calendar/calendar_screen.dart';
 import 'package:moodiary/features/dashboard/dashboard_screen.dart';
 import 'package:moodiary/features/settings/settings_screen.dart';
@@ -51,6 +52,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(
             offstage: _selectedIndex != 1,
             child: const DashboardScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 2,
+            child: const AddDiaryScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
