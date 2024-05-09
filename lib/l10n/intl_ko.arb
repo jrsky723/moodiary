@@ -30,5 +30,29 @@
   "verySad": "매우 슬픔",
   "unknown": "알 수 없음",
   "montlyDateSelectTitle": "월 선택하기",
-  "yearlyDateSelectTitle": "연도 선택하기"
+  "yearlyDateSelectTitle": "연도 선택하기",
+
+  "howWasYourDay": "어떤 하루였나요?",
+  "emotion": "감정",
+  "person": "사람",
+  "sleep": "수면",
+  "diary": "일기",
+  "todaysPhoto": "오늘의 사진",
+  "scrollToTop": "맨위로",
+  "enterContentPrompt" : "내용을 입력해주세요",
+  "selectPhotoPrompt": "사진을 선택해주세요",
+  "sleepDuration": "수면시간 {hours}시간 {minutes}분",
+  "@sleepDuration": {
+    "variables": {
+      "hours": {
+        "type": "number"
+      },
+      "minutes": {
+        "type": "number"
+      }
+    }
+  },
+  "bedtime": "취침",
+  "wakeUpTime": "기상",
+  "selectMonthDay" : "월 및 일 선택"
 }
