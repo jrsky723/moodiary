@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moodiary/features/add_diary/add_diary_screen.dart';
 import 'package:moodiary/features/calendar/calendar_screen.dart';
+import 'package:moodiary/features/community/community_screen.dart';
 import 'package:moodiary/features/dashboard/dashboard_screen.dart';
 import 'package:moodiary/features/settings/settings_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
+  static const String routeName = 'mainNavigation';
+  static const String initialTab = 'calendar';
+
   final String tab;
 
   const MainNavigationScreen({
@@ -21,12 +26,25 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<String> _tabs = [
     'calendar',
     'dashboard',
-    'xxx',
-    'store',
+    'xxxx',
+    'community',
     'settings',
   ];
 
   late int _selectedIndex = _tabs.indexOf(widget.tab);
+
+  final int _addDiaryIndex = 2;
+
+  void _onDestinationSelected(int index) {
+    if (index == _addDiaryIndex) {
+      context.pushNamed(AddDiaryScreen.routeName);
+    } else {
+      context.go('/${_tabs[index]}');
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +60,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             child: const DashboardScreen(),
           ),
           Offstage(
-            offstage: _selectedIndex != 2,
-            child: const AddDiaryScreen(),
-          ),
-          Offstage(
             offstage: _selectedIndex != 3,
-            child: const Center(
-              child: Text("Store"),
-            ),
+            child: const CommunityScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
@@ -72,8 +84,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             label: 'Add Diary',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.store),
-            label: 'Store',
+            icon: FaIcon(FontAwesomeIcons.users),
+            label: 'Community',
           ),
           NavigationDestination(
             icon: FaIcon(FontAwesomeIcons.gear),
@@ -81,11 +93,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ],
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onDestinationSelected: _onDestinationSelected,
       ),
     );
   }
