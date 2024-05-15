@@ -14,6 +14,9 @@ import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
 class AddDiaryScreen extends StatefulWidget {
+  static const String routeName = 'addDiary';
+  static const String routeUrl = '/add-diary';
+
   const AddDiaryScreen({super.key});
 
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moodiary/common/main_navigation_screen.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/settings/repos/settings_repos.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
+import 'package:moodiary/router.dart';
 import 'package:moodiary/theme/navigation_theme.dart';
 import 'package:moodiary/theme/switch_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +33,8 @@ class Moodiary extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: ref.read(routerProvider),
       title: 'Moodiary',
       themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       localizationsDelegates: const [
@@ -107,7 +108,6 @@ class Moodiary extends ConsumerWidget {
           child: child ?? const SizedBox(),
         );
       },
-      home: const MainNavigationScreen(tab: 'calendar'),
     );
   }
 }
