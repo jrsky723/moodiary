@@ -10,7 +10,7 @@ final routerProvider = Provider<GoRouter>(
       debugLogDiagnostics: true,
       routes: [
         GoRoute(
-          path: "/:tab(calendar|dashboard|community|settings)",
+          path: "/:tab(calendar|dashboard|community|user)",
           name: MainNavigationScreen.routeName,
           builder: (context, state) {
             final String tab = state.pathParameters['tab']!;

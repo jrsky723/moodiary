@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),
+        "communityTitle": MessageLookupByLibrary.simpleMessage("이야기"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("확인"),
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("다크 모드"),

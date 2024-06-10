@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
 class CommunityPost {
@@ -102,8 +103,8 @@ class _CommunityScreenState extends State<CommunityScreen>
         controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            const SliverAppBar(
-              title: Text('Community'),
+            SliverAppBar(
+              title: Text(S.of(context).communityTitle),
               pinned: true,
               floating: true,
               surfaceTintColor: Colors.transparent,
