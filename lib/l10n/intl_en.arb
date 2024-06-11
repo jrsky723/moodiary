@@ -31,7 +31,6 @@
   "unknown": "Unknown",
   "montlyDateSelectTitle": "Select Month",
   "yearlyDateSelectTitle": "Select Year",
-
   "howWasYourDay": "How was your day?",
   "emotion": "Emotion",
   "person": "Person",
@@ -39,7 +38,7 @@
   "diary": "Diary",
   "todaysPhoto": "Today's Photo",
   "scrollToTop": "go to top",
-  "enterContentPrompt" : "Enter your content here",
+  "enterContentPrompt": "Enter your content here",
   "selectPhotoPrompt": "Select a photo",
   "sleepDuration": "Sleep Duration : {hours} hours {minutes} minutes",
   "@sleepDuration": {
@@ -54,6 +53,6 @@
   },
   "bedtime": "bedtime",
   "wakeUpTime": "wake up time",
-  "selectMonthDay": "Select Month & Day"
-
+  "selectMonthDay": "Select Month & Day",
+  "communityTitle": "Community"
 }

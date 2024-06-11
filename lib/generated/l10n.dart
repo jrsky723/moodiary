@@ -429,6 +429,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Community`
+  String get communityTitle {
+    return Intl.message(
+      'Community',
+      name: 'communityTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

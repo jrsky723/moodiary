@@ -5,7 +5,7 @@ import 'package:moodiary/features/add_diary/add_diary_screen.dart';
 import 'package:moodiary/features/calendar/calendar_screen.dart';
 import 'package:moodiary/features/community/community_screen.dart';
 import 'package:moodiary/features/dashboard/dashboard_screen.dart';
-import 'package:moodiary/features/settings/settings_screen.dart';
+import 'package:moodiary/features/users/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const String routeName = 'mainNavigation';
@@ -28,7 +28,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     'dashboard',
     'xxxx',
     'community',
-    'settings',
+    'user',
   ];
 
   late int _selectedIndex = _tabs.indexOf(widget.tab);
@@ -65,7 +65,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const SettingsScreen(),
+            child: const UserProfileScreen(),
           ),
         ],
       ),
@@ -88,8 +88,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             label: 'Community',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.gear),
-            label: 'Settings',
+            icon: FaIcon(FontAwesomeIcons.user),
+            label: 'Profile',
+            selectedIcon: FaIcon(FontAwesomeIcons.solidUser),
           ),
         ],
         selectedIndex: _selectedIndex,
