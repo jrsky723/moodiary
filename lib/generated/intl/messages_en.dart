@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "communityTitle": MessageLookupByLibrary.simpleMessage("Community"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "darkModeSubtitle":
             MessageLookupByLibrary.simpleMessage("Change to dark mode"),

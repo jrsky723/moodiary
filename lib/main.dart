@@ -17,14 +17,16 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepos(preferences);
 
-  runApp(ProviderScope(
-    overrides: [
-      settingsProvider.overrideWith(
-        () => SettingsViewModel(repository),
-      ),
-    ],
-    child: const Moodiary(),
-  ));
+  runApp(
+    ProviderScope(
+      overrides: [
+        settingsProvider.overrideWith(
+          () => SettingsViewModel(repository),
+        ),
+      ],
+      child: const Moodiary(),
+    ),
+  );
 }
 
 class Moodiary extends ConsumerWidget {
