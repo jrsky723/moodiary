@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/settings_screen.dart';
-import 'package:moodiary/features/add_diary/widgets/custom_calendar.dart';
+import 'package:moodiary/features/add_diary/widgets/calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/daily_list.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
 import 'package:moodiary/features/add_diary/widgets/multi_select_list.dart';
@@ -26,55 +26,42 @@ class AddDiaryScreen extends StatefulWidget {
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
   late final ScrollController _scrollController;
   DateTime _selectedDate = DateTime.now();
+  int duration = 300;
 
   void _scrollToTop() {
     _scrollController.animateTo(
       0,
-      duration: const Duration(milliseconds: 300),
+      duration: Duration(milliseconds: duration),
       curve: Curves.easeInOut,
     );
   }
 
   void _showDatePickerDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          S.of(context).selectMonthDay,
-          style: TextStyle(
-            color: isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
-          ),
-        ),
-        content: SizedBox(
-          height: 200,
-          width: double.maxFinite,
-          child: cCalendarDatePicker(
-            initialDate: _selectedDate,
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2030),
-            onDateChanged: (newDate) {
-              _selectedDate = newDate;
-            },
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(S.of(context).cancelBtn),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() {});
+    late String formattedDate;
 
-              Navigator.of(context).pop();
-            },
-            child: Text(S.of(context).confirmBtn),
-          ),
-        ],
-      ),
-    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              title: const Text('Select a date'),
+              content: CalendarWidget(
+                initialDate: _selectedDate,
+                onDateSelected: (selectedDate) {
+                  setState(() {
+                    _selectedDate = selectedDate;
+                    formattedDate =
+                        DateFormat('yyyy-MM-dd').format(_selectedDate);
+                  });
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Selected date: $formattedDate'),
+                      backgroundColor: Colors.grey.shade700,
+                    ),
+                  );
+                },
+              ));
+        });
   }
 
   @override
@@ -189,7 +176,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
                   child: TextField(
                     maxLines: 1,
                     decoration: InputDecoration(

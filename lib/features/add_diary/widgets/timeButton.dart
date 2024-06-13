@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodiary/constants/sizes.dart';
 
 class timeButton extends StatelessWidget {
   final String title;
@@ -26,7 +27,7 @@ class timeButton extends StatelessWidget {
                 isDarkMode ? Colors.grey.shade500 : Colors.grey.shade300,
             surfaceTintColor: Colors.black,
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: BorderRadius.all(Radius.circular(Sizes.size8)),
             ),
           ),
           child: Text(
@@ -37,7 +38,7 @@ class timeButton extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: Sizes.size12,
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w800,
           ),

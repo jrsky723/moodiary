@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/utils.dart';
 
 class DiaryContainer extends StatefulWidget {
@@ -30,13 +31,13 @@ class _DiaryContainerState extends State<DiaryContainer> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15,
+        vertical: Sizes.size10,
+        horizontal: Sizes.size14 + Sizes.size1,
       ),
       decoration: BoxDecoration(
         // Add this
         color: isDarkMode(context) ? Colors.black : Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Sizes.size10),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -47,15 +48,15 @@ class _DiaryContainerState extends State<DiaryContainer> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(
-          left: 8,
-          right: 8,
-          bottom: 8,
+          left: Sizes.size8,
+          right: Sizes.size8,
+          bottom: Sizes.size8,
         ),
         child: Column(
           crossAxisAlignment: widget.crossAxisAlignment,
           children: [
             Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(Sizes.size5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -66,7 +67,7 @@ class _DiaryContainerState extends State<DiaryContainer> {
                     onPressed: onBlankButton,
                     icon: FaIcon(
                       FontAwesomeIcons.chevronDown,
-                      size: 12,
+                      size: Sizes.size12,
                       color: isDarkMode(context)
                           ? Colors.grey.shade500
                           : Colors.black,

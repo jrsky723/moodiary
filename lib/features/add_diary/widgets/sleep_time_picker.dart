@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/add_diary/model/sleep_time.dart';
+import 'package:moodiary/features/add_diary/widgets/timeButton.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
@@ -152,82 +153,34 @@ class _SleepDialogState extends State<SleepDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => _showTimePickerDialog(
-                      true,
-                      S.of(context).bedtime,
-                      bedTime.period,
-                      bedTime.hour,
-                      bedTime.minute),
-                  style: ElevatedButton.styleFrom(
-                    shadowColor: Colors.transparent,
-                    backgroundColor: isDarkMode(context)
-                        ? Colors.grey.shade500
-                        : Colors.grey.shade300,
-                    surfaceTintColor: Colors.black,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                  ),
-                  child: Text(
-                    formattedTime(
-                      bedTime.period,
-                      bedTime.hour,
-                      bedTime.minute,
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                  ),
-                ),
-                Text(
-                  S.of(context).bedtime,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
+            timeButton(
+              title: S.of(context).bedtime,
+              formattedTime:
+                  formattedTime(bedTime.period, bedTime.hour, bedTime.minute),
+              onPressed: () => _showTimePickerDialog(
+                true,
+                S.of(context).bedtime,
+                bedTime.period,
+                bedTime.hour,
+                bedTime.minute,
+              ),
+              isDarkMode: isDarkMode(context),
             ),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => _showTimePickerDialog(
-                      false,
-                      S.of(context).wakeUpTime,
-                      wakeTime.period,
-                      wakeTime.hour,
-                      wakeTime.minute),
-                  style: ElevatedButton.styleFrom(
-                    shadowColor: Colors.transparent,
-                    backgroundColor: isDarkMode(context)
-                        ? Colors.grey.shade500
-                        : Colors.grey.shade300,
-                    surfaceTintColor: Colors.black,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                  ),
-                  child: Text(
-                    formattedTime(
-                      wakeTime.period,
-                      wakeTime.hour,
-                      wakeTime.minute,
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                  ),
-                ),
-                Text(
-                  S.of(context).wakeUpTime,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
+            timeButton(
+              title: S.of(context).wakeUpTime,
+              formattedTime: formattedTime(
+                  wakeTime.period, wakeTime.hour, wakeTime.minute),
+              onPressed: () => _showTimePickerDialog(
+                false,
+                S.of(context).wakeUpTime,
+                wakeTime.period,
+                wakeTime.hour,
+                wakeTime.minute,
+              ),
+              isDarkMode: isDarkMode(context),
             ),
           ],
-        ),
+        )
       ],
     );
   }

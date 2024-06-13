@@ -46,7 +46,8 @@ class MultiSelectListState extends State<MultiSelectList> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(2), // Space for the border
+                padding:
+                    const EdgeInsets.all(Sizes.size2), // Space for the border
 
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -54,7 +55,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                     color: selectedIndexes.contains(index)
                         ? Theme.of(context).primaryColor
                         : Colors.transparent,
-                    width: 3,
+                    width: Sizes.size3,
                   ),
                 ),
                 child: const SCircleAvatar(),

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
@@ -42,7 +43,8 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
         foregroundColor: Colors.grey.shade500,
         surfaceTintColor: Colors.grey.shade100,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5), // Sizes.size5 대신에 리터럴 값 사용
+          borderRadius:
+              BorderRadius.circular(Sizes.size5), // Sizes.size5 대신에 리터럴 값 사용
         ),
       ),
       onPressed: _pickImage,
@@ -53,13 +55,13 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 52), // Sizes.size52 대신에 리터럴 값 사용
+                      vertical: Sizes.size52), // Sizes.size52 대신에 리터럴 값 사용
                   child: Column(
                     children: [
                       FaIcon(
                         FontAwesomeIcons.camera,
                         color: Colors.grey.shade700,
-                        size: 52, // Sizes.size52 대신에 리터럴 값 사용
+                        size: Sizes.size52, // Sizes.size52 대신에 리터럴 값 사용
                       ),
                       Text(
                         S.of(context).selectPhotoPrompt,
@@ -77,7 +79,7 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(
-                      5), // Match the button's borderRadius
+                      Sizes.size5), // Match the button's borderRadius
                   child: Image.file(
                     _image!,
                     fit: BoxFit
