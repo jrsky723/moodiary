@@ -58,7 +58,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                     width: Sizes.size3,
                   ),
                 ),
-                child: const SCircleAvatar(),
+                child: const AddDiaryAvatar(),
               ),
               Gaps.v2,
               Text(

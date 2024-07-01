@@ -22,7 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(label) => "Most frequently recorded emotion: ${label}";
 
-  static String m1(hours, minutes) =>
+  static String m1(date) => "Selected Date: ${date}";
+
+  static String m2(hours, minutes) =>
       "Sleep Duration : ${hours} hours ${minutes} minutes";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -59,15 +61,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "sad": MessageLookupByLibrary.simpleMessage("Sad"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
+        "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
         "selectMonthDay":
             MessageLookupByLibrary.simpleMessage("Select Month & Day"),
         "selectMonthYear":
             MessageLookupByLibrary.simpleMessage("Select Month & Year"),
         "selectPhotoPrompt":
             MessageLookupByLibrary.simpleMessage("Select a photo"),
+        "selectedDate": m1,
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sleep": MessageLookupByLibrary.simpleMessage("Sleep"),
-        "sleepDuration": m1,
+        "sleepDuration": m2,
         "todaysPhoto": MessageLookupByLibrary.simpleMessage("Today\'s Photo"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "veryHappy": MessageLookupByLibrary.simpleMessage("Very Happy"),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SCircleAvatar extends StatelessWidget {
-  const SCircleAvatar({super.key});
+class AddDiaryAvatar extends StatelessWidget {
+  const AddDiaryAvatar({super.key});
 
   @override
   Widget build(BuildContext context) {

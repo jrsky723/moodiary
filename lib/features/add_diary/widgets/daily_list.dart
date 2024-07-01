@@ -34,7 +34,7 @@ class _DailyListState extends State<DailyList> {
                 width: Sizes.size3,
               ),
             ),
-            child: const SCircleAvatar(),
+            child: const AddDiaryAvatar(),
           ),
         );
       }),

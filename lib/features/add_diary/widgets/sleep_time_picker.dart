@@ -75,6 +75,7 @@ class _SleepDialogState extends State<SleepDialog> {
                     },
                   ),
                   DropdownButton<int>(
+                    menuMaxHeight: 500,
                     value: hour! > 12 ? hour! - 12 : hour,
                     items: List<int>.generate(12, (index) => index + 1)
                         .map((int value) {

@@ -439,6 +439,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Select a Date`
+  String get selectDate {
+    return Intl.message(
+      'Select a Date',
+      name: 'selectDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected Date: {date}`
+  String selectedDate(Object date) {
+    return Intl.message(
+      'Selected Date: $date',
+      name: 'selectedDate',
+      desc: '',
+      args: [date],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

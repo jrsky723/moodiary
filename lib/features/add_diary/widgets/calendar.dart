@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:moodiary/common/widgets/date_selector_tab.dart';
+import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/dashboard/widgets/show_date_selection_sheet.dart';
 
 class CalendarWidget extends StatefulWidget {
   final DateTime initialDate;
@@ -15,7 +19,9 @@ class CalendarWidget extends StatefulWidget {
 class _CalendarWidgetState extends State<CalendarWidget> {
   late DateTime _focusedDate;
   late DateTime _selectedDate;
-  late int _selectedYear;
+  int _selectedMonth = DateTime.now().month;
+  int _selectedYear = DateTime.now().year;
+  final DateTime _now = DateTime.now();
 
   @override
   void initState() {
@@ -31,13 +37,48 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildHeader(),
-        _buildDaysOfWeek(),
+        _buildWeekdays(),
         _buildDates(),
       ],
     );
   }
 
-  Widget _buildHeader() {
+  Future<void> _onDateSelectorTap() async {
+    final ScrollController scrollController = ScrollController();
+    final int selectedIndex =
+        (_now.year - _selectedYear) * 12 + _now.month - _selectedMonth;
+    final int itemCount = _now.month + (_now.year - Date.minYear) * 12;
+    const double itemExtent = 50;
+    final double initialScrollOffset = selectedIndex * itemExtent;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(initialScrollOffset);
+      }
+    });
+
+    DateTime? picked = await showDateSelectionSheet(
+      context: context,
+      scrollController: scrollController,
+      isMonthly: true,
+      itemExtent: itemExtent,
+      selectedIndex: selectedIndex,
+      itemCount: itemCount,
+      now: _now,
+    );
+
+    if (picked != null) {
+      setState(
+        () {
+          _selectedYear = picked.year;
+          _selectedMonth = picked.month;
+          _focusedDate = DateTime(_selectedYear, _selectedMonth);
+        },
+      );
+    }
+  }
+
+  Row _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -52,26 +93,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         ),
         Row(
           children: [
-            DropdownButton<int>(
-              value: _selectedYear,
-              items: List.generate(
-                100,
-                (index) => DropdownMenuItem(
-                  value: 2000 + index,
-                  child: Text('${2000 + index}년'),
-                ),
-              ),
-              onChanged: (year) {
-                setState(() {
-                  _selectedYear = year!;
-                  _focusedDate = DateTime(_selectedYear, _focusedDate.month);
-                });
-              },
-            ),
-            Text(
-              "${_focusedDate.month}월",
-              style: const TextStyle(
-                  fontSize: Sizes.size16, fontWeight: FontWeight.bold),
+            DateSelectorTab(
+              text: DateFormat.yMMMM()
+                  .format(DateTime(_selectedYear, _selectedMonth)),
+              onTap: _onDateSelectorTap,
             ),
           ],
         ),
@@ -88,20 +113,36 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     );
   }
 
-  Widget _buildDaysOfWeek() {
-    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+  Row _buildWeekdays() {
+    final DateTime now = DateTime.now();
+    final DateTime sunday =
+        DateTime.now().subtract(Duration(days: now.weekday));
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: daysOfWeek
-          .map((day) => Text(
-                day,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ))
-          .toList(),
+      children: List.generate(
+        DateTime.daysPerWeek,
+        (index) {
+          return Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(Sizes.size8),
+              child: Opacity(
+                opacity: 0.8,
+                child: Text(
+                  DateFormat.E().format(sunday.add(Duration(days: index))),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildDates() {
+  Column _buildDates() {
     final daysInMonth =
         DateTime(_focusedDate.year, _focusedDate.month + 1, 0).day;
     final firstDayOfWeek =
@@ -130,7 +171,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     );
   }
 
-  Widget _buildDateTile(int day) {
+  Expanded _buildDateTile(int day) {
     final date = DateTime(_focusedDate.year, _focusedDate.month, day);
     final isSelected = _selectedDate.year == date.year &&
         _selectedDate.month == date.month &&

@@ -54,5 +54,14 @@
   "bedtime": "취침",
   "wakeUpTime": "기상",
   "selectMonthDay": "월 및 일 선택",
-  "communityTitle": "이야기"
+  "communityTitle": "이야기",
+  "selectDate": "날짜 선택",
+  "selectedDate": "선택한 날짜: {date}",
+  "@selectedDate": {
+    "variables": {
+      "date": {
+        "type": "string"
+      }
+    }
+  }
 }

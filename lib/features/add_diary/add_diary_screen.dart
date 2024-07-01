@@ -43,7 +43,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              title: const Text('Select a date'),
+              title: Text(S.of(context).selectDate),
               content: CalendarWidget(
                 initialDate: _selectedDate,
                 onDateSelected: (selectedDate) {
@@ -55,7 +55,9 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Selected date: $formattedDate'),
+                      content: Text(
+                        S.of(context).selectedDate(formattedDate),
+                      ),
                       backgroundColor: Colors.grey.shade700,
                     ),
                   );

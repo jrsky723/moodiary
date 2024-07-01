@@ -22,7 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(label) => "가장 많이 기록한 감정: ${label}";
 
-  static String m1(hours, minutes) => "수면시간 ${hours}시간 ${minutes}분";
+  static String m1(date) => "선택한 날짜: ${date}";
+
+  static String m2(hours, minutes) => "수면시간 ${hours}시간 ${minutes}분";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -54,12 +56,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "person": MessageLookupByLibrary.simpleMessage("사람"),
         "sad": MessageLookupByLibrary.simpleMessage("슬픔"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),
+        "selectDate": MessageLookupByLibrary.simpleMessage("날짜 선택"),
         "selectMonthDay": MessageLookupByLibrary.simpleMessage("월 및 일 선택"),
         "selectMonthYear": MessageLookupByLibrary.simpleMessage("연도 및 월 선택"),
         "selectPhotoPrompt": MessageLookupByLibrary.simpleMessage("사진을 선택해주세요"),
+        "selectedDate": m1,
         "settings": MessageLookupByLibrary.simpleMessage("설정"),
         "sleep": MessageLookupByLibrary.simpleMessage("수면"),
-        "sleepDuration": m1,
+        "sleepDuration": m2,
         "todaysPhoto": MessageLookupByLibrary.simpleMessage("오늘의 사진"),
         "unknown": MessageLookupByLibrary.simpleMessage("알 수 없음"),
         "veryHappy": MessageLookupByLibrary.simpleMessage("매우 행복함"),

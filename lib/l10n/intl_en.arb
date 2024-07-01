@@ -54,5 +54,14 @@
   "bedtime": "bedtime",
   "wakeUpTime": "wake up time",
   "selectMonthDay": "Select Month & Day",
-  "communityTitle": "Community"
+  "communityTitle": "Community",
+  "selectDate": "Select a Date",
+  "selectedDate": "Selected Date: {date}",
+  "@selectedDate": {
+    "variables": {
+      "date": {
+        "type": "string"
+      }
+    }
+  }
 }
