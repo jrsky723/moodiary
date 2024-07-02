@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/add_diary/model/sleep_time.dart';
+import 'package:moodiary/features/add_diary/widgets/customDropdown.dart';
 import 'package:moodiary/features/add_diary/widgets/timeButton.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
@@ -74,36 +75,21 @@ class _SleepDialogState extends State<SleepDialog> {
                       });
                     },
                   ),
-                  DropdownButton<int>(
-                    menuMaxHeight: 500,
-                    value: hour! > 12 ? hour! - 12 : hour,
-                    items: List<int>.generate(12, (index) => index + 1)
-                        .map((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text(value.toString()),
-                      );
-                    }).toList(),
-                    onChanged: (int? newValue) {
-                      setState(() {
-                        hour = newValue!;
-                      });
-                    },
+                  CustomDropdown(
+                    title: "시",
+                    selectedNum: hour! > 12 ? hour! - 12 : hour!,
+                    itemsCount: 12,
+                    onChanged: (value) => setState(() {
+                      hour = value;
+                    }),
                   ),
-                  DropdownButton<int>(
-                    value: minute,
-                    items: List<int>.generate(60, (index) => index)
-                        .map((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text(value.toString().padLeft(2, '0')),
-                      );
-                    }).toList(),
-                    onChanged: (int? newValue) {
-                      setState(() {
-                        minute = newValue!;
-                      });
-                    },
+                  CustomDropdown(
+                    title: "분",
+                    selectedNum: minute!,
+                    itemsCount: 60,
+                    onChanged: (value) => setState(() {
+                      minute = value;
+                    }),
                   ),
                 ],
               );
