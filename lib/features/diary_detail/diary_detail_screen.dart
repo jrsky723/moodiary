@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
 import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
 
 // 전역 변수로 예시 데이터 제공
@@ -51,6 +52,16 @@ const String DiarySampleText = """
 지금은 나 자신을 더 발전시키는 것이 중요하다고 생각한다.
 슬픔도 나의 일부분이기에 잘 받아들이고 극복해 나가야겠다.
    """;
+
+const List<String> imageUrls = [
+  'https://picsum.photos/300/200',
+  'https://picsum.photos/1980/1980',
+  'https://picsum.photos/1920/1080',
+  'https://picsum.photos/400/200',
+  'https://picsum.photos/300/400',
+  'https://picsum.photos/200/300',
+];
+
 const Offset emotionPosition = Offset(-0.2, 0.2);
 
 class DiaryDetailScreen extends StatelessWidget {
@@ -81,7 +92,8 @@ class DiaryDetailScreen extends StatelessWidget {
         child: ListView(
           children: [
             Gaps.v16,
-            _buildDiarySection(context),
+            _buildDiarySection(context, height: 300.0),
+            _buildImageSection(height: 100.0, imageUrls: imageUrls),
             Gaps.v16,
             // _buildEmotionSection(),
             // Gaps.v16,
@@ -96,9 +108,9 @@ class DiaryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDiarySection(BuildContext context) {
+  Widget _buildDiarySection(BuildContext context, {required double height}) {
     return Container(
-      height: 300.0,
+      height: height,
       padding: const EdgeInsets.only(
         left: Sizes.size16,
         right: Sizes.size16,
@@ -124,6 +136,18 @@ class DiaryDetailScreen extends StatelessWidget {
             constraints: constraints,
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildImageSection({
+    required double height,
+    required List<String> imageUrls,
+  }) {
+    return SizedBox(
+      height: height,
+      child: ImageSlider(
+        imageUrls: imageUrls,
       ),
     );
   }
