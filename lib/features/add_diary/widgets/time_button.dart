@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
 
-class timeButton extends StatelessWidget {
+class TimeButton extends StatelessWidget {
   final String title;
   final String formattedTime;
   final VoidCallback onPressed;
   final bool isDarkMode;
 
-  const timeButton({
+  const TimeButton({
     super.key,
     required this.title,
     required this.formattedTime,

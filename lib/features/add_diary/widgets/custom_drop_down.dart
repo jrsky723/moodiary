@@ -14,17 +14,16 @@ class CustomDropdown extends StatefulWidget {
     required this.title,
   });
   @override
-  _CustomDropdownState createState() => _CustomDropdownState();
+  State<CustomDropdown> createState() => _CustomDropdownState();
 }
 
 class _CustomDropdownState extends State<CustomDropdown> {
   String? selectedValue;
   late final List<String> dropdownItems;
 
-  double popUpSize = Sizes.size80 + Sizes.size80 + Sizes.size40;
+  double popUpSize = 200;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedValue = widget.selectedNum.toString();
     dropdownItems =

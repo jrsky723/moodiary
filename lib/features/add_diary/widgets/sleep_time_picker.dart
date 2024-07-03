@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/add_diary/model/sleep_time.dart';
-import 'package:moodiary/features/add_diary/widgets/customDropdown.dart';
-import 'package:moodiary/features/add_diary/widgets/timeButton.dart';
+import 'package:moodiary/features/add_diary/widgets/custom_drop_down.dart';
+import 'package:moodiary/features/add_diary/widgets/time_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
@@ -140,7 +140,7 @@ class _SleepDialogState extends State<SleepDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            timeButton(
+            TimeButton(
               title: S.of(context).bedtime,
               formattedTime:
                   formattedTime(bedTime.period, bedTime.hour, bedTime.minute),
@@ -153,7 +153,7 @@ class _SleepDialogState extends State<SleepDialog> {
               ),
               isDarkMode: isDarkMode(context),
             ),
-            timeButton(
+            TimeButton(
               title: S.of(context).wakeUpTime,
               formattedTime: formattedTime(
                   wakeTime.period, wakeTime.hour, wakeTime.minute),

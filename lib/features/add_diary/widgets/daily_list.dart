@@ -6,7 +6,7 @@ class DailyList extends StatefulWidget {
   const DailyList({super.key});
 
   @override
-  _DailyListState createState() => _DailyListState();
+  State<DailyList> createState() => _DailyListState();
 }
 
 class _DailyListState extends State<DailyList> {

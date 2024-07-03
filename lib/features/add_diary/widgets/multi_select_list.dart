@@ -13,7 +13,7 @@ class MultiSelectList extends StatefulWidget {
   });
 
   @override
-  MultiSelectListState createState() => MultiSelectListState();
+  State<MultiSelectList> createState() => MultiSelectListState();
 }
 
 class MultiSelectListState extends State<MultiSelectList> {

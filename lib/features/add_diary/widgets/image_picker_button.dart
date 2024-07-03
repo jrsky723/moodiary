@@ -11,7 +11,7 @@ class ImagePickerButton extends StatefulWidget {
   const ImagePickerButton({super.key});
 
   @override
-  _ImagePickerButtonState createState() => _ImagePickerButtonState();
+  State<ImagePickerButton> createState() => _ImagePickerButtonState();
 }
 
 class _ImagePickerButtonState extends State<ImagePickerButton> {

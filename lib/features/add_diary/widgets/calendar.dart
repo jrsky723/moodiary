@@ -13,7 +13,7 @@ class CalendarWidget extends StatefulWidget {
       {super.key, required this.initialDate, required this.onDateSelected});
 
   @override
-  _CalendarWidgetState createState() => _CalendarWidgetState();
+  State<CalendarWidget> createState() => _CalendarWidgetState();
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
@@ -124,7 +124,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           return Expanded(
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.all(Sizes.size8),
+              padding: const EdgeInsets.all(Sizes.size4),
               child: Opacity(
                 opacity: 0.8,
                 child: Text(
