@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TextPageView extends StatefulWidget {
   final String text;
@@ -81,32 +82,55 @@ class _TextPageViewState extends State<TextPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: pageController,
-      itemCount: _pages.length,
-      itemBuilder: (context, index) {
-        return FractionallySizedBox(
-          widthFactor: 1 / pageController.viewportFraction,
-          child: Stack(
-            children: [
-              Text(
-                _pages[index],
-                style: widget.textStyle,
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
+    return Column(
+      children: [
+        SizedBox(
+          height: widget.constraints.maxHeight * 0.9,
+          child: PageView.builder(
+            controller: pageController,
+            itemCount: _pages.length,
+            itemBuilder: (context, index) {
+              return FractionallySizedBox(
+                widthFactor: 1 / pageController.viewportFraction,
                 child: Text(
-                  '${index + 1}/${_pages.length}',
-                  style: TextStyle(
-                    fontSize: Sizes.size12,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  _pages[index],
+                  style: widget.textStyle,
+                ),
+              );
+            },
+          ),
+        ),
+        SizedBox(
+          height: widget.constraints.maxHeight * 0.1,
+          // child: Align(
+          //   alignment: Alignment.bottomCenter,
+          //   // child: Text(
+          //   //   '${index + 1}/${_pages.length}',
+          //   //   style: TextStyle(
+          //   //     fontSize: Sizes.size12,
+          //   //     color: Theme.of(context).primaryColor,
+          //   //   ),
+          //   // ),
+          // ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Opacity(
+              opacity: 0.5,
+              child: SmoothPageIndicator(
+                controller: pageController,
+                count: _pages.length,
+                effect: ScrollingDotsEffect(
+                  activeDotColor: Theme.of(context).primaryColor,
+                  dotColor: Colors.grey,
+                  dotHeight: Sizes.size8,
+                  dotWidth: Sizes.size8,
+                  spacing: Sizes.size8,
                 ),
               ),
-            ],
+            ),
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }
