@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
 import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
 
@@ -94,12 +95,11 @@ class DiaryDetailScreen extends StatelessWidget {
             Gaps.v16,
             _buildDiarySection(context, height: 300.0),
             _buildImageSection(height: 100.0, imageUrls: imageUrls),
-            Gaps.v16,
+            Gaps.v4,
+            _buildAnalysisSection(context, height: 180.0),
             // _buildEmotionSection(),
             // Gaps.v16,
             // _buildWordCloudSection(),
-            // Gaps.v16,
-            // _buildImageSection(),
             // Gaps.v16,
             // _buildShareSection(context),
           ],
@@ -108,7 +108,10 @@ class DiaryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDiarySection(BuildContext context, {required double height}) {
+  Widget _buildDiarySection(
+    BuildContext context, {
+    required double height,
+  }) {
     return Container(
       height: height,
       padding: const EdgeInsets.only(
@@ -149,6 +152,28 @@ class DiaryDetailScreen extends StatelessWidget {
       child: ImageSlider(
         imageUrls: imageUrls,
       ),
+    );
+  }
+
+  Widget _buildAnalysisSection(
+    BuildContext context, {
+    required double height,
+  }) {
+    return Container(
+      height: height,
+      padding: const EdgeInsets.symmetric(
+        horizontal: Sizes.size16,
+        vertical: Sizes.size12,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 2.0,
+        ),
+      ),
+      child: const InsightPages(),
     );
   }
 }
