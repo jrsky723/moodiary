@@ -63,5 +63,9 @@
         "type": "string"
       }
     }
-  }
+  },
+  "hour": "h",
+  "minute": "m",
+  "AM": "AM",
+  "PM": "PM"
 }

@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AM": MessageLookupByLibrary.simpleMessage("AM"),
+        "PM": MessageLookupByLibrary.simpleMessage("PM"),
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -47,8 +49,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterContentPrompt":
             MessageLookupByLibrary.simpleMessage("Enter your content here"),
         "happy": MessageLookupByLibrary.simpleMessage("Happy"),
+        "hour": MessageLookupByLibrary.simpleMessage("h"),
         "howWasYourDay":
             MessageLookupByLibrary.simpleMessage("How was your day?"),
+        "minute": MessageLookupByLibrary.simpleMessage("m"),
         "monthlyMoodDistTitle":
             MessageLookupByLibrary.simpleMessage("Monthly Mood Distribution"),
         "monthlyMoodFlowTitle":

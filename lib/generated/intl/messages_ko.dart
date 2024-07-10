@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AM": MessageLookupByLibrary.simpleMessage("오전"),
+        "PM": MessageLookupByLibrary.simpleMessage("오후"),
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),
@@ -44,7 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterContentPrompt":
             MessageLookupByLibrary.simpleMessage("내용을 입력해주세요"),
         "happy": MessageLookupByLibrary.simpleMessage("행복함"),
+        "hour": MessageLookupByLibrary.simpleMessage("시"),
         "howWasYourDay": MessageLookupByLibrary.simpleMessage("어떤 하루였나요?"),
+        "minute": MessageLookupByLibrary.simpleMessage("분"),
         "monthlyMoodDistTitle":
             MessageLookupByLibrary.simpleMessage("월간 기분 분포"),
         "monthlyMoodFlowTitle":

@@ -20,9 +20,10 @@ class _SleepDialogState extends State<SleepDialog> {
   SleepTime bedTime = SleepTime();
   SleepTime wakeTime = SleepTime();
 
+  final List<String> periods = ['AM', 'PM'];
+
   int totalHour = 0;
   int totalMinute = 0;
-
   void _getTotaltime() {
     int? bH = bedTime.hour, wH = wakeTime.hour;
     setState(() {
@@ -63,10 +64,12 @@ class _SleepDialogState extends State<SleepDialog> {
                 children: [
                   DropdownButton<String>(
                     value: period,
-                    items: ['AM', 'PM'].map((String value) {
+                    items: periods.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value == 'AM' ? S.of(context).AM : S.of(context).PM,
+                        ),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -75,22 +78,23 @@ class _SleepDialogState extends State<SleepDialog> {
                       });
                     },
                   ),
-                  CustomDropdown(
-                    title: "시",
-                    selectedNum: hour! > 12 ? hour! - 12 : hour!,
-                    itemsCount: 12,
-                    onChanged: (value) => setState(() {
-                      hour = value;
-                    }),
-                  ),
-                  CustomDropdown(
-                    title: "분",
-                    selectedNum: minute!,
-                    itemsCount: 60,
-                    onChanged: (value) => setState(() {
-                      minute = value;
-                    }),
-                  ),
+                  ResizableDropdownButton(),
+                  // CustomDropdown(
+                  //   title: S.of(context).hour,
+                  //   selectedNum: hour! > 12 ? hour! - 12 : hour!,
+                  //   itemsCount: 12,
+                  //   onChanged: (value) => setState(() {
+                  //     hour = value;
+                  //   }),
+                  // ),
+                  // CustomDropdown(
+                  //   title: S.of(context).minute,
+                  //   selectedNum: minute!,
+                  //   itemsCount: 60,
+                  //   onChanged: (value) => setState(() {
+                  //     minute = value;
+                  //   }),
+                  // ),
                 ],
               );
             },
