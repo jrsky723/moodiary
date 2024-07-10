@@ -76,7 +76,6 @@ class _CommunityScreenState extends State<CommunityScreen>
     setState(() {
       _itemCount += 5;
       posts = generatePosts();
-      print('posts: $posts');
       _isLoading = false;
     });
   }

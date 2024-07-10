@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary_detail/widgets/mood_analysis_card.dart';
+import 'package:moodiary/common/widgets/effect/scrolling_dots_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class InsightPages extends StatefulWidget {
-  const InsightPages({super.key});
+  final List<Widget> pages;
+
+  const InsightPages({super.key, required this.pages});
 
   @override
   State<InsightPages> createState() => _InsightPagerState();
@@ -12,14 +13,6 @@ class InsightPages extends StatefulWidget {
 
 class _InsightPagerState extends State<InsightPages> {
   final PageController _pageController = PageController(viewportFraction: 1.1);
-
-  final List<Widget> _pages = [
-    const MoodAnalysisCard(),
-    Container(
-      // todo: word cloud
-      color: Colors.red,
-    ),
-  ];
 
   @override
   void dispose() {
@@ -38,11 +31,11 @@ class _InsightPagerState extends State<InsightPages> {
               child: PageView(
                 controller: _pageController,
                 children: List.generate(
-                  _pages.length,
+                  widget.pages.length,
                   (index) {
                     return FractionallySizedBox(
                       widthFactor: 1 / _pageController.viewportFraction,
-                      child: _pages[index],
+                      child: widget.pages[index],
                     );
                   },
                 ),
@@ -56,12 +49,8 @@ class _InsightPagerState extends State<InsightPages> {
                   opacity: 0.5,
                   child: SmoothPageIndicator(
                     controller: _pageController,
-                    count: _pages.length,
-                    effect: WormEffect(
-                      dotWidth: Sizes.size8,
-                      dotHeight: Sizes.size8,
-                      activeDotColor: Theme.of(context).primaryColor,
-                    ),
+                    count: widget.pages.length,
+                    effect: CustomScrollingDotsEffect.effect,
                   ),
                 ),
               ),

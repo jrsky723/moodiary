@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/common/widgets/effect/scrolling_dots_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TextPageView extends StatefulWidget {
@@ -119,13 +119,7 @@ class _TextPageViewState extends State<TextPageView> {
               child: SmoothPageIndicator(
                 controller: pageController,
                 count: _pages.length,
-                effect: ScrollingDotsEffect(
-                  activeDotColor: Theme.of(context).primaryColor,
-                  dotColor: Colors.grey,
-                  dotHeight: Sizes.size8,
-                  dotWidth: Sizes.size8,
-                  spacing: Sizes.size8,
-                ),
+                effect: CustomScrollingDotsEffect.effect,
               ),
             ),
           ),
