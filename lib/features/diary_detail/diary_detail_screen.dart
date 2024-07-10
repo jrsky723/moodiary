@@ -4,6 +4,7 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
+import 'package:moodiary/features/diary_detail/widgets/mood_analysis_card.dart';
 import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
 
 // 전역 변수로 예시 데이터 제공
@@ -162,7 +163,7 @@ class DiaryDetailScreen extends StatelessWidget {
     return Container(
       height: height,
       padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size16,
+        horizontal: Sizes.size12,
         vertical: Sizes.size12,
       ),
       decoration: BoxDecoration(
@@ -173,7 +174,16 @@ class DiaryDetailScreen extends StatelessWidget {
           width: 2.0,
         ),
       ),
-      child: const InsightPages(),
+      child: InsightPages(
+        pages: [
+          const MoodAnalysisCard(
+            moodOffset: Offset(-0.5, -0.2),
+          ),
+          Container(
+            color: Colors.red,
+          ),
+        ],
+      ),
     );
   }
 }

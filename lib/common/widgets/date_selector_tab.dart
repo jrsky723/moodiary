@@ -6,7 +6,6 @@ class DateSelectorTab extends StatelessWidget {
   final void Function() onTap;
 
   const DateSelectorTab({super.key, required this.text, required this.onTap});
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
