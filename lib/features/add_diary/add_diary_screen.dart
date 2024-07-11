@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/add_diary/settings_screen.dart';
 import 'package:moodiary/features/add_diary/widgets/calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/daily_list.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
@@ -83,19 +82,9 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InfoButton(
-              icon: FontAwesomeIcons.gear,
-              size: Sizes.size20,
-              color: Colors.grey.shade600,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SettingsScreen()));
-              },
-            ),
+            const Spacer(),
             Row(
               children: [
                 Text(
@@ -117,6 +106,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
                 ),
               ],
             ),
+            const Spacer(),
             InfoButton(
               icon: FontAwesomeIcons.floppyDisk,
               size: Sizes.size24,
