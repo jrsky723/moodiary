@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:moodiary/constants/gaps.dart';
+import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/model/sleep_time.dart';
 import 'package:moodiary/features/add_diary/widgets/custom_drop_down.dart';
 import 'package:moodiary/features/add_diary/widgets/time_button.dart';
@@ -21,9 +23,15 @@ class _SleepDialogState extends State<SleepDialog> {
   SleepTime wakeTime = SleepTime();
 
   final List<String> periods = ['AM', 'PM'];
+  final List<String> hours = List.generate(12, (index) => index.toString());
+  final List<String> minutes = List.generate(60, (index) => index.toString());
 
   int totalHour = 0;
   int totalMinute = 0;
+
+  String formattedTime(String? period, int? hour, int? minute) =>
+      "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
+
   void _getTotaltime() {
     int? bH = bedTime.hour, wH = wakeTime.hour;
     setState(() {
@@ -47,54 +55,54 @@ class _SleepDialogState extends State<SleepDialog> {
     });
   }
 
-  String formattedTime(String? period, int? hour, int? minute) =>
-      "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
-
   void _showTimePickerDialog(
       bool isBedtime, String title, String? period, int? hour, int? minute) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text(title,
+              style: TextStyle(
+                color:
+                    isDarkMode(context) ? Colors.grey.shade500 : Colors.black,
+              )),
+          contentPadding: EdgeInsets.zero,
+          actionsPadding: const EdgeInsets.only(
+            left: Sizes.size8,
+            right: Sizes.size8,
+            bottom: Sizes.size5,
+          ),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  DropdownButton<String>(
-                    value: period,
-                    items: periods.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value == 'AM' ? S.of(context).AM : S.of(context).PM,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        period = newValue!;
-                      });
-                    },
+                  ResizableDropdownButton(
+                    items: periods,
+                    selectedValue: period!,
+                    onChanged: (value) => setState(() {
+                      period = value;
+                    }),
+                    isDarkMode: isDarkMode(context),
                   ),
-                  ResizableDropdownButton(),
-                  // CustomDropdown(
-                  //   title: S.of(context).hour,
-                  //   selectedNum: hour! > 12 ? hour! - 12 : hour!,
-                  //   itemsCount: 12,
-                  //   onChanged: (value) => setState(() {
-                  //     hour = value;
-                  //   }),
-                  // ),
-                  // CustomDropdown(
-                  //   title: S.of(context).minute,
-                  //   selectedNum: minute!,
-                  //   itemsCount: 60,
-                  //   onChanged: (value) => setState(() {
-                  //     minute = value;
-                  //   }),
-                  // ),
+                  ResizableDropdownButton(
+                    title: S.of(context).hour,
+                    items: hours,
+                    selectedValue: hour.toString(),
+                    onChanged: (value) => setState(() {
+                      hour = int.parse(value);
+                    }),
+                    isDarkMode: isDarkMode(context),
+                  ),
+                  ResizableDropdownButton(
+                    title: S.of(context).minute,
+                    items: minutes,
+                    selectedValue: minute.toString(),
+                    onChanged: (value) => setState(() {
+                      minute = int.parse(value);
+                    }),
+                    isDarkMode: isDarkMode(context),
+                  ),
                 ],
               );
             },
