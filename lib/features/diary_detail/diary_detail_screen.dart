@@ -6,18 +6,7 @@ import 'package:moodiary/features/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
 import 'package:moodiary/features/diary_detail/widgets/mood_analysis_card.dart';
 import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
-
-// 전역 변수로 예시 데이터 제공
-final List<String> wordList = [
-  '코딩',
-  '공부',
-  '운동',
-  '휴식',
-  '잠',
-  '여자친구',
-  '없다',
-  '슬프다',
-];
+import 'package:moodiary/features/diary_detail/widgets/word_cloud_card.dart';
 
 const String DiarySampleText = """
 오늘은 코딩을 열심히 했다.
@@ -63,8 +52,6 @@ const List<String> imageUrls = [
   'https://picsum.photos/300/400',
   'https://picsum.photos/200/300',
 ];
-
-const Offset emotionPosition = Offset(-0.2, 0.2);
 
 class DiaryDetailScreen extends StatelessWidget {
   final DateTime date;
@@ -174,13 +161,13 @@ class DiaryDetailScreen extends StatelessWidget {
           width: 2.0,
         ),
       ),
-      child: InsightPages(
+      child: const InsightPages(
         pages: [
-          const MoodAnalysisCard(
+          MoodAnalysisCard(
             moodOffset: Offset(-0.5, -0.2),
           ),
-          Container(
-            color: Colors.red,
+          WorldCloudCard(
+            imageUrl: 'assets/images/wordcloud.png',
           ),
         ],
       ),

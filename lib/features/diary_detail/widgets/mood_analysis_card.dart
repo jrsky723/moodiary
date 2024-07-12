@@ -3,6 +3,7 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary_detail/painters/circumplex_model_painter.dart';
 import 'package:moodiary/features/diary_detail/painters/linear_indicator_painter.dart';
+import 'package:moodiary/features/diary_detail/widgets/info_button.dart';
 
 class MoodAnalysisCard extends StatelessWidget {
   // 2(text):1(graph) 비율로 구성
@@ -28,29 +29,6 @@ class MoodAnalysisCard extends StatelessWidget {
       Colors.grey,
       color,
       (value).abs() * 1.5,
-    );
-  }
-
-  void _onInfoButtonPressed(BuildContext context) {
-    // circumplexModel의 정보 이미지를 보여준다
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          surfaceTintColor: Colors.transparent,
-          child: GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: SizedBox(
-              width: double.infinity,
-              child: Image.asset(
-                'assets/images/circumplex_model_colors.png',
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 
@@ -173,12 +151,9 @@ class MoodAnalysisCard extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    color: Colors.white,
-                    icon: const Icon(Icons.info_outline_rounded),
-                    iconSize: Sizes.size20,
-                    onPressed: () => _onInfoButtonPressed(context),
+                  child: const InfoImageButton(
+                    isAsset: true,
+                    imageUrl: 'assets/images/circumplex_model_colors.png',
                   ),
                 ),
               ),
