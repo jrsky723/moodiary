@@ -439,6 +439,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Mood Analysis`
+  String get moodAnalysis {
+    return Intl.message(
+      'Mood Analysis',
+      name: 'moodAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today's mood analysis.`
+  String get moodAnalysisExplanation {
+    return Intl.message(
+      'Today\'s mood analysis.',
+      name: 'moodAnalysisExplanation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `happiness`
+  String get happiness {
+    return Intl.message(
+      'happiness',
+      name: 'happiness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unhappiness`
+  String get unhappiness {
+    return Intl.message(
+      'unhappiness',
+      name: 'unhappiness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `activeness`
+  String get activeness {
+    return Intl.message(
+      'activeness',
+      name: 'activeness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sleepiness`
+  String get sleepiness {
+    return Intl.message(
+      'sleepiness',
+      name: 'sleepiness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mood Cloud`
+  String get moodCloud {
+    return Intl.message(
+      'Mood Cloud',
+      name: 'moodCloud',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

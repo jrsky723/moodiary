@@ -4,6 +4,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary_detail/painters/circumplex_model_painter.dart';
 import 'package:moodiary/features/diary_detail/painters/linear_indicator_painter.dart';
 import 'package:moodiary/features/diary_detail/widgets/info_button.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class MoodAnalysisCard extends StatelessWidget {
   // 2(text):1(graph) 비율로 구성
@@ -58,17 +59,17 @@ class MoodAnalysisCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '감정 분석',
-                  style: TextStyle(
+                Text(
+                  S.of(context).moodAnalysis,
+                  style: const TextStyle(
                     fontSize: Sizes.size18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Gaps.v8,
-                const Text(
-                  '오늘의 감정을 분석한 결과입니다.',
-                  style: TextStyle(
+                Text(
+                  S.of(context).moodAnalysisExplanation,
+                  style: const TextStyle(
                     fontSize: Sizes.size14,
                   ),
                 ),
@@ -86,7 +87,7 @@ class MoodAnalysisCard extends StatelessWidget {
                       painter: LinearIndicatorPainter(
                         label: TextSpan(
                           text:
-                              '${moodOffset.dx >= 0 ? '행복' : '불행'}: ${(moodOffset.dx * 100).toInt().abs()}%',
+                              '${moodOffset.dx >= 0 ? S.of(context).happiness : S.of(context).unhappiness}: ${(moodOffset.dx * 100).toInt().abs()}%',
                           style: TextStyle(
                             fontSize: Sizes.size12,
                             color: indicatorColorX,
@@ -111,7 +112,7 @@ class MoodAnalysisCard extends StatelessWidget {
                       painter: LinearIndicatorPainter(
                         label: TextSpan(
                           text:
-                              '${moodOffset.dy >= 0 ? '활발' : '졸림'}: ${(moodOffset.dy * 100).toInt().abs()}%',
+                              '${moodOffset.dy >= 0 ? S.of(context).activeness : S.of(context).sleepiness}: ${(moodOffset.dy * 100).toInt().abs()}%',
                           style: TextStyle(
                             fontSize: Sizes.size12,
                             color: indicatorColorY,

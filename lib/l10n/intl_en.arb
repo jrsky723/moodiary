@@ -54,5 +54,12 @@
   "bedtime": "bedtime",
   "wakeUpTime": "wake up time",
   "selectMonthDay": "Select Month & Day",
-  "communityTitle": "Community"
+  "communityTitle": "Community",
+  "moodAnalysis": "Mood Analysis",
+  "moodAnalysisExplanation": "Today's mood analysis.",
+  "happiness": "happiness",
+  "unhappiness": "unhappiness",
+  "activeness": "activeness",
+  "sleepiness": "sleepiness",
+  "moodCloud": "Mood Cloud"
 }
