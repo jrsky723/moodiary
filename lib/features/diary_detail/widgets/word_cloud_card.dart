@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary_detail/widgets/info_button.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class WorldCloudCard extends StatelessWidget {
   final String imageUrl;
@@ -15,9 +16,9 @@ class WorldCloudCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '감정 구름',
-          style: TextStyle(
+        Text(
+          S.of(context).moodCloud,
+          style: const TextStyle(
             fontSize: Sizes.size18,
             fontWeight: FontWeight.bold,
           ),

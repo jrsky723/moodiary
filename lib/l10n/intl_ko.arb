@@ -54,5 +54,12 @@
   "bedtime": "취침",
   "wakeUpTime": "기상",
   "selectMonthDay": "월 및 일 선택",
-  "communityTitle": "이야기"
+  "communityTitle": "이야기",
+  "moodAnalysis": "감정 분석",
+  "moodAnalysisExplanation": "오늘의 감정을 분석한 결과입니다.",
+  "happiness": "행복",
+  "unhappiness": "불행",
+  "activeness": "활발",
+  "sleepiness": "졸림",
+  "moodCloud": "감정 구름"
 }

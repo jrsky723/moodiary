@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "activeness": MessageLookupByLibrary.simpleMessage("activeness"),
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -44,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("English Mode"),
         "enterContentPrompt":
             MessageLookupByLibrary.simpleMessage("Enter your content here"),
+        "happiness": MessageLookupByLibrary.simpleMessage("happiness"),
         "happy": MessageLookupByLibrary.simpleMessage("Happy"),
         "howWasYourDay":
             MessageLookupByLibrary.simpleMessage("How was your day?"),
@@ -54,6 +56,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "monthlyTab": MessageLookupByLibrary.simpleMessage("Monthly"),
         "montlyDateSelectTitle":
             MessageLookupByLibrary.simpleMessage("Select Month"),
+        "moodAnalysis": MessageLookupByLibrary.simpleMessage("Mood Analysis"),
+        "moodAnalysisExplanation":
+            MessageLookupByLibrary.simpleMessage("Today\'s mood analysis."),
+        "moodCloud": MessageLookupByLibrary.simpleMessage("Mood Cloud"),
         "mostFrequentMoodText": m0,
         "normal": MessageLookupByLibrary.simpleMessage("Normal"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
@@ -68,7 +74,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sleep": MessageLookupByLibrary.simpleMessage("Sleep"),
         "sleepDuration": m1,
+        "sleepiness": MessageLookupByLibrary.simpleMessage("sleepiness"),
         "todaysPhoto": MessageLookupByLibrary.simpleMessage("Today\'s Photo"),
+        "unhappiness": MessageLookupByLibrary.simpleMessage("unhappiness"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "veryHappy": MessageLookupByLibrary.simpleMessage("Very Happy"),
         "verySad": MessageLookupByLibrary.simpleMessage("Very Sad"),

@@ -7,6 +7,7 @@ import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
 import 'package:moodiary/features/diary_detail/widgets/mood_analysis_card.dart';
 import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
 import 'package:moodiary/features/diary_detail/widgets/word_cloud_card.dart';
+import 'package:moodiary/utils.dart';
 
 const String DiarySampleText = """
 오늘은 코딩을 열심히 했다.
@@ -85,11 +86,6 @@ class DiaryDetailScreen extends StatelessWidget {
             _buildImageSection(height: 100.0, imageUrls: imageUrls),
             Gaps.v4,
             _buildAnalysisSection(context, height: 180.0),
-            // _buildEmotionSection(),
-            // Gaps.v16,
-            // _buildWordCloudSection(),
-            // Gaps.v16,
-            // _buildShareSection(context),
           ],
         ),
       ),
@@ -100,6 +96,7 @@ class DiaryDetailScreen extends StatelessWidget {
     BuildContext context, {
     required double height,
   }) {
+    final darkmode = isDarkMode(context);
     return Container(
       height: height,
       padding: const EdgeInsets.only(
@@ -109,7 +106,7 @@ class DiaryDetailScreen extends StatelessWidget {
         bottom: Sizes.size12,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: darkmode ? Colors.transparent : Colors.white,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           color: Theme.of(context).primaryColor,
@@ -147,6 +144,7 @@ class DiaryDetailScreen extends StatelessWidget {
     BuildContext context, {
     required double height,
   }) {
+    final darkmode = isDarkMode(context);
     return Container(
       height: height,
       padding: const EdgeInsets.symmetric(
@@ -154,7 +152,7 @@ class DiaryDetailScreen extends StatelessWidget {
         vertical: Sizes.size12,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: darkmode ? Colors.transparent : Colors.white,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           color: Colors.grey.shade300,

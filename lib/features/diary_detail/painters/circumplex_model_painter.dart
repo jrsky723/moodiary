@@ -5,7 +5,7 @@ import 'package:moodiary/constants/sizes.dart';
 
 class CMColors {
   // Circumplex Model Colors
-  static const Color borderColor = Colors.grey;
+  static Color borderColor = Colors.grey;
   static const Color pleasant = Color.fromARGB(255, 119, 255, 0);
   static const Color unpleasant = Color.fromARGB(255, 217, 0, 255);
   static const Color activation = Color.fromARGB(255, 255, 17, 0);
@@ -81,11 +81,6 @@ class CircumplexModelPainter extends CustomPainter {
     canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-
   Color getEmotionColor(double x, double y) {
     // Calculate horizontal (x-axis) color interpolation
     final xColor =
@@ -103,5 +98,10 @@ class CircumplexModelPainter extends CustomPainter {
       combinedColor,
       distanceFromCenter + 0.3,
     )!;
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
