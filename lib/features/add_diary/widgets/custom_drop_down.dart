@@ -17,17 +17,15 @@ class ResizableDropdownButton extends StatefulWidget {
   });
 
   @override
-  _ResizableDropdownButtonState createState() =>
-      _ResizableDropdownButtonState();
+  ResizableDropdownButtonState createState() => ResizableDropdownButtonState();
 }
 
-class _ResizableDropdownButtonState extends State<ResizableDropdownButton> {
+class ResizableDropdownButtonState extends State<ResizableDropdownButton> {
   String? _selectedValue;
   late final List<String> _dropdownItems;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _selectedValue = widget.selectedValue;
     _dropdownItems = widget.items;
