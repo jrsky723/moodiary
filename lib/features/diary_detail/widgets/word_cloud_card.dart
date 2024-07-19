@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary_detail/widgets/info_button.dart';
+import 'package:moodiary/features/diary_detail/widgets/info_image_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class WorldCloudCard extends StatelessWidget {
