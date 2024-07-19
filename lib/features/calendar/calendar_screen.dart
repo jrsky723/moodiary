@@ -10,6 +10,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/widgets/info_container.dart';
 import 'package:moodiary/features/calendar/search_screen.dart';
 import 'package:moodiary/features/calendar/widgets/year_month_select_dialog.dart';
+import 'package:moodiary/features/diary_detail/diary_detail_screen.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
@@ -255,6 +256,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     setState(() {
                       _selectedDate = day;
                     });
+                  },
+                  onDoubleTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DiaryDetailScreen(
+                          date: day,
+                        ),
+                      ),
+                    );
                   },
                   child: Column(
                     children: [

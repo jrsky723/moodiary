@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "activeness": MessageLookupByLibrary.simpleMessage("활발"),
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),
@@ -41,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "englishModeTitle": MessageLookupByLibrary.simpleMessage("영어 모드"),
         "enterContentPrompt":
             MessageLookupByLibrary.simpleMessage("내용을 입력해주세요"),
+        "happiness": MessageLookupByLibrary.simpleMessage("행복"),
         "happy": MessageLookupByLibrary.simpleMessage("행복함"),
         "howWasYourDay": MessageLookupByLibrary.simpleMessage("어떤 하루였나요?"),
         "monthlyMoodDistTitle":
@@ -49,6 +51,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("월간 기분 흐름"),
         "monthlyTab": MessageLookupByLibrary.simpleMessage("월간"),
         "montlyDateSelectTitle": MessageLookupByLibrary.simpleMessage("월 선택하기"),
+        "moodAnalysis": MessageLookupByLibrary.simpleMessage("감정 분석"),
+        "moodAnalysisExplanation":
+            MessageLookupByLibrary.simpleMessage("오늘의 감정을 분석한 결과입니다."),
+        "moodCloud": MessageLookupByLibrary.simpleMessage("감정 구름"),
         "mostFrequentMoodText": m0,
         "normal": MessageLookupByLibrary.simpleMessage("보통"),
         "person": MessageLookupByLibrary.simpleMessage("사람"),
@@ -60,7 +66,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("설정"),
         "sleep": MessageLookupByLibrary.simpleMessage("수면"),
         "sleepDuration": m1,
+        "sleepiness": MessageLookupByLibrary.simpleMessage("졸림"),
         "todaysPhoto": MessageLookupByLibrary.simpleMessage("오늘의 사진"),
+        "unhappiness": MessageLookupByLibrary.simpleMessage("불행"),
         "unknown": MessageLookupByLibrary.simpleMessage("알 수 없음"),
         "veryHappy": MessageLookupByLibrary.simpleMessage("매우 행복함"),
         "verySad": MessageLookupByLibrary.simpleMessage("매우 슬픔"),
