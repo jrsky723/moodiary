@@ -1,53 +1,113 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/features/dashboard/monthly_dashboard.dart';
-import 'package:moodiary/features/dashboard/yearly_dashboard.dart';
-import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/constants/gaps.dart';
+import 'package:moodiary/constants/sizes.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen>
-    with TickerProviderStateMixin {
-  TabController? _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-      animationDuration: const Duration(milliseconds: 300),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          '감정 분석',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        surfaceTintColor: Colors.transparent,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
+        child: ListView(
+          children: [
+            Gaps.v16,
+            _buildMoodChartSection(
+              height: 200.0,
+            ),
+            Gaps.v16,
+            _buildFlowChartSection(
+              height: 200.0,
+            ),
+            Gaps.v16,
+            _buildDistributionChartSection(
+              height: 500.0,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  @override
-  void dispose() {
-    _tabController?.dispose();
-    super.dispose();
+  Widget _buildMoodChartSection({
+    required double height,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Sizes.size18,
+        vertical: Sizes.size20,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(Sizes.size16),
+      ),
+      child: Column(
+        children: [
+          Gaps.v12,
+          SizedBox(
+            height: height,
+            child: const Placeholder(),
+          ),
+        ],
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: S.of(context).monthlyTab),
-            Tab(text: S.of(context).yearlyTab),
-          ],
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: const [
-            MonthlyDashboard(),
-            YearlyDashboard(),
-          ],
-        ),
+  Widget _buildFlowChartSection({
+    required double height,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Sizes.size18,
+        vertical: Sizes.size20,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(Sizes.size16),
+      ),
+      child: Column(
+        children: [
+          Gaps.v12,
+          SizedBox(
+            height: height,
+            child: const Placeholder(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDistributionChartSection({
+    required double height,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Sizes.size18,
+        vertical: Sizes.size20,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(Sizes.size16),
+      ),
+      child: Column(
+        children: [
+          Gaps.v12,
+          SizedBox(
+            height: height,
+            child: const Placeholder(),
+          ),
+        ],
       ),
     );
   }
