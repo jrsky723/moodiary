@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 class MoodChartCard extends StatelessWidget {
   final String title;

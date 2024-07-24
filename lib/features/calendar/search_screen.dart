@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/models/diary_entry.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 SwitchThemeData switchThemeData(BuildContext context) {
   final isDark = isDarkMode(context);
