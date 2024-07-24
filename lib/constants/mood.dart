@@ -2,80 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 enum Mood {
-  veryHappy,
-  happy,
-  neutral,
-  sad,
-  verySad,
+  // Circumplex model 에서, (1,0)에서 반시계 방향으로
+  glad,
+  delighted,
+  excited,
+  alert,
+  alarmed,
+  tense,
+  distressed,
+  upset,
+  miserable,
+  gloomy,
+  bored,
+  tired,
+  sleepy,
+  relaxed,
+  serene,
+  content,
 }
 
 extension MoodExtension on Mood {
   String label(BuildContext context) {
     switch (this) {
-      case Mood.veryHappy:
-        return S.of(context).veryHappy;
-      case Mood.happy:
-        return S.of(context).happy;
-      case Mood.neutral:
-        return S.of(context).normal;
-      case Mood.sad:
-        return S.of(context).sad;
-      case Mood.verySad:
-        return S.of(context).verySad;
-      default:
-        return S.of(context).unknown;
-    }
-  }
-
-  int get score {
-    switch (this) {
-      case Mood.veryHappy:
-        return 5;
-      case Mood.happy:
-        return 4;
-      case Mood.neutral:
-        return 3;
-      case Mood.sad:
-        return 2;
-      case Mood.verySad:
-        return 1;
-      default:
-        return 0;
-    }
-  }
-
-  Color get color {
-    switch (this) {
-      case Mood.veryHappy:
-        return const Color(0xFF1FBF88);
-      case Mood.happy:
-        return const Color(0xFF26A69A);
-      case Mood.neutral:
-        return const Color(0xFF4DB6AC);
-      case Mood.sad:
-        return const Color(0xFF80CBC4);
-      case Mood.verySad:
-        return const Color(0xFFB2DFDB);
-      default:
-        return Colors.black;
-    }
-  }
-  // from methods
-
-  static Mood fromScore(int score) {
-    switch (score) {
-      case 5:
-        return Mood.veryHappy;
-      case 4:
-        return Mood.happy;
-      case 3:
-        return Mood.neutral;
-      case 2:
-        return Mood.sad;
-      case 1:
-        return Mood.verySad;
-      default:
-        return Mood.neutral;
+      case Mood.glad:
+        return S.of(context).glad;
+      case Mood.delighted:
+        return S.of(context).delighted;
+      case Mood.excited:
+        return S.of(context).excited;
+      case Mood.alert:
+        return S.of(context).alert;
+      case Mood.alarmed:
+        return S.of(context).alarmed;
+      case Mood.tense:
+        return S.of(context).tense;
+      case Mood.distressed:
+        return S.of(context).distressed;
+      case Mood.upset:
+        return S.of(context).upset;
+      case Mood.miserable:
+        return S.of(context).miserable;
+      case Mood.gloomy:
+        return S.of(context).gloomy;
+      case Mood.bored:
+        return S.of(context).bored;
+      case Mood.tired:
+        return S.of(context).tired;
+      case Mood.sleepy:
+        return S.of(context).sleepy;
+      case Mood.relaxed:
+        return S.of(context).relaxed;
+      case Mood.serene:
+        return S.of(context).serene;
+      case Mood.content:
+        return S.of(context).content;
     }
   }
 }

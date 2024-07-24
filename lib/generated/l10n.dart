@@ -220,51 +220,161 @@ class S {
     );
   }
 
-  /// `Very Happy`
-  String get veryHappy {
+  /// `Glad`
+  String get glad {
     return Intl.message(
-      'Very Happy',
-      name: 'veryHappy',
+      'Glad',
+      name: 'glad',
       desc: '',
       args: [],
     );
   }
 
-  /// `Happy`
-  String get happy {
+  /// `Delighted`
+  String get delighted {
     return Intl.message(
-      'Happy',
-      name: 'happy',
+      'Delighted',
+      name: 'delighted',
       desc: '',
       args: [],
     );
   }
 
-  /// `Normal`
-  String get normal {
+  /// `Excited`
+  String get excited {
     return Intl.message(
-      'Normal',
-      name: 'normal',
+      'Excited',
+      name: 'excited',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sad`
-  String get sad {
+  /// `Alert`
+  String get alert {
     return Intl.message(
-      'Sad',
-      name: 'sad',
+      'Alert',
+      name: 'alert',
       desc: '',
       args: [],
     );
   }
 
-  /// `Very Sad`
-  String get verySad {
+  /// `Alarmed`
+  String get alarmed {
     return Intl.message(
-      'Very Sad',
-      name: 'verySad',
+      'Alarmed',
+      name: 'alarmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tense`
+  String get tense {
+    return Intl.message(
+      'Tense',
+      name: 'tense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distressed`
+  String get distressed {
+    return Intl.message(
+      'Distressed',
+      name: 'distressed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upset`
+  String get upset {
+    return Intl.message(
+      'Upset',
+      name: 'upset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Miserable`
+  String get miserable {
+    return Intl.message(
+      'Miserable',
+      name: 'miserable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gloomy`
+  String get gloomy {
+    return Intl.message(
+      'Gloomy',
+      name: 'gloomy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bored`
+  String get bored {
+    return Intl.message(
+      'Bored',
+      name: 'bored',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tired`
+  String get tired {
+    return Intl.message(
+      'Tired',
+      name: 'tired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sleepy`
+  String get sleepy {
+    return Intl.message(
+      'Sleepy',
+      name: 'sleepy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Relaxed`
+  String get relaxed {
+    return Intl.message(
+      'Relaxed',
+      name: 'relaxed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Serene`
+  String get serene {
+    return Intl.message(
+      'Serene',
+      name: 'serene',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content`
+  String get content {
+    return Intl.message(
+      'Content',
+      name: 'content',
       desc: '',
       args: [],
     );
