@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/theme/material_state_extension.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 NavigationBarThemeData navigationBarThemeData(BuildContext context) {
   final isDark = isDarkMode(context);

@@ -10,7 +10,8 @@ import 'package:moodiary/features/dashboard/widgets/mood_dist_chart.dart';
 import 'package:moodiary/features/dashboard/widgets/mood_flow_chart.dart';
 import 'package:moodiary/features/dashboard/widgets/show_date_selection_sheet.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/mood_utils.dart';
+import 'package:moodiary/utils/date_utils.dart';
 
 class YearlyDashboard extends StatefulWidget {
   const YearlyDashboard({super.key});

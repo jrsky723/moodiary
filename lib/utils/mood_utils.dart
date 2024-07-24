@@ -1,14 +1,18 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:moodiary/constants/mood.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 
-import 'package:flutter/material.dart';
-
-bool isSameDay(DateTime date1, DateTime date2) {
-  return date1.year == date2.year &&
-      date1.month == date2.month &&
-      date1.day == date2.day;
+Offset getMoodOffset(Mood mood) {
+  const int numPositions = 16;
+  const double angleOffset = 2 * pi / numPositions;
+  const double startAngle = pi / 8;
+  int index = Mood.values.indexOf(mood);
+  return Offset(
+    cos(startAngle + angleOffset * index),
+    sin(startAngle + angleOffset * index),
+  );
 }
 
 Random random = Random();
@@ -26,17 +30,6 @@ List<MoodEntry> generateMoodEntries(DateTime startDate, int days) {
     entries.add(randomMoodEntry(startDate.add(Duration(days: i))));
   }
   return entries;
-}
-
-int daysInMonth(int year, int month) {
-  // 0 is the day before the first day of the month
-  return DateTime(year, month + 1, 0).day;
-}
-
-int daysInYear(int year) {
-  DateTime firstDay = DateTime(year, 1, 1);
-  DateTime lastDay = DateTime(year + 1, 1, 1);
-  return lastDay.difference(firstDay).inDays;
 }
 
 List<MoodEntry> modeYearlyMoodEntries(
@@ -78,8 +71,4 @@ List<MoodEntry> modeYearlyMoodEntries(
     ));
   }
   return monthlyMoodModes;
-}
-
-bool isDarkMode(BuildContext context) {
-  return Theme.of(context).brightness == Brightness.dark;
 }

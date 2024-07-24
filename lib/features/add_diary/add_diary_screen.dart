@@ -11,7 +11,7 @@ import 'package:moodiary/features/add_diary/widgets/multi_select_list.dart';
 import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
 import 'package:moodiary/features/add_diary/widgets/sleep_time_picker.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 class AddDiaryScreen extends StatefulWidget {
   static const String routeName = 'addDiary';
