@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/dashboard/models/mood_entry.dart';
+import 'package:moodiary/features/dashboard/widgets/circumplex_model_card.dart';
+import 'package:moodiary/utils/mood_utils.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  List<MoodEntry> moodEntries = generateMoodEntries(
+    DateTime.now().subtract(
+      const Duration(days: 28),
+    ),
+    28,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +34,9 @@ class DashboardScreen extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Sizes.size16,
+        ),
         child: ListView(
           children: [
             Gaps.v16,
@@ -44,20 +61,45 @@ class DashboardScreen extends StatelessWidget {
     required double height,
   }) {
     return Container(
+      height: height,
       padding: const EdgeInsets.symmetric(
         horizontal: Sizes.size18,
-        vertical: Sizes.size20,
+        vertical: Sizes.size18,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(Sizes.size16),
       ),
-      child: Column(
+      child: PageView(
         children: [
-          Gaps.v12,
-          SizedBox(
-            height: height,
-            child: const Placeholder(),
+          CircumplexModelCard(
+            moodOffsets: [
+              for (final moodEntry in moodEntries) moodEntry.offset,
+            ],
+          ),
+          Column(
+            children: [
+              const Text(
+                'Mood Cloud',
+                style: TextStyle(
+                  fontSize: Sizes.size20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Gaps.v8,
+              Expanded(
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/images/wordcloud.png',
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

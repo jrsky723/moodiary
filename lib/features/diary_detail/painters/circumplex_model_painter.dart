@@ -3,38 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 
-class CMColors {
-  // Circumplex Model Colors
-  static Color borderColor = Colors.grey;
-  static const Color pleasant = Color.fromARGB(255, 119, 255, 0);
-  static const Color unpleasant = Color.fromARGB(255, 217, 0, 255);
-  static const Color activation = Color.fromARGB(255, 255, 17, 0);
-  static const Color deactivation = Color.fromARGB(255, 0, 140, 255);
-}
-
 class CircumplexModelPainter extends CustomPainter {
-  final double x;
-  final double y;
+  final List<Offset> moodOffsets;
 
-  CircumplexModelPainter({required Offset moodOffset})
-      : x = moodOffset.dx,
-        y = moodOffset.dy;
-
+  CircumplexModelPainter({required this.moodOffsets});
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2 - Sizes.size4;
+
+    final double radius;
+    if (size.width < size.height) {
+      radius = size.width / 2 - Sizes.size4;
+    } else {
+      radius = size.height / 2 - Sizes.size4;
+    }
 
     paintBackground(canvas, center, radius);
     paintBorder(canvas, center, radius);
-    final emotionOffset =
-        Offset(center.dx + x * radius, center.dy - y * radius);
-    paintEmotion(canvas, emotionOffset);
+    for (final offset in moodOffsets) {
+      final emotionOffset = Offset(
+        center.dx + offset.dx * radius,
+        center.dy - offset.dy * radius,
+      );
+      paintEmotion(canvas, emotionOffset, radius);
+    }
   }
 
   void paintBackground(Canvas canvas, Offset center, double radius) {
     final paint = Paint()..style = PaintingStyle.fill;
-
     // Draw the circumplex model with gradient colors
     for (double dx = -1; dx <= 1; dx += 0.01) {
       for (double dy = -1; dy <= 1; dy += 0.01) {
@@ -57,7 +53,6 @@ class CircumplexModelPainter extends CustomPainter {
       ..strokeWidth = 2.0;
 
     canvas.drawCircle(center, radius, paint);
-
     // Draw the axes
     canvas.drawLine(
       Offset(center.dx, center.dy - radius),
@@ -71,13 +66,13 @@ class CircumplexModelPainter extends CustomPainter {
     );
   }
 
-  void paintEmotion(Canvas canvas, Offset offset) {
+  void paintEmotion(Canvas canvas, Offset offset, double radius) {
     final emotionBorderPaint = Paint()
       ..color = customPrimarySwatch
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
-    const emotionRadius = 4.0;
+    final double emotionRadius = radius / 13;
     canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
   }
 

@@ -2,15 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
 
 class LinearIndicatorPainter extends CustomPainter {
-  final double value;
-  final Color? color;
+  final List<double> values;
+  final Color? leftColor;
+  final Color? rightColor;
+  final Color? middleColor;
+  final double indicatorRadius;
   final TextSpan label;
 
   LinearIndicatorPainter({
-    required this.value,
-    required this.color,
+    required this.values,
+    required this.leftColor,
+    required this.rightColor,
+    required this.middleColor,
     required this.label,
+    this.indicatorRadius = Sizes.size5,
   });
+
+  Color? getIndicatorColor(
+      // -1 ~ 1 사이의 double value를 받아서 leftColor와 rightColor 사이의 색을 반환
+      double value) {
+    final color = Color.lerp(
+      leftColor,
+      rightColor,
+      (value + 1) / 2,
+    );
+    //  얼마나 원점에 가까이에 있는지에 따라 가운데 색을 섞어줌
+    return Color.lerp(
+      middleColor,
+      color,
+      (value).abs() * 1.5,
+    );
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -26,7 +48,6 @@ class LinearIndicatorPainter extends CustomPainter {
 
     // Draw the center line
     const lineLenght = 8.0;
-
     final axisCenterPaint = Paint()
       ..color = Colors.grey.shade400
       ..strokeWidth = 1.5;
@@ -36,18 +57,19 @@ class LinearIndicatorPainter extends CustomPainter {
       axisCenterPaint,
     );
 
-    // Map the value from [-1, 1] to [0, size.width]
-    final indicatorPosition = (value + 1) / 2 * size.width;
-    final indicatorPainter = Paint()
-      ..color = color ?? Colors.transparent
-      ..style = PaintingStyle.fill;
-    // Draw the value indicator circle
-    canvas.drawCircle(
-      Offset(indicatorPosition, size.height / 2),
-      5,
-      indicatorPainter,
-    );
-
+    for (final value in values) {
+      // Map the value from [-1, 1] to [0, size.width]
+      final indicatorPosition = (value + 1) / 2 * size.width;
+      final indicatorPainter = Paint()
+        ..color = getIndicatorColor(value)!
+        ..style = PaintingStyle.fill;
+      // Draw the value indicator circle
+      canvas.drawCircle(
+        Offset(indicatorPosition, size.height / 2),
+        indicatorRadius,
+        indicatorPainter,
+      );
+    }
     // Draw the label
     final labelPainter = TextPainter(
       text: label,
