@@ -25,28 +25,23 @@ class WorldCloudCard extends StatelessWidget {
         ),
         Gaps.v8,
         Expanded(
-          child: Center(
-            child: SizedBox(
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  Center(
-                    child: Image.asset(
-                      imageUrl,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                  const Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: InfoImageButton(
-                      isAsset: true,
-                      imageUrl: 'assets/images/emotion_colors.png',
-                    ),
-                  ),
-                ],
+          child: Stack(
+            children: [
+              Center(
+                child: Image.asset(
+                  imageUrl,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
-            ),
+              const Positioned(
+                right: 0,
+                bottom: 0,
+                child: InfoImageButton(
+                  isAsset: true,
+                  imageUrl: 'assets/images/emotion_colors.png',
+                ),
+              ),
+            ],
           ),
         ),
       ],
