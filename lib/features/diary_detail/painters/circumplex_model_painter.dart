@@ -2,11 +2,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/painter_utils.dart';
 
 class CircumplexModelPainter extends CustomPainter {
   final List<Offset> moodOffsets;
+  final bool showAverage;
 
-  CircumplexModelPainter({required this.moodOffsets});
+  CircumplexModelPainter({
+    required this.moodOffsets,
+    this.showAverage = false,
+  });
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
@@ -27,6 +32,10 @@ class CircumplexModelPainter extends CustomPainter {
       );
       paintEmotion(canvas, emotionOffset, radius);
     }
+
+    if (showAverage) {
+      paintAveragePoint(canvas, center, radius);
+    }
   }
 
   void paintBackground(Canvas canvas, Offset center, double radius) {
@@ -43,6 +52,39 @@ class CircumplexModelPainter extends CustomPainter {
         }
       }
     }
+  }
+
+  void paintAveragePoint(Canvas canvas, Offset center, double radius) {
+    if (moodOffsets.isEmpty) return;
+    final avgOffset =
+        moodOffsets.reduce((a, b) => a + b) / moodOffsets.length.toDouble();
+    final averagePoint = Offset(
+      center.dx + avgOffset.dx * radius,
+      center.dy - avgOffset.dy * radius,
+    );
+
+    for (int i = 1; i <= 5; i++) {
+      final color = Color.lerp(customPrimarySwatch.shade900,
+          customPrimarySwatch.shade50, (5 - i) / 4)!;
+      final paint = Paint()
+        ..color = color.withOpacity(0.5 - 0.1 * i)
+        ..style = PaintingStyle.fill;
+      canvas.drawCircle(averagePoint, (radius / 12) * i, paint);
+    }
+
+    final complementaryColor = getComplementaryColor(customPrimarySwatch);
+
+    final paint = Paint()
+      ..color = complementaryColor.withOpacity(0.8)
+      ..style = PaintingStyle.fill;
+
+    final borderPaint = Paint()
+      ..color = Colors.white.withOpacity(0.5)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    canvas.drawCircle(averagePoint, radius / 15, borderPaint);
+    canvas.drawCircle(averagePoint, radius / 15, paint);
   }
 
   void paintBorder(Canvas canvas, Offset center, double radius) {
@@ -72,7 +114,7 @@ class CircumplexModelPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
-    final double emotionRadius = radius / 13;
+    final double emotionRadius = radius / 20;
     canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
   }
 

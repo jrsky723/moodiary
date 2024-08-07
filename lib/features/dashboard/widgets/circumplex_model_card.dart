@@ -44,6 +44,7 @@ class CircumplexModelCard extends StatelessWidget {
         Flexible(
           flex: 1,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Text(
                 'Circumplex Model',
@@ -60,10 +61,11 @@ class CircumplexModelCard extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              Gaps.v8,
+              Gaps.v20,
               CustomPaint(
-                size: const Size(double.infinity, 40.0),
+                size: const Size(double.infinity, 20.0),
                 painter: LinearIndicatorPainter(
+                  showAverage: true,
                   values: [for (final offset in moodOffsets) offset.dx],
                   leftColor: CMColors.unpleasant,
                   rightColor: CMColors.pleasant,
@@ -78,10 +80,11 @@ class CircumplexModelCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Gaps.v8,
+              Gaps.v20,
               CustomPaint(
-                size: const Size(double.infinity, 40.0),
+                size: const Size(double.infinity, 20.0),
                 painter: LinearIndicatorPainter(
+                  showAverage: true,
                   values: [for (final offset in moodOffsets) offset.dy],
                   leftColor: CMColors.deactivation,
                   rightColor: CMColors.activation,
@@ -106,6 +109,7 @@ class CircumplexModelCard extends StatelessWidget {
             size: const Size(double.infinity, double.infinity),
             painter: CircumplexModelPainter(
               moodOffsets: moodOffsets,
+              showAverage: true,
             ),
           ),
         ),

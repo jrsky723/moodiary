@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/painter_utils.dart';
 
 class LinearIndicatorPainter extends CustomPainter {
   final List<double> values;
@@ -8,6 +10,7 @@ class LinearIndicatorPainter extends CustomPainter {
   final Color? middleColor;
   final double indicatorRadius;
   final TextSpan label;
+  final bool showAverage;
 
   LinearIndicatorPainter({
     required this.values,
@@ -16,6 +19,7 @@ class LinearIndicatorPainter extends CustomPainter {
     required this.middleColor,
     required this.label,
     this.indicatorRadius = Sizes.size5,
+    this.showAverage = false,
   });
 
   Color? getIndicatorColor(
@@ -47,7 +51,7 @@ class LinearIndicatorPainter extends CustomPainter {
     );
 
     // Draw the center line
-    const lineLenght = 8.0;
+    final lineLenght = size.height / 2;
     final axisCenterPaint = Paint()
       ..color = Colors.grey.shade400
       ..strokeWidth = 1.5;
@@ -79,6 +83,24 @@ class LinearIndicatorPainter extends CustomPainter {
       canvas,
       Offset(0, size.height / 2 - Sizes.size24),
     );
+
+    // Draw the average line
+    if (showAverage) {
+      final average = values.reduce((a, b) => a + b) / values.length;
+      final averagePosition = (average + 1) / 2 * size.width;
+      final color = getComplementaryColor(customPrimarySwatch);
+
+      final averagePaint = Paint()
+        ..color = color.withOpacity(0.5)
+        ..style = PaintingStyle.fill;
+
+      // Draw the average circle
+      canvas.drawCircle(
+        Offset(averagePosition, size.height / 2),
+        indicatorRadius * 1.5,
+        averagePaint,
+      );
+    }
   }
 
   @override
