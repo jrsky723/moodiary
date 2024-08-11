@@ -23,4 +23,5 @@ class CMColors {
   static const Color unpleasant = Color.fromARGB(255, 217, 0, 255);
   static const Color activation = Color.fromARGB(255, 255, 17, 0);
   static const Color deactivation = Color.fromARGB(255, 0, 140, 255);
+  static const Color neutral = Colors.grey;
 }
