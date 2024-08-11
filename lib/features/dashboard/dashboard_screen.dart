@@ -3,6 +3,7 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 import 'package:moodiary/features/dashboard/widgets/circumplex_model_card.dart';
+import 'package:moodiary/features/dashboard/widgets/flow_chart_card.dart';
 import 'package:moodiary/utils/mood_utils.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -114,16 +115,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         horizontal: Sizes.size18,
         vertical: Sizes.size20,
       ),
+      height: height,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(Sizes.size16),
       ),
-      child: Column(
+      child: PageView(
         children: [
-          Gaps.v12,
-          SizedBox(
-            height: height,
-            child: const Placeholder(),
+          FlowChartCard(moodEntries: moodEntries),
+          FlowChartCard(
+            moodEntries: moodEntries,
+            isXAxis: false,
           ),
         ],
       ),

@@ -114,7 +114,7 @@ class CircumplexModelPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
-    final double emotionRadius = radius / 20;
+    final double emotionRadius = radius / 15;
     canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
   }
 
