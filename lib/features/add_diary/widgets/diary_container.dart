@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/utils.dart';
@@ -76,7 +77,12 @@ class _DiaryContainerState extends State<DiaryContainer> {
                 ],
               ),
             ),
-            isShow ? widget.child : const SizedBox(),
+            Visibility(
+              visible: isShow,
+              maintainState: true,
+              maintainAnimation: true,
+              child: widget.child,
+            ),
           ],
         ),
       ),

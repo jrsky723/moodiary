@@ -15,88 +15,101 @@ class ImagePickerButton extends StatefulWidget {
 }
 
 class _ImagePickerButtonState extends State<ImagePickerButton> {
-  File? _image;
+  List<File> _images = [];
 
-  Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
+  Future<void> _pickImages() async {
+    final pickedFiles = await ImagePicker().pickMultiImage();
+    setState(() {
+      _images = pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+    });
   }
 
-  void _cancelSelection() {
+  void _cancelSelection(int index) {
     setState(() {
-      _image = null;
+      _images.removeAt(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 1,
-        backgroundColor:
-            isDarkMode(context) ? Colors.grey.shade500 : Colors.grey.shade300,
-        foregroundColor: Colors.grey.shade500,
-        surfaceTintColor: Colors.grey.shade100,
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(Sizes.size5), // Sizes.size5 대신에 리터럴 값 사용
+        style: ElevatedButton.styleFrom(
+          elevation: 1,
+          backgroundColor:
+              isDarkMode(context) ? Colors.grey.shade500 : Colors.grey.shade300,
+          foregroundColor: Colors.grey.shade500,
+          surfaceTintColor: Colors.grey.shade100,
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(Sizes.size5), // Sizes.size5 대신에 리터럴 값 사용
+          ),
         ),
-      ),
-      onPressed: _pickImage,
-      child: _image == null
-          ? Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size52), // Sizes.size52 대신에 리터럴 값 사용
-                  child: Column(
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.camera,
-                        color: Colors.grey.shade700,
-                        size: Sizes.size52, // Sizes.size52 대신에 리터럴 값 사용
+        onPressed: _pickImages,
+        child: _images.isEmpty
+            ? SizedBox(
+                width: buttonSize['width'],
+                height: buttonSize['height'],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Sizes.size52,
                       ),
-                      Text(
-                        S.of(context).selectPhotoPrompt,
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
+                      child: Column(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.camera,
+                            color: Colors.grey.shade700,
+                            size: Sizes.size52,
+                          ),
+                          Text(
+                            S.of(context).selectPhotoPrompt,
+                            style: TextStyle(
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                ),
+                itemCount: _images.length,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            Sizes.size5), // Match the button's borderRadius
+                        child: Image.file(
+                          _images[index],
+                          fit: BoxFit
+                              .cover, // This will cover the area without distorting the aspect ratio
+                          height: double.infinity,
+                          width: double.infinity,
                         ),
                       ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.cancel,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () => _cancelSelection(index),
+                      ),
                     ],
-                  ),
-                ),
-              ],
-            )
-          : Stack(
-              alignment: Alignment.topRight,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      Sizes.size5), // Match the button's borderRadius
-                  child: Image.file(
-                    _image!,
-                    fit: BoxFit
-                        .contain, // This will cover the area without distorting the aspect ratio
-                    height: buttonSize[
-                        'height'], // Set the height to limit the size of the image
-                    width: buttonSize[
-                        'width'], // Width takes the full width of the button
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.cancel, color: Colors.red),
-                  onPressed: _cancelSelection,
-                ),
-              ],
-            ),
-    );
+                  );
+                },
+              ));
   }
 }
 

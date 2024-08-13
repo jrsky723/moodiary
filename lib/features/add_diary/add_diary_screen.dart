@@ -5,6 +5,7 @@ import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/widgets/calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
+import 'package:moodiary/features/add_diary/widgets/diary_text_widget.dart';
 import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
@@ -121,73 +122,10 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           controller: _scrollController,
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // SliverToBoxAdapter(
-            //   child: DiaryContainer(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     text: S.of(context).howWasYourDay,
-            //     child: const DailyList(),
-            //   ),
-            // ),
-            // SliverToBoxAdapter(
-            //   child: DiaryContainer(
-            //     text: S.of(context).emotion,
-            //     child: MultiSelectList(
-            //       items: emotions,
-            //       crossAxisCount: 4,
-            //     ),
-            //   ),
-            // ),
-            // SliverToBoxAdapter(
-            //   child: DiaryContainer(
-            //     text: S.of(context).person,
-            //     child: MultiSelectList(
-            //       items: people,
-            //       crossAxisCount: 4,
-            //     ),
-            //   ),
-            // ),
-            // SliverToBoxAdapter(
-            //   child: DiaryContainer(
-            //     text: S.of(context).sleep,
-            //     child: Center(
-            //       child: SleepDialog(
-            //         context: context,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             SliverToBoxAdapter(
               child: DiaryContainer(
                 text: S.of(context).diary,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isDarkMode(context)
-                        ? Colors.grey.shade500
-                        : Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(
-                      Sizes.size5,
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: Sizes.size10),
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: S.of(context).enterContentPrompt,
-                        hintStyle: TextStyle(
-                          color: Colors.grey.shade800,
-                          fontSize: Sizes.size14,
-                        ),
-                      ),
-                      cursorColor: Colors.green.shade300,
-                    ),
-                  ),
-                ),
+                child: const DiaryTextWidget(),
               ),
             ),
             SliverToBoxAdapter(
