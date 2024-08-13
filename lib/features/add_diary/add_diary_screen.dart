@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
@@ -22,8 +23,39 @@ class AddDiaryScreen extends StatefulWidget {
 
 class _AddDiaryScreenState extends State<AddDiaryScreen> {
   late final ScrollController _scrollController;
+  late final TextEditingController _textController;
+
+  bool _isFocused = false;
+  final FocusNode _focusNode = FocusNode();
+
   DateTime _selectedDate = DateTime.now();
   int duration = 300;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _textController = TextEditingController();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection !=
+          ScrollDirection.idle) {
+        _hideKeyboard();
+      }
+    });
+    _focusNode.addListener(() {
+      setState(() {
+        _isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _textController.dispose();
+    super.dispose();
+  }
 
   void _scrollToTop() {
     _scrollController.animateTo(
@@ -63,16 +95,25 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
+  void _hideKeyboard() {
+    FocusScope.of(context).unfocus();
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+  void _onSave() {
+    // TODO: 저장 로직 추가
+    _hideKeyboard();
+  }
+
+  void _onCancel() {
+    // TODO : 한번더 물어보는 로직 추가
+
+    // 취소버튼 더 누르면 calendar 화면으로 이동(뒤로가기)
+    // 아니면 화면 그대로
+
+    _textController.clear();
+    _hideKeyboard();
+
+    Navigator.pop(context);
   }
 
   @override
@@ -105,47 +146,118 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
               ],
             ),
             const Spacer(),
-            InfoButton(
-              icon: FontAwesomeIcons.floppyDisk,
-              size: Sizes.size24,
-              color: Colors.grey.shade600,
-              onTap: () => print("저장"),
-            ),
           ],
         ),
       ),
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
+          _hideKeyboard();
         },
-        child: CustomScrollView(
-          controller: _scrollController,
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-              child: DiaryContainer(
-                text: S.of(context).diary,
-                child: const DiaryTextWidget(),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: DiaryContainer(
-                text: S.of(context).todaysPhoto,
-                child: const Center(
-                  child: ImagePickerButton(),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: DiaryContainer(
+                    text: S.of(context).diary,
+                    child: DiaryTextWidget(
+                      controller: _textController,
+                      focusNode: _focusNode,
+                    ),
+                  ),
                 ),
-              ),
+                SliverToBoxAdapter(
+                  child: DiaryContainer(
+                    text: S.of(context).todaysPhoto,
+                    child: const Center(
+                      child: ImagePickerButton(),
+                    ),
+                  ),
+                ),
+                // TODO MVVM모델로 변경
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      SwitchListTile.adaptive(
+                        title: const Text(
+                          '커뮤니티',
+                        ),
+                        subtitle: const Opacity(
+                          opacity: 0.5,
+                          child: Text(
+                            '커뮤니티에 올리기',
+                          ),
+                        ),
+                        value: true,
+                        onChanged: (value) => false,
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.size20,
+                      vertical: Sizes.size10,
+                    ),
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      onTap: () => _scrollToTop(),
+                      child: Text(S.of(context).scrollToTop),
+                    ),
+                  ),
+                ),
+
+                // TODO: 분석 버튼만들어서 클릭하면
+                // TODO: circumplex model을 활용한 이미지와 wordcloud 보여주기
+              ],
             ),
-            SliverToBoxAdapter(
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
               child: Container(
+                color: Colors.grey.shade100,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.size20,
-                  vertical: Sizes.size10,
+                  vertical: Sizes.size6,
+                  horizontal: Sizes.size24,
                 ),
-                alignment: Alignment.bottomRight,
-                child: InkWell(
-                  onTap: () => _scrollToTop(),
-                  child: Text(S.of(context).scrollToTop),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Sizes.size60,
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: Sizes.size18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onPressed: _onCancel,
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Sizes.size60,
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: Sizes.size18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onPressed: _onSave,
+                      child: const Text('Save'),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -156,29 +268,29 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
   }
 }
 
-List<String> emotions = [
-  "신나는",
-  "편안한",
-  "뿌듯한",
-  "기대되는",
-  "행복한",
-  "의욕적인",
-  "설레는",
-  "상쾌한",
-  "우울한",
-  "외로운",
-  "불안한",
-  "슬픈",
-  "화난",
-  "부담되는",
-  "짜증나는",
-  "피곤한",
-];
+// List<String> emotions = [
+//   "신나는",
+//   "편안한",
+//   "뿌듯한",
+//   "기대되는",
+//   "행복한",
+//   "의욕적인",
+//   "설레는",
+//   "상쾌한",
+//   "우울한",
+//   "외로운",
+//   "불안한",
+//   "슬픈",
+//   "화난",
+//   "부담되는",
+//   "짜증나는",
+//   "피곤한",
+// ];
 
-List<String> people = [
-  "친구",
-  "가족",
-  "애인",
-  "지인",
-  "안 만남",
-];
+// List<String> people = [
+//   "친구",
+//   "가족",
+//   "애인",
+//   "지인",
+//   "안 만남",
+// ];
