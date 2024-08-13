@@ -113,98 +113,106 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
           ],
         ),
       ),
-      body: CustomScrollView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          // SliverToBoxAdapter(
-          //   child: DiaryContainer(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     text: S.of(context).howWasYourDay,
-          //     child: const DailyList(),
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: DiaryContainer(
-          //     text: S.of(context).emotion,
-          //     child: MultiSelectList(
-          //       items: emotions,
-          //       crossAxisCount: 4,
-          //     ),
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: DiaryContainer(
-          //     text: S.of(context).person,
-          //     child: MultiSelectList(
-          //       items: people,
-          //       crossAxisCount: 4,
-          //     ),
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: DiaryContainer(
-          //     text: S.of(context).sleep,
-          //     child: Center(
-          //       child: SleepDialog(
-          //         context: context,
-          //       ),
-          //     ),
-          //   ),
-          // ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: CustomScrollView(
+          controller: _scrollController,
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            // SliverToBoxAdapter(
+            //   child: DiaryContainer(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     text: S.of(context).howWasYourDay,
+            //     child: const DailyList(),
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: DiaryContainer(
+            //     text: S.of(context).emotion,
+            //     child: MultiSelectList(
+            //       items: emotions,
+            //       crossAxisCount: 4,
+            //     ),
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: DiaryContainer(
+            //     text: S.of(context).person,
+            //     child: MultiSelectList(
+            //       items: people,
+            //       crossAxisCount: 4,
+            //     ),
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: DiaryContainer(
+            //     text: S.of(context).sleep,
+            //     child: Center(
+            //       child: SleepDialog(
+            //         context: context,
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
-          SliverToBoxAdapter(
-            child: DiaryContainer(
-              text: S.of(context).diary,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: isDarkMode(context)
-                      ? Colors.grey.shade500
-                      : Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(
-                    Sizes.size5,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
-                  child: TextField(
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: S.of(context).enterContentPrompt,
-                      hintStyle: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: Sizes.size14,
-                      ),
+            SliverToBoxAdapter(
+              child: DiaryContainer(
+                text: S.of(context).diary,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: isDarkMode(context)
+                        ? Colors.grey.shade500
+                        : Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(
+                      Sizes.size5,
                     ),
-                    cursorColor: Colors.green.shade300,
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: Sizes.size10),
+                    child: TextField(
+                      minLines: 1,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: S.of(context).enterContentPrompt,
+                        hintStyle: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: Sizes.size14,
+                        ),
+                      ),
+                      cursorColor: Colors.green.shade300,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: DiaryContainer(
-              text: S.of(context).todaysPhoto,
-              child: const Center(
-                child: ImagePickerButton(),
+            SliverToBoxAdapter(
+              child: DiaryContainer(
+                text: S.of(context).todaysPhoto,
+                child: const Center(
+                  child: ImagePickerButton(),
+                ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Sizes.size20,
-                vertical: Sizes.size10,
-              ),
-              alignment: Alignment.bottomRight,
-              child: InkWell(
-                onTap: () => _scrollToTop(),
-                child: Text(S.of(context).scrollToTop),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size20,
+                  vertical: Sizes.size10,
+                ),
+                alignment: Alignment.bottomRight,
+                child: InkWell(
+                  onTap: () => _scrollToTop(),
+                  child: Text(S.of(context).scrollToTop),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
