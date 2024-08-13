@@ -120,41 +120,42 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
         controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         slivers: [
-          SliverToBoxAdapter(
-            child: DiaryContainer(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              text: S.of(context).howWasYourDay,
-              child: const DailyList(),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: DiaryContainer(
-              text: S.of(context).emotion,
-              child: MultiSelectList(
-                items: emotions,
-                crossAxisCount: 4,
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: DiaryContainer(
-              text: S.of(context).person,
-              child: MultiSelectList(
-                items: people,
-                crossAxisCount: 4,
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: DiaryContainer(
-              text: S.of(context).sleep,
-              child: Center(
-                child: SleepDialog(
-                  context: context,
-                ),
-              ),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: DiaryContainer(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     text: S.of(context).howWasYourDay,
+          //     child: const DailyList(),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: DiaryContainer(
+          //     text: S.of(context).emotion,
+          //     child: MultiSelectList(
+          //       items: emotions,
+          //       crossAxisCount: 4,
+          //     ),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: DiaryContainer(
+          //     text: S.of(context).person,
+          //     child: MultiSelectList(
+          //       items: people,
+          //       crossAxisCount: 4,
+          //     ),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: DiaryContainer(
+          //     text: S.of(context).sleep,
+          //     child: Center(
+          //       child: SleepDialog(
+          //         context: context,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
           SliverToBoxAdapter(
             child: DiaryContainer(
               text: S.of(context).diary,
