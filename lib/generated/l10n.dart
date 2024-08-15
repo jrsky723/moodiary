@@ -619,6 +619,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Neutral`
+  String get neutral {
+    return Intl.message(
+      'Neutral',
+      name: 'neutral',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

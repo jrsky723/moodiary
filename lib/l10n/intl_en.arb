@@ -72,5 +72,6 @@
   "unhappiness": "unhappiness",
   "activeness": "activeness",
   "sleepiness": "sleepiness",
-  "moodCloud": "Mood Cloud"
+  "moodCloud": "Mood Cloud",
+  "neutral": "Neutral"
 }

@@ -8,10 +8,14 @@ import 'package:moodiary/utils/color_utils.dart';
 
 class CircumplexModelCard extends StatelessWidget {
   final List<Offset> moodOffsets;
+  final Text titleText;
+  final Text subtitleText;
 
   const CircumplexModelCard({
     super.key,
     required this.moodOffsets,
+    this.titleText = const Text(''),
+    this.subtitleText = const Text(''),
   });
 
   double getMeanX() {
@@ -46,22 +50,10 @@ class CircumplexModelCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(
-                'Circumplex Model',
-                style: TextStyle(
-                  fontSize: Sizes.size20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              titleText,
               Gaps.v8,
-              const Text(
-                '감정 분석(28일)',
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.grey,
-                ),
-              ),
-              Gaps.v20,
+              subtitleText,
+              Gaps.v28,
               CustomPaint(
                 size: const Size(double.infinity, 20.0),
                 painter: LinearIndicatorPainter(
