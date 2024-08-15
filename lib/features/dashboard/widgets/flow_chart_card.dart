@@ -9,11 +9,13 @@ import 'package:moodiary/features/dashboard/painters/line_chart_painter.dart';
 class FlowChartCard extends StatelessWidget {
   final List<MoodEntry> moodEntries;
   final bool isXAxis;
+  final Text titleText;
 
   const FlowChartCard({
     super.key,
     required this.moodEntries,
     this.isXAxis = true,
+    this.titleText = const Text(''),
   });
 
   @override
@@ -25,32 +27,46 @@ class FlowChartCard extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size24,
-        vertical: Sizes.size16,
+      padding: const EdgeInsets.only(
+        left: Sizes.size24,
+        right: Sizes.size24,
+        bottom: Sizes.size16,
       ),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Flexible(
-              flex: 1,
-              child: CustomPaint(
-                size: const Size(double.infinity, double.infinity),
-                painter: GradientLegendPainter(
-                  colors: colors,
-                ),
-              )),
-          Gaps.h16,
+            flex: 1,
+            child: titleText,
+          ),
           Flexible(
-            flex: 12,
-            child: CustomPaint(
-              size: const Size(double.infinity, double.infinity),
-              painter: LineChartPainter(
-                dataPoints: moodEntries
-                    .map((e) => isXAxis ? e.offset.dx : e.offset.dy)
-                    .toList(),
-                dates: moodEntries.map((e) => e.date).toList(),
-                colors: colors,
-              ),
+            flex: 5,
+            child: Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: CustomPaint(
+                    size: const Size(double.infinity, double.infinity),
+                    painter: GradientLegendPainter(
+                      colors: colors,
+                    ),
+                  ),
+                ),
+                Gaps.h16,
+                Flexible(
+                  flex: 12,
+                  child: CustomPaint(
+                    size: const Size(double.infinity, double.infinity),
+                    painter: LineChartPainter(
+                      dataPoints: moodEntries
+                          .map((e) => isXAxis ? e.offset.dx : e.offset.dy)
+                          .toList(),
+                      dates: moodEntries.map((e) => e.date).toList(),
+                      colors: colors,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

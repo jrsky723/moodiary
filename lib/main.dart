@@ -60,7 +60,6 @@ class Moodiary extends ConsumerWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.green.shade50,
           centerTitle: true,
-          elevation: 0,
         ),
         tabBarTheme: const TabBarTheme(
           labelColor: customPrimarySwatch,
@@ -80,7 +79,6 @@ class Moodiary extends ConsumerWidget {
           foregroundColor: Colors.white,
           backgroundColor: Colors.grey.shade900,
           centerTitle: true,
-          elevation: 0,
         ),
         listTileTheme: const ListTileThemeData(
           textColor: Colors.white,

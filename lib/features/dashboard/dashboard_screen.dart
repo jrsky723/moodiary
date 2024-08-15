@@ -3,6 +3,7 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 import 'package:moodiary/features/dashboard/widgets/circumplex_model_card.dart';
+import 'package:moodiary/features/dashboard/widgets/distribution_chart_card.dart';
 import 'package:moodiary/features/dashboard/widgets/flow_chart_card.dart';
 import 'package:moodiary/utils/mood_utils.dart';
 
@@ -14,6 +15,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   List<MoodEntry> moodEntries = generateMoodEntries(
     DateTime.now().subtract(
       const Duration(days: 28),
@@ -22,35 +25,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
   );
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          '감정 분석',
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        surfaceTintColor: Colors.transparent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size16,
-        ),
-        child: ListView(
-          children: [
-            Gaps.v16,
-            _buildMoodChartSection(
-              height: 200.0,
+      body: NestedScrollView(
+        controller: _scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            const SliverAppBar(
+              title: Text('Dashboard'),
+              pinned: true,
+              floating: true,
+              surfaceTintColor: Colors.transparent,
+              shadowColor: Colors.black,
             ),
-            Gaps.v16,
-            _buildFlowChartSection(
-              height: 200.0,
+          ];
+        },
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: _buildMoodChartSection(
+                height: 200.0,
+              ),
             ),
-            Gaps.v16,
-            _buildDistributionChartSection(
-              height: 500.0,
+            const SliverToBoxAdapter(
+              child: Gaps.v16,
+            ),
+            SliverToBoxAdapter(
+              child: _buildFlowChartSection(
+                height: 200.0,
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Gaps.v16,
+            ),
+            SliverToBoxAdapter(
+              child: _buildDistributionChartSection(
+                height: 540.0,
+              ),
             ),
           ],
         ),
@@ -58,34 +75,62 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  Widget _buildSectionContainer({
+    required Widget child,
+    required double height,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Sizes.size16,
+        vertical: Sizes.size8,
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Sizes.size18,
+          vertical: Sizes.size20,
+        ),
+        height: height,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(Sizes.size16),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 5,
+              offset: Offset(0, 1.5),
+            ),
+          ],
+        ),
+        child: child,
+      ),
+    );
+  }
+
   Widget _buildMoodChartSection({
     required double height,
   }) {
-    return Container(
+    return _buildSectionContainer(
       height: height,
-      padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size18,
-        vertical: Sizes.size18,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(Sizes.size16),
-      ),
       child: PageView(
         children: [
           CircumplexModelCard(
+            titleText: Text(
+              'Circumplex Model',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            subtitleText: Text(
+              '최근 28일 감정 분포',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             moodOffsets: [
               for (final moodEntry in moodEntries) moodEntry.offset,
             ],
           ),
           Column(
             children: [
-              const Text(
+              Text(
                 'Mood Cloud',
-                style: TextStyle(
-                  fontSize: Sizes.size20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               Gaps.v8,
               Expanded(
@@ -110,21 +155,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildFlowChartSection({
     required double height,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size18,
-        vertical: Sizes.size20,
-      ),
+    return _buildSectionContainer(
       height: height,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(Sizes.size16),
-      ),
       child: PageView(
         children: [
-          FlowChartCard(moodEntries: moodEntries),
           FlowChartCard(
             moodEntries: moodEntries,
+            titleText: Text(
+              'Pleasantness - Unpleasantness',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+          FlowChartCard(
+            moodEntries: moodEntries,
+            titleText: Text(
+              'Activation - Deactivation',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             isXAxis: false,
           ),
         ],
@@ -135,23 +182,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildDistributionChartSection({
     required double height,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size18,
-        vertical: Sizes.size20,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(Sizes.size16),
-      ),
-      child: Column(
-        children: [
-          Gaps.v12,
-          SizedBox(
-            height: height,
-            child: const Placeholder(),
-          ),
-        ],
+    return _buildSectionContainer(
+      height: height,
+      child: DistributionChartCard(
+        moodEntries: moodEntries,
+        titleText: Text(
+          'Mood Distribution',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
     );
   }

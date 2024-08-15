@@ -69,7 +69,7 @@ class CustomTextThemes {
     ),
     titleMedium: TextStyle(
       fontFamily: 'NotoSansKR',
-      fontSize: Sizes.size16,
+      fontSize: Sizes.size18,
       fontVariations: [
         FontVariation('wght', 600), // Semi-bold weight
       ],

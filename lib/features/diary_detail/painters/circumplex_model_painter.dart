@@ -1,8 +1,8 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/painter_utils.dart';
+import 'package:moodiary/utils/color_utils.dart';
 
 class CircumplexModelPainter extends CustomPainter {
   final List<Offset> moodOffsets;
@@ -44,7 +44,7 @@ class CircumplexModelPainter extends CustomPainter {
     for (double dx = -1; dx <= 1; dx += 0.01) {
       for (double dy = -1; dy <= 1; dy += 0.01) {
         if (dx * dx + dy * dy <= 1) {
-          final color = getEmotionColor(dx, dy);
+          final color = getMoodOffsetColor(Offset(dx, dy));
           final offset =
               Offset(center.dx + dx * radius, center.dy - dy * radius);
           paint.color = color;
@@ -116,25 +116,6 @@ class CircumplexModelPainter extends CustomPainter {
 
     final double emotionRadius = radius / 15;
     canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
-  }
-
-  Color getEmotionColor(double x, double y) {
-    // Calculate horizontal (x-axis) color interpolation
-    final xColor =
-        Color.lerp(CMColors.unpleasant, CMColors.pleasant, (x + 1) / 2);
-    // Calculate vertical (y-axis) color interpolation
-    final yColor =
-        Color.lerp(CMColors.deactivation, CMColors.activation, (y + 1) / 2);
-    // Combine the two colors
-    final combinedColor = Color.lerp(xColor, yColor, 0.5)!;
-    // Calculate distance from center (0,0) and blend with gray
-    final distanceFromCenter = sqrt(x * x + y * y);
-
-    return Color.lerp(
-      Colors.grey,
-      combinedColor,
-      distanceFromCenter + 0.3,
-    )!;
   }
 
   @override

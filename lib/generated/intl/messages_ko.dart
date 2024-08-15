@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("오늘의 감정을 분석한 결과입니다."),
         "moodCloud": MessageLookupByLibrary.simpleMessage("감정 구름"),
         "mostFrequentMoodText": m0,
+        "neutral": MessageLookupByLibrary.simpleMessage("어중간한"),
         "person": MessageLookupByLibrary.simpleMessage("사람"),
         "relaxed": MessageLookupByLibrary.simpleMessage("이완된"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),

@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Today\'s mood analysis."),
         "moodCloud": MessageLookupByLibrary.simpleMessage("Mood Cloud"),
         "mostFrequentMoodText": m0,
+        "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "relaxed": MessageLookupByLibrary.simpleMessage("Relaxed"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
