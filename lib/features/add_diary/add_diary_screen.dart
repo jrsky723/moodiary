@@ -99,6 +99,7 @@ class _AddDiaryScreenState extends State<AddDiaryScreen> {
     FocusScope.of(context).unfocus();
   }
 
+// TODO : 로직 분리하기
   void _onSave() {
     // TODO: 저장 로직 추가
     _hideKeyboard();

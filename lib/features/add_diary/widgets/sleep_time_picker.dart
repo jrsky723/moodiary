@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/add_diary/model/sleep_time.dart';
+import 'package:moodiary/features/add_diary/models/sleep_time.dart';
 import 'package:moodiary/features/add_diary/widgets/custom_drop_down.dart';
 import 'package:moodiary/features/add_diary/widgets/time_button.dart';
 import 'package:moodiary/generated/l10n.dart';
