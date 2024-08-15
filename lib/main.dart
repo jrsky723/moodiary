@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/colors.dart';
-import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/constants/text_themes.dart';
 import 'package:moodiary/features/settings/repos/settings_repos.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
 import 'package:moodiary/router.dart';
@@ -50,7 +50,7 @@ class Moodiary extends ConsumerWidget {
           : const Locale('ko', 'KR'),
       supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
-        textTheme: Typography.blackMountainView,
+        textTheme: CustomTextThemes.darkTextTheme,
         brightness: Brightness.light,
         dialogBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSwatch(
@@ -61,11 +61,6 @@ class Moodiary extends ConsumerWidget {
           backgroundColor: Colors.green.shade50,
           centerTitle: true,
           elevation: 0,
-          titleTextStyle: const TextStyle(
-            color: Colors.black,
-            fontSize: Sizes.size20,
-            fontWeight: FontWeight.bold,
-          ),
         ),
         tabBarTheme: const TabBarTheme(
           labelColor: customPrimarySwatch,
@@ -74,7 +69,7 @@ class Moodiary extends ConsumerWidget {
         ),
       ),
       darkTheme: ThemeData.dark().copyWith(
-        textTheme: Typography.whiteMountainView,
+        textTheme: CustomTextThemes.whiteTextTheme,
         brightness: Brightness.dark,
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: Colors.grey.shade900,
@@ -86,11 +81,6 @@ class Moodiary extends ConsumerWidget {
           backgroundColor: Colors.grey.shade900,
           centerTitle: true,
           elevation: 0,
-          titleTextStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: Sizes.size20,
-            fontWeight: FontWeight.bold,
-          ),
         ),
         listTileTheme: const ListTileThemeData(
           textColor: Colors.white,
