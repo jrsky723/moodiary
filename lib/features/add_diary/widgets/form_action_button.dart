@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
 class FormActionButton extends StatelessWidget {
