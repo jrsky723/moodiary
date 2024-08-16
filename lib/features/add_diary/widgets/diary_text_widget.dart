@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
-class DiaryTextWidget extends StatefulWidget {
+class DiaryTextWidget extends ConsumerStatefulWidget {
   final TextEditingController controller;
-  final FocusNode focusNode;
   const DiaryTextWidget({
     super.key,
     required this.controller,
-    required this.focusNode,
   });
 
   @override
-  State<DiaryTextWidget> createState() => _DiaryTextWidgetState();
+  ConsumerState<DiaryTextWidget> createState() => _DiaryTextWidgetState();
 }
 
-class _DiaryTextWidgetState extends State<DiaryTextWidget> {
+class _DiaryTextWidgetState extends ConsumerState<DiaryTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +29,6 @@ class _DiaryTextWidgetState extends State<DiaryTextWidget> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
         child: TextField(
-          focusNode: widget.focusNode,
           controller: widget.controller,
           minLines: 1,
           maxLines: null,

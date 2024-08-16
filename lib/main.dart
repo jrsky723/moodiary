@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/add_diary/repos/add_diary_repo.dart';
+import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/settings/repos/settings_repos.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
 import 'package:moodiary/router.dart';
@@ -16,12 +18,16 @@ void main() async {
 
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepos(preferences);
+  final addDiaryRepo = AddDiaryRepository(preferences);
 
   runApp(
     ProviderScope(
       overrides: [
         settingsProvider.overrideWith(
           () => SettingsViewModel(repository),
+        ),
+        addDiaryProvider.overrideWith(
+          () => AddDiaryViewModel(addDiaryRepo),
         ),
       ],
       child: const Moodiary(),
