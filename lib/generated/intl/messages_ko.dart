@@ -33,6 +33,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),
+        "communityBtn": MessageLookupByLibrary.simpleMessage("커뮤니티"),
+        "communityBtnSubtitle":
+            MessageLookupByLibrary.simpleMessage("커뮤니티에 올리기"),
         "communityTitle": MessageLookupByLibrary.simpleMessage("이야기"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("확인"),
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
@@ -59,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "normal": MessageLookupByLibrary.simpleMessage("보통"),
         "person": MessageLookupByLibrary.simpleMessage("사람"),
         "sad": MessageLookupByLibrary.simpleMessage("슬픔"),
+        "saveBtn": MessageLookupByLibrary.simpleMessage("저장"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),
         "selectDate": MessageLookupByLibrary.simpleMessage("날짜 선택"),
         "selectMonthDay": MessageLookupByLibrary.simpleMessage("월 및 일 선택"),

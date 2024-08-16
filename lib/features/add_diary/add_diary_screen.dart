@@ -11,6 +11,7 @@ import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dar
 import 'package:moodiary/features/add_diary/widgets/calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_text_widget.dart';
+import 'package:moodiary/features/add_diary/widgets/form_action_button.dart';
 import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
@@ -202,13 +203,13 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                         onChanged: (value) => {
                           ref.read(addDiaryProvider.notifier).setIsShared(value)
                         },
-                        title: const Text(
-                          '커뮤니티',
+                        title: Text(
+                          S.of(context).communityBtn,
                         ),
-                        subtitle: const Opacity(
+                        subtitle: Opacity(
                           opacity: 0.5,
                           child: Text(
-                            '커뮤니티에 올리기',
+                            S.of(context).communityBtnSubtitle,
                           ),
                         ),
                       ),
@@ -228,8 +229,6 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                     ),
                   ),
                 ),
-                // 이미지가 잘 저장되었는지 확인하기위해
-                //격자형태로 이미지 불러와서 보여주기
 
                 // TODO: 분석 버튼만들어서 클릭하면
                 // TODO: circumplex model을 활용한 이미지와 wordcloud 보여주기
@@ -240,7 +239,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
               right: 0,
               bottom: 0,
               child: Container(
-                color: Colors.grey.shade100,
+                color:
+                    isDarkMode(context) ? Colors.black12 : Colors.grey.shade100,
                 padding: const EdgeInsets.symmetric(
                   vertical: Sizes.size6,
                   horizontal: Sizes.size24,
@@ -248,36 +248,14 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Sizes.size60,
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: Sizes.size18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    FormActionButton(
+                      text: S.of(context).cancelBtn,
                       onPressed: _onCancel,
-                      child: const Text('Cancel'),
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Sizes.size60,
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: Sizes.size18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    FormActionButton(
+                      text: S.of(context).saveBtn,
                       onPressed: _onSave,
-                      child: const Text('Save'),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -288,30 +266,3 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     );
   }
 }
-
-// List<String> emotions = [
-//   "신나는",
-//   "편안한",
-//   "뿌듯한",
-//   "기대되는",
-//   "행복한",
-//   "의욕적인",
-//   "설레는",
-//   "상쾌한",
-//   "우울한",
-//   "외로운",
-//   "불안한",
-//   "슬픈",
-//   "화난",
-//   "부담되는",
-//   "짜증나는",
-//   "피곤한",
-// ];
-
-// List<String> people = [
-//   "친구",
-//   "가족",
-//   "애인",
-//   "지인",
-//   "안 만남",
-// ];

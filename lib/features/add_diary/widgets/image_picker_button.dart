@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/generated/l10n.dart';

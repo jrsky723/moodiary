@@ -34,6 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "communityBtn": MessageLookupByLibrary.simpleMessage("Community"),
+        "communityBtnSubtitle":
+            MessageLookupByLibrary.simpleMessage("Post to community"),
         "communityTitle": MessageLookupByLibrary.simpleMessage("Community"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "darkModeSubtitle":
@@ -64,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "normal": MessageLookupByLibrary.simpleMessage("Normal"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "sad": MessageLookupByLibrary.simpleMessage("Sad"),
+        "saveBtn": MessageLookupByLibrary.simpleMessage("Save"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
         "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
         "selectMonthDay":
