@@ -629,6 +629,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Circumplex Model`
+  String get circumplexModel {
+    return Intl.message(
+      'Circumplex Model',
+      name: 'circumplexModel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Positive`
+  String get positive {
+    return Intl.message(
+      'Positive',
+      name: 'positive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Negative`
+  String get negative {
+    return Intl.message(
+      'Negative',
+      name: 'negative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message(
+      'Active',
+      name: 'active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passive`
+  String get passive {
+    return Intl.message(
+      'Passive',
+      name: 'passive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent {days} days mood`
+  String recentMoodDescription(Object days) {
+    return Intl.message(
+      'Recent $days days mood',
+      name: 'recentMoodDescription',
+      desc: '',
+      args: [days],
+    );
+  }
+
+  /// `Mood Distribution`
+  String get moodDistribution {
+    return Intl.message(
+      'Mood Distribution',
+      name: 'moodDistribution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard`
+  String get dashboard {
+    return Intl.message(
+      'Dashboard',
+      name: 'dashboard',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

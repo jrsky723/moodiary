@@ -4,6 +4,7 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary_detail/painters/circumplex_model_painter.dart';
 import 'package:moodiary/features/diary_detail/painters/linear_indicator_painter.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/color_utils.dart';
 
 class CircumplexModelCard extends StatelessWidget {
@@ -64,7 +65,8 @@ class CircumplexModelCard extends StatelessWidget {
                   middleColor: Colors.grey,
                   indicatorRadius: Sizes.size3,
                   label: TextSpan(
-                    text: 'Positive-Negative: ${(meanX * 100).toInt()}%',
+                    text:
+                        '${S.of(context).positive} - ${S.of(context).negative}: ${(meanX * 100).toInt()}%',
                     style: TextStyle(
                       fontSize: Sizes.size14,
                       color: meanXColor,
@@ -83,7 +85,8 @@ class CircumplexModelCard extends StatelessWidget {
                   middleColor: Colors.grey,
                   indicatorRadius: Sizes.size3,
                   label: TextSpan(
-                    text: 'Active-Passive: ${(meanY * 100).toInt()}%',
+                    text:
+                        '${S.of(context).active} - ${S.of(context).passive}: ${(meanY * 100).toInt()}%',
                     style: TextStyle(
                       fontSize: Sizes.size14,
                       color: meanYColor,

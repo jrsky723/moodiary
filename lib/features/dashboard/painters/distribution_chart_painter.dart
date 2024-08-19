@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/constants/mood.dart';
-import 'package:moodiary/utils/color_utils.dart';
-import 'package:moodiary/utils/mood_utils.dart';
+import 'package:moodiary/features/dashboard/models/distribution_chart_data.dart';
 
 class DistributionChartPainter extends CustomPainter {
   // 분포 차트 그리는 painter
   // data를 받아서 분포 차트를 그림
-  // data: Map 형태로 <string, double>로 받음
-  // string은 mood의 이름, double은 분포의 비율 (0~1)
+  // data: DistributionChartData list
 
-  final Map<Mood, double> data;
+  final List<DistributionChartData> data;
+  final TextStyle textStyle;
 
   DistributionChartPainter({
     required this.data,
+    required this.textStyle,
   });
 
   @override
@@ -26,11 +25,10 @@ class DistributionChartPainter extends CustomPainter {
       final startY = size.height / data.length;
       final gap = size.height / data.length;
 
-      // mood 처리
-      final mood = data.keys.elementAt(i);
-      final moodOffset = getMoodOffset(mood);
-      final color = getMoodOffsetColor(moodOffset);
-      final ratio = data.values.elementAt(i);
+      final mood = data[i];
+      final ratio = mood.value;
+      final label = mood.label;
+      final color = mood.color;
 
       // 빈 차트 그리기
       final emptyPaint = Paint()
@@ -58,7 +56,7 @@ class DistributionChartPainter extends CustomPainter {
       paintText(
         canvas: canvas,
         offset: Offset(0, y - size.height / data.length / 1.4),
-        text: mood.name,
+        text: label,
       );
 
       // percent 그리기
@@ -82,10 +80,7 @@ class DistributionChartPainter extends CustomPainter {
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 13,
-        ),
+        style: textStyle,
       ),
       textDirection: TextDirection.ltr,
     );
