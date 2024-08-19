@@ -22,10 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(label) => "가장 많이 기록한 감정: ${label}";
 
-  static String m1(hours, minutes) => "수면시간 ${hours}시간 ${minutes}분";
+  static String m1(days) => "최근 ${days}일 감정";
+
+  static String m2(hours, minutes) => "수면시간 ${hours}시간 ${minutes}분";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "active": MessageLookupByLibrary.simpleMessage("활동"),
         "activeness": MessageLookupByLibrary.simpleMessage("활발"),
         "alarmed": MessageLookupByLibrary.simpleMessage("(나쁜) 놀란"),
         "alert": MessageLookupByLibrary.simpleMessage("(좋은) 놀란"),
@@ -33,11 +36,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "bored": MessageLookupByLibrary.simpleMessage("지루한"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),
+        "circumplexModel":
+            MessageLookupByLibrary.simpleMessage("Circumplex Model"),
         "communityTitle": MessageLookupByLibrary.simpleMessage("이야기"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("확인"),
         "content": MessageLookupByLibrary.simpleMessage("만족한"),
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("다크 모드"),
+        "dashboard": MessageLookupByLibrary.simpleMessage("분석"),
         "delighted": MessageLookupByLibrary.simpleMessage("즐거운"),
         "diary": MessageLookupByLibrary.simpleMessage("일기"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("다이어리 검색"),
@@ -64,9 +70,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "moodAnalysisExplanation":
             MessageLookupByLibrary.simpleMessage("오늘의 감정을 분석한 결과입니다."),
         "moodCloud": MessageLookupByLibrary.simpleMessage("감정 구름"),
+        "moodDistribution": MessageLookupByLibrary.simpleMessage("감정 분포"),
         "mostFrequentMoodText": m0,
+        "negative": MessageLookupByLibrary.simpleMessage("부정"),
         "neutral": MessageLookupByLibrary.simpleMessage("어중간한"),
+        "passive": MessageLookupByLibrary.simpleMessage("수동"),
         "person": MessageLookupByLibrary.simpleMessage("사람"),
+        "positive": MessageLookupByLibrary.simpleMessage("긍정"),
+        "recentMoodDescription": m1,
         "relaxed": MessageLookupByLibrary.simpleMessage("이완된"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),
         "selectMonthDay": MessageLookupByLibrary.simpleMessage("월 및 일 선택"),
@@ -75,7 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "serene": MessageLookupByLibrary.simpleMessage("평온한"),
         "settings": MessageLookupByLibrary.simpleMessage("설정"),
         "sleep": MessageLookupByLibrary.simpleMessage("수면"),
-        "sleepDuration": m1,
+        "sleepDuration": m2,
         "sleepiness": MessageLookupByLibrary.simpleMessage("졸림"),
         "sleepy": MessageLookupByLibrary.simpleMessage("졸린"),
         "tense": MessageLookupByLibrary.simpleMessage("긴장된"),

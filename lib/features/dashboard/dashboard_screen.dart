@@ -5,7 +5,9 @@ import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 import 'package:moodiary/features/dashboard/widgets/circumplex_model_card.dart';
 import 'package:moodiary/features/dashboard/widgets/distribution_chart_card.dart';
 import 'package:moodiary/features/dashboard/widgets/flow_chart_card.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/mood_utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -37,8 +39,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            const SliverAppBar(
-              title: Text('Dashboard'),
+            SliverAppBar(
+              title: Text(S.of(context).dashboard),
               pinned: true,
               floating: true,
               surfaceTintColor: Colors.transparent,
@@ -91,7 +93,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         height: height,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDarkMode(context) ? Colors.transparent : Colors.white,
           borderRadius: BorderRadius.circular(Sizes.size16),
           boxShadow: const [
             BoxShadow(
@@ -115,11 +117,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           CircumplexModelCard(
             titleText: Text(
-              'Circumplex Model',
+              S.of(context).circumplexModel,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             subtitleText: Text(
-              '최근 28일 감정 분포',
+              S.of(context).recentMoodDescription(28),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             moodOffsets: [
@@ -129,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Column(
             children: [
               Text(
-                'Mood Cloud',
+                S.of(context).moodCloud,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Gaps.v8,
@@ -162,14 +164,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           FlowChartCard(
             moodEntries: moodEntries,
             titleText: Text(
-              'Pleasantness - Unpleasantness',
+              '${S.of(context).positive} - ${S.of(context).negative}',
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
           FlowChartCard(
             moodEntries: moodEntries,
             titleText: Text(
-              'Activation - Deactivation',
+              '${S.of(context).active} - ${S.of(context).passive}',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             isXAxis: false,
@@ -187,7 +189,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: DistributionChartCard(
         moodEntries: moodEntries,
         titleText: Text(
-          'Mood Distribution',
+          S.of(context).moodDistribution,
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),

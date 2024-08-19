@@ -73,5 +73,20 @@
   "unhappiness": "불행",
   "activeness": "활발",
   "sleepiness": "졸림",
-  "moodCloud": "감정 구름"
+  "moodCloud": "감정 구름",
+  "circumplexModel": "Circumplex Model",
+  "positive": "긍정",
+  "negative": "부정",
+  "active": "활동",
+  "passive": "수동",
+  "recentMoodDescription": "최근 {days}일 감정",
+  "@recentMoodDescription": {
+    "variables": {
+      "days": {
+        "type": "number"
+      }
+    }
+  },
+  "moodDistribution": "감정 분포",
+  "dashboard": "분석"
 }
