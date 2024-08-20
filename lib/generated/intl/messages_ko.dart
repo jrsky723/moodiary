@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AM": MessageLookupByLibrary.simpleMessage("오전"),
         "PM": MessageLookupByLibrary.simpleMessage("오후"),
+        "analysisBtn": MessageLookupByLibrary.simpleMessage("분석"),
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "calendar": MessageLookupByLibrary.simpleMessage("달력"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("취소"),

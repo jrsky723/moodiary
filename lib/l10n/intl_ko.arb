@@ -70,5 +70,6 @@
   "AM": "오전",
   "PM": "오후",
   "communityBtn": "커뮤니티",
-  "communityBtnSubtitle": "커뮤니티에 올리기"
+  "communityBtnSubtitle": "커뮤니티에 올리기",
+  "analysisBtn": "분석"
 }

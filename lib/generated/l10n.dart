@@ -529,6 +529,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Analysis`
+  String get analysisBtn {
+    return Intl.message(
+      'Analysis',
+      name: 'analysisBtn',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -70,5 +70,6 @@
   "AM": "AM",
   "PM": "PM",
   "communityBtn": "Community",
-  "communityBtnSubtitle": "Post to community"
+  "communityBtnSubtitle": "Post to community",
+  "analysisBtn": "Analysis"
 }
