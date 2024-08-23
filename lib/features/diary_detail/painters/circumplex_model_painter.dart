@@ -120,6 +120,9 @@ class CircumplexModelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    if (oldDelegate is CircumplexModelPainter) {
+      return oldDelegate.moodOffsets != moodOffsets;
+    }
     return false;
   }
 }

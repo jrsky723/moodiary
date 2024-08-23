@@ -105,6 +105,9 @@ class LinearIndicatorPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    if (oldDelegate is LinearIndicatorPainter) {
+      return oldDelegate.values != values;
+    }
     return false;
   }
 }

@@ -709,6 +709,16 @@ class S {
       args: [],
     );
   }
+
+  /// `{value}D`
+  String days(Object value) {
+    return Intl.message(
+      '${value}D',
+      name: 'days',
+      desc: '',
+      args: [value],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
