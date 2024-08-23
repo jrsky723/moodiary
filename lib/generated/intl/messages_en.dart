@@ -20,11 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(label) => "Most frequently recorded emotion: ${label}";
+  static String m0(value) => "${value}D";
 
-  static String m1(days) => "Recent ${days} days mood";
+  static String m1(label) => "Most frequently recorded emotion: ${label}";
 
-  static String m2(hours, minutes) =>
+  static String m2(days) => "Recent ${days} days mood";
+
+  static String m3(hours, minutes) =>
       "Sleep Duration : ${hours} hours ${minutes} minutes";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -46,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Change to dark mode"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("Dark mode"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
+        "days": m0,
         "delighted": MessageLookupByLibrary.simpleMessage("Delighted"),
         "diary": MessageLookupByLibrary.simpleMessage("Diary"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("Diary Search"),
@@ -77,13 +80,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "moodCloud": MessageLookupByLibrary.simpleMessage("Mood Cloud"),
         "moodDistribution":
             MessageLookupByLibrary.simpleMessage("Mood Distribution"),
-        "mostFrequentMoodText": m0,
+        "mostFrequentMoodText": m1,
         "negative": MessageLookupByLibrary.simpleMessage("Negative"),
         "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
-        "recentMoodDescription": m1,
+        "recentMoodDescription": m2,
         "relaxed": MessageLookupByLibrary.simpleMessage("Relaxed"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
         "selectMonthDay":
@@ -95,7 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "serene": MessageLookupByLibrary.simpleMessage("Serene"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sleep": MessageLookupByLibrary.simpleMessage("Sleep"),
-        "sleepDuration": m2,
+        "sleepDuration": m3,
         "sleepiness": MessageLookupByLibrary.simpleMessage("sleepiness"),
         "sleepy": MessageLookupByLibrary.simpleMessage("Sleepy"),
         "tense": MessageLookupByLibrary.simpleMessage("Tense"),

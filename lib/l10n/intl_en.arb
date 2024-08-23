@@ -88,5 +88,13 @@
     }
   },
   "moodDistribution": "Mood Distribution",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "days": "{value}D",
+  "@days": {
+    "variables": {
+      "value": {
+        "type": "number"
+      }
+    }
+  }
 }

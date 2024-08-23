@@ -62,10 +62,6 @@ class LineChartPainter extends CustomPainter {
       final startPoint = Offset(startX, startY);
       final endPoint = Offset(endX, endY);
       canvas.drawLine(startPoint, endPoint, gradient);
-      canvas.drawCircle(startPoint, 3.5, gradient);
-      if (i == dataPoints.length - 2) {
-        canvas.drawCircle(endPoint, 3.5, gradient);
-      }
     }
   }
 

@@ -102,6 +102,9 @@ class DistributionChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+    if (oldDelegate is DistributionChartPainter) {
+      return oldDelegate.data != data;
+    }
+    return true;
   }
 }

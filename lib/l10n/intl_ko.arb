@@ -88,5 +88,13 @@
     }
   },
   "moodDistribution": "감정 분포",
-  "dashboard": "분석"
+  "dashboard": "분석",
+  "days": "{value}일",
+  "@days": {
+    "variables": {
+      "value": {
+        "type": "number"
+      }
+    }
+  }
 }
