@@ -680,11 +680,11 @@ class S {
     );
   }
 
-  /// `Recent {days} days mood`
-  String recentMoodDescription(Object days) {
+  /// `Only {days} of Mood data are displayed.`
+  String dashboardDescription(Object days) {
     return Intl.message(
-      'Recent $days days mood',
-      name: 'recentMoodDescription',
+      'Only $days of Mood data are displayed.',
+      name: 'dashboardDescription',
       desc: '',
       args: [days],
     );

@@ -79,10 +79,10 @@
   "negative": "부정",
   "active": "활동",
   "passive": "수동",
-  "recentMoodDescription": "최근 {days}일 감정",
-  "@recentMoodDescription": {
+  "dashboardDescription": "전체 중 {maxDrawCount}개의 감정정보만 표시됩니다.",
+  "@dashboardDescription": {
     "variables": {
-      "days": {
+      "maxDrawCount": {
         "type": "number"
       }
     }

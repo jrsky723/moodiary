@@ -20,11 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
-  static String m0(value) => "${value}일";
+  static String m0(maxDrawCount) => "전체 중 ${maxDrawCount}개의 감정정보만 표시됩니다.";
 
-  static String m1(label) => "가장 많이 기록한 감정: ${label}";
+  static String m1(value) => "${value}일";
 
-  static String m2(days) => "최근 ${days}일 감정";
+  static String m2(label) => "가장 많이 기록한 감정: ${label}";
 
   static String m3(hours, minutes) => "수면시간 ${hours}시간 ${minutes}분";
 
@@ -46,7 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("다크 모드"),
         "dashboard": MessageLookupByLibrary.simpleMessage("분석"),
-        "days": m0,
+        "dashboardDescription": m0,
+        "days": m1,
         "delighted": MessageLookupByLibrary.simpleMessage("즐거운"),
         "diary": MessageLookupByLibrary.simpleMessage("일기"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("다이어리 검색"),
@@ -74,13 +75,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("오늘의 감정을 분석한 결과입니다."),
         "moodCloud": MessageLookupByLibrary.simpleMessage("감정 구름"),
         "moodDistribution": MessageLookupByLibrary.simpleMessage("감정 분포"),
-        "mostFrequentMoodText": m1,
+        "mostFrequentMoodText": m2,
         "negative": MessageLookupByLibrary.simpleMessage("부정"),
         "neutral": MessageLookupByLibrary.simpleMessage("어중간한"),
         "passive": MessageLookupByLibrary.simpleMessage("수동"),
         "person": MessageLookupByLibrary.simpleMessage("사람"),
         "positive": MessageLookupByLibrary.simpleMessage("긍정"),
-        "recentMoodDescription": m2,
         "relaxed": MessageLookupByLibrary.simpleMessage("이완된"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("맨위로"),
         "selectMonthDay": MessageLookupByLibrary.simpleMessage("월 및 일 선택"),

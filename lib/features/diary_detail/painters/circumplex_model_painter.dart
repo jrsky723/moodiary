@@ -7,10 +7,12 @@ import 'package:moodiary/utils/color_utils.dart';
 class CircumplexModelPainter extends CustomPainter {
   final List<Offset> moodOffsets;
   final bool showAverage;
+  final int maxDrawCount;
 
   CircumplexModelPainter({
     required this.moodOffsets,
     this.showAverage = false,
+    this.maxDrawCount = 30, // 최대로 그릴 감정 개수
   });
   @override
   void paint(Canvas canvas, Size size) {
@@ -25,17 +27,40 @@ class CircumplexModelPainter extends CustomPainter {
 
     paintBackground(canvas, center, radius);
     paintBorder(canvas, center, radius);
-    for (final offset in moodOffsets) {
+    // 전체 리스트에서, maxDrawCount만 추출 (비율 유지)
+    final step = moodOffsets.length ~/ maxDrawCount;
+    for (int i = 0; i < moodOffsets.length; i++) {
+      final offset = moodOffsets[i];
       final emotionOffset = Offset(
         center.dx + offset.dx * radius,
         center.dy - offset.dy * radius,
       );
-      paintEmotion(canvas, emotionOffset, radius);
+      if (step == 0 || i % step == 0) {
+        paintEmotion(canvas, emotionOffset, radius, i, moodOffsets.length);
+      }
     }
-
     if (showAverage) {
       paintAveragePoint(canvas, center, radius);
     }
+  }
+
+  void paintEmotion(
+    Canvas canvas,
+    Offset offset,
+    double radius,
+    int index,
+    int length,
+  ) {
+    // 순서에 따라 opacity는 index에 비례
+    double proportion = (index + 1) / length;
+
+    final emotionBorderPaint = Paint()
+      ..color = customPrimarySwatch.withOpacity(proportion)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    final double emotionRadius = radius / 15;
+    canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
   }
 
   void paintBackground(Canvas canvas, Offset center, double radius) {
@@ -106,16 +131,6 @@ class CircumplexModelPainter extends CustomPainter {
       Offset(center.dx + radius, center.dy),
       paint,
     );
-  }
-
-  void paintEmotion(Canvas canvas, Offset offset, double radius) {
-    final emotionBorderPaint = Paint()
-      ..color = customPrimarySwatch
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-
-    final double emotionRadius = radius / 15;
-    canvas.drawCircle(offset, emotionRadius, emotionBorderPaint);
   }
 
   @override

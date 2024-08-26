@@ -20,11 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(value) => "${value}D";
+  static String m0(days) => "Only ${days} of Mood data are displayed.";
 
-  static String m1(label) => "Most frequently recorded emotion: ${label}";
+  static String m1(value) => "${value}D";
 
-  static String m2(days) => "Recent ${days} days mood";
+  static String m2(label) => "Most frequently recorded emotion: ${label}";
 
   static String m3(hours, minutes) =>
       "Sleep Duration : ${hours} hours ${minutes} minutes";
@@ -48,7 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Change to dark mode"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("Dark mode"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
-        "days": m0,
+        "dashboardDescription": m0,
+        "days": m1,
         "delighted": MessageLookupByLibrary.simpleMessage("Delighted"),
         "diary": MessageLookupByLibrary.simpleMessage("Diary"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("Diary Search"),
@@ -80,13 +81,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "moodCloud": MessageLookupByLibrary.simpleMessage("Mood Cloud"),
         "moodDistribution":
             MessageLookupByLibrary.simpleMessage("Mood Distribution"),
-        "mostFrequentMoodText": m1,
+        "mostFrequentMoodText": m2,
         "negative": MessageLookupByLibrary.simpleMessage("Negative"),
         "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
-        "recentMoodDescription": m2,
         "relaxed": MessageLookupByLibrary.simpleMessage("Relaxed"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
         "selectMonthDay":

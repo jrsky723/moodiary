@@ -11,6 +11,7 @@ class LinearIndicatorPainter extends CustomPainter {
   final double indicatorRadius;
   final TextSpan label;
   final bool showAverage;
+  final int maxDrawCount;
 
   LinearIndicatorPainter({
     required this.values,
@@ -20,6 +21,7 @@ class LinearIndicatorPainter extends CustomPainter {
     required this.label,
     this.indicatorRadius = Sizes.size5,
     this.showAverage = false,
+    this.maxDrawCount = 30, // 최대로 그릴 감정 개수
   });
 
   Color? getIndicatorColor(
@@ -61,18 +63,24 @@ class LinearIndicatorPainter extends CustomPainter {
       axisCenterPaint,
     );
 
-    for (final value in values) {
-      // Map the value from [-1, 1] to [0, size.width]
+    // 최대 그릴 감정 개수에 따라서 step을 정함
+    final step = values.length ~/ maxDrawCount;
+    for (int i = 0; i < values.length; i++) {
+      final value = values[i];
       final indicatorPosition = (value + 1) / 2 * size.width;
+
+      double proportion = (i + 1) / values.length;
       final indicatorPainter = Paint()
-        ..color = getIndicatorColor(value)!
+        ..color = getIndicatorColor(value)!.withOpacity(proportion)
         ..style = PaintingStyle.fill;
-      // Draw the value indicator circle
-      canvas.drawCircle(
-        Offset(indicatorPosition, size.height / 2),
-        indicatorRadius,
-        indicatorPainter,
-      );
+      // step이 0: maxDrawCount > values.length보다 큰 경우 모든 값을 그림
+      if (step == 0 || i % step == 0) {
+        canvas.drawCircle(
+          Offset(indicatorPosition, size.height / 2),
+          indicatorRadius,
+          indicatorPainter,
+        );
+      }
     }
     // Draw the label
     final labelPainter = TextPainter(
