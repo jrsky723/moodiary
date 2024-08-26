@@ -147,14 +147,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           _buildOptionButton(_daysOptions[i], i),
                         ],
                         _buildSeperator(),
-
                         // months options
                         for (int i = 0; i < _monthsOptions.length; i++) ...[
                           _buildOptionButton(
                               _monthsOptions[i], i + _daysOptions.length),
                         ],
                         _buildSeperator(),
-
                         // years options
                         for (int i = 0; i < _yearsOptions.length; i++) ...[
                           _buildOptionButton(_yearsOptions[i],
@@ -226,15 +224,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildSeperator() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: Sizes.size4),
-      child: Text(
-        '|',
-        style: TextStyle(
-          fontSize: Sizes.size20,
-          fontWeight: FontWeight.w400,
-          color: Colors.grey,
-        ),
+    return const SizedBox(
+      height: Sizes.size30,
+      child: VerticalDivider(
+        color: Colors.grey,
+        thickness: 1.5,
       ),
     );
   }
@@ -283,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             subtitleText: Text(
-              S.of(context).recentMoodDescription(28),
+              S.of(context).dashboardDescription(30),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             moodOffsets: [

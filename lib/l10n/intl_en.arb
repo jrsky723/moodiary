@@ -79,8 +79,8 @@
   "negative": "Negative",
   "active": "Active",
   "passive": "Passive",
-  "recentMoodDescription": "Recent {days} days mood",
-  "@recentMoodDescription": {
+  "dashboardDescription": "Only {days} of Mood data are displayed.",
+  "@dashboardDescription": {
     "variables": {
       "days": {
         "type": "number"

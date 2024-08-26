@@ -54,7 +54,7 @@ class CircumplexModelCard extends StatelessWidget {
               titleText,
               Gaps.v8,
               subtitleText,
-              Gaps.v28,
+              Gaps.v24,
               CustomPaint(
                 size: const Size(double.infinity, 20.0),
                 painter: LinearIndicatorPainter(

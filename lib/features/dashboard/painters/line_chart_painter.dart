@@ -10,6 +10,7 @@ class LineChartPainter extends CustomPainter {
   final List<Color> colors;
   final int dateCount;
   final TextStyle textStyle;
+  final int maxDrawCount; // 최대 그릴 감정 개수
 
   LineChartPainter({
     required this.dataPoints, // -1.0 ~ 1.0
@@ -20,6 +21,7 @@ class LineChartPainter extends CustomPainter {
       color: Colors.grey,
       fontSize: 12.0,
     ),
+    this.maxDrawCount = 30, // 최대로 그릴 감정 개수
   });
 
   @override
@@ -52,16 +54,22 @@ class LineChartPainter extends CustomPainter {
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
       ..strokeWidth = 2.5;
 
+    final step = dataPoints.length ~/ maxDrawCount;
+    double startX = 0.0;
+    double startY = size.height * (1 - dataPoints[0]) / 2;
+    double endX, endY;
+
     for (int i = 0; i < dataPoints.length - 1; i++) {
-      final startX = size.width * i / (dataPoints.length - 1);
-      final endX = size.width * (i + 1) / (dataPoints.length - 1);
-
-      final startY = size.height * (1 - dataPoints[i]) / 2;
-      final endY = size.height * (1 - dataPoints[i + 1]) / 2;
-
+      if (step != 0 && i % step != 0) {
+        continue;
+      }
       final startPoint = Offset(startX, startY);
+      endX = size.width * (i + 1) / (dataPoints.length - 1);
+      endY = size.height * (1 - dataPoints[i + 1]) / 2;
       final endPoint = Offset(endX, endY);
       canvas.drawLine(startPoint, endPoint, gradient);
+      startX = endX;
+      startY = endY;
     }
   }
 
