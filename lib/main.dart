@@ -53,10 +53,12 @@ class Moodiary extends ConsumerWidget {
         textTheme: CustomTextThemes.darkTextTheme,
         brightness: Brightness.light,
         dialogBackgroundColor: Colors.white,
-        colorScheme: ColorScheme.fromSwatch(
-          backgroundColor: Colors.green.shade50,
-          primarySwatch: customPrimarySwatch,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: customPrimarySwatch,
+          surface: Colors.green.shade50,
+          brightness: Brightness.light,
         ),
+        primaryColor: customPrimarySwatch,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.green.shade50,
           centerTitle: true,
@@ -67,14 +69,16 @@ class Moodiary extends ConsumerWidget {
           dividerColor: Colors.white,
         ),
       ),
-      darkTheme: ThemeData.dark().copyWith(
+      darkTheme: ThemeData(
         textTheme: CustomTextThemes.whiteTextTheme,
         brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSwatch(
-          backgroundColor: Colors.grey.shade900,
-          primarySwatch: customPrimarySwatch,
+        dialogBackgroundColor: Colors.grey.shade900,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: customPrimarySwatch,
+          surface: Colors.grey.shade900,
+          brightness: Brightness.dark,
         ),
-        primaryColor: customPrimarySwatch,
+        primaryColor: customPrimarySwatch.shade500,
         appBarTheme: AppBarTheme(
           foregroundColor: Colors.white,
           backgroundColor: Colors.grey.shade900,

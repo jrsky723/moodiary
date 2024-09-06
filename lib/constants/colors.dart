@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 const MaterialColor customPrimarySwatch = MaterialColor(
   0xFF1FBF88,
   <int, Color>{
-    50: Color(0xFFE0F2F1),
-    100: Color(0xFFB2DFDB),
-    200: Color(0xFF80CBC4),
-    300: Color(0xFF4DB6AC),
-    400: Color(0xFF26A69A),
+    50: Color(0xFFE4F7F3),
+    100: Color(0xFFBDEBDF),
+    200: Color(0xFF92DFCA),
+    300: Color(0xFF67D3B6),
+    400: Color(0xFF46C9A6),
     500: Color(0xFF1FBF88),
-    600: Color(0xFF00897B),
-    700: Color(0xFF00796B),
-    800: Color(0xFF00695C),
-    900: Color(0xFF004D40),
+    600: Color(0xFF1AB97F),
+    700: Color(0xFF14B175),
+    800: Color(0xFF0FAA6B),
+    900: Color(0xFF059D5A),
   },
 );
 

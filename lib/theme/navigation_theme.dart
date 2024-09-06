@@ -8,13 +8,13 @@ NavigationBarThemeData navigationBarThemeData(BuildContext context) {
   return NavigationBarThemeData(
     height: Sizes.size64,
     elevation: 0,
-    backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
+    backgroundColor: isDark ? Colors.black : Colors.white,
     indicatorColor: Colors.transparent,
-    overlayColor: MaterialStateProperty.resolveWith(
+    overlayColor: WidgetStateProperty.resolveWith(
       (states) => Colors.transparent,
     ),
     labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-    iconTheme: MaterialStateProperty.resolveWith((states) {
+    iconTheme: WidgetStateProperty.resolveWith((states) {
       if (states.isSelected()) {
         return IconThemeData(
           size: Sizes.size30,
