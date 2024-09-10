@@ -37,7 +37,7 @@ class _DiaryContainerState extends State<DiaryContainer> {
       ),
       decoration: BoxDecoration(
         // Add this
-        color: isDarkMode(context) ? Colors.black : Colors.white,
+        color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
         borderRadius: BorderRadius.circular(Sizes.size10),
         boxShadow: [
           BoxShadow(

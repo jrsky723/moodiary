@@ -3,6 +3,7 @@
   "selectMonthYear": "연도 및 월 선택",
   "cancelBtn": "취소",
   "confirmBtn": "확인",
+  "saveBtn": "저장",
   "settings": "설정",
   "darkModeTitle": "다크 모드",
   "darkModeSubtitle": "어두운 모드로 전환",
@@ -67,5 +68,8 @@
   "hour": "시",
   "minute": "분",
   "AM": "오전",
-  "PM": "오후"
+  "PM": "오후",
+  "communityBtn": "커뮤니티",
+  "communityBtnSubtitle": "커뮤니티에 올리기",
+  "analysisBtn": "분석"
 }

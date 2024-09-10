@@ -90,6 +90,16 @@ class S {
     );
   }
 
+  /// `Save`
+  String get saveBtn {
+    return Intl.message(
+      'Save',
+      name: 'saveBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -495,6 +505,36 @@ class S {
     return Intl.message(
       'PM',
       name: 'PM',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Community`
+  String get communityBtn {
+    return Intl.message(
+      'Community',
+      name: 'communityBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post to community`
+  String get communityBtnSubtitle {
+    return Intl.message(
+      'Post to community',
+      name: 'communityBtnSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analysis`
+  String get analysisBtn {
+    return Intl.message(
+      'Analysis',
+      name: 'analysisBtn',
       desc: '',
       args: [],
     );
