@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
@@ -18,8 +19,9 @@ void main() async {
 
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepos(preferences);
-  final addDiaryRepo = AddDiaryRepository(preferences);
-
+  // final addDiaryRepo = AddDiaryRepository(preferences);
+  final addDiaryRepo = AddDiaryRepository();
+  await dotenv.load(fileName: ".env");
   runApp(
     ProviderScope(
       overrides: [

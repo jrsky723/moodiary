@@ -75,30 +75,31 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     late String formattedDate;
 
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              title: Text(S.of(context).selectDate),
-              content: CalendarWidget(
-                initialDate: _selectedDate,
-                onDateSelected: (selectedDate) {
-                  setState(() {
-                    _selectedDate = selectedDate;
-                    formattedDate =
-                        DateFormat('yyyy-MM-dd').format(_selectedDate);
-                  });
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        S.of(context).selectedDate(formattedDate),
-                      ),
-                      backgroundColor: Colors.grey.shade700,
-                    ),
-                  );
-                },
-              ));
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(S.of(context).selectDate),
+          content: CalendarWidget(
+            initialDate: _selectedDate,
+            onDateSelected: (selectedDate) {
+              setState(() {
+                _selectedDate = selectedDate;
+                formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
+              });
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    S.of(context).selectedDate(formattedDate),
+                  ),
+                  backgroundColor: Colors.grey.shade700,
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   void _hideKeyboard() {
@@ -107,10 +108,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
 
   void _onSave() {
     ref.read(addDiaryProvider.notifier).saveDiary(
-          _selectedDate.toString(),
           _textController.text,
           _tempImages,
-          ref.watch(addDiaryProvider).isShared,
         );
 
     _hideKeyboard();
@@ -221,10 +220,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   child: Column(
                     children: [
                       SwitchListTile.adaptive(
-                        value: ref.watch(addDiaryProvider).isShared,
-                        onChanged: (value) => {
-                          ref.read(addDiaryProvider.notifier).setIsShared(value)
-                        },
+                        value: false,
+                        onChanged: (value) => {},
                         title: Text(
                           S.of(context).communityBtn,
                         ),

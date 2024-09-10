@@ -9,69 +9,18 @@ class AddDiaryViewModel extends Notifier<AddDiaryModel> {
 
   AddDiaryViewModel(this._repository);
 
-  void setContent(String value) {
-    _repository.setContent(value);
-    state = AddDiaryModel(
-      date: state.date,
-      content: value,
-      images: state.images,
-      isShared: state.isShared,
-    );
-  }
-
-  void setImages(List<File> value) {
-    _repository.setImagesPath(value);
-    state = AddDiaryModel(
-      date: state.date,
-      content: state.content,
-      images: value,
-      isShared: state.isShared,
-    );
-  }
-
-  void setIsShared(bool value) {
-    _repository.setIsShared(value);
-    state = AddDiaryModel(
-      date: state.date,
-      content: state.content,
-      images: state.images,
-      isShared: value,
-    );
-  }
-
-  void setDate(String value) {
-    _repository.setDate(value);
-    state = AddDiaryModel(
-      date: value,
-      content: state.content,
-      images: state.images,
-      isShared: state.isShared,
-    );
-  }
-
-  void saveDiary(
-      String date, String content, List<File> images, bool isShared) {
-    _repository.setDate(date);
-    _repository.setContent(content);
-    _repository.setImagesPath(images);
-    _repository.setIsShared(isShared);
-
-    state = AddDiaryModel(
-      date: date,
-      content: content,
-      images: images,
-      isShared: isShared,
+  void saveDiary(String content, List<File> images) {
+    _repository.postDiary(
+      AddDiaryModel(
+        content: content,
+        images: images,
+      ),
     );
   }
 
   @override
   AddDiaryModel build() {
-    return AddDiaryModel(
-      date: _repository.getDate(),
-      images: _repository.getImages(),
-      content: _repository.getContent(),
-      isShared: _repository.isShared(),
-    );
+    return AddDiaryModel();
   }
 }
 
