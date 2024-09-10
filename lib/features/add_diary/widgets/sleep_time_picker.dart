@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/add_diary/model/sleep_time.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 class SleepDialog extends StatefulWidget {
   final BuildContext context;

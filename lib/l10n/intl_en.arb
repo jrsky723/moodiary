@@ -23,11 +23,22 @@
       }
     }
   },
-  "veryHappy": "Very Happy",
-  "happy": "Happy",
-  "normal": "Normal",
-  "sad": "Sad",
-  "verySad": "Very Sad",
+  "glad": "Glad",
+  "delighted": "Delighted",
+  "excited": "Excited",
+  "alert": "Alert",
+  "alarmed": "Alarmed",
+  "tense": "Tense",
+  "distressed": "Distressed",
+  "upset": "Upset",
+  "miserable": "Miserable",
+  "gloomy": "Gloomy",
+  "bored": "Bored",
+  "tired": "Tired",
+  "sleepy": "Sleepy",
+  "relaxed": "Relaxed",
+  "serene": "Serene",
+  "content": "Content",
   "unknown": "Unknown",
   "montlyDateSelectTitle": "Select Month",
   "yearlyDateSelectTitle": "Select Year",
@@ -61,5 +72,29 @@
   "unhappiness": "unhappiness",
   "activeness": "activeness",
   "sleepiness": "sleepiness",
-  "moodCloud": "Mood Cloud"
+  "moodCloud": "Mood Cloud",
+  "neutral": "Neutral",
+  "circumplexModel": "Circumplex Model",
+  "positive": "Positive",
+  "negative": "Negative",
+  "active": "Active",
+  "passive": "Passive",
+  "dashboardDescription": "Only {days} of Mood data are displayed.",
+  "@dashboardDescription": {
+    "variables": {
+      "days": {
+        "type": "number"
+      }
+    }
+  },
+  "moodDistribution": "Mood Distribution",
+  "dashboard": "Dashboard",
+  "days": "{value}D",
+  "@days": {
+    "variables": {
+      "value": {
+        "type": "number"
+      }
+    }
+  }
 }

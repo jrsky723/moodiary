@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary_detail/painters/circumplex_model_painter.dart';
 import 'package:moodiary/features/diary_detail/painters/linear_indicator_painter.dart';
 import 'package:moodiary/features/diary_detail/widgets/info_image_button.dart';
 import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils/color_utils.dart';
 
 class MoodAnalysisCard extends StatelessWidget {
   // 2(text):1(graph) 비율로 구성
@@ -15,36 +17,19 @@ class MoodAnalysisCard extends StatelessWidget {
     required this.moodOffset,
   });
 
-  Color? _getIndicatorColor(
-    double value, {
-    Color? positiveColor,
-    Color? negativeColor,
-  }) {
-    final color = Color.lerp(
-      negativeColor,
-      positiveColor,
-      (value + 1) / 2,
-    );
-    // 얼마나 원점에 가까이에 있는지에 따라 회색을 섞어줌
-    return Color.lerp(
-      Colors.grey,
-      color,
-      (value).abs() * 1.5,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final indicatorColorX = _getIndicatorColor(
-      moodOffset.dx,
-      positiveColor: CMColors.pleasant,
-      negativeColor: CMColors.unpleasant,
+    final indicatorColorX = getIndicatorColor(
+      value: moodOffset.dx,
+      leftColor: CMColors.unpleasant,
+      rightColor: CMColors.pleasant,
+      middleColor: Colors.grey,
     );
-
-    final indicatorColorY = _getIndicatorColor(
-      moodOffset.dy,
-      positiveColor: CMColors.activation,
-      negativeColor: CMColors.deactivation,
+    final indicatorColorY = getIndicatorColor(
+      value: moodOffset.dy,
+      leftColor: CMColors.deactivation,
+      rightColor: CMColors.activation,
+      middleColor: Colors.grey,
     );
 
     return Row(
@@ -93,8 +78,10 @@ class MoodAnalysisCard extends StatelessWidget {
                             color: indicatorColorX,
                           ),
                         ),
-                        value: moodOffset.dx,
-                        color: indicatorColorX,
+                        values: [moodOffset.dx],
+                        leftColor: CMColors.unpleasant,
+                        rightColor: CMColors.pleasant,
+                        middleColor: Colors.grey,
                       ),
                     ),
                   ),
@@ -118,8 +105,10 @@ class MoodAnalysisCard extends StatelessWidget {
                             color: indicatorColorY,
                           ),
                         ),
-                        value: moodOffset.dy,
-                        color: indicatorColorY,
+                        values: [moodOffset.dy],
+                        leftColor: CMColors.deactivation,
+                        rightColor: CMColors.activation,
+                        middleColor: Colors.grey,
                       ),
                     ),
                   ),
@@ -137,7 +126,7 @@ class MoodAnalysisCard extends StatelessWidget {
                 alignment: Alignment.center,
                 child: CustomPaint(
                   size: const Size(double.infinity, double.infinity),
-                  painter: CircumplexModelPainter(moodOffset: moodOffset),
+                  painter: CircumplexModelPainter(moodOffsets: [moodOffset]),
                 ),
               ),
               // 확대 버튼
