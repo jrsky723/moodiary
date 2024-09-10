@@ -4,6 +4,7 @@ class UserProfileModel {
   final String name;
   final String bio;
   final bool hasAvatar;
+  final String avatarUrl;
 
   UserProfileModel({
     required this.uid,
@@ -11,6 +12,7 @@ class UserProfileModel {
     required this.name,
     required this.bio,
     required this.hasAvatar,
+    required this.avatarUrl,
   });
 
   UserProfileModel.empty()
@@ -18,5 +20,6 @@ class UserProfileModel {
         userName = '',
         name = '',
         bio = '',
+        avatarUrl = '',
         hasAvatar = false;
 }

@@ -78,7 +78,7 @@ class Moodiary extends ConsumerWidget {
           surface: Colors.grey.shade900,
           brightness: Brightness.dark,
         ),
-        primaryColor: customPrimarySwatch.shade500,
+        primaryColor: customPrimarySwatch,
         appBarTheme: AppBarTheme(
           foregroundColor: Colors.white,
           backgroundColor: Colors.grey.shade900,
