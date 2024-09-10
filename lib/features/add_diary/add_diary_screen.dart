@@ -112,11 +112,10 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
           _textController.text,
           _tempImages,
         );
-
     _hideKeyboard();
 
     // TODO: 페이지를 detail로 이동할지 아니면 calendar로 이동할지 결정
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 
   void _onCancel() {

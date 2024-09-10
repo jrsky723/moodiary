@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -11,18 +12,18 @@ class ApiService {
   Future<void> postDiary(AddDiaryModel model) async {
     final url = Uri.parse('$baseURL/add-diary');
     final headers = {
-      "Content-Type": "application/json",
       "x-api-key": x_api_key,
     };
     final body = model.toJson();
     try {
       final response =
           await http.post(url, headers: headers, body: jsonEncode(body));
-
+      log(headers['x-api-key'].toString());
+      log(jsonEncode(body));
       if (response.statusCode == 200) {
-        print('post success');
+        log('post success');
       } else {
-        print('post fail');
+        log(response.statusCode.toString());
       }
     } catch (e) {
       print(e);
