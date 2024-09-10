@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
@@ -33,9 +32,10 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   bool _isLoading = false; // 로딩 상태를 관리
   final ImagePicker _picker = ImagePicker();
 
-  // 갤러리에서 이미지 선택 및 서버에 업로드
-  Future<void> _onGallaryTap(FormFieldState<bool> state) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  // 카메라 또는 갤러리에서 이미지 선택 및 서버에 업로드
+  Future<void> _onImageSelected(
+      ImageSource source, FormFieldState<bool> state) async {
+    final pickedFile = await _picker.pickImage(source: source);
 
     if (pickedFile != null) {
       setState(() {
@@ -43,19 +43,66 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
       });
 
       File imageFile = File(pickedFile.path);
-      // TODO: 서버로 이미지 업로드 후 URL 받아오는 로직
-      // 예를 들어:
+      // TODO: 서버로 이미지 업로드 후 hasAvatar true로 변경
       await Future.delayed(const Duration(seconds: 2)); // 업로드 중이라고 가정
 
-      bool isUploaded = true; // 업로드 성공 여부
-
-      if (isUploaded) {
-        setState(() {
-          state.didChange(true);
-          _isLoading = false;
-        });
-      }
+      // 이미지 업로드 성공 시 hasAvatar를 true로 설정
+      setState(() {
+        state.didChange(true); // FormField의 값 변경
+        _formData['hasAvatar'] = true; // formData에 저장
+        _isLoading = false;
+      });
     }
+  }
+
+  // 기본 프로필로 변경
+  void _resetToDefaultProfile(FormFieldState<bool> state) {
+    setState(() {
+      state.didChange(false); // FormField의 값 변경
+      _formData['hasAvatar'] = false;
+    });
+  }
+
+  // 이미지 선택 옵션을 보여주는 함수
+  void _showImageSourceSelection(
+      BuildContext context, FormFieldState<bool> state) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('사진 촬영'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _onImageSelected(ImageSource.camera, state);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo),
+                title: const Text('갤러리에서 선택'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _onImageSelected(ImageSource.gallery, state);
+                },
+              ),
+              if (_formData['hasAvatar'] == true || _userProfile.hasAvatar)
+                ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text('기본 프로필로 변경'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _resetToDefaultProfile(state);
+                  },
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   // 폼 저장 함수
@@ -115,11 +162,9 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                                 shape: const CircleBorder(),
                                 padding: EdgeInsets.zero,
                               ),
-                              onPressed: () => _onGallaryTap(state),
-                              child: const FaIcon(
-                                FontAwesomeIcons.image,
-                                size: 20,
-                              ),
+                              onPressed: () =>
+                                  _showImageSourceSelection(context, state),
+                              child: const Icon(Icons.camera_alt),
                             ),
                           ),
                         ),
