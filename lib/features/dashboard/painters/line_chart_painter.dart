@@ -1,101 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/constants/mood.dart';
-import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/dashboard/models/mood_entry.dart';
-import 'package:moodiary/painter_utils.dart';
 
 class LineChartPainter extends CustomPainter {
-  final List<MoodEntry> moodEntries;
-  final bool isMonthly;
+  // 날짜별, offset의 변화를 통해 선을 그리는 painter
+  // 날짜는 전체 기간에서 4개의 날짜를 선택하여 그림 (4등분)
+  // 아래 색상과, 위의 색상 두개를 받아서, 사이의 그라데이션을 적용
+  // x, y 좌표를 이용할 건지, bool 변수를 통해 선택 가능
+  final List<double> dataPoints;
+  final List<DateTime> dates;
+  final List<Color> colors;
+  final int dateCount;
+  final TextStyle textStyle;
+  final int maxDrawCount; // 최대 그릴 감정 개수
 
   LineChartPainter({
-    required this.moodEntries,
-    required this.isMonthly,
+    required this.dataPoints, // -1.0 ~ 1.0
+    required this.dates,
+    required this.colors,
+    this.dateCount = 4,
+    this.textStyle = const TextStyle(
+      color: Colors.grey,
+      fontSize: 12.0,
+    ),
+    this.maxDrawCount = 30, // 최대로 그릴 감정 개수
   });
 
-  void drawMoodLines({
-    required List<MoodEntry> moodEntries,
-    required Canvas canvas,
-    required Size size,
-  }) {
-    const minScore = 1;
-    const maxScore = 5;
-    // 각 점을 연결하는 선에 그라데이션 적용
-    for (int i = 0; i < moodEntries.length - 1; i++) {
-      final startX = size.width * i / moodEntries.length;
-      final endX = size.width * (i + 1) / moodEntries.length;
+  @override
+  void paint(Canvas canvas, Size size) {
+    drawAxis(canvas, size);
+    drawLine(canvas, size);
+    drawDate(canvas, size);
+  }
 
-      final startYValue =
-          (moodEntries[i].mood.score - minScore) / (maxScore - minScore);
-      final endYValue =
-          (moodEntries[i + 1].mood.score - minScore) / (maxScore - minScore);
+  void drawAxis(Canvas canvas, Size size) {
+    final axisPaint = Paint()
+      ..color = Colors.grey.withOpacity(0.5)
+      ..strokeWidth = 0.5;
 
-      final startY = size.height - startYValue * size.height;
-      final endY = size.height - endYValue * size.height;
+    // x축 및 값들을 나타내는 선 (-1.0, -0.5, 0.0, 0.5, 1.0)
+    for (int i = 0; i < 5; i++) {
+      final y = size.height * i / 4;
+      final start = Offset(0, y);
+      final end = Offset(size.width, y);
+      canvas.drawLine(start, end, axisPaint);
+    }
+  }
 
+  void drawLine(Canvas canvas, Size size) {
+    final gradient = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+        colors: colors,
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..strokeWidth = 2.5;
+
+    final step = dataPoints.length ~/ maxDrawCount;
+    double startX = 0.0;
+    double startY = size.height * (1 - dataPoints[0]) / 2;
+    double endX, endY;
+
+    for (int i = 0; i < dataPoints.length - 1; i++) {
+      if (step != 0 && i % step != 0) {
+        continue;
+      }
       final startPoint = Offset(startX, startY);
+      endX = size.width * (i + 1) / (dataPoints.length - 1);
+      endY = size.height * (1 - dataPoints[i + 1]) / 2;
       final endPoint = Offset(endX, endY);
-
-      final gradient = Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [moodEntries[i].mood.color, moodEntries[i + 1].mood.color],
-        ).createShader(Rect.fromPoints(startPoint, endPoint))
-        ..strokeWidth = 2;
-
-      // 점마다 원 그리기
-      final circlePaint = Paint()
-        ..color = moodEntries[i].mood.color
-        ..style = PaintingStyle.fill;
-
-      const circleRadius = 3.0;
-      canvas.drawCircle(startPoint, circleRadius, circlePaint);
-      canvas.drawCircle(endPoint, circleRadius, circlePaint);
-
       canvas.drawLine(startPoint, endPoint, gradient);
+      startX = endX;
+      startY = endY;
     }
   }
 
-  void drawVerticalLines({
-    required int interval,
-    required Canvas canvas,
-    required Size size,
-  }) {
-    final linePaint = Paint()
-      ..color = Colors.grey.withOpacity(0.3)
-      ..strokeWidth = 2;
+  void drawDate(Canvas canvas, Size size) {
+    // 전체 date에서 dateCount로 등분하여, 각 지점에 날짜를 표시
+    // 시작, 끝, 중간...
+    final dates = [
+      for (int i = 0; i < dateCount; i++)
+        this.dates[i * (this.dates.length - 1) ~/ (dateCount - 1)]
+    ];
 
-    for (int i = 0; i < moodEntries.length; i += interval) {
-      final x = size.width * i / moodEntries.length;
-      final start = Offset(x, 0);
-      final end = Offset(x, size.height);
-      drawDottedVerticalLine(canvas, start, end, linePaint);
-    }
-  }
-
-  void drawText({
-    required int interval,
-    required Canvas canvas,
-    required Size size,
-    required bool isMonthly,
-  }) {
     final textPainter = TextPainter(
       textDirection: TextDirection.ltr,
     );
 
-    for (int i = 0; i < moodEntries.length; i += interval) {
-      final x = size.width * i / moodEntries.length;
-      // date text Example: 01/01
-      final dateText = isMonthly
-          ? "${moodEntries[i].date.month}/${moodEntries[i].date.day}"
-          : "${moodEntries[i].date.month}";
+    for (int i = 0; i < dateCount; i++) {
+      final x = size.width * i / (dateCount - 1);
+      final dateText = "${dates[i].month}/${dates[i].day}";
       textPainter.text = TextSpan(
         text: dateText,
-        style: const TextStyle(
-          color: Colors.grey,
-          fontSize: Sizes.size12,
-        ),
+        style: textStyle,
       );
       textPainter.layout(
         minWidth: 0,
@@ -105,7 +100,7 @@ class LineChartPainter extends CustomPainter {
         canvas,
         Offset(
           x - textPainter.width / 2,
-          size.height + textPainter.height,
+          size.height + 4.0,
         ),
       );
     }
@@ -113,41 +108,12 @@ class LineChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    drawMoodLines(
-      moodEntries: moodEntries,
-      canvas: canvas,
-      size: size,
-    );
-
-    if (isMonthly) {
-      drawVerticalLines(
-        interval: 5,
-        canvas: canvas,
-        size: size,
-      );
-      drawText(
-        interval: 5,
-        canvas: canvas,
-        size: size,
-        isMonthly: isMonthly,
-      );
-    } else {
-      drawVerticalLines(
-        interval: 1,
-        canvas: canvas,
-        size: size,
-      );
-      drawText(
-        interval: 1,
-        canvas: canvas,
-        size: size,
-        isMonthly: isMonthly,
-      );
+    if (oldDelegate is LineChartPainter) {
+      // 비교할 변수들을 체크하여, 재페인팅이 필요한 경우 true 반환
+      return oldDelegate.dataPoints != dataPoints ||
+          oldDelegate.dates != dates ||
+          oldDelegate.colors != colors;
     }
+    return true;
   }
 }

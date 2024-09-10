@@ -13,3 +13,12 @@ void drawDottedVerticalLine(
     canvas.drawLine(Offset(start.dx, y), Offset(end.dx, y + dashWidth), paint);
   }
 }
+
+Color getComplementaryColor(Color color) {
+  return Color.fromARGB(
+    color.alpha,
+    255 - color.red,
+    255 - color.green,
+    255 - color.blue,
+  );
+}

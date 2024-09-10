@@ -23,11 +23,23 @@
       }
     }
   },
-  "veryHappy": "매우 행복함",
-  "happy": "행복함",
-  "normal": "보통",
-  "sad": "슬픔",
-  "verySad": "매우 슬픔",
+  "glad": "기쁜",
+  "delighted": "즐거운",
+  "excited": "신난",
+  "alert": "(좋은) 놀란",
+  "alarmed": "(나쁜) 놀란",
+  "tense": "긴장된",
+  "distressed": "괴로운",
+  "upset": "속상한",
+  "miserable": "비참한",
+  "gloomy": "우울한",
+  "bored": "지루한",
+  "tired": "지친",
+  "sleepy": "졸린",
+  "relaxed": "이완된",
+  "serene": "평온한",
+  "content": "만족한",
+  "neutral": "어중간한",
   "unknown": "알 수 없음",
   "montlyDateSelectTitle": "월 선택하기",
   "yearlyDateSelectTitle": "연도 선택하기",
@@ -61,5 +73,28 @@
   "unhappiness": "불행",
   "activeness": "활발",
   "sleepiness": "졸림",
-  "moodCloud": "감정 구름"
+  "moodCloud": "감정 구름",
+  "circumplexModel": "Circumplex Model",
+  "positive": "긍정",
+  "negative": "부정",
+  "active": "활동",
+  "passive": "수동",
+  "dashboardDescription": "전체 중 {maxDrawCount}개의 감정정보만 표시됩니다.",
+  "@dashboardDescription": {
+    "variables": {
+      "maxDrawCount": {
+        "type": "number"
+      }
+    }
+  },
+  "moodDistribution": "감정 분포",
+  "dashboard": "분석",
+  "days": "{value}일",
+  "@days": {
+    "variables": {
+      "value": {
+        "type": "number"
+      }
+    }
+  }
 }

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/utils.dart';
+import 'package:moodiary/utils/theme_utils.dart';
 
 SwitchThemeData switchThemeData(BuildContext context) {
   final isDark = isDarkMode(context);
   return SwitchThemeData(
-    thumbColor: MaterialStateProperty.resolveWith(
+    thumbColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return Colors.white;
         }
         return Colors.grey.shade400;
       },
     ),
-    trackOutlineColor: MaterialStateProperty.resolveWith(
+    trackOutlineColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return null;
         }
         return Colors.grey.shade300;
       },
     ),
-    trackColor: MaterialStateProperty.resolveWith(
+    trackColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return null;
         }
         return isDark ? Colors.grey.shade800 : Colors.grey.shade50;
