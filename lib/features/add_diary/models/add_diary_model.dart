@@ -18,8 +18,10 @@ class AddDiaryModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'author': 1,
       'content': content,
       'images': images.map((image) => image.path).toList(),
+      'is_public': false,
     };
   }
 }
