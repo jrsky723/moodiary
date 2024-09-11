@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -6,7 +9,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils.dart';
 
-class ImagePickerButton extends StatefulWidget {
+class ImagePickerButton extends ConsumerStatefulWidget {
   final Function(List<File>) onImagesSelected;
   const ImagePickerButton({
     super.key,
@@ -14,10 +17,10 @@ class ImagePickerButton extends StatefulWidget {
   });
 
   @override
-  State<ImagePickerButton> createState() => _ImagePickerButtonState();
+  ConsumerState<ImagePickerButton> createState() => _ImagePickerButtonState();
 }
 
-class _ImagePickerButtonState extends State<ImagePickerButton> {
+class _ImagePickerButtonState extends ConsumerState<ImagePickerButton> {
   List<File> _images = [];
 
   List<File> get selectedImages => _images;
@@ -31,11 +34,59 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
     widget.onImagesSelected(_images);
   }
 
+  Future<void> _captureImageFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+
+    // 카메라로 사진을 찍는 메소드
+    final XFile? capturedFile =
+        await picker.pickImage(source: ImageSource.camera);
+
+    if (capturedFile != null) {
+      setState(() {
+        _images.clear();
+        _images.add(File(capturedFile.path));
+      });
+
+      widget.onImagesSelected(_images);
+    }
+  }
+
   void _cancelSelection(int index) {
     setState(() {
       _images.removeAt(index);
       widget.onImagesSelected(_images);
     });
+  }
+
+  void _showImageSourceSelection(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('사진 촬영'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _captureImageFromCamera();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo),
+                title: const Text('갤러리에서 선택'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImages();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -52,7 +103,7 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
               BorderRadius.circular(Sizes.size5), // Sizes.size5 대신에 리터럴 값 사용
         ),
       ),
-      onPressed: _pickImages,
+      onPressed: () => _showImageSourceSelection(context),
       child: _images.isEmpty
           ? SizedBox(
               width: buttonSize['width'],

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -114,9 +115,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
           _isPublic,
         );
     _hideKeyboard();
-
-    // TODO: 페이지를 detail로 이동할지 아니면 calendar로 이동할지 결정
-    // Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void _onCancel() {
@@ -209,6 +208,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                       child: ImagePickerButton(
                         onImagesSelected: (images) {
                           setState(() {
+                            _tempImages.clear();
                             _tempImages.addAll(images);
                           });
                         },
