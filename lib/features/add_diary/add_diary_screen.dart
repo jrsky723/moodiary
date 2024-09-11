@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/add_diary/models/add_diary_model.dart';
 import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/add_diary/widgets/calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
