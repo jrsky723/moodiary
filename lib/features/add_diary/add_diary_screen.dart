@@ -235,41 +235,6 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   ),
                 ),
 
-                // TODO: 분석 버튼만들어서 클릭하면
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size96,
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.transparent,
-                        side: const BorderSide(
-                          color: customPrimarySwatch,
-                          width: 1.5,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Sizes.size60,
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: Sizes.size18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: _isLoading ? null : _performAnalysis,
-                      child: _isLoading
-                          ? const CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
-                              S.of(context).analysisBtn,
-                            ),
-                    ),
-                  ),
-                ),
-                // TODO: circumplex model을 활용한 이미지와 wordcloud 보여주기
-
                 SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
