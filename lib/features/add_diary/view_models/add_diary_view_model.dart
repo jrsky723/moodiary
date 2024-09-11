@@ -9,11 +9,12 @@ class AddDiaryViewModel extends Notifier<AddDiaryModel> {
 
   AddDiaryViewModel(this._repository);
 
-  void saveDiary(String content, List<File> photos) {
+  void saveDiary(String content, List<File> photos, bool isPublic) {
     _repository.postDiary(
       AddDiaryModel(
         content: content,
         photos: photos,
+        isPublic: isPublic,
       ),
     );
   }

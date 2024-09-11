@@ -31,6 +31,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   late final TextEditingController _textController;
   bool _isLoading = false;
   bool _isFocused = false;
+  bool _isPublic = true;
   final FocusNode _focusNode = FocusNode();
 
   DateTime _selectedDate = DateTime.now();
@@ -110,6 +111,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     ref.read(addDiaryProvider.notifier).saveDiary(
           _textController.text,
           _tempImages,
+          _isPublic,
         );
     _hideKeyboard();
 
@@ -219,8 +221,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   child: Column(
                     children: [
                       SwitchListTile.adaptive(
-                        value: true,
-                        onChanged: (value) => {},
+                        value: _isPublic,
+                        onChanged: (value) => {_isPublic = !value},
                         title: Text(
                           S.of(context).communityBtn,
                         ),
