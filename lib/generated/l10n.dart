@@ -819,6 +819,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Select a Date`
+  String get selectDate {
+    return Intl.message(
+      'Select a Date',
+      name: 'selectDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected Date: {date}`
+  String selectedDate(Object date) {
+    return Intl.message(
+      'Selected Date: $date',
+      name: 'selectedDate',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `h`
+  String get hour {
+    return Intl.message(
+      'h',
+      name: 'hour',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `m`
+  String get minute {
+    return Intl.message(
+      'm',
+      name: 'minute',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Community`
+  String get communityBtn {
+    return Intl.message(
+      'Community',
+      name: 'communityBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post to community`
+  String get communityBtnSubtitle {
+    return Intl.message(
+      'Post to community',
+      name: 'communityBtnSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

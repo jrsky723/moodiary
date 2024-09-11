@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/common/widgets/circle_avatar.dart';
+import 'package:moodiary/constants/sizes.dart';
 
 class DailyList extends StatefulWidget {
   const DailyList({super.key});
 
   @override
-  _DailyListState createState() => _DailyListState();
+  State<DailyList> createState() => _DailyListState();
 }
 
 class _DailyListState extends State<DailyList> {
@@ -23,14 +24,14 @@ class _DailyListState extends State<DailyList> {
             });
           },
           child: Container(
-            padding: const EdgeInsets.all(2), // Space for the border
+            padding: const EdgeInsets.all(Sizes.size2), // Space for the border
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
                 color: selectedIndex == index
                     ? Theme.of(context).primaryColor
                     : Colors.transparent, // Conditional border color
-                width: 3,
+                width: Sizes.size3,
               ),
             ),
             child: const SCircleAvatar(),
