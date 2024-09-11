@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/utils/theme_utils.dart';
 
@@ -35,7 +36,7 @@ class _DiaryContainerState extends State<DiaryContainer> {
       ),
       decoration: BoxDecoration(
         // Add this
-        color: isDarkMode(context) ? Colors.black : Colors.white,
+        color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -75,7 +76,12 @@ class _DiaryContainerState extends State<DiaryContainer> {
                 ],
               ),
             ),
-            isShow ? widget.child : const SizedBox(),
+            Visibility(
+              visible: isShow,
+              maintainState: true,
+              maintainAnimation: true,
+              child: widget.child,
+            ),
           ],
         ),
       ),

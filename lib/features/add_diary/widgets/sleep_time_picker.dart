@@ -1,8 +1,10 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
-import 'package:moodiary/features/add_diary/model/sleep_time.dart';
+import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/add_diary/models/sleep_time.dart';
+import 'package:moodiary/features/add_diary/widgets/custom_drop_down.dart';
+import 'package:moodiary/features/add_diary/widgets/time_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/theme_utils.dart';
 
@@ -18,8 +20,15 @@ class _SleepDialogState extends State<SleepDialog> {
   SleepTime bedTime = SleepTime();
   SleepTime wakeTime = SleepTime();
 
+  final List<String> periods = ['AM', 'PM'];
+  final List<String> hours = List.generate(12, (index) => index.toString());
+  final List<String> minutes = List.generate(60, (index) => index.toString());
+
   int totalHour = 0;
   int totalMinute = 0;
+
+  String formattedTime(String? period, int? hour, int? minute) =>
+      "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
 
   void _getTotaltime() {
     int? bH = bedTime.hour, wH = wakeTime.hour;
@@ -44,64 +53,53 @@ class _SleepDialogState extends State<SleepDialog> {
     });
   }
 
-  String formattedTime(String? period, int? hour, int? minute) =>
-      "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
-
   void _showTimePickerDialog(
       bool isBedtime, String title, String? period, int? hour, int? minute) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text(title,
+              style: TextStyle(
+                color:
+                    isDarkMode(context) ? Colors.grey.shade500 : Colors.black,
+              )),
+          contentPadding: EdgeInsets.zero,
+          actionsPadding: const EdgeInsets.only(
+            left: Sizes.size8,
+            right: Sizes.size8,
+            bottom: Sizes.size5,
+          ),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  DropdownButton<String>(
-                    value: period,
-                    items: ['AM', 'PM'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        period = newValue!;
-                      });
-                    },
+                  ResizableDropdownButton(
+                    items: periods,
+                    selectedValue: period!,
+                    onChanged: (value) => setState(() {
+                      period = value;
+                    }),
+                    isDarkMode: isDarkMode(context),
                   ),
-                  DropdownButton<int>(
-                    value: hour! > 12 ? hour! - 12 : hour,
-                    items: List<int>.generate(12, (index) => index + 1)
-                        .map((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text(value.toString()),
-                      );
-                    }).toList(),
-                    onChanged: (int? newValue) {
-                      setState(() {
-                        hour = newValue!;
-                      });
-                    },
+                  ResizableDropdownButton(
+                    title: S.of(context).hour,
+                    items: hours,
+                    selectedValue: hour.toString(),
+                    onChanged: (value) => setState(() {
+                      hour = int.parse(value);
+                    }),
+                    isDarkMode: isDarkMode(context),
                   ),
-                  DropdownButton<int>(
-                    value: minute,
-                    items: List<int>.generate(60, (index) => index)
-                        .map((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text(value.toString().padLeft(2, '0')),
-                      );
-                    }).toList(),
-                    onChanged: (int? newValue) {
-                      setState(() {
-                        minute = newValue!;
-                      });
-                    },
+                  ResizableDropdownButton(
+                    title: S.of(context).minute,
+                    items: minutes,
+                    selectedValue: minute.toString(),
+                    onChanged: (value) => setState(() {
+                      minute = int.parse(value);
+                    }),
+                    isDarkMode: isDarkMode(context),
                   ),
                 ],
               );
@@ -152,82 +150,34 @@ class _SleepDialogState extends State<SleepDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => _showTimePickerDialog(
-                      true,
-                      S.of(context).bedtime,
-                      bedTime.period,
-                      bedTime.hour,
-                      bedTime.minute),
-                  style: ElevatedButton.styleFrom(
-                    shadowColor: Colors.transparent,
-                    backgroundColor: isDarkMode(context)
-                        ? Colors.grey.shade500
-                        : Colors.grey.shade300,
-                    surfaceTintColor: Colors.black,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                  ),
-                  child: Text(
-                    formattedTime(
-                      bedTime.period,
-                      bedTime.hour,
-                      bedTime.minute,
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                  ),
-                ),
-                Text(
-                  S.of(context).bedtime,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
+            TimeButton(
+              title: S.of(context).bedtime,
+              formattedTime:
+                  formattedTime(bedTime.period, bedTime.hour, bedTime.minute),
+              onPressed: () => _showTimePickerDialog(
+                true,
+                S.of(context).bedtime,
+                bedTime.period,
+                bedTime.hour,
+                bedTime.minute,
+              ),
+              isDarkMode: isDarkMode(context),
             ),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => _showTimePickerDialog(
-                      false,
-                      S.of(context).wakeUpTime,
-                      wakeTime.period,
-                      wakeTime.hour,
-                      wakeTime.minute),
-                  style: ElevatedButton.styleFrom(
-                    shadowColor: Colors.transparent,
-                    backgroundColor: isDarkMode(context)
-                        ? Colors.grey.shade500
-                        : Colors.grey.shade300,
-                    surfaceTintColor: Colors.black,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                  ),
-                  child: Text(
-                    formattedTime(
-                      wakeTime.period,
-                      wakeTime.hour,
-                      wakeTime.minute,
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                  ),
-                ),
-                Text(
-                  S.of(context).wakeUpTime,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
+            TimeButton(
+              title: S.of(context).wakeUpTime,
+              formattedTime: formattedTime(
+                  wakeTime.period, wakeTime.hour, wakeTime.minute),
+              onPressed: () => _showTimePickerDialog(
+                false,
+                S.of(context).wakeUpTime,
+                wakeTime.period,
+                wakeTime.hour,
+                wakeTime.minute,
+              ),
+              isDarkMode: isDarkMode(context),
             ),
           ],
-        ),
+        )
       ],
     );
   }

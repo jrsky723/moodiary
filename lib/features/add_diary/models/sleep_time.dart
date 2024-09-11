@@ -6,7 +6,7 @@ class SleepTime {
   SleepTime() {
     int? hour = DateTime.now().hour;
     _hour = hour > 12 ? hour - 12 : hour; // Hour
-    _period = hour >= 12 ? "PM" : "AM";
+    _period = hour >= 12 && hour < 24 ? "PM" : "AM";
     _minute = DateTime.now().minute; // Minute
   }
   String get period => _period!;
