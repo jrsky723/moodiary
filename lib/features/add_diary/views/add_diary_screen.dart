@@ -222,7 +222,11 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                     children: [
                       SwitchListTile.adaptive(
                         value: _isPublic,
-                        onChanged: (value) => {_isPublic = !value},
+                        onChanged: (value) => {
+                          setState(() {
+                            _isPublic = value;
+                          })
+                        },
                         title: Text(
                           S.of(context).communityBtn,
                         ),
