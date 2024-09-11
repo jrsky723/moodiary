@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class ProfileEditScreen extends ConsumerStatefulWidget {
   const ProfileEditScreen({super.key});
@@ -75,7 +77,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('사진 촬영'),
+                title: Text(S.of(context).takePhoto),
                 onTap: () {
                   Navigator.pop(context);
                   _onImageSelected(ImageSource.camera, state);
@@ -83,7 +85,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
               ),
               ListTile(
                 leading: const Icon(Icons.photo),
-                title: const Text('갤러리에서 선택'),
+                title: Text(S.of(context).selectFromGallery),
                 onTap: () {
                   Navigator.pop(context);
                   _onImageSelected(ImageSource.gallery, state);
@@ -92,7 +94,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
               if (_formData['hasAvatar'] == true || _userProfile.hasAvatar)
                 ListTile(
                   leading: const Icon(Icons.person),
-                  title: const Text('기본 프로필로 변경'),
+                  title: Text(S.of(context).resetToDefaultProfile),
                   onTap: () {
                     Navigator.pop(context);
                     _resetToDefaultProfile(state);
@@ -120,7 +122,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('프로필 수정'),
+        title: Text(S.of(context).editProfile),
       ),
       body: Form(
         key: _formKey,
@@ -164,7 +166,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                               ),
                               onPressed: () =>
                                   _showImageSourceSelection(context, state),
-                              child: const Icon(Icons.camera_alt),
+                              child: const Icon(FontAwesomeIcons.plus),
                             ),
                           ),
                         ),
@@ -181,11 +183,11 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             // 사용자 이름 입력 필드
             TextFormField(
               initialValue: _userProfile.userName,
-              decoration: const InputDecoration(labelText: '사용자 이름'),
+              decoration: InputDecoration(labelText: S.of(context).userName),
               maxLength: 16,
               validator: (value) {
                 if (value == null || value.isEmpty || value.length < 2) {
-                  return '사용자 이름은 2자 이상이어야 합니다.';
+                  return S.of(context).userNameMinError;
                 }
                 return null;
               },
@@ -197,11 +199,11 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             // 이름 입력 필드
             TextFormField(
               initialValue: _userProfile.name,
-              decoration: const InputDecoration(labelText: '이름'),
+              decoration: InputDecoration(labelText: S.of(context).name),
               maxLength: 16,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return '이름을 입력해주세요.';
+                  return S.of(context).pleaseEnterName;
                 }
                 return null;
               },
@@ -213,7 +215,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             // 소개 입력 필드
             TextFormField(
               initialValue: _userProfile.bio,
-              decoration: const InputDecoration(labelText: '소개'),
+              decoration: InputDecoration(labelText: S.of(context).bio),
               maxLength: 50,
               onSaved: (newValue) {
                 if (newValue != null) _formData['bio'] = newValue;
@@ -223,7 +225,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             // 저장 버튼
             ElevatedButton(
               onPressed: onSubmitTap,
-              child: const Text('저장'),
+              child: Text(S.of(context).save),
             ),
           ],
         ),
