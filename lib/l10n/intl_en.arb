@@ -96,5 +96,15 @@
         "type": "number"
       }
     }
-  }
+  },
+  "editProfile": "Edit Profile",
+  "userName": "User Name",
+  "userNameMinError": "User name must be at least 2 characters.",
+  "name": "Name",
+  "takePhoto": "Take a photo",
+  "selectFromGallery": "Select from gallery",
+  "resetToDefaultProfile": "Reset to default profile",
+  "pleaseEnterName": "Please enter your name.",
+  "bio": "Bio",
+  "save": "Save"
 }

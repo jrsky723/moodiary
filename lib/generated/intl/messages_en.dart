@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alarmed": MessageLookupByLibrary.simpleMessage("Alarmed"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
+        "bio": MessageLookupByLibrary.simpleMessage("Bio"),
         "bored": MessageLookupByLibrary.simpleMessage("Bored"),
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -54,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diary": MessageLookupByLibrary.simpleMessage("Diary"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("Diary Search"),
         "distressed": MessageLookupByLibrary.simpleMessage("Distressed"),
+        "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "emotion": MessageLookupByLibrary.simpleMessage("Emotion"),
         "englishModeSubtitle": MessageLookupByLibrary.simpleMessage(
             "Change the language to English"),
@@ -82,13 +84,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "moodDistribution":
             MessageLookupByLibrary.simpleMessage("Mood Distribution"),
         "mostFrequentMoodText": m2,
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
         "negative": MessageLookupByLibrary.simpleMessage("Negative"),
         "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
+        "pleaseEnterName":
+            MessageLookupByLibrary.simpleMessage("Please enter your name."),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
         "relaxed": MessageLookupByLibrary.simpleMessage("Relaxed"),
+        "resetToDefaultProfile":
+            MessageLookupByLibrary.simpleMessage("Reset to default profile"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
+        "selectFromGallery":
+            MessageLookupByLibrary.simpleMessage("Select from gallery"),
         "selectMonthDay":
             MessageLookupByLibrary.simpleMessage("Select Month & Day"),
         "selectMonthYear":
@@ -101,12 +111,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "sleepDuration": m3,
         "sleepiness": MessageLookupByLibrary.simpleMessage("sleepiness"),
         "sleepy": MessageLookupByLibrary.simpleMessage("Sleepy"),
+        "takePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
         "tense": MessageLookupByLibrary.simpleMessage("Tense"),
         "tired": MessageLookupByLibrary.simpleMessage("Tired"),
         "todaysPhoto": MessageLookupByLibrary.simpleMessage("Today\'s Photo"),
         "unhappiness": MessageLookupByLibrary.simpleMessage("unhappiness"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "upset": MessageLookupByLibrary.simpleMessage("Upset"),
+        "userName": MessageLookupByLibrary.simpleMessage("User Name"),
+        "userNameMinError": MessageLookupByLibrary.simpleMessage(
+            "User name must be at least 2 characters."),
         "wakeUpTime": MessageLookupByLibrary.simpleMessage("wake up time"),
         "yearlyDateSelectTitle":
             MessageLookupByLibrary.simpleMessage("Select Year"),

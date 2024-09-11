@@ -96,5 +96,16 @@
         "type": "number"
       }
     }
-  }
+  },
+  "editProfile": "프로필 수정",
+  "userName": "사용자 이름",
+  "userNameMinError": "사용자 이름은 2자 이상이어야 합니다.",
+  "name": "이름",
+  "putYourName": "이름을 입력해주세요.",
+  "takePhoto": "사진 촬영",
+  "selectFromGallery": "갤러리에서 선택",
+  "resetToDefaultProfile": "기본 프로필로 변경",
+  "pleaseEnterName": "이름을 입력해주세요.",
+  "bio": "소개",
+  "save": "저장"
 }

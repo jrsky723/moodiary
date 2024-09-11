@@ -719,6 +719,106 @@ class S {
       args: [value],
     );
   }
+
+  /// `Edit Profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Name`
+  String get userName {
+    return Intl.message(
+      'User Name',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User name must be at least 2 characters.`
+  String get userNameMinError {
+    return Intl.message(
+      'User name must be at least 2 characters.',
+      name: 'userNameMinError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a photo`
+  String get takePhoto {
+    return Intl.message(
+      'Take a photo',
+      name: 'takePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select from gallery`
+  String get selectFromGallery {
+    return Intl.message(
+      'Select from gallery',
+      name: 'selectFromGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset to default profile`
+  String get resetToDefaultProfile {
+    return Intl.message(
+      'Reset to default profile',
+      name: 'resetToDefaultProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your name.`
+  String get pleaseEnterName {
+    return Intl.message(
+      'Please enter your name.',
+      name: 'pleaseEnterName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bio`
+  String get bio {
+    return Intl.message(
+      'Bio',
+      name: 'bio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
