@@ -26,7 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(label) => "Most frequently recorded emotion: ${label}";
 
-  static String m3(hours, minutes) =>
+  static String m3(date) => "Selected Date: ${date}";
+
+  static String m4(hours, minutes) =>
       "Sleep Duration : ${hours} hours ${minutes} minutes";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -42,6 +44,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
         "circumplexModel":
             MessageLookupByLibrary.simpleMessage("Circumplex Model"),
+        "communityBtn": MessageLookupByLibrary.simpleMessage("Community"),
+        "communityBtnSubtitle":
+            MessageLookupByLibrary.simpleMessage("Post to community"),
         "communityTitle": MessageLookupByLibrary.simpleMessage("Community"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "content": MessageLookupByLibrary.simpleMessage("Content"),
@@ -67,8 +72,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "glad": MessageLookupByLibrary.simpleMessage("Glad"),
         "gloomy": MessageLookupByLibrary.simpleMessage("Gloomy"),
         "happiness": MessageLookupByLibrary.simpleMessage("happiness"),
+        "hour": MessageLookupByLibrary.simpleMessage("h"),
         "howWasYourDay":
             MessageLookupByLibrary.simpleMessage("How was your day?"),
+        "minute": MessageLookupByLibrary.simpleMessage("m"),
         "miserable": MessageLookupByLibrary.simpleMessage("Miserable"),
         "monthlyMoodDistTitle":
             MessageLookupByLibrary.simpleMessage("Monthly Mood Distribution"),
@@ -97,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reset to default profile"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
+        "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
         "selectFromGallery":
             MessageLookupByLibrary.simpleMessage("Select from gallery"),
         "selectMonthDay":
@@ -105,10 +113,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Month & Year"),
         "selectPhotoPrompt":
             MessageLookupByLibrary.simpleMessage("Select a photo"),
+        "selectedDate": m3,
         "serene": MessageLookupByLibrary.simpleMessage("Serene"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sleep": MessageLookupByLibrary.simpleMessage("Sleep"),
-        "sleepDuration": m3,
+        "sleepDuration": m4,
         "sleepiness": MessageLookupByLibrary.simpleMessage("sleepiness"),
         "sleepy": MessageLookupByLibrary.simpleMessage("Sleepy"),
         "takePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),

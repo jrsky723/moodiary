@@ -107,5 +107,18 @@
   "resetToDefaultProfile": "기본 프로필로 변경",
   "pleaseEnterName": "이름을 입력해주세요.",
   "bio": "소개",
-  "save": "저장"
+  "save": "저장",
+  "selectDate": "날짜 선택",
+  "selectedDate": "선택한 날짜: {date}",
+  "@selectedDate": {
+    "variables": {
+      "date": {
+        "type": "string"
+      }
+    }
+  },
+  "hour": "시",
+  "minute": "분",
+  "communityBtn": "커뮤니티",
+  "communityBtnSubtitle": "커뮤니티에 올리기"
 }

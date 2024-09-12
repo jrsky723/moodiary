@@ -106,5 +106,18 @@
   "resetToDefaultProfile": "Reset to default profile",
   "pleaseEnterName": "Please enter your name.",
   "bio": "Bio",
-  "save": "Save"
+  "save": "Save",
+  "selectDate": "Select a Date",
+  "selectedDate": "Selected Date: {date}",
+  "@selectedDate": {
+    "variables": {
+      "date": {
+        "type": "string"
+      }
+    }
+  },
+  "hour": "h",
+  "minute": "m",
+  "communityBtn": "Community",
+  "communityBtnSubtitle": "Post to community"
 }
