@@ -35,15 +35,18 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
   }
 
   Future<void> createDiary(AddDiaryModel model) async {
-    await Future.delayed(const Duration(seconds: 5));
     state = const AsyncValue.loading();
+
+    final diaryId = _repository.generateDiaryId(model.uid);
+
     final diary = AddDiaryModel(
       uid: model.uid,
-      diaryId: model.diaryId,
+      diaryId: diaryId,
       content: model.content,
       imageUrls: model.imageUrls,
       isPublic: model.isPublic,
     );
+
     await _repository.createDiary(diary);
   }
 }

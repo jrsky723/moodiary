@@ -48,4 +48,14 @@ class AddDiaryModel {
         content = '',
         imageUrls = [],
         isPublic = true;
+
+  Map<String, dynamic> toJson(String diaryId) {
+    return {
+      'uid': uid,
+      'diaryId': diaryId,
+      'content': content,
+      'imageUrls': imageUrls,
+      'isPublic': isPublic,
+    };
+  }
 }
