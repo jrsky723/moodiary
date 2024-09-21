@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/add_diary/models/add_diary_model.dart';
 import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/add_diary/widgets/calendar.dart';
 import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
@@ -107,10 +108,18 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   }
 
   void _onSave() {
-    ref.read(addDiaryProvider.notifier).saveDiary(
-          _textController.text,
-          _tempImages,
-          _isPublic,
+    // ref.read(addDiaryProvider.notifier).saveDiary(
+    //       _textController.text,
+    //       _tempImages,
+    //       _isPublic,
+    //     );
+    ref.read(addDiaryProvider.notifier).createDiary(
+          AddDiaryModel(
+            uid: '1',
+            content: _textController.text,
+            imageUrls: _tempImages.map((image) => image.path).toList(),
+            isPublic: _isPublic,
+          ),
         );
     _hideKeyboard();
     Navigator.pop(context);
@@ -120,7 +129,6 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     if (_isFocused) {
       _hideKeyboard();
     } else {
-      // TODO :if 데이터가 남아있는게 있으면 물어보기
       _textController.clear();
       Navigator.pop(context);
     }
@@ -128,149 +136,158 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          _hideKeyboard();
-        },
-        child: Stack(
-          children: [
-            CustomScrollView(
-              controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverAppBar(
-                  pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    collapseMode: CollapseMode.none,
-                    background: Container(
-                      color: isDarkMode(context)
-                          ? Colors.grey.shade900
-                          : customPrimarySwatch,
-                    ),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Text(
-                            DateFormat.MMMMEEEEd().format(_selectedDate),
-                            style: TextStyle(
-                              fontSize: Sizes.size16,
-                              color: isDarkMode(context)
-                                  ? Colors.grey.shade400
-                                  : Colors.black,
-                              fontWeight: FontWeight.bold,
+    return ref.watch(addDiaryProvider).when(
+          error: (error, stackTrace) => Center(
+            child: Text('Error: $error'),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+          data: (data) => Scaffold(
+            body: GestureDetector(
+              onTap: () {
+                _hideKeyboard();
+              },
+              child: Stack(
+                children: [
+                  CustomScrollView(
+                    controller: _scrollController,
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverAppBar(
+                        pinned: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                          collapseMode: CollapseMode.none,
+                          background: Container(
+                            color: isDarkMode(context)
+                                ? Colors.grey.shade900
+                                : customPrimarySwatch,
+                          ),
+                        ),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Spacer(),
+                            Row(
+                              children: [
+                                Text(
+                                  DateFormat.MMMMEEEEd().format(_selectedDate),
+                                  style: TextStyle(
+                                    fontSize: Sizes.size16,
+                                    color: isDarkMode(context)
+                                        ? Colors.grey.shade400
+                                        : Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                InfoButton(
+                                  icon: FontAwesomeIcons.caretDown,
+                                  size: Sizes.size16,
+                                  color: isDarkMode(context)
+                                      ? Colors.grey.shade400
+                                      : Colors.black,
+                                  onTap: () => _showDatePickerDialog(context),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: DiaryContainer(
+                          text: S.of(context).diary,
+                          child: DiaryTextWidget(
+                            controller: _textController,
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: DiaryContainer(
+                          text: S.of(context).todaysPhoto,
+                          child: Center(
+                            child: ImagePickerButton(
+                              onImagesSelected: (images) {
+                                setState(() {
+                                  _tempImages.clear();
+                                  _tempImages.addAll(images);
+                                });
+                              },
                             ),
                           ),
-                          InfoButton(
-                            icon: FontAwesomeIcons.caretDown,
-                            size: Sizes.size16,
-                            color: isDarkMode(context)
-                                ? Colors.grey.shade400
-                                : Colors.black,
-                            onTap: () => _showDatePickerDialog(context),
+                        ),
+                      ),
+                      //
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            SwitchListTile.adaptive(
+                              value: _isPublic,
+                              onChanged: (value) => {
+                                setState(() {
+                                  _isPublic = value;
+                                })
+                              },
+                              title: Text(
+                                S.of(context).communityBtn,
+                              ),
+                              subtitle: Opacity(
+                                opacity: 0.5,
+                                child: Text(
+                                  S.of(context).communityBtnSubtitle,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size20,
+                            vertical: Sizes.size10,
                           ),
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            onTap: () => _scrollToTop(),
+                            child: Text(S.of(context).scrollToTop),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      color: isDarkMode(context)
+                          ? Colors.black12
+                          : Colors.grey.shade100,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Sizes.size6,
+                        horizontal: Sizes.size24,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FormActionButton(
+                            text: S.of(context).cancelBtn,
+                            onPressed: _onCancel,
+                          ),
+                          FormActionButton(
+                            text: S.of(context).save,
+                            onPressed: _onSave,
+                          )
                         ],
                       ),
-                      const Spacer(),
-                    ],
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: DiaryContainer(
-                    text: S.of(context).diary,
-                    child: DiaryTextWidget(
-                      controller: _textController,
                     ),
                   ),
-                ),
-                SliverToBoxAdapter(
-                  child: DiaryContainer(
-                    text: S.of(context).todaysPhoto,
-                    child: Center(
-                      child: ImagePickerButton(
-                        onImagesSelected: (images) {
-                          setState(() {
-                            _tempImages.clear();
-                            _tempImages.addAll(images);
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                //
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      SwitchListTile.adaptive(
-                        value: _isPublic,
-                        onChanged: (value) => {
-                          setState(() {
-                            _isPublic = value;
-                          })
-                        },
-                        title: Text(
-                          S.of(context).communityBtn,
-                        ),
-                        subtitle: Opacity(
-                          opacity: 0.5,
-                          child: Text(
-                            S.of(context).communityBtnSubtitle,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size20,
-                      vertical: Sizes.size10,
-                    ),
-                    alignment: Alignment.bottomRight,
-                    child: InkWell(
-                      onTap: () => _scrollToTop(),
-                      child: Text(S.of(context).scrollToTop),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                color:
-                    isDarkMode(context) ? Colors.black12 : Colors.grey.shade100,
-                padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.size6,
-                  horizontal: Sizes.size24,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FormActionButton(
-                      text: S.of(context).cancelBtn,
-                      onPressed: _onCancel,
-                    ),
-                    FormActionButton(
-                      text: S.of(context).save,
-                      onPressed: _onSave,
-                    )
-                  ],
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
   }
 }

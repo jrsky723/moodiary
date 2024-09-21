@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/text_themes.dart';
-import 'package:moodiary/features/add_diary/repos/add_diary_repo.dart';
 import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/settings/repos/settings_repos.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
@@ -21,8 +20,7 @@ void main() async {
   await dotenv.load();
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepos(preferences);
-
-  final addDiaryRepo = AddDiaryRepository();
+  await dotenv.load();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -35,7 +33,8 @@ void main() async {
           () => SettingsViewModel(repository),
         ),
         addDiaryProvider.overrideWith(
-          () => AddDiaryViewModel(addDiaryRepo),
+          // () => AddDiaryViewModel(addDiaryRepo),
+          () => AddDiaryViewModel(),
         ),
       ],
       child: const Moodiary(),
