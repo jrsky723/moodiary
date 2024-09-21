@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +8,7 @@ import 'package:moodiary/features/add_diary/repos/add_diary_repo.dart';
 import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/settings/repos/settings_repos.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
+import 'package:moodiary/firebase_options.dart';
 import 'package:moodiary/router.dart';
 import 'package:moodiary/theme/navigation_theme.dart';
 import 'package:moodiary/theme/switch_theme.dart';
@@ -19,8 +21,13 @@ void main() async {
 
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepos(preferences);
+
   final addDiaryRepo = AddDiaryRepository();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     ProviderScope(
