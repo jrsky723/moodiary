@@ -16,11 +16,10 @@ import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await dotenv.load();
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepos(preferences);
   final addDiaryRepo = AddDiaryRepository();
-  await dotenv.load(fileName: ".env");
 
   runApp(
     ProviderScope(
