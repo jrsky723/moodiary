@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/painter_utils.dart';
+import 'package:moodiary/utils/painter_utils.dart';
 import 'package:moodiary/utils/color_utils.dart';
 
 class CircumplexModelPainter extends CustomPainter {
