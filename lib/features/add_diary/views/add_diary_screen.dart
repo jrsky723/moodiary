@@ -14,7 +14,7 @@ import 'package:moodiary/features/add_diary/widgets/diary_text_widget.dart';
 import 'package:moodiary/features/add_diary/widgets/form_action_button.dart';
 import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils/theme_utils.dart';
+import 'package:moodiary/utils/build_utils.dart';
 
 class AddDiaryScreen extends ConsumerStatefulWidget {
   static const String routeName = 'addDiary';

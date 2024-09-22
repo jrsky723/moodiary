@@ -7,7 +7,7 @@ import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
 import 'package:moodiary/features/diary_detail/widgets/mood_analysis_card.dart';
 import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
 import 'package:moodiary/features/diary_detail/widgets/word_cloud_card.dart';
-import 'package:moodiary/utils/theme_utils.dart';
+import 'package:moodiary/utils/build_utils.dart';
 
 const String DiarySampleText = """
 오늘은 코딩을 열심히 했다.
