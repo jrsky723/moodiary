@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/utils/build_utils.dart';
 
 class PostContent extends StatefulWidget {
   final String username;
@@ -21,11 +22,14 @@ class _PostContentState extends State<PostContent> {
 
   @override
   Widget build(BuildContext context) {
-    const usernameStyle = TextStyle(
+    final darkmode = isDarkMode(context);
+    final usernameStyle = TextStyle(
+      color: darkmode ? Colors.white : Colors.black,
       fontWeight: FontWeight.bold,
     );
-    const contentStyle = TextStyle(
+    final contentStyle = TextStyle(
       height: 1.8,
+      color: darkmode ? Colors.white : Colors.black,
     );
 
     String displayContent = widget.content;
@@ -79,7 +83,7 @@ class _PostContentState extends State<PostContent> {
                 style: contentStyle,
               ),
               if (!_isExpanded && widget.content.length > overflowLimit) ...[
-                const TextSpan(
+                TextSpan(
                   text: ' ...',
                   style: contentStyle,
                 ),
