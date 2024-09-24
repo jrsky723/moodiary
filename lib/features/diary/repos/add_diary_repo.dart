@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moodiary/features/diary/models/diary_model.dart';
 
 class AddDiaryRepository {
   // static final ApiService _apiService = ApiService();
@@ -45,6 +44,7 @@ class AddDiaryRepository {
     List<String> imageUrls =
         await uploadImage(model['uid'], model['diaryId'], model['imageUrls']);
 
+    model['imageUrls'] = imageUrls;
     await _db
         .collection('users')
         .doc(model['uid'])
