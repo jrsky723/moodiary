@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/dashboard/widgets/show_date_selection_sheet.dart';
+import 'package:moodiary/features/dashboard/views/widgets/show_date_selection_sheet.dart';
 
 class CalendarWidget extends StatefulWidget {
   final DateTime initialDate;

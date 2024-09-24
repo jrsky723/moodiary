@@ -5,8 +5,8 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/community/models/community_post.dart';
 import 'package:moodiary/features/community/models/community_user.dart';
-import 'package:moodiary/features/community/widgets/post_page_view.dart';
-import 'package:moodiary/features/community/widgets/post_content.dart';
+import 'package:moodiary/features/community/views/widgets/post_page_view.dart';
+import 'package:moodiary/features/community/views/widgets/post_content.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class CommunityScreen extends StatefulWidget {
