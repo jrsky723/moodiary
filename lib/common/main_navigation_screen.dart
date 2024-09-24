@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moodiary/features/diary/views/add_diary/add_diary_screen.dart';
+import 'package:moodiary/features/diary/views/add_diary_screen.dart';
 import 'package:moodiary/features/calendar/views/calendar_screen.dart';
 import 'package:moodiary/features/community/views/community_screen.dart';
 import 'package:moodiary/features/dashboard/views/dashboard_screen.dart';
