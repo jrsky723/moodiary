@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/calendar.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/diary_container.dart';
@@ -36,7 +35,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
 
   DateTime _selectedDate = DateTime.now();
   int duration = 300;
-  final List<File> _tempImages = [];
+  final List<File> _images = [];
 
   @override
   void initState() {
@@ -115,7 +114,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     //     );
     ref.read(addDiaryProvider.notifier).createDiary(
           content: _textController.text,
-          imageUrls: _tempImages.map((image) => image.path).toList(),
+          images: _images,
           isPublic: _isPublic,
           date: _selectedDate,
         );
@@ -209,8 +208,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                             child: ImagePickerButton(
                               onImagesSelected: (images) {
                                 setState(() {
-                                  _tempImages.clear();
-                                  _tempImages.addAll(images);
+                                  _images.clear();
+                                  _images.addAll(images);
                                 });
                               },
                             ),
