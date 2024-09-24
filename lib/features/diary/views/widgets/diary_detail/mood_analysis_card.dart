@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary_detail/views/painters/circumplex_model_painter.dart';
-import 'package:moodiary/features/diary_detail/views/painters/linear_indicator_painter.dart';
-import 'package:moodiary/features/diary_detail/views/widgets/info_image_button.dart';
+import 'package:moodiary/features/diary/views/painters/circumplex_model_painter.dart';
+import 'package:moodiary/features/diary/views/painters/linear_indicator_painter.dart';
+import 'package:moodiary/features/diary/views/widgets/diary_detail/info_image_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/color_utils.dart';
 
