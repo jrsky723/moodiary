@@ -33,6 +33,8 @@ class AddDiaryModel {
   final String content;
   final List<String> imageUrls;
   final bool isPublic;
+  final double xOffset;
+  final double yOffset;
 
   AddDiaryModel({
     required this.uid,
@@ -40,6 +42,8 @@ class AddDiaryModel {
     required this.content,
     required this.imageUrls,
     required this.isPublic,
+    this.xOffset = 0.0,
+    this.yOffset = 0.0,
   });
 
   AddDiaryModel.empty()
@@ -47,15 +51,7 @@ class AddDiaryModel {
         diaryId = '',
         content = '',
         imageUrls = [],
-        isPublic = true;
-
-  Map<String, dynamic> toJson(String diaryId) {
-    return {
-      'uid': uid,
-      'diaryId': diaryId,
-      'content': content,
-      'imageUrls': imageUrls,
-      'isPublic': isPublic,
-    };
-  }
+        isPublic = true,
+        xOffset = 0.0,
+        yOffset = 0.0;
 }
