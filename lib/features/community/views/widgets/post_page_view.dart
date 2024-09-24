@@ -52,12 +52,18 @@ class _PostPageViewState extends State<PostPageView> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> imageUrls = widget.imageUrls;
+    if (widget.imageUrls.isEmpty) {
+      imageUrls = [
+        'https://picsum.photos/id/1/200/200',
+      ];
+    }
     return Stack(
       children: [
         PageView(
           controller: _pageController,
           children: [
-            for (String imageUrl in widget.imageUrls)
+            for (String imageUrl in imageUrls)
               _buildPostFrame(
                 child: ImageNetwork(imageUrl: imageUrl),
               ),
