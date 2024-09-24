@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary_detail/insight_pages.dart';
-import 'package:moodiary/features/diary_detail/widgets/image_slider.dart';
-import 'package:moodiary/features/diary_detail/widgets/mood_analysis_card.dart';
-import 'package:moodiary/features/diary_detail/widgets/text_page_view.dart.dart';
-import 'package:moodiary/features/diary_detail/widgets/word_cloud_card.dart';
+import 'package:moodiary/features/diary_detail/views/insight_pages.dart';
+import 'package:moodiary/features/diary_detail/views/widgets/image_slider.dart';
+import 'package:moodiary/features/diary_detail/views/widgets/mood_analysis_card.dart';
+import 'package:moodiary/features/diary_detail/views/widgets/text_page_view.dart.dart';
+import 'package:moodiary/features/diary_detail/views/widgets/word_cloud_card.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
 const String DiarySampleText = """

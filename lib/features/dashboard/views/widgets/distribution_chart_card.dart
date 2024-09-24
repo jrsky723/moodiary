@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/constants/mood.dart';
 import 'package:moodiary/features/dashboard/models/distribution_chart_data.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
-import 'package:moodiary/features/dashboard/painters/distribution_chart_painter.dart';
+import 'package:moodiary/features/dashboard/views/painters/distribution_chart_painter.dart';
 import 'package:moodiary/utils/color_utils.dart';
 import 'package:moodiary/utils/mood_utils.dart';
 

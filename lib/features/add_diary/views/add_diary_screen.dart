@@ -9,11 +9,11 @@ import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/add_diary/models/add_diary_model.dart';
 import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
-import 'package:moodiary/features/add_diary/widgets/calendar.dart';
-import 'package:moodiary/features/add_diary/widgets/diary_container.dart';
-import 'package:moodiary/features/add_diary/widgets/diary_text_widget.dart';
-import 'package:moodiary/features/add_diary/widgets/form_action_button.dart';
-import 'package:moodiary/features/add_diary/widgets/image_picker_button.dart';
+import 'package:moodiary/features/add_diary/views/widgets/calendar.dart';
+import 'package:moodiary/features/add_diary/views/widgets/diary_container.dart';
+import 'package:moodiary/features/add_diary/views/widgets/diary_text_widget.dart';
+import 'package:moodiary/features/add_diary/views/widgets/form_action_button.dart';
+import 'package:moodiary/features/add_diary/views/widgets/image_picker_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
@@ -137,158 +137,149 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(addDiaryProvider).when(
-          error: (error, stackTrace) => Center(
-            child: Text('Error: $error'),
-          ),
-          loading: () => const Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
-          data: (data) => Scaffold(
-            body: GestureDetector(
-              onTap: () {
-                _hideKeyboard();
-              },
-              child: Stack(
-                children: [
-                  CustomScrollView(
-                    controller: _scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    slivers: [
-                      SliverAppBar(
-                        pinned: true,
-                        flexibleSpace: FlexibleSpaceBar(
-                          collapseMode: CollapseMode.none,
-                          background: Container(
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          _hideKeyboard();
+        },
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.none,
+                    background: Container(
+                      color: isDarkMode(context)
+                          ? Colors.grey.shade900
+                          : customPrimarySwatch,
+                    ),
+                  ),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Text(
+                            DateFormat.MMMMEEEEd().format(_selectedDate),
+                            style: TextStyle(
+                              fontSize: Sizes.size16,
+                              color: isDarkMode(context)
+                                  ? Colors.grey.shade400
+                                  : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          InfoButton(
+                            icon: FontAwesomeIcons.caretDown,
+                            size: Sizes.size16,
                             color: isDarkMode(context)
-                                ? Colors.grey.shade900
-                                : customPrimarySwatch,
+                                ? Colors.grey.shade400
+                                : Colors.black,
+                            onTap: () => _showDatePickerDialog(context),
                           ),
-                        ),
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Spacer(),
-                            Row(
-                              children: [
-                                Text(
-                                  DateFormat.MMMMEEEEd().format(_selectedDate),
-                                  style: TextStyle(
-                                    fontSize: Sizes.size16,
-                                    color: isDarkMode(context)
-                                        ? Colors.grey.shade400
-                                        : Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                InfoButton(
-                                  icon: FontAwesomeIcons.caretDown,
-                                  size: Sizes.size16,
-                                  color: isDarkMode(context)
-                                      ? Colors.grey.shade400
-                                      : Colors.black,
-                                  onTap: () => _showDatePickerDialog(context),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
+                        ],
                       ),
-                      SliverToBoxAdapter(
-                        child: DiaryContainer(
-                          text: S.of(context).diary,
-                          child: DiaryTextWidget(
-                            controller: _textController,
-                          ),
-                        ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: DiaryContainer(
+                    text: S.of(context).diary,
+                    child: DiaryTextWidget(
+                      controller: _textController,
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: DiaryContainer(
+                    text: S.of(context).todaysPhoto,
+                    child: Center(
+                      child: ImagePickerButton(
+                        onImagesSelected: (images) {
+                          setState(() {
+                            _tempImages.clear();
+                            _tempImages.addAll(images);
+                          });
+                        },
                       ),
-                      SliverToBoxAdapter(
-                        child: DiaryContainer(
-                          text: S.of(context).todaysPhoto,
-                          child: Center(
-                            child: ImagePickerButton(
-                              onImagesSelected: (images) {
-                                setState(() {
-                                  _tempImages.clear();
-                                  _tempImages.addAll(images);
-                                });
-                              },
-                            ),
-                          ),
+                    ),
+                  ),
+                ),
+                //
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      SwitchListTile.adaptive(
+                        value: _isPublic,
+                        onChanged: (value) => {
+                          setState(() {
+                            _isPublic = value;
+                          })
+                        },
+                        title: Text(
+                          S.of(context).communityBtn,
                         ),
-                      ),
-                      //
-                      SliverToBoxAdapter(
-                        child: Column(
-                          children: [
-                            SwitchListTile.adaptive(
-                              value: _isPublic,
-                              onChanged: (value) => {
-                                setState(() {
-                                  _isPublic = value;
-                                })
-                              },
-                              title: Text(
-                                S.of(context).communityBtn,
-                              ),
-                              subtitle: Opacity(
-                                opacity: 0.5,
-                                child: Text(
-                                  S.of(context).communityBtnSubtitle,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SliverToBoxAdapter(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: Sizes.size20,
-                            vertical: Sizes.size10,
-                          ),
-                          alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            onTap: () => _scrollToTop(),
-                            child: Text(S.of(context).scrollToTop),
+                        subtitle: Opacity(
+                          opacity: 0.5,
+                          child: Text(
+                            S.of(context).communityBtnSubtitle,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      color: isDarkMode(context)
-                          ? Colors.black12
-                          : Colors.grey.shade100,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Sizes.size6,
-                        horizontal: Sizes.size24,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FormActionButton(
-                            text: S.of(context).cancelBtn,
-                            onPressed: _onCancel,
-                          ),
-                          FormActionButton(
-                            text: S.of(context).save,
-                            onPressed: _onSave,
-                          )
-                        ],
-                      ),
+                ),
+
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.size20,
+                      vertical: Sizes.size10,
+                    ),
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      onTap: () => _scrollToTop(),
+                      child: Text(S.of(context).scrollToTop),
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                color:
+                    isDarkMode(context) ? Colors.black12 : Colors.grey.shade100,
+                padding: const EdgeInsets.symmetric(
+                  vertical: Sizes.size6,
+                  horizontal: Sizes.size24,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FormActionButton(
+                      text: S.of(context).cancelBtn,
+                      onPressed: _onCancel,
+                    ),
+                    FormActionButton(
+                      text: S.of(context).save,
+                      onPressed: _onSave,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        );
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/features/add_diary/views/add_diary_screen.dart';
-import 'package:moodiary/features/calendar/calendar_screen.dart';
+import 'package:moodiary/features/calendar/views/calendar_screen.dart';
 import 'package:moodiary/features/community/views/community_screen.dart';
-import 'package:moodiary/features/dashboard/dashboard_screen.dart';
+import 'package:moodiary/features/dashboard/views/dashboard_screen.dart';
 import 'package:moodiary/features/users/views/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {

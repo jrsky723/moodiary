@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moodiary/common/widgets/dialog_button.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/calendar/widgets/scroll_dialog.dart';
+import 'package:moodiary/features/calendar/views/widgets/scroll_dialog.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class YearMonthSelectDialog extends StatefulWidget {

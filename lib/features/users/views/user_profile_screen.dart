@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/settings/settings_screen.dart';
+import 'package:moodiary/features/settings/views/settings_screen.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/views/profile_edit_screen.dart';
 
