@@ -5,13 +5,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
 
 class DiaryRepository {
   // static final ApiService _apiService = ApiService();
 
   // DiaryRepository();
-  // Future<void> postDiary(DiaryModel model) async {
-  //   return _apiService.postDiary(model);
+  // Future<void> postDiary(Diarydiary diary) async {
+  //   return _apiService.postDiary(diary);
   // }
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -35,37 +36,34 @@ class DiaryRepository {
     return imageUrls;
   }
 
-  Future<void> createDiary(Map<String, dynamic> model) async {
+  Future<void> createDiary(DiaryModel diary) async {
     // CollectionReference diaries =
-    //     _db.collection('users').doc(model.uid).collection('diaries');
+    //     _db.collection('users').doc(diary.uid).collection('diaries');
     // DocumentReference docRef = diaries.doc();
 
     // fire Storage의 경로로 imageUrl 생성
     List<String> imageUrls =
-        await uploadImage(model['uid'], model['diaryId'], model['imageUrls']);
+        await uploadImage(diary.uid, diary.diaryId, diary.imageUrls);
 
-    model['imageUrls'] = imageUrls;
+    diary.imageUrls = imageUrls;
     await _db
         .collection('users')
-        .doc(model['uid'])
+        .doc(diary.uid)
         .collection('diaries')
-        .doc(model['diaryId'])
+        .doc(diary.diaryId)
         .set({
-      ...model,
-      'created_at': Timestamp.now(),
-      'updated_at': Timestamp.now(),
+      ...diary.toJson(),
     });
 
-    // await docRef.set({
-    //   // TODO: authentication 구성하고 uid로 변경해야됨
-    //   'uid': model.uid,
-    //   'diaryId': model.diaryId,
-    //   'content': model.content,
-    //   // fire storage에 저장된 이미지 url
-    //   'imageUrls': imageUrls,
-    //   'isPublic': model.isPublic,
-    //   'created_at': Timestamp.now(),
-    //   'updated_at': Timestamp.now(),
+    if (diary.isPublic) {
+      await uploadDiaryToCommunity(diary);
+    }
+  }
+
+  Future<void> uploadDiaryToCommunity(DiaryModel diary) async {
+    // await _db.collection('community').doc(diary.diaryId).set({
+    //   ...diary.toJson(),
+    //   'uploadedAt': DateTime.now().millisecondsSinceEpoch,
     // });
   }
 
