@@ -7,13 +7,13 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/add_diary/models/add_diary_model.dart';
-import 'package:moodiary/features/add_diary/view_models/add_diary_view_model.dart';
-import 'package:moodiary/features/add_diary/views/widgets/calendar.dart';
-import 'package:moodiary/features/add_diary/views/widgets/diary_container.dart';
-import 'package:moodiary/features/add_diary/views/widgets/diary_text_widget.dart';
-import 'package:moodiary/features/add_diary/views/widgets/form_action_button.dart';
-import 'package:moodiary/features/add_diary/views/widgets/image_picker_button.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
+import 'package:moodiary/features/diary/view_models/add_diary_view_model.dart';
+import 'package:moodiary/features/diary/views/widgets/add_diary/calendar.dart';
+import 'package:moodiary/features/diary/views/widgets/add_diary/diary_container.dart';
+import 'package:moodiary/features/diary/views/widgets/add_diary/diary_text_widget.dart';
+import 'package:moodiary/features/diary/views/widgets/add_diary/form_action_button.dart';
+import 'package:moodiary/features/diary/views/widgets/add_diary/image_picker_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
@@ -114,7 +114,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     //       _isPublic,
     //     );
     ref.read(addDiaryProvider.notifier).createDiary(
-          AddDiaryModel(
+          DiaryModel(
             uid: '1',
             content: _textController.text,
             imageUrls: _tempImages.map((image) => image.path).toList(),

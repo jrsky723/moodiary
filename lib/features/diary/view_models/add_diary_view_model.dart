@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moodiary/features/add_diary/models/add_diary_model.dart';
-import 'package:moodiary/features/add_diary/repos/add_diary_repo.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
+import 'package:moodiary/features/diary/repos/add_diary_repo.dart';
 
-// class AddDiaryViewModel extends Notifier<AddDiaryModel> {
+// class AddDiaryViewModel extends Notifier<DiaryModel> {
 //   final AddDiaryRepository _repository;
 
 //   AddDiaryViewModel(this._repository);
 
 //   void saveDiary(String content, List<File> photos, bool isPublic) {
 //     _repository.postDiary(
-//       AddDiaryModel(
+//       DiaryModel(
 //         content: content,
 //         photos: photos,
 //         isPublic: isPublic,
@@ -20,8 +20,8 @@ import 'package:moodiary/features/add_diary/repos/add_diary_repo.dart';
 //   }
 
 //   @override
-//   AddDiaryModel build() {
-//     return AddDiaryModel();
+//   DiaryModel build() {
+//     return DiaryModel();
 //   }
 // }
 
@@ -31,15 +31,15 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
   @override
   FutureOr<void> build() {
     _repository = ref.read(addDiaryRepo);
-    return AddDiaryModel.empty();
+    return DiaryModel.empty();
   }
 
-  Future<void> createDiary(AddDiaryModel model) async {
+  Future<void> createDiary(DiaryModel model) async {
     state = const AsyncValue.loading();
 
     final diaryId = _repository.generateDiaryId(model.uid);
 
-    final diary = AddDiaryModel(
+    final diary = DiaryModel(
       uid: model.uid,
       diaryId: diaryId,
       content: model.content,

@@ -1,16 +1,16 @@
-// class AddDiaryModel {
+// class DiaryModel {
 //   String content;
 //   List<File> photos;
 //   bool isPublic;
 
-//   AddDiaryModel({
+//   DiaryModel({
 //     this.content = '',
 //     this.photos = const [],
 //     this.isPublic = true,
 //   });
 
-//   factory AddDiaryModel.fromJson(Map<String, dynamic> json) {
-//     return AddDiaryModel(
+//   factory DiaryModel.fromJson(Map<String, dynamic> json) {
+//     return DiaryModel(
 //       content: json['content'],
 //       photos: List<File>.from(json['photos']),
 //       isPublic: json['is_public'],
@@ -27,7 +27,7 @@
 //   }
 // }
 
-class AddDiaryModel {
+class DiaryModel {
   final String uid;
   final String diaryId;
   final String content;
@@ -37,7 +37,7 @@ class AddDiaryModel {
   final double xOffset;
   final double yOffset;
 
-  AddDiaryModel({
+  DiaryModel({
     required this.uid,
     this.diaryId = "0",
     required this.content,
@@ -48,7 +48,7 @@ class AddDiaryModel {
     this.yOffset = 0.0,
   });
 
-  AddDiaryModel.empty()
+  DiaryModel.empty()
       : uid = '',
         diaryId = '',
         content = '',

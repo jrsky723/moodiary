@@ -5,13 +5,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moodiary/features/add_diary/models/add_diary_model.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
 
 class AddDiaryRepository {
   // static final ApiService _apiService = ApiService();
 
   // AddDiaryRepository();
-  // Future<void> postDiary(AddDiaryModel model) async {
+  // Future<void> postDiary(DiaryModel model) async {
   //   return _apiService.postDiary(model);
   // }
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -36,7 +36,7 @@ class AddDiaryRepository {
     return imageUrls;
   }
 
-  Future<void> createDiary(AddDiaryModel model) async {
+  Future<void> createDiary(DiaryModel model) async {
     // CollectionReference diaries =
     //     _db.collection('users').doc(model.uid).collection('diaries');
     // DocumentReference docRef = diaries.doc();
