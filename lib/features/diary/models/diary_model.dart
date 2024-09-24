@@ -57,4 +57,17 @@ class DiaryModel {
         date = '',
         xOffset = 0.0,
         yOffset = 0.0;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uid': uid,
+      'diaryId': diaryId,
+      'content': content,
+      'imageUrls': imageUrls,
+      'isPublic': isPublic,
+      'date': date,
+      'xOffset': xOffset,
+      'yOffset': yOffset,
+    };
+  }
 }
