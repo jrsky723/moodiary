@@ -54,17 +54,6 @@ class DiaryRepository {
         .set({
       ...diary.toJson(),
     });
-
-    if (diary.isPublic) {
-      await uploadDiaryToCommunity(diary);
-    }
-  }
-
-  Future<void> uploadDiaryToCommunity(DiaryModel diary) async {
-    // await _db.collection('community').doc(diary.diaryId).set({
-    //   ...diary.toJson(),
-    //   'uploadedAt': DateTime.now().millisecondsSinceEpoch,
-    // });
   }
 
   Future<Map<String, dynamic>?> getDiaryByDate(String uid, String date) async {

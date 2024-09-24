@@ -24,7 +24,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   // 임시 유저 프로필
   final UserProfileModel _userProfile = UserProfileModel(
     uid: '123456',
-    userName: 'Hong111',
+    username: 'Hong111',
     bio: '안녕하세요! 저는 홍길동입니다. 저는 개발밖에 안해요',
     hasAvatar: false,
     avatarUrl: 'https://picsum.photos/id/${1}/200/200',
@@ -182,7 +182,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             Gaps.v16,
             // 사용자 이름 입력 필드
             TextFormField(
-              initialValue: _userProfile.userName,
+              initialValue: _userProfile.username,
               decoration: InputDecoration(labelText: S.of(context).userName),
               maxLength: 16,
               validator: (value) {
