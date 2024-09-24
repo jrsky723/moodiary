@@ -15,7 +15,7 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final UserProfileModel _userProfile = UserProfileModel(
     uid: '123456',
-    userName: 'Hong111',
+    username: 'Hong111',
     bio: '안녕하세요! 저는 홍길동입니다. 저는 개발밖에 안해요',
     hasAvatar: false,
     avatarUrl: 'https://picsum.photos/id/${123456}/200/200',
@@ -41,7 +41,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: Text(_userProfile.userName),
+        title: Text(_userProfile.username),
         actions: [
           if (_isMyProfile) ...[
             IconButton(
