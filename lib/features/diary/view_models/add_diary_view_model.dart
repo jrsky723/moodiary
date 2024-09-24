@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/community/models/community_post.dart';
@@ -40,7 +41,7 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
 
   Future<void> createDiary({
     required String content,
-    required List<String> imageUrls,
+    required List<File> images,
     required bool isPublic,
     required DateTime date,
   }) async {
@@ -48,6 +49,12 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
 
     const userId = '1'; // TODO: authentication 구성하고 uid로 변경해야됨
     final diaryId = _diaryRepo.generateDiaryId(userId);
+
+    final imageUrls = await _diaryRepo.uploadImages(
+      uid: userId,
+      diaryId: diaryId,
+      images: images,
+    );
 
     final diary = DiaryModel(
       uid: userId,

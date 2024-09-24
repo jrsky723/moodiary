@@ -21,31 +21,31 @@ class DiaryRepository {
     return _db.collection('users').doc(uid).collection('diaries').doc().id;
   }
 
-  Future<List<String>> uploadImage(
-      String uid, String diaryId, List<String> imagePaths) async {
+  Future<List<String>> uploadImages({
+    required String uid,
+    required String diaryId,
+    required List<File> images,
+  }) async {
+    // 이미지들을 업로드 하고, 이미지 url을 반환
     List<String> imageUrls = [];
-    String url = '$uid/diaries/$diaryId';
+    String baseUrl = 'users/$uid/diaries/$diaryId';
+    final fileRef = _storage.ref().child(baseUrl);
 
-    final fileRef = _storage.ref().child(url);
-    for (int i = 0; i < imagePaths.length; i++) {
-      final file = File(imagePaths[i]);
+    for (int i = 0; i < images.length; i++) {
+      final file = images[i];
       String fileName = 'image$i';
+      // 이미지 업로드
       await fileRef.child(fileName).putFile(file);
-      imageUrls.add('$url/$fileName');
+
+      // 이미지 url 가져오기 및 저장
+      final url = '$baseUrl/$fileName';
+      final String imageUrl = await getImageUrl(url);
+      imageUrls.add(imageUrl);
     }
     return imageUrls;
   }
 
   Future<void> createDiary(DiaryModel diary) async {
-    // CollectionReference diaries =
-    //     _db.collection('users').doc(diary.uid).collection('diaries');
-    // DocumentReference docRef = diaries.doc();
-
-    // fire Storage의 경로로 imageUrl 생성
-    List<String> imageUrls =
-        await uploadImage(diary.uid, diary.diaryId, diary.imageUrls);
-
-    diary.imageUrls = imageUrls;
     await _db
         .collection('users')
         .doc(diary.uid)
