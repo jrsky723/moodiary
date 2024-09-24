@@ -78,8 +78,6 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     // TODO: implement initState
     super.initState();
     dateFormatted = DateFormat.yMMMMd().format(widget.date);
-    ref.read(diaryDetailProvider.notifier).getDiaryByDate(dateFormatted);
-    imageDownloads = ref.read(diaryDetailProvider.notifier).getImageUrls(imageUrls);
   }
 
   @override
@@ -163,8 +161,6 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     required double height,
     required List<String> imageUrls,
   }) {
-
-    List<String> imageDownloads = ref.read(diaryDetailProvider.notifier).
     return SizedBox(
       height: height,
       child: ImageSlider(

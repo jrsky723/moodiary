@@ -31,11 +31,13 @@ class DiaryModel {
   final String uid;
   final String diaryId;
   final String content;
-  final List<String> imageUrls;
+  List<String> imageUrls;
   final bool isPublic;
-  final String date;
+  final DateTime date;
   final double xOffset;
   final double yOffset;
+  final int createAt;
+  final int updateAt;
 
   DiaryModel({
     required this.uid,
@@ -46,6 +48,8 @@ class DiaryModel {
     required this.date,
     this.xOffset = 0.0,
     this.yOffset = 0.0,
+    this.createAt = 0,
+    this.updateAt = 0,
   });
 
   DiaryModel.empty()
@@ -54,9 +58,11 @@ class DiaryModel {
         content = '',
         imageUrls = [],
         isPublic = true,
-        date = '',
+        date = DateTime.now(),
         xOffset = 0.0,
-        yOffset = 0.0;
+        yOffset = 0.0,
+        createAt = 0,
+        updateAt = 0;
 
   Map<String, dynamic> toJson() {
     return {
@@ -68,6 +74,8 @@ class DiaryModel {
       'date': date,
       'xOffset': xOffset,
       'yOffset': yOffset,
+      'createAt': createAt,
+      'updateAt': updateAt,
     };
   }
 
@@ -79,5 +87,7 @@ class DiaryModel {
         isPublic = data['isPublic'],
         date = data['date'],
         xOffset = data['xOffset'],
-        yOffset = data['yOffset'];
+        yOffset = data['yOffset'],
+        createAt = data['createAt'],
+        updateAt = data['updateAt'];
 }

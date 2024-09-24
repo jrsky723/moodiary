@@ -114,13 +114,10 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     //       _isPublic,
     //     );
     ref.read(addDiaryProvider.notifier).createDiary(
-          DiaryModel(
-            uid: '1',
-            content: _textController.text,
-            imageUrls: _tempImages.map((image) => image.path).toList(),
-            isPublic: _isPublic,
-            date: DateFormat('yyyy-MM-dd').format(_selectedDate),
-          ),
+          content: _textController.text,
+          imageUrls: _tempImages.map((image) => image.path).toList(),
+          isPublic: _isPublic,
+          date: _selectedDate,
         );
     _hideKeyboard();
     Navigator.pop(context);

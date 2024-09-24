@@ -34,21 +34,29 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
     return DiaryModel.empty();
   }
 
-  Future<void> createDiary(DiaryModel model) async {
+  Future<void> createDiary({
+    required String content,
+    required List<String> imageUrls,
+    required bool isPublic,
+    required DateTime date,
+  }) async {
     state = const AsyncValue.loading();
 
-    final diaryId = _repository.generateDiaryId(model.uid);
+    const userId = '1'; // TODO: authentication 구성하고 uid로 변경해야됨
+    final diaryId = _repository.generateDiaryId(userId);
 
     final diary = DiaryModel(
-      uid: model.uid,
+      uid: userId,
       diaryId: diaryId,
-      content: model.content,
-      imageUrls: model.imageUrls,
-      isPublic: model.isPublic,
-      date: model.date,
+      content: content,
+      imageUrls: imageUrls,
+      isPublic: isPublic,
+      date: date,
+      createAt: DateTime.now().millisecondsSinceEpoch,
+      updateAt: DateTime.now().millisecondsSinceEpoch,
     );
 
-    await _repository.createDiary(diary.toJson());
+    await _repository.createDiary(diary);
     state = AsyncValue.data(diary);
   }
 }
