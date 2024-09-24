@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/common/main_navigation_screen.dart';
-import 'package:moodiary/features/diary/views/add_diary/add_diary_screen.dart';
+import 'package:moodiary/features/diary/views/add_diary_screen.dart';
 
 final routerProvider = Provider<GoRouter>(
   (ref) {

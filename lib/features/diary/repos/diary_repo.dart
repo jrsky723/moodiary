@@ -46,6 +46,7 @@ class DiaryRepository {
   }
 
   Future<void> createDiary(DiaryModel diary) async {
+    print('diary: ${diary.toJson()}');
     await _db
         .collection('users')
         .doc(diary.uid)
@@ -56,15 +57,29 @@ class DiaryRepository {
     });
   }
 
-  Future<Map<String, dynamic>?> getDiaryByDate(String uid, String date) async {
+  Future<Map<String, dynamic>?> fetchDiaryByUserAndDate(
+    String uid,
+    DateTime date,
+  ) async {
+    print(date);
+    final startOfDay =
+        Timestamp.fromDate(DateTime(date.year, date.month, date.day));
+    final endOfDay = Timestamp.fromDate(
+        DateTime(date.year, date.month, date.day, 23, 59, 59));
+    print('startOfDay: $startOfDay, endOfDay: $endOfDay');
     final snapshot = await _db
         .collection('users')
         .doc(uid)
         .collection('diaries')
-        .where('date', isEqualTo: date)
+        .where(
+          'date',
+          isGreaterThanOrEqualTo: startOfDay,
+          isLessThanOrEqualTo: endOfDay,
+        )
         .limit(1)
         .get();
 
+    print('snapshot: $snapshot');
     if (snapshot.docs.isNotEmpty) {
       return snapshot.docs.first.data();
     } else {
