@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodiary/common/widgets/image_network.dart';
 import 'package:moodiary/constants/sizes.dart';
 
 class ImageSlider extends StatefulWidget {
@@ -122,27 +123,7 @@ class _ImageSliderState extends State<ImageSlider> {
                     ),
                   ],
                 ),
-                child: Image.network(
-                  widget.imageUrls[index],
-                  fit: BoxFit.cover,
-                  frameBuilder:
-                      (context, child, frame, wasSynchronouslyLoaded) {
-                    if (wasSynchronouslyLoaded) {
-                      return child;
-                    }
-                    return AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      opacity: frame == null ? 0 : 1,
-                      child: child,
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.error,
-                      color: Colors.grey,
-                    );
-                  },
-                ),
+                child: ImageNetwork(imageUrl: widget.imageUrls[index]),
               ),
             ),
           ),
