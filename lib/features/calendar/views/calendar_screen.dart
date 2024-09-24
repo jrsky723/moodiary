@@ -10,7 +10,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/views/widgets/info_container.dart';
 import 'package:moodiary/features/calendar/views/search_screen.dart';
 import 'package:moodiary/features/calendar/views/widgets/year_month_select_dialog.dart';
-import 'package:moodiary/features/diary/views/diary_detail/diary_detail_screen.dart';
+import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 import 'package:moodiary/utils/date_utils.dart';

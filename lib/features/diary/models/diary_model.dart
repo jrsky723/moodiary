@@ -83,7 +83,7 @@ class DiaryModel {
       : uid = data['uid'],
         diaryId = data['diaryId'],
         content = data['content'],
-        imageUrls = List<String>.from(data['imageUrls']),
+        imageUrls = data['imageUrls'],
         isPublic = data['isPublic'],
         date = data['date'],
         xOffset = data['xOffset'],
