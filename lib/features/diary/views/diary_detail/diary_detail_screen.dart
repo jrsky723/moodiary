@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
+import 'package:moodiary/features/diary/view_models/diary_detail_view_model.dart';
 import 'package:moodiary/features/diary/views/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
@@ -54,7 +57,7 @@ const List<String> imageUrls = [
   'https://picsum.photos/200/300',
 ];
 
-class DiaryDetailScreen extends StatelessWidget {
+class DiaryDetailScreen extends ConsumerStatefulWidget {
   final DateTime date;
 
   const DiaryDetailScreen({
@@ -63,11 +66,28 @@ class DiaryDetailScreen extends StatelessWidget {
   });
 
   @override
+  ConsumerState<DiaryDetailScreen> createState() => _DiaryDetailScreenState();
+}
+
+class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
+  late String dateFormatted;
+  late List<String> imageDownloads;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dateFormatted = DateFormat.yMMMMd().format(widget.date);
+    ref.read(diaryDetailProvider.notifier).getDiaryByDate(dateFormatted);
+    imageDownloads = ref.read(diaryDetailProvider.notifier).getImageUrls(imageUrls);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          DateFormat.yMMMMd().format(date),
+          dateFormatted,
           style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -75,26 +95,37 @@ class DiaryDetailScreen extends StatelessWidget {
         ),
         surfaceTintColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size16,
-        ),
-        child: ListView(
-          children: [
-            Gaps.v16,
-            _buildDiarySection(context, height: 300.0),
-            _buildImageSection(height: 100.0, imageUrls: imageUrls),
-            Gaps.v4,
-            _buildAnalysisSection(context, height: 180.0),
-          ],
-        ),
-      ),
+      body: ref.watch(diaryDetailProvider).when(
+            loading: () => const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+            error: (error, stackTrace) => Center(child: Text('Error: $error')),
+            data: (diary) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size16,
+                ),
+                child: ListView(
+                  children: [
+                    Gaps.v16,
+                    _buildDiarySection(context,
+                        height: 300.0, content: diary.content),
+                    _buildImageSection(
+                        height: 100.0, imageUrls: diary.imageUrls),
+                    Gaps.v4,
+                    _buildAnalysisSection(context, height: 180.0),
+                  ],
+                ),
+              );
+            },
+          ),
     );
   }
 
   Widget _buildDiarySection(
     BuildContext context, {
     required double height,
+    required String content,
   }) {
     final darkmode = isDarkMode(context);
     return Container(
@@ -116,7 +147,7 @@ class DiaryDetailScreen extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return TextPageView(
-            text: DiarySampleText,
+            text: content,
             textStyle: const TextStyle(
               fontSize: Sizes.size16,
               height: 1.3,
@@ -132,6 +163,8 @@ class DiaryDetailScreen extends StatelessWidget {
     required double height,
     required List<String> imageUrls,
   }) {
+
+    List<String> imageDownloads = ref.read(diaryDetailProvider.notifier).
     return SizedBox(
       height: height,
       child: ImageSlider(
