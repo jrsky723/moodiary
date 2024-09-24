@@ -3,59 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_detail_view_model.dart';
-import 'package:moodiary/features/diary/views/diary_detail/insight_pages.dart';
+import 'package:moodiary/features/diary/views/widgets/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/text_page_view.dart.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/word_cloud_card.dart';
 import 'package:moodiary/utils/build_utils.dart';
-
-const String DiarySampleText = """
-오늘은 코딩을 열심히 했다.
-오랜만에 새로운 프로젝트를 시작해서 흥미진진했다. 
-복잡한 알고리즘 문제를 풀었을 때의 성취감이 정말 컸다.
-
-공부도 열심히 했다.
-내일 있을 시험을 대비해서 밤늦게까지 공부했다.
-특히 데이터베이스와 네트워크 부분을 집중적으로 복습했다.
-모든 내용을 다 이해하지는 못했지만, 그래도 많이 배운 것 같다.
-
-운동도 열심히 했다.
-오후에 헬스장에서 땀을 많이 흘렸다.
-런닝머신에서 30분 뛰고, 근력 운동도 했다.
-운동 후에는 몸이 가벼워지는 느낌이 들어서 기분이 좋았다.
-
-휴식도 열심히 했다.
-오후에는 잠깐 낮잠도 자고, 좋아하는 책도 읽었다.
-카페에서 커피 한 잔 마시며 조용한 시간을 보냈다.
-이런 시간이 정말 소중하게 느껴졌다.
-
-잠도 열심히 잤다.
-요즘 잠이 부족해서 그런지 피곤했다.
-오늘은 일찍 잠자리에 들기로 했다.
-푹 자고 나면 내일은 더 활기차게 보낼 수 있을 것 같다.
-
-여자친구는 없다.
-요즘 친구들이 여자친구 얘기를 많이 해서 그런지 나도 외롭다.
-연애를 하고 싶다는 생각이 들지만, 아직은 준비가 안 된 것 같다.
-그래도 가끔은 누군가와 함께하고 싶은 마음이 커진다.
-
-그래서 슬프다.
-이런 감정을 느끼는 내가 조금은 불안하고, 외로움을 느끼지만
-지금은 나 자신을 더 발전시키는 것이 중요하다고 생각한다.
-슬픔도 나의 일부분이기에 잘 받아들이고 극복해 나가야겠다.
-   """;
-
-const List<String> imageUrls = [
-  'https://picsum.photos/300/200',
-  'https://picsum.photos/1980/1980',
-  'https://picsum.photos/1920/1080',
-  'https://picsum.photos/400/200',
-  'https://picsum.photos/300/400',
-  'https://picsum.photos/200/300',
-];
 
 class DiaryDetailScreen extends ConsumerStatefulWidget {
   final DateTime date;
@@ -70,14 +24,14 @@ class DiaryDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
-  late String dateFormatted;
-  late List<String> imageDownloads;
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    dateFormatted = DateFormat.yMMMMd().format(widget.date);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -85,7 +39,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dateFormatted,
+          DateFormat.yMMMMd().format(widget.date),
           style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -93,7 +47,11 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
         ),
         surfaceTintColor: Colors.transparent,
       ),
-      body: ref.watch(diaryDetailProvider).when(
+      body: ref
+          .watch(diaryDetailProvider(
+            widget.date,
+          ))
+          .when(
             loading: () => const Center(
               child: CircularProgressIndicator.adaptive(),
             ),
