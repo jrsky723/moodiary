@@ -48,7 +48,8 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
       date: model.date,
     );
 
-    await _repository.createDiary(diary);
+    await _repository.createDiary(diary.toJson());
+    state = AsyncValue.data(diary);
   }
 }
 

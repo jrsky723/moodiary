@@ -36,29 +36,22 @@ class AddDiaryRepository {
     return imageUrls;
   }
 
-  Future<void> createDiary(DiaryModel model) async {
+  Future<void> createDiary(Map<String, dynamic> model) async {
     // CollectionReference diaries =
     //     _db.collection('users').doc(model.uid).collection('diaries');
     // DocumentReference docRef = diaries.doc();
 
     // fire Storage의 경로로 imageUrl 생성
     List<String> imageUrls =
-        await uploadImage(model.uid, model.diaryId, model.imageUrls);
+        await uploadImage(model['uid'], model['diaryId'], model['imageUrls']);
 
     await _db
         .collection('users')
-        .doc(model.uid)
+        .doc(model['uid'])
         .collection('diaries')
-        .doc(model.diaryId)
+        .doc(model['diaryId'])
         .set({
-      'uid': model.uid,
-      'diaryId': model.diaryId,
-      'content': model.content,
-      'imageUrls': imageUrls,
-      'isPublic': model.isPublic,
-      'date': model.date,
-      'xOffset': model.xOffset,
-      'yOffset': model.yOffset,
+      ...model,
       'created_at': Timestamp.now(),
       'updated_at': Timestamp.now(),
     });
