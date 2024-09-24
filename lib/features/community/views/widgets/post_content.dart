@@ -53,7 +53,7 @@ class _PostContentState extends State<PostContent> {
     textPainter.layout(maxWidth: MediaQuery.of(context).size.width);
 
     // 실제 줄 수 계산
-    final lineCount = textPainter.computeLineMetrics().length + 1;
+    final lineCount = textPainter.computeLineMetrics().length;
 
     return Stack(
       children: [
