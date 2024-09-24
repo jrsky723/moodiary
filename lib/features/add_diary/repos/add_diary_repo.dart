@@ -56,6 +56,7 @@ class AddDiaryRepository {
       'content': model.content,
       'imageUrls': imageUrls,
       'isPublic': model.isPublic,
+      'date': model.date,
       'xOffset': model.xOffset,
       'yOffset': model.yOffset,
       'created_at': Timestamp.now(),
