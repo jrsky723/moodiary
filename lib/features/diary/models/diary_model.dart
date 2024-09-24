@@ -70,4 +70,14 @@ class DiaryModel {
       'yOffset': yOffset,
     };
   }
+
+  DiaryModel.fromJson(Map<String, dynamic> data)
+      : uid = data['uid'],
+        diaryId = data['diaryId'],
+        content = data['content'],
+        imageUrls = List<String>.from(data['imageUrls']),
+        isPublic = data['isPublic'],
+        date = data['date'],
+        xOffset = data['xOffset'],
+        yOffset = data['yOffset'];
 }

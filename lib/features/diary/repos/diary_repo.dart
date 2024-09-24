@@ -6,10 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddDiaryRepository {
+class DiaryRepository {
   // static final ApiService _apiService = ApiService();
 
-  // AddDiaryRepository();
+  // DiaryRepository();
   // Future<void> postDiary(DiaryModel model) async {
   //   return _apiService.postDiary(model);
   // }
@@ -68,6 +68,26 @@ class AddDiaryRepository {
     //   'updated_at': Timestamp.now(),
     // });
   }
+
+  Future<Map<String, dynamic>?> getDiaryByDate(String uid, String date) async {
+    final snapshot = await _db
+        .collection('users')
+        .doc(uid)
+        .collection('diaries')
+        .where('date', isEqualTo: date)
+        .limit(1)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      return snapshot.docs.first.data();
+    } else {
+      return null;
+    }
+  }
+
+  Future<String> getImageUrl(String url) async {
+    return await _storage.ref().child(url).getDownloadURL();
+  }
 }
 
-final addDiaryRepo = Provider((ref) => AddDiaryRepository());
+final diaryRepo = Provider((ref) => DiaryRepository());

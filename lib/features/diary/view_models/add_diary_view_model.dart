@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
-import 'package:moodiary/features/diary/repos/add_diary_repo.dart';
+import 'package:moodiary/features/diary/repos/diary_repo.dart';
 
 // class AddDiaryViewModel extends Notifier<DiaryModel> {
 //   final AddDiaryRepository _repository;
@@ -26,11 +26,11 @@ import 'package:moodiary/features/diary/repos/add_diary_repo.dart';
 // }
 
 class AddDiaryViewModel extends AsyncNotifier<void> {
-  late final AddDiaryRepository _repository;
+  late final DiaryRepository _repository;
 
   @override
   FutureOr<void> build() {
-    _repository = ref.read(addDiaryRepo);
+    _repository = ref.read(diaryRepo);
     return DiaryModel.empty();
   }
 
