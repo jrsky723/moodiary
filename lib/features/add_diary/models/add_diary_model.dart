@@ -33,6 +33,7 @@ class AddDiaryModel {
   final String content;
   final List<String> imageUrls;
   final bool isPublic;
+  final String date;
   final double xOffset;
   final double yOffset;
 
@@ -42,6 +43,7 @@ class AddDiaryModel {
     required this.content,
     required this.imageUrls,
     required this.isPublic,
+    required this.date,
     this.xOffset = 0.0,
     this.yOffset = 0.0,
   });
@@ -52,6 +54,7 @@ class AddDiaryModel {
         content = '',
         imageUrls = [],
         isPublic = true,
+        date = '',
         xOffset = 0.0,
         yOffset = 0.0;
 }

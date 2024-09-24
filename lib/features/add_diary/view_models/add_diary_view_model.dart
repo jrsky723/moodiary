@@ -45,6 +45,7 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
       content: model.content,
       imageUrls: model.imageUrls,
       isPublic: model.isPublic,
+      date: model.date,
     );
 
     await _repository.createDiary(diary);

@@ -119,6 +119,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
             content: _textController.text,
             imageUrls: _tempImages.map((image) => image.path).toList(),
             isPublic: _isPublic,
+            date: DateFormat('yyyy-MM-dd').format(_selectedDate),
           ),
         );
     _hideKeyboard();
