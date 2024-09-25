@@ -879,6 +879,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Sign Up`
+  String get signUp {
+    return Intl.message(
+      'Sign Up',
+      name: 'signUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `next`
+  String get nextBtn {
+    return Intl.message(
+      'next',
+      name: 'nextBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one number`
+  String get pwdnumbererror {
+    return Intl.message(
+      'Password must contain at least one number',
+      name: 'pwdnumbererror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one special character`
+  String get pwdspecialcharerror {
+    return Intl.message(
+      'Password must contain at least one special character',
+      name: 'pwdspecialcharerror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one uppercase letter`
+  String get pwduppercaseerror {
+    return Intl.message(
+      'Password must contain at least one uppercase letter',
+      name: 'pwduppercaseerror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `8 to 20 characters`
+  String get pwdlengtherror {
+    return Intl.message(
+      '8 to 20 characters',
+      name: 'pwdlengtherror',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complete`
+  String get completeBtn {
+    return Intl.message(
+      'Complete',
+      name: 'completeBtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `login`
+  String get login {
+    return Intl.message(
+      'login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

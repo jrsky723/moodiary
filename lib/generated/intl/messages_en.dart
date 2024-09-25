@@ -48,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "communityBtnSubtitle":
             MessageLookupByLibrary.simpleMessage("Post to community"),
         "communityTitle": MessageLookupByLibrary.simpleMessage("Community"),
+        "completeBtn": MessageLookupByLibrary.simpleMessage("Complete"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "content": MessageLookupByLibrary.simpleMessage("Content"),
         "darkModeSubtitle":
@@ -75,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hour": MessageLookupByLibrary.simpleMessage("h"),
         "howWasYourDay":
             MessageLookupByLibrary.simpleMessage("How was your day?"),
+        "login": MessageLookupByLibrary.simpleMessage("login"),
         "minute": MessageLookupByLibrary.simpleMessage("m"),
         "miserable": MessageLookupByLibrary.simpleMessage("Miserable"),
         "monthlyMoodDistTitle":
@@ -94,11 +96,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "negative": MessageLookupByLibrary.simpleMessage("Negative"),
         "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
+        "nextBtn": MessageLookupByLibrary.simpleMessage("next"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "pleaseEnterName":
             MessageLookupByLibrary.simpleMessage("Please enter your name."),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
+        "pwdlengtherror":
+            MessageLookupByLibrary.simpleMessage("8 to 20 characters"),
+        "pwdnumbererror": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one number"),
+        "pwdspecialcharerror": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one special character"),
+        "pwduppercaseerror": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one uppercase letter"),
         "relaxed": MessageLookupByLibrary.simpleMessage("Relaxed"),
         "resetToDefaultProfile":
             MessageLookupByLibrary.simpleMessage("Reset to default profile"),
@@ -116,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectedDate": m3,
         "serene": MessageLookupByLibrary.simpleMessage("Serene"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "sleep": MessageLookupByLibrary.simpleMessage("Sleep"),
         "sleepDuration": m4,
         "sleepiness": MessageLookupByLibrary.simpleMessage("sleepiness"),
