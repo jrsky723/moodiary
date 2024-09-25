@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/common/main_navigation_screen.dart';
+import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
+import 'package:moodiary/features/authentication/views/log_in_screen.dart';
+import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
 import 'package:moodiary/features/diary/views/add_diary_screen.dart';
 
 final routerProvider = Provider<GoRouter>(
@@ -8,7 +11,31 @@ final routerProvider = Provider<GoRouter>(
     return GoRouter(
       initialLocation: '/${MainNavigationScreen.initialTab}',
       debugLogDiagnostics: true,
+      redirect: (context, state) {
+        final isLoggIned = ref.read(authRepo).isLoggedIn;
+        if (!isLoggIned) {
+          if (state.matchedLocation != SignUpScreen.routeUrl &&
+              state.matchedLocation != LogInScreen.routeUrl) {
+            return SignUpScreen.routeUrl;
+          }
+        }
+        return null;
+      },
       routes: [
+        GoRoute(
+          path: LogInScreen.routeUrl,
+          name: LogInScreen.routeName,
+          builder: (context, state) {
+            return const LogInScreen();
+          },
+        ),
+        GoRoute(
+          path: SignUpScreen.routeUrl,
+          name: SignUpScreen.routeName,
+          builder: (context, state) {
+            return const SignUpScreen();
+          },
+        ),
         GoRoute(
           path: "/:tab(calendar|dashboard|community|user)",
           name: MainNavigationScreen.routeName,

@@ -12,7 +12,20 @@
           "package_name": "com.example.moodiary"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "436974429429-uo7ib4u99p3fmv6jkdnm757rlcrk8qn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moodiary",
+            "certificate_hash": "1f73e6dd6912192aad87496093778ada2a4b0531"
+          }
+        },
+        {
+          "client_id": "436974429429-f9b6uc40mlkatf7f7tdlmg2rgehjn3fc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAYQXrb1eCof7ykVbGosP4VeLU1l_n2QZA"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436974429429-f9b6uc40mlkatf7f7tdlmg2rgehjn3fc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "436974429429-67rminqsrbvnphgd8k9e5jfq7ba3if9t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.moodiary"
+              }
+            }
+          ]
         }
       }
     }

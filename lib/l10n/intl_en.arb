@@ -119,5 +119,13 @@
   "hour": "h",
   "minute": "m",
   "communityBtn": "Community",
-  "communityBtnSubtitle": "Post to community"
+  "communityBtnSubtitle": "Post to community",
+  "signUp": "Sign Up",
+  "nextBtn": "next",
+  "pwdnumbererror": "Password must contain at least one number",
+  "pwdspecialcharerror": "Password must contain at least one special character",
+  "pwduppercaseerror": "Password must contain at least one uppercase letter",
+  "pwdlengtherror": "8 to 20 characters",
+  "completeBtn": "Complete",
+  "login": "login"
 }
