@@ -120,5 +120,13 @@
   "hour": "시",
   "minute": "분",
   "communityBtn": "커뮤니티",
-  "communityBtnSubtitle": "커뮤니티에 올리기"
+  "communityBtnSubtitle": "커뮤니티에 올리기",
+  "signUp": "회원가입",
+  "nextBtn": "다음",
+  "pwdnumbererror": "비밀번호는 최소 하나의 숫자를 포함해야 합니다",
+  "pwduppercaseerror": "비밀번호는 최소 하나의 대문자를 포함해야 합니다",
+  "pwdspecialcharerror": "비밀번호는 최소 하나의 특수문자를 포함해야 합니다",
+  "pwdlengtherror": "비밀번호는 8자에서 20자 사이여야 합니다",
+  "completeBtn": "완료",
+  "login": "로그인"
 }
