@@ -2,20 +2,21 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/calendar/models/calendar_entry.dart';
-import 'package:moodiary/features/calendar/repos/calendar_repo.dart';
+import 'package:moodiary/features/diary/repos/diary_repo.dart';
+import 'package:moodiary/utils/date_utils.dart';
 
 class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
-  late final CalendarRepository _repo;
+  late final DiaryRepository _repo;
   late List<CalendarEntry> _list;
 
   @override
   FutureOr<List<CalendarEntry>> build() async {
-    _repo = ref.read(calendarRepo);
+    _repo = ref.read(diaryRepo);
     _list = await _fetchEntries();
     return _list;
   }
 
-  List<DateTime> _generateDaysForYearMonth(DateTime date) {
+  List<DateTime> _generateDatesForYearMonth(DateTime date) {
     List<DateTime> days = [];
     DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
     DateTime lastDayOfMonth = DateTime(date.year, date.month + 1, 0);
@@ -42,7 +43,13 @@ class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
     final month = date ?? DateTime.now(); // date가 없으면 현재 달
-    final result = await _repo.fetchDiariesByUserAndMonth(uid!, month);
+    final start = DateTime(month.year, month.month, 1);
+    final end = DateTime(month.year, month.month + 1, 0);
+    final result = await _repo.fetchDiariesByUserAndDateRange(
+      uid: uid!,
+      start: start,
+      end: end,
+    );
 
     List<CalendarEntry> fetchedEntries = result.docs
         .map(
@@ -50,15 +57,13 @@ class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
         )
         .toList();
 
-    final days = _generateDaysForYearMonth(month); // 캘린더 한 화면안에 있는 날짜들 (이전달 포함)
+    final dates =
+        _generateDatesForYearMonth(month); // 캘린더 한 화면안에 있는 날짜들 (이전달 포함)
 
-    final entries = days.map((day) {
+    final entries = dates.map((date) {
       final entry = fetchedEntries.firstWhere(
-        (entry) =>
-            entry.date.year == day.year &&
-            entry.date.month == day.month &&
-            entry.date.day == day.day,
-        orElse: () => CalendarEntry.empty(date: day),
+        (entry) => isSameDay(entry.date, date),
+        orElse: () => CalendarEntry.empty(date: date),
       );
       return entry;
     }).toList();

@@ -16,7 +16,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
   FutureOr<void> build() {
     _diaryRepo = ref.read(diaryRepo);
     _communityPostRepo = ref.read(communityPostRepo);
-    return DiaryModel.empty();
   }
 
   Future<void> createDiary({
@@ -68,8 +67,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
         diaryId: diaryId,
       );
     }
-
-    state = AsyncValue.data(diary);
   }
 }
 

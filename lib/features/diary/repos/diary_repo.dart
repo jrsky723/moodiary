@@ -8,12 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 
 class DiaryRepository {
-  // static final ApiService _apiService = ApiService();
-
-  // DiaryRepository();
-  // Future<void> postDiary(Diarydiary diary) async {
-  //   return _apiService.postDiary(diary);
-  // }
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -71,6 +65,25 @@ class DiaryRepository {
 
   Future<String> getImageUrl(String url) async {
     return await _storage.ref().child(url).getDownloadURL();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUserAndDateRange({
+    required String uid,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    // 사용자의 uid와 시작일과 끝일을 받아서 해당 기간에 해당하는 일기들을 가져옴
+    // startDate는 그 날의 00:00:00, endDate는 그 다음날의 00:00:00
+    final startDate = DateTime(start.year, start.month, start.day);
+    final endDate = DateTime(end.year, end.month, end.day + 1); // 다음날 00:00:00
+
+    final query = _db
+        .collection('users')
+        .doc(uid)
+        .collection('diaries')
+        .where('date', isGreaterThanOrEqualTo: startDate)
+        .where('date', isLessThan: endDate);
+    return query.get();
   }
 }
 
