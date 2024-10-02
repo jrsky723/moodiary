@@ -8,7 +8,7 @@ import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/calendar/view_model/calendar_view_model.dart';
+import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
 import 'package:moodiary/features/calendar/views/search_screen.dart';
 import 'package:moodiary/features/calendar/views/widgets/calender_entry_widget.dart';
 import 'package:moodiary/features/calendar/views/widgets/year_month_select_dialog.dart';
