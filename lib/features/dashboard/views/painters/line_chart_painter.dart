@@ -5,16 +5,18 @@ class LineChartPainter extends CustomPainter {
   // 날짜는 전체 기간에서 4개의 날짜를 선택하여 그림 (4등분)
   // 아래 색상과, 위의 색상 두개를 받아서, 사이의 그라데이션을 적용
   // x, y 좌표를 이용할 건지, bool 변수를 통해 선택 가능
-  final List<double> dataPoints;
+  final List<double> points;
   final List<DateTime> dates;
+  final List<DateTime> totalDates;
   final List<Color> colors;
   final int dateCount;
   final TextStyle textStyle;
   final int maxDrawCount; // 최대 그릴 감정 개수
 
   LineChartPainter({
-    required this.dataPoints, // -1.0 ~ 1.0
+    required this.points, // -1.0 ~ 1.0
     required this.dates,
+    required this.totalDates,
     required this.colors,
     this.dateCount = 4,
     this.textStyle = const TextStyle(
@@ -46,31 +48,42 @@ class LineChartPainter extends CustomPainter {
   }
 
   void drawLine(Canvas canvas, Size size) {
-    final gradient = Paint()
+    final gradientPaint = Paint()
       ..shader = LinearGradient(
         begin: Alignment.bottomCenter,
         end: Alignment.topCenter,
         colors: colors,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
-      ..strokeWidth = 2.5;
+      ..strokeWidth = 2.5
+      ..style = PaintingStyle.stroke;
 
-    final step = dataPoints.length ~/ maxDrawCount;
-    double startX = 0.0;
-    double startY = size.height * (1 - dataPoints[0]) / 2;
-    double endX, endY;
+    final path = Path();
 
-    for (int i = 0; i < dataPoints.length - 1; i++) {
-      if (step != 0 && i % step != 0) {
-        continue;
-      }
-      final startPoint = Offset(startX, startY);
-      endX = size.width * (i + 1) / (dataPoints.length - 1);
-      endY = size.height * (1 - dataPoints[i + 1]) / 2;
-      final endPoint = Offset(endX, endY);
-      canvas.drawLine(startPoint, endPoint, gradient);
-      startX = endX;
-      startY = endY;
+    // points 리스트가 비어있을 경우 반환
+    if (points.isEmpty || dates.isEmpty || totalDates.isEmpty) return;
+
+    // 전체 날짜 범위 계산 (기간의 시작과 끝)
+    final totalDays = totalDates.last.difference(totalDates.first).inDays;
+
+    // 첫 번째 좌표 설정 (첫 번째 날짜의 위치를 기준으로 시작)
+    double startX =
+        (dates[0].difference(totalDates.first).inDays / totalDays) * size.width;
+    double startY = size.height *
+        (1 - (points[0] + 1) / 2); // -1.0 ~ 1.0 범위를 0 ~ height로 변환
+    path.moveTo(startX, startY);
+
+    // 나머지 좌표들을 계산하고 선을 이어줌
+    for (int i = 1; i < points.length; i++) {
+      // 각 날짜별로 x 좌표 계산 (날짜 차이를 기반으로 비율 계산)
+      double x = (dates[i].difference(totalDates.first).inDays / totalDays) *
+          size.width;
+      double y =
+          size.height * (1 - (points[i] + 1) / 2); // y 좌표는 points 값에 따라 계산
+      path.lineTo(x, y);
     }
+
+    // 캔버스에 그리기
+    canvas.drawPath(path, gradientPaint);
   }
 
   void drawDate(Canvas canvas, Size size) {
@@ -110,9 +123,12 @@ class LineChartPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     if (oldDelegate is LineChartPainter) {
       // 비교할 변수들을 체크하여, 재페인팅이 필요한 경우 true 반환
-      return oldDelegate.dataPoints != dataPoints ||
+      if (oldDelegate.points != points ||
           oldDelegate.dates != dates ||
-          oldDelegate.colors != colors;
+          oldDelegate.totalDates != totalDates ||
+          oldDelegate.colors != colors) {
+        return true;
+      }
     }
     return true;
   }

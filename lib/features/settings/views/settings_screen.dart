@@ -1,5 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
+import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 
@@ -40,6 +44,14 @@ class SettingsScreen extends ConsumerWidget {
                 value: ref.watch(settingsProvider).isEnglish,
                 onChanged: (value) {
                   ref.read(settingsProvider.notifier).setEnglish(value);
+                },
+              ),
+              // sign out
+              ListTile(
+                title: const Text("sign out"),
+                onTap: () {
+                  ref.read(authRepo).signOut();
+                  context.goNamed(SignUpScreen.routeName);
                 },
               ),
             ],

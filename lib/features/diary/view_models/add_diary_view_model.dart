@@ -2,32 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/community/models/community_post.dart';
 import 'package:moodiary/features/community/repos/community_post_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
-
-// class AddDiaryViewModel extends Notifier<DiaryModel> {
-//   final AddDiaryRepository _repository;
-
-//   AddDiaryViewModel(this._repository);
-
-//   void saveDiary(String content, List<File> photos, bool isPublic) {
-//     _repository.postDiary(
-//       DiaryModel(
-//         content: content,
-//         photos: photos,
-//         isPublic: isPublic,
-//       ),
-//     );
-//   }
-
-//   @override
-//   DiaryModel build() {
-//     return DiaryModel();
-//   }
-// }
 
 class AddDiaryViewModel extends AsyncNotifier<void> {
   late final DiaryRepository _diaryRepo;
@@ -36,7 +16,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
   FutureOr<void> build() {
     _diaryRepo = ref.read(diaryRepo);
     _communityPostRepo = ref.read(communityPostRepo);
-    return DiaryModel.empty();
   }
 
   Future<void> createDiary({
@@ -47,8 +26,9 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
   }) async {
     state = const AsyncValue.loading();
 
-    const userId = '1'; // TODO: authentication 구성하고 uid로 변경해야됨
-    final diaryId = _diaryRepo.generateDiaryId(userId);
+    final user = ref.read(authRepo).user;
+    final userId = user?.uid;
+    final diaryId = _diaryRepo.generateDiaryId(userId!);
 
     final imageUrls = await _diaryRepo.uploadImages(
       uid: userId,
@@ -87,8 +67,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
         diaryId: diaryId,
       );
     }
-
-    state = AsyncValue.data(diary);
   }
 }
 

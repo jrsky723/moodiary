@@ -75,7 +75,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
               GestureDetector(
                 onTap: _onSubmitTap,
                 child: FormButton(
-                  disabled: false,
+                  disabled: ref.watch(loginProvider).isLoading,
                   text: S.of(context).login,
                 ),
               )

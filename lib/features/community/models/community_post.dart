@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 
 class CommunityPost {
@@ -20,7 +21,7 @@ class CommunityPost {
   })  :
         // TimeStamp를 DateTime으로 변환
         date = DateTime.fromMillisecondsSinceEpoch(
-            json['date'].millisecondsSinceEpoch),
+            (json['date'] as Timestamp).millisecondsSinceEpoch),
         owner = UserProfileModel.fromJson(json['owner']),
         content = json['content'],
         imageUrls = List<String>.from(json['imageUrls']),
