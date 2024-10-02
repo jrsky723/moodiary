@@ -10,12 +10,16 @@ class FlowChartCard extends StatelessWidget {
   final List<MoodEntry> moodEntries;
   final bool isXAxis;
   final Text titleText;
+  final DateTime startDate;
+  final DateTime endDate;
 
   const FlowChartCard({
     super.key,
     required this.moodEntries,
     this.isXAxis = true,
     this.titleText = const Text(''),
+    required this.startDate,
+    required this.endDate,
   });
 
   @override
@@ -25,6 +29,12 @@ class FlowChartCard extends StatelessWidget {
       CMColors.neutral,
       isXAxis ? CMColors.pleasant : CMColors.activation,
     ];
+
+    // startDate와 endDate 사이로 dates를 생성
+    final diff = endDate.difference(startDate).inDays + 1;
+    final totalDates = List.generate(diff, (index) {
+      return startDate.add(Duration(days: index));
+    });
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -58,10 +68,11 @@ class FlowChartCard extends StatelessWidget {
                   child: CustomPaint(
                     size: const Size(double.infinity, double.infinity),
                     painter: LineChartPainter(
-                      dataPoints: moodEntries
+                      points: moodEntries
                           .map((e) => isXAxis ? e.offset.dx : e.offset.dy)
                           .toList(),
                       dates: moodEntries.map((e) => e.date).toList(),
+                      totalDates: totalDates,
                       colors: colors,
                     ),
                   ),

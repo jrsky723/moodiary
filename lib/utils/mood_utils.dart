@@ -56,7 +56,10 @@ MoodEntry randomMoodEntry(DateTime date) {
   );
 }
 
-List<MoodEntry> generateMoodEntries(DateTime startDate, int days) {
+List<MoodEntry> generateMoodEntries({
+  required DateTime startDate,
+  required int days,
+}) {
   List<MoodEntry> entries = [];
   for (int i = 0; i < days; i++) {
     entries.add(randomMoodEntry(startDate.add(Duration(days: i))));

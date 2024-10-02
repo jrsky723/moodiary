@@ -8,12 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 
 class DiaryRepository {
-  // static final ApiService _apiService = ApiService();
-
-  // DiaryRepository();
-  // Future<void> postDiary(Diarydiary diary) async {
-  //   return _apiService.postDiary(diary);
-  // }
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -57,38 +51,39 @@ class DiaryRepository {
     });
   }
 
-  Future<Map<String, dynamic>?> fetchDiaryByUserAndDate(
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiaryByUserAndId(
     String uid,
-    DateTime date,
+    String diaryId,
   ) async {
-    print(date);
-    final startOfDay =
-        Timestamp.fromDate(DateTime(date.year, date.month, date.day));
-    final endOfDay = Timestamp.fromDate(
-        DateTime(date.year, date.month, date.day, 23, 59, 59));
-    print('startOfDay: $startOfDay, endOfDay: $endOfDay');
-    final snapshot = await _db
+    final query = _db
         .collection('users')
         .doc(uid)
         .collection('diaries')
-        .where(
-          'date',
-          isGreaterThanOrEqualTo: startOfDay,
-          isLessThanOrEqualTo: endOfDay,
-        )
-        .limit(1)
-        .get();
-
-    print('snapshot: $snapshot');
-    if (snapshot.docs.isNotEmpty) {
-      return snapshot.docs.first.data();
-    } else {
-      return null;
-    }
+        .where('diaryId', isEqualTo: diaryId);
+    return query.get();
   }
 
   Future<String> getImageUrl(String url) async {
     return await _storage.ref().child(url).getDownloadURL();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUserAndDateRange({
+    required String uid,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    // 사용자의 uid와 시작일과 끝일을 받아서 해당 기간에 해당하는 일기들을 가져옴
+    // startDate는 그 날의 00:00:00, endDate는 그 다음날의 00:00:00
+    final startDate = DateTime(start.year, start.month, start.day);
+    final endDate = DateTime(end.year, end.month, end.day + 1); // 다음날 00:00:00
+
+    final query = _db
+        .collection('users')
+        .doc(uid)
+        .collection('diaries')
+        .where('date', isGreaterThanOrEqualTo: startDate)
+        .where('date', isLessThan: endDate);
+    return query.get();
   }
 }
 

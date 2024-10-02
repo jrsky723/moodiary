@@ -20,7 +20,9 @@ class AddDiaryScreen extends ConsumerStatefulWidget {
   static const String routeName = 'addDiary';
   static const String routeUrl = '/add-diary';
 
-  const AddDiaryScreen({super.key});
+  final DateTime? date;
+
+  const AddDiaryScreen({super.key, this.date});
 
   @override
   ConsumerState<AddDiaryScreen> createState() => _AddDiaryScreenState();
@@ -33,7 +35,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   bool _isPublic = true;
   final FocusNode _focusNode = FocusNode();
 
-  DateTime _selectedDate = DateTime.now();
+  late DateTime _selectedDate;
   int duration = 300;
   final List<File> _images = [];
 
@@ -42,7 +44,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     super.initState();
     _scrollController = ScrollController();
     _textController = TextEditingController();
-
+    _selectedDate = widget.date ?? DateTime.now();
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection !=
           ScrollDirection.idle) {

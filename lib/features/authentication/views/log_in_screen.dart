@@ -53,11 +53,12 @@ class LogInScreen extends StatelessWidget {
                 imagePath,
                 fit: BoxFit.fitWidth,
               ),
-              const AuthButton(
+              AuthButton(
                 text: "local login",
-                icon: FaIcon(
+                icon: const FaIcon(
                   FontAwesomeIcons.user,
                 ),
+                onTap: () => _onLocalLoginTap(context),
               ),
               Gaps.v14,
               const AuthButton(
