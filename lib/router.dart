@@ -5,6 +5,7 @@ import 'package:moodiary/features/authentication/repos/authentication_repo.dart'
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
 import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
 import 'package:moodiary/features/diary/views/add_diary_screen.dart';
+import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 
 final routerProvider = Provider<GoRouter>(
   (ref) {
@@ -48,9 +49,19 @@ final routerProvider = Provider<GoRouter>(
           path: AddDiaryScreen.routeUrl,
           name: AddDiaryScreen.routeName,
           builder: (context, state) {
-            return const AddDiaryScreen();
+            final date = state.extra as DateTime?;
+            return AddDiaryScreen(date: date);
           },
         ),
+        GoRoute(
+          path: DiaryDetailScreen.routeUrl,
+          name: DiaryDetailScreen.routeName,
+          builder: (context, state) {
+            final String diaryId = state.pathParameters['diaryId']!;
+            final date = state.extra as DateTime;
+            return DiaryDetailScreen(diaryId: diaryId, date: date);
+          },
+        )
       ],
     );
   },

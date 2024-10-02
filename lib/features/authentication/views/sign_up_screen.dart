@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -84,6 +85,8 @@ class SignUpScreen extends ConsumerWidget {
                               fontSize: Sizes.size14,
                               decoration: TextDecoration.underline,
                             ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => _onLoginTap(context),
                           ),
                         ],
                       ),

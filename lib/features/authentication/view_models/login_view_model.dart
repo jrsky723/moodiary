@@ -16,7 +16,10 @@ class LoginViewModel extends AsyncNotifier<void> {
   }
 
   Future<void> login(
-      String email, String password, BuildContext context) async {
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
       () async {

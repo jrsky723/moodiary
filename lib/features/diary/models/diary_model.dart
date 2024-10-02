@@ -1,31 +1,4 @@
-// class DiaryModel {
-//   String content;
-//   List<File> photos;
-//   bool isPublic;
-
-//   DiaryModel({
-//     this.content = '',
-//     this.photos = const [],
-//     this.isPublic = true,
-//   });
-
-//   factory DiaryModel.fromJson(Map<String, dynamic> json) {
-//     return DiaryModel(
-//       content: json['content'],
-//       photos: List<File>.from(json['photos']),
-//       isPublic: json['is_public'],
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'author_id': 1,
-//       'content': content,
-//       'photos': photos.map((image) => image.path).toList(),
-//       'is_public': isPublic,
-//     };
-//   }
-// }
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DiaryModel {
   final String uid;
@@ -79,15 +52,20 @@ class DiaryModel {
     };
   }
 
-  DiaryModel.fromJson(Map<String, dynamic> data)
-      : uid = data['uid'],
-        diaryId = data['diaryId'],
-        content = data['content'],
-        imageUrls = data['imageUrls'],
-        isPublic = data['isPublic'],
-        date = data['date'],
-        xOffset = data['xOffset'],
-        yOffset = data['yOffset'],
-        createAt = data['createAt'],
-        updateAt = data['updateAt'];
+  DiaryModel.fromJson({
+    required Map<String, dynamic> json,
+  })  : uid = json['uid'],
+        diaryId = json['diaryId'],
+        content = json['content'],
+        // List<dynamic>를 List<String>으로 변환
+        imageUrls = List<String>.from(json['imageUrls']),
+        isPublic = json['isPublic'],
+        // timestamp를 DateTime으로 변환
+        date = DateTime.fromMillisecondsSinceEpoch(
+          (json['date'] as Timestamp).millisecondsSinceEpoch,
+        ),
+        xOffset = json['xOffset'],
+        yOffset = json['yOffset'],
+        createAt = json['createAt'],
+        updateAt = json['updateAt'];
 }
