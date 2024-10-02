@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/text_themes.dart';
-import 'package:moodiary/features/diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/settings/repos/settings_repos.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
 import 'package:moodiary/firebase_options.dart';
@@ -31,10 +30,6 @@ void main() async {
       overrides: [
         settingsProvider.overrideWith(
           () => SettingsViewModel(repository),
-        ),
-        addDiaryProvider.overrideWith(
-          // () => AddDiaryViewModel(addDiaryRepo),
-          () => AddDiaryViewModel(),
         ),
       ],
       child: const Moodiary(),

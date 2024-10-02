@@ -57,34 +57,16 @@ class DiaryRepository {
     });
   }
 
-  Future<Map<String, dynamic>?> fetchDiaryByUserAndDate(
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiaryByUserAndId(
     String uid,
-    DateTime date,
+    String diaryId,
   ) async {
-    print(date);
-    final startOfDay =
-        Timestamp.fromDate(DateTime(date.year, date.month, date.day));
-    final endOfDay = Timestamp.fromDate(
-        DateTime(date.year, date.month, date.day, 23, 59, 59));
-    print('startOfDay: $startOfDay, endOfDay: $endOfDay');
-    final snapshot = await _db
+    final query = _db
         .collection('users')
         .doc(uid)
         .collection('diaries')
-        .where(
-          'date',
-          isGreaterThanOrEqualTo: startOfDay,
-          isLessThanOrEqualTo: endOfDay,
-        )
-        .limit(1)
-        .get();
-
-    print('snapshot: $snapshot');
-    if (snapshot.docs.isNotEmpty) {
-      return snapshot.docs.first.data();
-    } else {
-      return null;
-    }
+        .where('diaryId', isEqualTo: diaryId);
+    return query.get();
   }
 
   Future<String> getImageUrl(String url) async {

@@ -1,40 +1,40 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/date.dart';
-import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/calendar/views/widgets/info_container.dart';
+import 'package:moodiary/features/calendar/view_model/calendar_view_model.dart';
 import 'package:moodiary/features/calendar/views/search_screen.dart';
+import 'package:moodiary/features/calendar/views/widgets/calender_entry_widget.dart';
 import 'package:moodiary/features/calendar/views/widgets/year_month_select_dialog.dart';
+import 'package:moodiary/features/diary/views/add_diary_screen.dart';
 import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils/build_utils.dart';
 import 'package:moodiary/utils/date_utils.dart';
 
-class CalendarScreen extends StatefulWidget {
+class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
 
   @override
-  State<CalendarScreen> createState() => _CalendarScreenState();
+  ConsumerState<CalendarScreen> createState() => _CalendarScreenState();
 }
 
-class _CalendarScreenState extends State<CalendarScreen> {
-  final DateTime _now = DateTime.now();
+class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   late DateTime _selectedDate;
-  List<DateTime> _days = [];
-  bool _monthChanging = false;
-
+  late DateTime _now;
   final ScrollController _calendarScrollController = ScrollController();
+  bool _monthChanging = false;
 
   @override
   void initState() {
     super.initState();
-    _selectedDate = DateTime(_now.year, _now.month, _now.day);
-    _days = _generateDaysForYearMonth(_now.year, _now.month);
+    _now = DateTime.now();
+    _selectedDate = _now;
   }
 
   @override
@@ -43,40 +43,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
     super.dispose();
   }
 
-  List<DateTime> _generateDaysForYearMonth(int year, int month) {
-    List<DateTime> days = [];
-    DateTime firstDayOfMonth = DateTime(year, month, 1);
-    DateTime lastDayOfMonth = DateTime(year, month + 1, 0);
-
-    int weekDayOfFirstDay = firstDayOfMonth.weekday % 7;
-
-    // 달력의 시작을 이전 달의 마지막 일부터 시작하도록 합니다.
-    DateTime startDayOfCalendar =
-        firstDayOfMonth.subtract(Duration(days: weekDayOfFirstDay));
-
-    // 달력의 시작일부터 마지막 날까지 days 리스트에 추가합니다.
-    for (DateTime day = startDayOfCalendar;
-        day.isBefore(lastDayOfMonth.add(const Duration(days: 1)));
-        day = day.add(const Duration(days: 1))) {
-      days.add(day);
-    }
-
-    return days;
-  }
-
   Future<void> _onRefresh() async {
-    await Future.delayed(const Duration(seconds: 1));
     setState(() {
-      _days =
-          _generateDaysForYearMonth(_selectedDate.year, _selectedDate.month);
+      _now = DateTime.now();
+      _selectedDate = _now;
     });
+    ref.read(calendarProvider.notifier).refresh();
   }
 
-  void _changeMonth(bool isNext) {
+  void _onSwipeChangeMonth(bool isNext) {
     // 달이 한번에 한번씩 바뀌게 하기 위해서
     if (_monthChanging) return;
-    _monthChanging = true;
     setState(() {
+      _monthChanging = true;
       if (isNext) {
         if (_selectedDate.year > _now.year ||
             (_selectedDate.year == _now.year &&
@@ -90,8 +69,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
         }
         _selectedDate = DateTime(_selectedDate.year, _selectedDate.month - 1);
       }
-      _days =
-          _generateDaysForYearMonth(_selectedDate.year, _selectedDate.month);
+    });
+    ref.read(calendarProvider.notifier).changeMonth(_selectedDate);
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      setState(() {
+        _monthChanging = false;
+      });
     });
   }
 
@@ -111,8 +94,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        _days = _generateDaysForYearMonth(picked.year, picked.month);
       });
+      ref.read(calendarProvider.notifier).changeMonth(_selectedDate);
     }
   }
 
@@ -132,15 +115,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
               surfaceTintColor: Colors.transparent,
               title: Text(S.of(context).calendar),
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.today),
-                  onPressed: () {
-                    setState(() {
-                      _selectedDate = DateTime(_now.year, _now.month, _now.day);
-                      _days = _generateDaysForYearMonth(_now.year, _now.month);
-                    });
-                  },
-                ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
                   onPressed: () {
@@ -166,12 +140,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             SliverToBoxAdapter(
               child: _buildCalendar(),
-            ),
-            SliverToBoxAdapter(
-              child: InfoContainer(
-                image: Image.asset('assets/images/expressionless.png').image,
-                date: _selectedDate.day,
-              ),
             ),
           ],
         ),
@@ -215,106 +183,88 @@ class _CalendarScreenState extends State<CalendarScreen> {
       height: 500,
       child: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scrollInfo) {
-          if (scrollInfo is ScrollEndNotification) {
-            if (_monthChanging) {
-              _monthChanging = false;
-            }
-          }
           if (_monthChanging) return true;
           double scrollPosition = scrollInfo.metrics.pixels; // 현재 스크롤 위치
           double scrollRatio = scrollPosition / width; // 현재 스크롤 위치 비율
           if (scrollRatio > scrollThreshold) {
-            _changeMonth(true);
+            _onSwipeChangeMonth(true);
           } else if (scrollRatio < -scrollThreshold) {
-            _changeMonth(false);
+            _onSwipeChangeMonth(false);
           }
           return true;
         },
         child: SingleChildScrollView(
           controller: _calendarScrollController,
-          physics: const BouncingScrollPhysics(),
+          physics: _monthChanging
+              ? const NeverScrollableScrollPhysics()
+              : const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           child: SizedBox(
-            width: width + 1,
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 7, // 한 주의 7일
-                childAspectRatio: 9 / 11,
+            width: width + 1, // 스와이프가 가능하도록 1px 추가
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1000),
+              child: ref.watch(calendarProvider).when(
+                data: (data) {
+                  return GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 7, // 한 주의 7일
+                      childAspectRatio: 9 / 11,
+                    ),
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final entry = data[index];
+                      final date = entry.date;
+                      if (date.year != _selectedDate.year ||
+                          date.month != _selectedDate.month) {
+                        return Container();
+                      }
+                      final isSelected = isSameDay(date, _selectedDate);
+                      final isToday = isSameDay(date, _now);
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedDate = date;
+                          });
+                          // 다이어리가 있으면 DiaryDetail Screen
+                          if (entry.hasDiary) {
+                            context.pushNamed(
+                              DiaryDetailScreen.routeName,
+                              pathParameters: {'diaryId': entry.diaryId!},
+                              extra: date,
+                            );
+                          } else {
+                            // 다이어리가 없으면 AddDiaryScreen
+                            context.pushNamed(
+                              AddDiaryScreen.routeName,
+                              extra: date,
+                            );
+                          }
+                        },
+                        child: CalendarEntryWidget(
+                          entry: entry,
+                          isSelected: isSelected,
+                          isToday: isToday,
+                        ),
+                      );
+                    },
+                  );
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Center(
+                    child: Text(
+                      error.toString(),
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  );
+                },
               ),
-              itemCount: _days.length,
-              itemBuilder: (context, index) {
-                DateTime day = _days[index];
-                if (day.year != _selectedDate.year ||
-                    day.month != _selectedDate.month) {
-                  return Container();
-                }
-                final isSelected = isSameDay(day, _selectedDate);
-                final isToday = isSameDay(day, _now);
-
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedDate = day;
-                    });
-                  },
-                  onDoubleTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DiaryDetailScreen(
-                          date: day,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: isSelected
-                                ? Theme.of(context).primaryColor
-                                : Colors.transparent,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: CircleAvatar(
-                          backgroundImage:
-                              Image.asset('assets/images/expressionless.png')
-                                  .image,
-                        ),
-                      ),
-                      Gaps.v4,
-                      Container(
-                        width: Sizes.size32,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: isToday
-                              ? Theme.of(context).primaryColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(Sizes.size8),
-                        ),
-                        child: Text(
-                          day.day.toString(),
-                          style: TextStyle(
-                            fontSize: Sizes.size11,
-                            fontWeight: FontWeight.w600,
-                            color: isToday
-                                ? Colors.white
-                                : isSelected
-                                    ? Theme.of(context).primaryColor
-                                    : isDarkMode(context)
-                                        ? Colors.grey.shade400
-                                        : Colors.grey.shade700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
             ),
           ),
         ),

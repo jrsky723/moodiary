@@ -12,10 +12,13 @@ import 'package:moodiary/features/diary/views/widgets/diary_detail/word_cloud_ca
 import 'package:moodiary/utils/build_utils.dart';
 
 class DiaryDetailScreen extends ConsumerStatefulWidget {
+  static const String routeName = 'diary';
+  static const String routeUrl = '/diary/:diaryId';
+  final String diaryId;
   final DateTime date;
-
   const DiaryDetailScreen({
     super.key,
+    required this.diaryId,
     required this.date,
   });
 
@@ -47,16 +50,14 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
         ),
         surfaceTintColor: Colors.transparent,
       ),
-      body: ref
-          .watch(diaryDetailProvider(
-            widget.date,
-          ))
-          .when(
+      body: ref.watch(diaryDetailProvider(widget.diaryId)).when(
             loading: () => const Center(
               child: CircularProgressIndicator.adaptive(),
             ),
             error: (error, stackTrace) => Center(child: Text('Error: $error')),
             data: (diary) {
+              final offset = Offset(diary.xOffset, diary.yOffset);
+              // final moodCloudUrl = diary.moodCloudUrl;
               return Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: Sizes.size16,
@@ -69,7 +70,11 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                     _buildImageSection(
                         height: 100.0, imageUrls: diary.imageUrls),
                     Gaps.v4,
-                    _buildAnalysisSection(context, height: 180.0),
+                    _buildAnalysisSection(
+                      context, height: 180.0,
+                      offset: offset,
+                      // moodCloudUrl: moodCloudUrl,
+                    ),
                   ],
                 ),
               );
@@ -130,6 +135,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   Widget _buildAnalysisSection(
     BuildContext context, {
     required double height,
+    required Offset offset,
   }) {
     final darkmode = isDarkMode(context);
     return Container(
@@ -146,12 +152,12 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           width: 2.0,
         ),
       ),
-      child: const InsightPages(
+      child: InsightPages(
         pages: [
           MoodAnalysisCard(
-            moodOffset: Offset(-0.5, -0.2),
+            moodOffset: offset,
           ),
-          WorldCloudCard(
+          const WorldCloudCard(
             imageUrl: 'assets/images/wordcloud.png',
           ),
         ],
