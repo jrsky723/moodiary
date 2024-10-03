@@ -226,15 +226,17 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                 child: DiaryContainer(
                   text: S.of(context).todaysPhoto,
                   child: Center(
-                    child: ImagePickerButton(
-                      onImagesSelected: (images) {
-                        setState(() {
-                          _images.clear();
-                          _images.addAll(images);
-                          _textFieldFocusNode.unfocus();
-                          _isFocused = _textFieldFocusNode.hasFocus;
-                        });
-                      },
+                    child: GestureDetector(
+                      child: ImagePickerButton(
+                        onImagesSelected: (images) {
+                          setState(() {
+                            _images.clear();
+                            _images.addAll(images);
+                            _textFieldFocusNode.unfocus();
+                            _isFocused = _textFieldFocusNode.hasFocus;
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),
