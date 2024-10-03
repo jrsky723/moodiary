@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/login_view_model.dart';
@@ -15,8 +16,30 @@ class LoginFormScreen extends ConsumerStatefulWidget {
 
 class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final TextEditingController _passwordController;
+  String _password = "";
+  bool _isObscure = true;
 
   Map<String, String> formData = {};
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _passwordController = TextEditingController();
+    _passwordController.addListener(() {
+      setState(() {
+        _password = _passwordController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void _onSubmitTap() {
     if (_formKey.currentState != null) {
@@ -27,6 +50,16 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
             .login(formData['email']!, formData['password']!, context);
       }
     }
+  }
+
+  void _onClearTap() {
+    _passwordController.clear();
+  }
+
+  void _toggleObscrueText() {
+    setState(() {
+      _isObscure = !_isObscure;
+    });
   }
 
   @override
@@ -59,9 +92,26 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
               ),
               Gaps.v16,
               TextFormField(
-                decoration: const InputDecoration(
+                controller: _passwordController,
+                obscureText: _isObscure,
+                decoration: InputDecoration(
                   hintText: 'Password',
+                  suffix: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: _onClearTap,
+                        child: const FaIcon(FontAwesomeIcons.circleXmark),
+                      ),
+                      Gaps.h10,
+                      GestureDetector(
+                        onTap: _toggleObscrueText,
+                        child: const FaIcon(FontAwesomeIcons.eye),
+                      ),
+                    ],
+                  ),
                 ),
+                onChanged: (value) => _password = value,
                 validator: (value) {
                   return null;
                 },

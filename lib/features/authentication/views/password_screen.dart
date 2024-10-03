@@ -17,15 +17,16 @@ class PasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _PasswordScreenState extends ConsumerState<PasswordScreen> {
-  final TextEditingController _passwordController = TextEditingController();
+  late final TextEditingController _passwordController;
 
   String _password = "";
   bool _isButtonDisabled = true;
-  bool _obscureText = true;
+  bool _isObscure = true;
 
   @override
   void initState() {
     super.initState();
+    _passwordController = TextEditingController();
     _passwordController.addListener(() {
       setState(() {
         _password = _passwordController.text;
@@ -102,7 +103,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
 
   void _toggleObscrueText() {
     setState(() {
-      _obscureText = !_obscureText;
+      _isObscure = !_isObscure;
     });
   }
 
@@ -134,7 +135,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
                 controller: _passwordController,
                 autocorrect: false,
                 onEditingComplete: _onSubmit,
-                obscureText: _obscureText,
+                obscureText: _isObscure,
                 decoration: InputDecoration(
                   suffix: Row(
                     mainAxisSize: MainAxisSize.min,
