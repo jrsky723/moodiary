@@ -42,6 +42,7 @@ class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
   }) async {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
+    print('uid: $uid');
     final month = date ?? DateTime.now(); // date가 없으면 현재 달
     final start = DateTime(month.year, month.month, 1);
     final end = DateTime(month.year, month.month + 1, 0);

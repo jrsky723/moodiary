@@ -53,20 +53,21 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       errors.add(S.of(context).pwdlengtherror);
     }
 
-    final specialCharRegex = RegExp(r'[!@#\$&*~]');
-    if (!specialCharRegex.hasMatch(_password)) {
-      errors.add(S.of(context).pwdspecialcharerror);
-    }
+    //  추가적인 validation rule
+    // final specialCharRegex = RegExp(r'[!@#\$&*~]');
+    // if (!specialCharRegex.hasMatch(_password)) {
+    //   errors.add(S.of(context).pwdspecialcharerror);
+    // }
 
-    final uppercaseRegex = RegExp(r'[A-Z]');
-    if (!uppercaseRegex.hasMatch(_password)) {
-      errors.add(S.of(context).pwduppercaseerror);
-    }
+    // final uppercaseRegex = RegExp(r'[A-Z]');
+    // if (!uppercaseRegex.hasMatch(_password)) {
+    //   errors.add(S.of(context).pwduppercaseerror);
+    // }
 
-    final numberRegex = RegExp(r'[0-9]');
-    if (!numberRegex.hasMatch(_password)) {
-      errors.add(S.of(context).pwdnumbererror);
-    }
+    // final numberRegex = RegExp(r'[0-9]');
+    // if (!numberRegex.hasMatch(_password)) {
+    //   errors.add(S.of(context).pwdnumbererror);
+    // }
 
     if (errors.isEmpty) {
       return null;
@@ -87,7 +88,12 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       "password": _password,
     };
     ref.read(signUpProvider.notifier).signUp();
-    context.go(LogInScreen.routeUrl);
+    // context.push(LogInScreen.routeUrl);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LogInScreen()),
+      (route) => route.isFirst, // 첫 번째 페이지(초기 페이지)만 남김
+    );
   }
 
   void _onClearTap() {
