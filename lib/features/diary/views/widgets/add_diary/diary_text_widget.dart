@@ -6,9 +6,11 @@ import 'package:moodiary/utils/build_utils.dart';
 
 class DiaryTextWidget extends ConsumerStatefulWidget {
   final TextEditingController controller;
+  final FocusNode focusNode;
   const DiaryTextWidget({
     super.key,
     required this.controller,
+    required this.focusNode,
   });
 
   @override
@@ -30,6 +32,7 @@ class _DiaryTextWidgetState extends ConsumerState<DiaryTextWidget> {
         padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
         child: TextField(
           controller: widget.controller,
+          focusNode: widget.focusNode,
           minLines: 1,
           maxLines: null,
           keyboardType: TextInputType.multiline,
