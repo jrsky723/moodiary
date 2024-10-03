@@ -21,7 +21,6 @@ class AddDiaryScreen extends ConsumerStatefulWidget {
   static const String routeUrl = '/add-diary';
 
   final DateTime? date;
-
   const AddDiaryScreen({super.key, this.date});
 
   @override
@@ -34,7 +33,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   bool _isFocused = false;
   bool _isPublic = true;
   bool _isLoading = false;
-
+  final DateTime _now = DateTime.now();
   final FocusNode _focusNode = FocusNode();
 
   late DateTime _selectedDate;
@@ -53,6 +52,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
         _hideKeyboard();
       }
     });
+
     _focusNode.addListener(() {
       setState(() {
         _isFocused = _focusNode.hasFocus;
@@ -77,6 +77,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
 
   void _showDatePickerDialog(BuildContext context) {
     late String formattedDate;
+    bool isFutureDate = false;
 
     showDialog(
       context: context,
@@ -87,15 +88,22 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
             initialDate: _selectedDate,
             onDateSelected: (selectedDate) {
               setState(() {
-                _selectedDate = selectedDate;
-                formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
+                isFutureDate = selectedDate.millisecondsSinceEpoch >
+                    _now.millisecondsSinceEpoch;
+                if (!isFutureDate) {
+                  _selectedDate = selectedDate;
+                  formattedDate =
+                      DateFormat('yyyy-MM-dd').format(_selectedDate);
+                } else {
+                  formattedDate = DateFormat('yyyy-MM-dd').format(_now);
+                }
               });
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
-                    S.of(context).selectedDate(formattedDate),
-                  ),
+                  content: isFutureDate
+                      ? const Text("미래날짜입니다.")
+                      : Text(S.of(context).selectedDate(formattedDate)),
                   backgroundColor: Colors.grey.shade700,
                 ),
               );

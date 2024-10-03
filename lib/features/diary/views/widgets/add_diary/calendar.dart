@@ -67,7 +67,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       now: _now,
     );
 
-    if (picked != null) {
+    if (picked != null &&
+        picked.millisecondsSinceEpoch <= _now.millisecondsSinceEpoch) {
       setState(
         () {
           _selectedYear = picked.year;
