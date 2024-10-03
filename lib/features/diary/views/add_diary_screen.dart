@@ -33,6 +33,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   late final TextEditingController _textController;
   bool _isFocused = false;
   bool _isPublic = true;
+  bool _isLoading = false;
+
   final FocusNode _focusNode = FocusNode();
 
   late DateTime _selectedDate;
@@ -108,20 +110,36 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     FocusScope.of(context).unfocus();
   }
 
-  void _onSave() {
-    // ref.read(addDiaryProvider.notifier).saveDiary(
-    //       _textController.text,
-    //       _tempImages,
-    //       _isPublic,
-    //     );
-    ref.read(addDiaryProvider.notifier).createDiary(
-          content: _textController.text,
-          images: _images,
-          isPublic: _isPublic,
-          date: _selectedDate,
-        );
-    _hideKeyboard();
-    Navigator.pop(context);
+  Future<void> _onSave() async {
+    //  이미지가 없으면 저장하지 않음
+    //  이미지가 없다는 에러 메시지를 띄워주기
+    setState(() {
+      _isLoading = true;
+    });
+
+    if (_textController.text.isEmpty && _images.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please write a diary or add a photo at least."),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    try {
+      await ref.read(addDiaryProvider.notifier).createDiary(
+            content: _textController.text,
+            images: _images,
+            isPublic: _isPublic,
+            date: _selectedDate,
+          );
+      _hideKeyboard();
+      Navigator.pop(context);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _onCancel() {
