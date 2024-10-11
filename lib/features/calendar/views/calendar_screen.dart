@@ -8,6 +8,7 @@ import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/calendar/models/calendar_entry.dart';
 import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
 import 'package:moodiary/features/calendar/views/search_screen.dart';
 import 'package:moodiary/features/calendar/views/widgets/calender_entry_widget.dart';
@@ -29,6 +30,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   late DateTime _now;
   final ScrollController _calendarScrollController = ScrollController();
   bool _monthChanging = false;
+  bool _isSnackBarVisible = false;
 
   @override
   void initState() {
@@ -46,9 +48,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Future<void> _onRefresh() async {
     setState(() {
       _now = DateTime.now();
-      _selectedDate = _now;
     });
-    ref.read(calendarProvider.notifier).refresh();
+    ref.read(calendarProvider.notifier).refresh(
+          _selectedDate,
+        );
   }
 
   void _onSwipeChangeMonth(bool isNext) {
@@ -99,49 +102,88 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     }
   }
 
+  void _onEntryTap(CalendarEntry entry) {
+    final date = entry.date;
+    // 미래의 일기는 접근 안되게 메세지 출력, 출력 중복은 방지
+    if (date.isAfter(_now)) {
+      if (_isSnackBarVisible) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).cantAccessFutureDiary),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      _isSnackBarVisible = true;
+
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          _isSnackBarVisible = false;
+        });
+      });
+      return;
+    }
+
+    setState(() {
+      _selectedDate = date;
+    });
+    // 다이어리가 있으면 DiaryDetail Screen
+    if (entry.hasDiary) {
+      context.pushNamed(
+        DiaryDetailScreen.routeName,
+        pathParameters: {'diaryId': entry.diaryId!},
+        extra: date,
+      );
+    } else {
+      // 다이어리가 없으면 AddDiaryScreen
+      context.pushNamed(
+        AddDiaryScreen.routeName,
+        extra: date,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: _onRefresh,
-            ),
-            SliverAppBar(
-              centerTitle: true,
-              pinned: true,
-              surfaceTintColor: Colors.transparent,
-              title: Text(S.of(context).calendar),
-              actions: [
-                IconButton(
-                  icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
-                  onPressed: () {
-                    // open search screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SearchScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-            SliverToBoxAdapter(
-              child: DateSelectorTab(
-                text: DateFormat.yMMMM().format(_selectedDate),
-                onTap: _onDateSelectorTap,
+        child: RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                centerTitle: true,
+                pinned: true,
+                surfaceTintColor: Colors.transparent,
+                title: Text(S.of(context).calendar),
+                actions: [
+                  IconButton(
+                    icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
+                    onPressed: () {
+                      // open search screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ),
-            SliverToBoxAdapter(
-              child: _buildWeekdays(context),
-            ),
-            SliverToBoxAdapter(
-              child: _buildCalendar(),
-            ),
-          ],
+              SliverToBoxAdapter(
+                child: DateSelectorTab(
+                  text: DateFormat.yMMMM().format(_selectedDate),
+                  onTap: _onDateSelectorTap,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: _buildWeekdays(context),
+              ),
+              SliverToBoxAdapter(
+                child: _buildCalendar(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -223,25 +265,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                       final isSelected = isSameDay(date, _selectedDate);
                       final isToday = isSameDay(date, _now);
                       return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedDate = date;
-                          });
-                          // 다이어리가 있으면 DiaryDetail Screen
-                          if (entry.hasDiary) {
-                            context.pushNamed(
-                              DiaryDetailScreen.routeName,
-                              pathParameters: {'diaryId': entry.diaryId!},
-                              extra: date,
-                            );
-                          } else {
-                            // 다이어리가 없으면 AddDiaryScreen
-                            context.pushNamed(
-                              AddDiaryScreen.routeName,
-                              extra: date,
-                            );
-                          }
-                        },
+                        onTap: () => _onEntryTap(entry),
                         child: CalendarEntryWidget(
                           entry: entry,
                           isSelected: isSelected,

@@ -1,7 +1,7 @@
 class UserProfileModel {
   final String uid;
   final String username;
-  final String name;
+  final String nickname;
   final String bio;
   final bool hasAvatar;
   final String avatarUrl;
@@ -9,7 +9,7 @@ class UserProfileModel {
   UserProfileModel({
     required this.uid,
     required this.username,
-    required this.name,
+    required this.nickname,
     required this.bio,
     required this.hasAvatar,
     required this.avatarUrl,
@@ -18,7 +18,7 @@ class UserProfileModel {
   UserProfileModel.empty()
       : uid = '',
         username = '',
-        name = '',
+        nickname = '',
         bio = '',
         avatarUrl = '',
         hasAvatar = false;
@@ -26,7 +26,7 @@ class UserProfileModel {
   UserProfileModel.fromJson(Map<String, dynamic> data)
       : uid = data['uid'],
         username = data['username'],
-        name = data['name'],
+        nickname = data['name'],
         bio = data['bio'],
         avatarUrl = data['avatarUrl'],
         hasAvatar = data['hasAvatar'];
@@ -35,7 +35,7 @@ class UserProfileModel {
     return {
       'uid': uid,
       'username': username,
-      'name': name,
+      'nickname': nickname,
       'bio': bio,
       'avatarUrl': avatarUrl,
       'hasAvatar': hasAvatar,
