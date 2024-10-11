@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary/view_models/add_diary_view_model.dart';
+import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/calendar.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/diary_container.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/diary_text_widget.dart';
@@ -88,7 +90,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
           title: Text(S.of(context).selectDate),
           content: CalendarWidget(
             initialDate: _selectedDate,
-            onDateSelected: (selectedDate) {
+            onDateSelected: (selectedDate) async {
               setState(() {
                 isFutureDate = selectedDate.millisecondsSinceEpoch >
                     _now.millisecondsSinceEpoch;
@@ -96,11 +98,31 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   _selectedDate = selectedDate;
                   formattedDate =
                       DateFormat('yyyy-MM-dd').format(_selectedDate);
+
+                  //  선택한 날짜에 diary가 있는지 확인
+                  //  있으면 해당 diary의 detail screen으로 이동
+                  //  없으면 add diary screen으로 이동
                 } else {
                   formattedDate = DateFormat('yyyy-MM-dd').format(_now);
                 }
               });
+
+              final diary = await ref
+                  .read(addDiaryProvider.notifier)
+                  .fetchDiaryByDate(_selectedDate);
+              print('diary : $diary');
               Navigator.pop(context);
+
+              if (diary != null) {
+                Navigator.pop(context);
+                context.pushNamed(
+                  DiaryDetailScreen.routeName,
+                  pathParameters: {
+                    'diaryId': diary.diaryId,
+                  },
+                  extra: _selectedDate,
+                );
+              }
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: isFutureDate
