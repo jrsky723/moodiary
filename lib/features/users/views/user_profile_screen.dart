@@ -19,7 +19,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     bio: '안녕하세요! 저는 홍길동입니다. 저는 개발밖에 안해요',
     hasAvatar: false,
     avatarUrl: 'https://picsum.photos/id/${123456}/200/200',
-    name: '홍길동',
+    nickname: '홍길동',
   );
 
   final bool _isMyProfile = true;
@@ -77,13 +77,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       : CircleAvatar(
                           radius: 50,
                           child: Text(
-                            _userProfile.name[0],
+                            _userProfile.nickname[0],
                             style: const TextStyle(fontSize: 40),
                           ),
                         ),
                   Gaps.v16,
                   Text(
-                    _userProfile.name,
+                    _userProfile.nickname,
                     style: const TextStyle(
                         fontSize: 24, fontWeight: FontWeight.bold),
                   ),

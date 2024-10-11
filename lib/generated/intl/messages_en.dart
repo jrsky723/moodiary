@@ -41,7 +41,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "bio": MessageLookupByLibrary.simpleMessage("Bio"),
         "bored": MessageLookupByLibrary.simpleMessage("Bored"),
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelBtn": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cantAccessFutureDiary":
+            MessageLookupByLibrary.simpleMessage("Can\'t access future diary"),
         "circumplexModel":
             MessageLookupByLibrary.simpleMessage("Circumplex Model"),
         "communityBtn": MessageLookupByLibrary.simpleMessage("Community"),
@@ -57,6 +60,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
         "dashboardDescription": m0,
         "days": m1,
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
+        "deleteAccountMessage": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete your account?"),
         "delighted": MessageLookupByLibrary.simpleMessage("Delighted"),
         "diary": MessageLookupByLibrary.simpleMessage("Diary"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("Diary Search"),
@@ -93,10 +100,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "moodDistribution":
             MessageLookupByLibrary.simpleMessage("Mood Distribution"),
         "mostFrequentMoodText": m2,
-        "name": MessageLookupByLibrary.simpleMessage("Name"),
         "negative": MessageLookupByLibrary.simpleMessage("Negative"),
         "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
         "nextBtn": MessageLookupByLibrary.simpleMessage("next"),
+        "nickname": MessageLookupByLibrary.simpleMessage("Nickname"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "pleaseEnterName":
@@ -127,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectedDate": m3,
         "serene": MessageLookupByLibrary.simpleMessage("Serene"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "signOut": MessageLookupByLibrary.simpleMessage("Sign Out"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "sleep": MessageLookupByLibrary.simpleMessage("Sleep"),
         "sleepDuration": m4,

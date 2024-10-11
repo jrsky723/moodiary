@@ -750,11 +750,11 @@ class S {
     );
   }
 
-  /// `Name`
-  String get name {
+  /// `Nickname`
+  String get nickname {
     return Intl.message(
-      'Name',
-      name: 'name',
+      'Nickname',
+      name: 'nickname',
       desc: '',
       args: [],
     );
@@ -955,6 +955,66 @@ class S {
     return Intl.message(
       'login',
       name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Out`
+  String get signOut {
+    return Intl.message(
+      'Sign Out',
+      name: 'signOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can't access future diary`
+  String get cantAccessFutureDiary {
+    return Intl.message(
+      'Can\'t access future diary',
+      name: 'cantAccessFutureDiary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete your account?`
+  String get deleteAccountMessage {
+    return Intl.message(
+      'Are you sure you want to delete your account?',
+      name: 'deleteAccountMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
       desc: '',
       args: [],
     );
