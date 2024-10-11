@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
@@ -17,15 +16,16 @@ class PasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _PasswordScreenState extends ConsumerState<PasswordScreen> {
-  final TextEditingController _passwordController = TextEditingController();
+  late final TextEditingController _passwordController;
 
   String _password = "";
   bool _isButtonDisabled = true;
-  bool _obscureText = true;
+  bool _isObscure = true;
 
   @override
   void initState() {
     super.initState();
+    _passwordController = TextEditingController();
     _passwordController.addListener(() {
       setState(() {
         _password = _passwordController.text;
@@ -53,20 +53,21 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       errors.add(S.of(context).pwdlengtherror);
     }
 
-    final specialCharRegex = RegExp(r'[!@#\$&*~]');
-    if (!specialCharRegex.hasMatch(_password)) {
-      errors.add(S.of(context).pwdspecialcharerror);
-    }
+    //  추가적인 validation rule
+    // final specialCharRegex = RegExp(r'[!@#\$&*~]');
+    // if (!specialCharRegex.hasMatch(_password)) {
+    //   errors.add(S.of(context).pwdspecialcharerror);
+    // }
 
-    final uppercaseRegex = RegExp(r'[A-Z]');
-    if (!uppercaseRegex.hasMatch(_password)) {
-      errors.add(S.of(context).pwduppercaseerror);
-    }
+    // final uppercaseRegex = RegExp(r'[A-Z]');
+    // if (!uppercaseRegex.hasMatch(_password)) {
+    //   errors.add(S.of(context).pwduppercaseerror);
+    // }
 
-    final numberRegex = RegExp(r'[0-9]');
-    if (!numberRegex.hasMatch(_password)) {
-      errors.add(S.of(context).pwdnumbererror);
-    }
+    // final numberRegex = RegExp(r'[0-9]');
+    // if (!numberRegex.hasMatch(_password)) {
+    //   errors.add(S.of(context).pwdnumbererror);
+    // }
 
     if (errors.isEmpty) {
       return null;
@@ -87,7 +88,12 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       "password": _password,
     };
     ref.read(signUpProvider.notifier).signUp();
-    context.go(LogInScreen.routeUrl);
+    // context.push(LogInScreen.routeUrl);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LogInScreen()),
+      (route) => route.isFirst, // 첫 번째 페이지(초기 페이지)만 남김
+    );
   }
 
   void _onClearTap() {
@@ -96,7 +102,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
 
   void _toggleObscrueText() {
     setState(() {
-      _obscureText = !_obscureText;
+      _isObscure = !_isObscure;
     });
   }
 
@@ -128,7 +134,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
                 controller: _passwordController,
                 autocorrect: false,
                 onEditingComplete: _onSubmit,
-                obscureText: _obscureText,
+                obscureText: _isObscure,
                 decoration: InputDecoration(
                   suffix: Row(
                     mainAxisSize: MainAxisSize.min,

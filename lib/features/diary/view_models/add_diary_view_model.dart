@@ -10,11 +10,11 @@ import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 
 class AddDiaryViewModel extends AsyncNotifier<void> {
-  late final DiaryRepository _diaryRepo;
+  late final DiaryRepository _Repo;
   late final CommunityPostRepo _communityPostRepo;
   @override
   FutureOr<void> build() {
-    _diaryRepo = ref.read(diaryRepo);
+    _Repo = ref.read(diaryRepo);
     _communityPostRepo = ref.read(communityPostRepo);
   }
 
@@ -28,9 +28,9 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
 
     final user = ref.read(authRepo).user;
     final userId = user?.uid;
-    final diaryId = _diaryRepo.generateDiaryId(userId!);
+    final diaryId = _Repo.generateDiaryId(userId!);
 
-    final imageUrls = await _diaryRepo.uploadImages(
+    final imageUrls = await _Repo.uploadImages(
       uid: userId,
       diaryId: diaryId,
       images: images,
@@ -47,7 +47,7 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
       updateAt: DateTime.now().millisecondsSinceEpoch,
     );
 
-    await _diaryRepo.createDiary(diary);
+    await _Repo.createDiary(diary);
 
     if (isPublic) {
       // userprofile model과 diary를 연결해서, communityPost 객체로 만들어서, communityPostRepo에 저장
@@ -67,6 +67,21 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
         diaryId: diaryId,
       );
     }
+  }
+
+  Future<DiaryModel?> fetchDiaryByDate(DateTime date) async {
+    final user = ref.read(authRepo).user;
+    final uid = user?.uid;
+    final result = await _Repo.fetchDiariesByUserAndDateRange(
+      uid: uid!,
+      start: date,
+      end: date,
+    );
+    if (result.docs.isEmpty) {
+      return null;
+    }
+    final diary = DiaryModel.fromJson(json: result.docs.first.data());
+    return diary;
   }
 }
 
