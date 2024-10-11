@@ -9,6 +9,11 @@ import 'package:moodiary/generated/l10n.dart';
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
+  void _onSignOut(BuildContext context, WidgetRef ref) {
+    ref.read(authRepo).signOut();
+    GoRouter.of(context).go(SignUpScreen.routeUrl);
+  }
+
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }

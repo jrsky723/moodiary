@@ -292,23 +292,26 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                 vertical: Sizes.size6,
                 horizontal: Sizes.size24,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FormActionButton(
-                    text: S.of(context).cancelBtn,
-                    onPressed: _onCancel,
-                  ),
-                  _isFocused
-                      ? FormActionButton(
-                          text: "text save",
-                          onPressed: _hideKeyboard,
-                        )
-                      : FormActionButton(
-                          text: S.of(context).save,
-                          onPressed: _onSave,
-                        )
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FormActionButton(
+                      text: S.of(context).cancelBtn,
+                      onPressed: _onCancel,
+                    ),
+                    _isFocused
+                        ? FormActionButton(
+                            text: "text save",
+                            onPressed: _hideKeyboard,
+                          )
+                        : FormActionButton(
+                            text: S.of(context).save,
+                            onPressed: _onSave,
+                          )
+                  ],
+                ),
               ),
             ),
           ),
