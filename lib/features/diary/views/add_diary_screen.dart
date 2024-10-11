@@ -91,6 +91,21 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
           content: CalendarWidget(
             initialDate: _selectedDate,
             onDateSelected: (selectedDate) async {
+              final diary = await ref
+                  .read(addDiaryProvider.notifier)
+                  .fetchDiaryByDate(selectedDate);
+              Navigator.pop(context);
+              print(diary);
+              if (diary != null) {
+                Navigator.pop(context);
+                context.pushNamed(
+                  DiaryDetailScreen.routeName,
+                  pathParameters: {
+                    'diaryId': diary.diaryId,
+                  },
+                  extra: selectedDate,
+                );
+              }
               setState(() {
                 isFutureDate = selectedDate.millisecondsSinceEpoch >
                     _now.millisecondsSinceEpoch;
@@ -107,22 +122,6 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                 }
               });
 
-              final diary = await ref
-                  .read(addDiaryProvider.notifier)
-                  .fetchDiaryByDate(_selectedDate);
-              print('diary : $diary');
-              Navigator.pop(context);
-
-              if (diary != null) {
-                Navigator.pop(context);
-                context.pushNamed(
-                  DiaryDetailScreen.routeName,
-                  pathParameters: {
-                    'diaryId': diary.diaryId,
-                  },
-                  extra: _selectedDate,
-                );
-              }
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: isFutureDate
@@ -136,6 +135,53 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
         );
       },
     );
+  }
+
+  Future<void> _fetchDiaryAndNavigate(
+      DateTime selectedDate, BuildContext context) async {
+    bool isFutureDate =
+        selectedDate.millisecondsSinceEpoch > _now.millisecondsSinceEpoch;
+    String formattedDate = DateFormat('yyyy-MM-dd').format(
+      isFutureDate ? _now : selectedDate,
+    );
+
+    try {
+      final diary = await ref
+          .read(addDiaryProvider.notifier)
+          .fetchDiaryByDate(selectedDate);
+
+      if (!mounted) return;
+
+      Navigator.pop(context); // 로딩 인디케이터 닫기
+      Navigator.pop(context); // 다이얼로그 닫기
+
+      if (diary != null) {
+        context.pushNamed(
+          DiaryDetailScreen.routeName,
+          pathParameters: {
+            'diaryId': diary.diaryId,
+          },
+          extra: selectedDate,
+        );
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: isFutureDate
+              ? const Text("미래날짜입니다.")
+              : Text(S.of(context).selectedDate(formattedDate)),
+          backgroundColor: Colors.grey.shade700,
+        ),
+      );
+    } catch (e) {
+      Navigator.pop(context); // 로딩 인디케이터 닫기
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('데이터를 가져오는 중 오류가 발생했습니다.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   void _hideKeyboard() {
