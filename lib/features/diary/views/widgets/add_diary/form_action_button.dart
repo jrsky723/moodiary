@@ -18,7 +18,7 @@ class FormActionButton extends StatelessWidget {
         backgroundColor: Colors.transparent,
         foregroundColor: isDarkMode(context) ? Colors.white : Colors.black,
         padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size60,
+          horizontal: Sizes.size40,
         ),
         textStyle: const TextStyle(
           fontSize: Sizes.size18,

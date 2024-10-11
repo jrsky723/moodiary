@@ -35,6 +35,7 @@ class SignUpScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -101,7 +102,7 @@ class SignUpScreen extends ConsumerWidget {
                     ),
                     Gaps.v14,
                     AuthButton(
-                      text: "Google login",
+                      text: "Google",
                       icon: const FaIcon(
                         FontAwesomeIcons.google,
                       ),
@@ -111,7 +112,7 @@ class SignUpScreen extends ConsumerWidget {
                     ),
                     Gaps.v14,
                     const AuthButton(
-                      text: "Apple login",
+                      text: "Apple",
                       icon: FaIcon(
                         FontAwesomeIcons.apple,
                       ),
