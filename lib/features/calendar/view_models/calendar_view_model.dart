@@ -79,9 +79,9 @@ class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
     state = AsyncValue.data(_list);
   }
 
-  Future<void> refresh() async {
+  Future<void> refresh(DateTime date) async {
     state = const AsyncValue.loading();
-    final entries = await _fetchEntries();
+    final entries = await _fetchEntries(date: date);
     _list = entries;
     state = AsyncValue.data(_list);
   }

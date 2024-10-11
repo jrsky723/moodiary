@@ -46,9 +46,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Future<void> _onRefresh() async {
     setState(() {
       _now = DateTime.now();
-      _selectedDate = _now;
     });
-    ref.read(calendarProvider.notifier).refresh();
+    ref.read(calendarProvider.notifier).refresh(_selectedDate);
   }
 
   void _onSwipeChangeMonth(bool isNext) {
@@ -103,45 +102,44 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: _onRefresh,
-            ),
-            SliverAppBar(
-              centerTitle: true,
-              pinned: true,
-              surfaceTintColor: Colors.transparent,
-              title: Text(S.of(context).calendar),
-              actions: [
-                IconButton(
-                  icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
-                  onPressed: () {
-                    // open search screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SearchScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-            SliverToBoxAdapter(
-              child: DateSelectorTab(
-                text: DateFormat.yMMMM().format(_selectedDate),
-                onTap: _onDateSelectorTap,
+        child: RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                centerTitle: true,
+                pinned: true,
+                surfaceTintColor: Colors.transparent,
+                title: Text(S.of(context).calendar),
+                actions: [
+                  IconButton(
+                    icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
+                    onPressed: () {
+                      // open search screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ),
-            SliverToBoxAdapter(
-              child: _buildWeekdays(context),
-            ),
-            SliverToBoxAdapter(
-              child: _buildCalendar(),
-            ),
-          ],
+              SliverToBoxAdapter(
+                child: DateSelectorTab(
+                  text: DateFormat.yMMMM().format(_selectedDate),
+                  onTap: _onDateSelectorTap,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: _buildWeekdays(context),
+              ),
+              SliverToBoxAdapter(
+                child: _buildCalendar(),
+              ),
+            ],
+          ),
         ),
       ),
     );

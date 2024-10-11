@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +8,11 @@ import 'package:moodiary/generated/l10n.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
+
+  void _onSignOut(BuildContext context, WidgetRef ref) {
+    ref.read(authRepo).signOut();
+    GoRouter.of(context).go(SignUpScreen.routeUrl);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,13 +50,14 @@ class SettingsScreen extends ConsumerWidget {
                   ref.read(settingsProvider.notifier).setEnglish(value);
                 },
               ),
-              // sign out
-              ListTile(
-                title: const Text("sign out"),
-                onTap: () {
-                  ref.read(authRepo).signOut();
-                  context.goNamed(SignUpScreen.routeName);
-                },
+              TextButton(
+                onPressed: () => _onSignOut(context, ref),
+                child: Text(
+                  "Sign Out",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.red,
+                      ),
+                ),
               ),
             ],
           ),
