@@ -100,7 +100,7 @@
   "editProfile": "Edit Profile",
   "userName": "User Name",
   "userNameMinError": "User name must be at least 2 characters.",
-  "name": "Name",
+  "nickname": "Nickname",
   "takePhoto": "Take a photo",
   "selectFromGallery": "Select from gallery",
   "resetToDefaultProfile": "Reset to default profile",
@@ -127,5 +127,11 @@
   "pwduppercaseerror": "Password must contain at least one uppercase letter",
   "pwdlengtherror": "8 to 20 characters",
   "completeBtn": "Complete",
-  "login": "login"
+  "login": "login",
+  "signOut": "Sign Out",
+  "cantAccessFutureDiary": "Can't access future diary",
+  "deleteAccount": "Delete Account",
+  "deleteAccountMessage": "Are you sure you want to delete your account?",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }

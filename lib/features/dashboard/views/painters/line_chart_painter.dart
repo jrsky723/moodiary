@@ -91,7 +91,7 @@ class LineChartPainter extends CustomPainter {
     // 시작, 끝, 중간...
     final dates = [
       for (int i = 0; i < dateCount; i++)
-        this.dates[i * (this.dates.length - 1) ~/ (dateCount - 1)]
+        totalDates[i * (totalDates.length - 1) ~/ (dateCount - 1)]
     ];
 
     final textPainter = TextPainter(
