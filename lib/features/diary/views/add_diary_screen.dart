@@ -32,6 +32,7 @@ class AddDiaryScreen extends ConsumerStatefulWidget {
 class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   late final ScrollController _scrollController;
   late final TextEditingController _textController;
+  final bool _isSnackBarVisible = false;
   bool _isFocused = false;
   bool _isPublic = true;
   bool _isLoading = false;
@@ -117,19 +118,26 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   //  선택한 날짜에 diary가 있는지 확인
                   //  있으면 해당 diary의 detail screen으로 이동
                   //  없으면 add diary screen으로 이동
+
+                  // 미래날짜 선택 시 에러 메시지 띄우기
+                  // delayed 1초 후 에러 메시지 사라지게 하기
+                  // 여러번 안띄우게 하기
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(S.of(context).selectedDate(formattedDate)),
+                      backgroundColor: Colors.grey.shade700,
+                    ),
+                  );
                 } else {
                   formattedDate = DateFormat('yyyy-MM-dd').format(_now);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("미래날짜입니다."),
+                      backgroundColor: Colors.grey.shade700,
+                    ),
+                  );
                 }
               });
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: isFutureDate
-                      ? const Text("미래날짜입니다.")
-                      : Text(S.of(context).selectedDate(formattedDate)),
-                  backgroundColor: Colors.grey.shade700,
-                ),
-              );
             },
           ),
         );
