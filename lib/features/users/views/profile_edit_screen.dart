@@ -28,7 +28,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     bio: '안녕하세요! 저는 홍길동입니다. 저는 개발밖에 안해요',
     hasAvatar: false,
     avatarUrl: 'https://picsum.photos/id/${1}/200/200',
-    name: '홍길동',
+    nickname: '홍길동',
   );
 
   bool _isLoading = false; // 로딩 상태를 관리
@@ -146,7 +146,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                           backgroundImage:
                               hasAvatar ? NetworkImage(imageUrl) : null,
                           child: Text(
-                            hasAvatar ? "" : _userProfile.name[0],
+                            hasAvatar ? "" : _userProfile.nickname[0],
                             style: const TextStyle(fontSize: Sizes.size44),
                           ),
                         ),
@@ -198,8 +198,8 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             Gaps.v16,
             // 이름 입력 필드
             TextFormField(
-              initialValue: _userProfile.name,
-              decoration: InputDecoration(labelText: S.of(context).name),
+              initialValue: _userProfile.nickname,
+              decoration: InputDecoration(labelText: S.of(context).nickname),
               maxLength: 16,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -212,6 +212,9 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
               },
             ),
             Gaps.v16,
+
+            // 이메일 입력 필드
+
             // 소개 입력 필드
             TextFormField(
               initialValue: _userProfile.bio,
