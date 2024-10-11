@@ -5,8 +5,8 @@ import 'package:moodiary/features/calendar/models/calendar_entry.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/utils/date_utils.dart';
 
-class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
-  late final DiaryRepository _repo;
+class CalendarViewModel extends AutoDisposeAsyncNotifier<List<CalendarEntry>> {
+  late final DiaryRepository? _repo;
   late List<CalendarEntry> _list;
 
   @override
@@ -45,7 +45,7 @@ class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
     final month = date ?? DateTime.now(); // date가 없으면 현재 달
     final start = DateTime(month.year, month.month, 1);
     final end = DateTime(month.year, month.month + 1, 0);
-    final result = await _repo.fetchDiariesByUserAndDateRange(
+    final result = await _repo!.fetchDiariesByUserAndDateRange(
       uid: uid!,
       start: start,
       end: end,
@@ -87,6 +87,6 @@ class CalendarViewModel extends AsyncNotifier<List<CalendarEntry>> {
 }
 
 final calendarProvider =
-    AsyncNotifierProvider<CalendarViewModel, List<CalendarEntry>>(
+    AutoDisposeAsyncNotifierProvider<CalendarViewModel, List<CalendarEntry>>(
   () => CalendarViewModel(),
 );
