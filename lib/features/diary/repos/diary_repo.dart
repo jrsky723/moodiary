@@ -40,7 +40,6 @@ class DiaryRepository {
   }
 
   Future<void> createDiary(DiaryModel diary) async {
-    print('diary: ${diary.toJson()}');
     await _db
         .collection('users')
         .doc(diary.uid)
@@ -49,6 +48,23 @@ class DiaryRepository {
         .set({
       ...diary.toJson(),
     });
+  }
+
+  Future<void> updateDiary(
+      String uid, String diaryId, Map<String, dynamic> data) async {
+    await _db
+        .collection('users')
+        .doc(uid)
+        .collection('diaries')
+        .doc(diaryId)
+        .update(data);
+  }
+
+  Future<void> updateCommunityDiary(
+    String diaryId,
+    Map<String, dynamic> data,
+  ) async {
+    await _db.collection('community').doc(diaryId).update(data);
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDiaryByUserAndId(
