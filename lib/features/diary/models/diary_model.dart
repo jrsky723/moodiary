@@ -68,4 +68,28 @@ class DiaryModel {
         yOffset = json['yOffset'],
         createAt = json['createAt'],
         updateAt = json['updateAt'];
+
+  DiaryModel copyWith({
+    String? content,
+    List<String>? imageUrls,
+    bool? isPublic,
+    DateTime? date,
+    double? xOffset,
+    double? yOffset,
+    int? createAt,
+    int? updateAt,
+  }) {
+    return DiaryModel(
+      uid: uid,
+      diaryId: diaryId,
+      content: content ?? this.content,
+      imageUrls: imageUrls ?? this.imageUrls,
+      isPublic: isPublic ?? this.isPublic,
+      date: date ?? this.date,
+      xOffset: xOffset ?? this.xOffset,
+      yOffset: yOffset ?? this.yOffset,
+      createAt: createAt ?? this.createAt,
+      updateAt: updateAt ?? this.updateAt,
+    );
+  }
 }
