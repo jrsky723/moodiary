@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
-import 'package:moodiary/features/authentication/views/log_in_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/form_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 
@@ -87,13 +86,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
       ...state,
       "password": _password,
     };
-    ref.read(signUpProvider.notifier).signUp();
-    // context.push(LogInScreen.routeUrl);
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const LogInScreen()),
-      (route) => route.isFirst, // 첫 번째 페이지(초기 페이지)만 남김
-    );
+    ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _onClearTap() {

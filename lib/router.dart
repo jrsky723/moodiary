@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:moodiary/common/main_navigation_screen.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
+import 'package:moodiary/features/authentication/views/create_profile_screen.dart';
 import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
 import 'package:moodiary/features/diary/views/add_diary_screen.dart';
 import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
@@ -35,6 +36,14 @@ final routerProvider = Provider<GoRouter>(
           name: SignUpScreen.routeName,
           builder: (context, state) {
             return const SignUpScreen();
+          },
+        ),
+        GoRoute(
+          path: CreateProfileScreen.routeUrl,
+          name: CreateProfileScreen.routeName,
+          builder: (context, state) {
+            final username = state.extra as String;
+            return CreateProfileScreen(username: username);
           },
         ),
         GoRoute(

@@ -30,13 +30,13 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
     return UserProfileModel.empty();
   }
 
-  Future<void> createProfile(UserCredential user) async {
+  Future<void> createProfile(UserCredential credential) async {
     state = const AsyncValue.loading();
     final profile = UserProfileModel(
-      uid: user.user!.uid,
+      uid: credential.user!.uid,
       bio: 'bio',
       nickname: 'nickname',
-      username: user.user!.displayName ?? 'username',
+      username: credential.user!.displayName ?? 'username',
       hasAvatar: false,
     );
     await _userRepo.createProfile(profile);
