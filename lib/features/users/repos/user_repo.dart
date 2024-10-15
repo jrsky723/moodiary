@@ -15,7 +15,6 @@ class UserRepoSitory {
 
   Future<Map<String, dynamic>?> findProfile(String uid) async {
     final doc = await _db.collection('users').doc(uid).get();
-    print("test ${doc.data()}");
     return doc.data();
   }
 
@@ -23,7 +22,6 @@ class UserRepoSitory {
     required File file,
     required String filename,
   }) async {
-    // TODO : 파일이름 뭘로?
     String baseUrl = 'avatars/$filename';
     final ref = _storage.ref().child(baseUrl);
     await ref.putFile(file);

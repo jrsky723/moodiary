@@ -5,6 +5,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/settings/views/settings_screen.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
+import 'package:moodiary/features/users/view_models/user_posts.dart';
 import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 import 'package:moodiary/features/users/views/profile_edit_screen.dart';
 
@@ -16,21 +17,6 @@ class UserProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
-  late final List<Map<String, dynamic>> _posts;
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(usersProvider.notifier).fetchUserPosts().then((value) {
-        setState(() {
-          _posts = value;
-        });
-      });
-    });
-  }
-
   void _onEditProfile(UserProfileModel user) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -43,23 +29,19 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(usersProvider).when(
-          loading: () => const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator.adaptive(),
+    return Scaffold(
+      appBar: ref.watch(usersProvider).when(
+            loading: () => AppBar(
+              title: const Text('Loading...'),
             ),
-          ),
-          error: (error, stackTrace) => Scaffold(
-            body: Center(
-              child: Text('Error: $error'),
+            error: (error, stackTrace) => AppBar(
+              title: Text('Error: $error'),
             ),
-          ),
-          data: (data) => Scaffold(
-            appBar: AppBar(
+            data: (user) => AppBar(
               surfaceTintColor: Colors.transparent,
-              title: Text(data.username),
+              title: Text(user.username),
               actions: [
-                if (data.uid == ref.watch(authRepo).user!.uid) ...[
+                if (user.uid == ref.watch(authRepo).user!.uid) ...[
                   IconButton(
                     icon: const Icon(Icons.settings),
                     onPressed: () {
@@ -72,34 +54,43 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.edit),
-                    onPressed: () => _onEditProfile(data),
+                    onPressed: () => _onEditProfile(user),
                   ),
                 ]
               ],
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Center(
+          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            // 3. 사용자 프로필 정보를 표시하는 위젯
+            ref.watch(usersProvider).when(
+                  loading: () => const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                  error: (error, stackTrace) => Center(
+                    child: Text('Error: $error'),
+                  ),
+                  data: (user) => Center(
                     child: Column(
                       children: <Widget>[
-                        data.hasAvatar
+                        user.hasAvatar
                             ? CircleAvatar(
                                 radius: 50,
                                 backgroundImage: NetworkImage(
-                                  "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${data.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
-                                ), // Example URL, replace with actual avatar URL
+                                  "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${user.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
+                                ),
                               )
                             : CircleAvatar(
                                 radius: 50,
                                 child: Text(
-                                  data.nickname[0],
+                                  user.nickname[0],
                                   style: const TextStyle(fontSize: 40),
                                 ),
                               ),
                         Gaps.v16,
                         Text(
-                          data.nickname,
+                          user.nickname,
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
@@ -109,7 +100,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                             horizontal: Sizes.size16,
                           ),
                           child: Text(
-                            data.bio,
+                            user.bio,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: Sizes.size16,
@@ -120,31 +111,37 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       ],
                     ),
                   ),
-                  GridView.builder(
+                ),
+            ref.watch(userPostProvider).when(
+                  loading: () => const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                  error: (error, stackTrace) => Center(
+                    child: Text('Error: $error'),
+                  ),
+                  data: (posts) => GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                     ),
-                    itemCount: _posts.length,
+                    itemCount: posts.length,
                     itemBuilder: (context, index) {
-                      ref.read(usersProvider.notifier).fetchUserPosts();
-
                       return Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(_posts[index]['imageUrl']),
+                            image: NetworkImage(posts[index].imageUrls[0]),
                             fit: BoxFit.cover,
                           ),
                         ),
                       );
                     },
                   ),
-                ],
-              ),
-            ),
-          ),
-        );
+                ),
+          ],
+        ),
+      ),
+    );
   }
 }
