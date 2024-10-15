@@ -50,23 +50,6 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
     ));
   }
 
-  Future<List<Map<String, dynamic>>> fetchUserPosts() async {
-    final user = ref.read(authRepo).user;
-    final uid = user?.uid;
-    final diaries = await _diaryRepo.fetchDiariesByUId(uid!);
-
-    final result = diaries.docs.map((doc) {
-      final data = doc.data();
-      final imageUrls = data['imageUrls'] as List<dynamic>? ?? [];
-      final firstImageUrl = imageUrls.isNotEmpty ? imageUrls[0] : null;
-      return {
-        'diaryId': doc.id,
-        'imageUrl': firstImageUrl,
-      };
-    }).toList();
-    return result;
-  }
-
   Future<void> updateUserProfile(Map<String, dynamic> profile) async {
     // Map<String, dynamic> 형태로 변환
     final user = ref.read(authRepo).user;

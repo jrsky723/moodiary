@@ -44,7 +44,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
       isPublic: isPublic,
       date: date,
       createAt: DateTime.now().millisecondsSinceEpoch,
-      updateAt: DateTime.now().millisecondsSinceEpoch,
     );
 
     await _Repo.createDiary(diary);
@@ -52,7 +51,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
     if (isPublic) {
       // userprofile model과 diary를 연결해서, communityPost 객체로 만들어서, communityPostRepo에 저장
 
-      // final user = await _communityPostRepo.getUserProfile(userId);
       final user = UserProfileModel.empty();
       final communityPost = CommunityPost(
         date: date,

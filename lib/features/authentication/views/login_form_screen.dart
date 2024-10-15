@@ -18,20 +18,16 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController _passwordController;
   bool _isObscure = true;
-
   Map<String, String> formData = {};
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _passwordController = TextEditingController();
-    _passwordController.addListener(() {});
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _passwordController.dispose();
     super.dispose();
   }
