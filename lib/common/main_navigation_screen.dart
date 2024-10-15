@@ -37,7 +37,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   void _onDestinationSelected(int index) {
     if (index == _addDiaryIndex) {
-      context.pushNamed(AddDiaryScreen.routeUrl);
+      context.pushNamed(AddDiaryScreen.routeName);
     } else {
       context.go('/${_tabs[index]}');
       setState(() {
