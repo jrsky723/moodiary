@@ -1,130 +1,150 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/settings/views/settings_screen.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
+import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 import 'package:moodiary/features/users/views/profile_edit_screen.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class UserProfileScreen extends ConsumerStatefulWidget {
   const UserProfileScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  ConsumerState<UserProfileScreen> createState() => _UserProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
-  final UserProfileModel _userProfile = UserProfileModel(
-    uid: '123456',
-    username: 'Hong111',
-    bio: '안녕하세요! 저는 홍길동입니다. 저는 개발밖에 안해요',
-    hasAvatar: false,
-    avatarUrl: 'https://picsum.photos/id/${123456}/200/200',
-    nickname: '홍길동',
-  );
+class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
+  late final List<Map<String, dynamic>> _posts;
 
-  final bool _isMyProfile = true;
-  final List<String> _posts = List.generate(
-      20,
-      (index) =>
-          'https://picsum.photos/id/${index + 1}/200/200'); // 예제 이미지 URL 리스트
+  @override
+  void initState() {
+    super.initState();
 
-  void _onEditProfile() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(usersProvider.notifier).fetchUserPosts().then((value) {
+        setState(() {
+          _posts = value;
+        });
+      });
+    });
+  }
+
+  void _onEditProfile(UserProfileModel user) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const ProfileEditScreen(),
+        builder: (context) => ProfileEditScreen(
+          userProfile: user,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        title: Text(_userProfile.username),
-        actions: [
-          if (_isMyProfile) ...[
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsScreen(),
+    return ref.watch(usersProvider).when(
+          loading: () => const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          ),
+          error: (error, stackTrace) => Scaffold(
+            body: Center(
+              child: Text('Error: $error'),
+            ),
+          ),
+          data: (data) => Scaffold(
+            appBar: AppBar(
+              surfaceTintColor: Colors.transparent,
+              title: Text(data.username),
+              actions: [
+                if (data.uid == ref.watch(authRepo).user!.uid) ...[
+                  IconButton(
+                    icon: const Icon(Icons.settings),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsScreen(),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () => _onEditProfile(data),
+                  ),
+                ]
+              ],
             ),
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: _onEditProfile,
-            ),
-          ]
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Center(
+            body: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _userProfile.hasAvatar
-                      ? const CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                            'https://via.placeholder.com/150',
-                          ), // Example URL, replace with actual avatar URL
-                        )
-                      : CircleAvatar(
-                          radius: 50,
+                  Center(
+                    child: Column(
+                      children: <Widget>[
+                        data.hasAvatar
+                            ? CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(
+                                  "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${data.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
+                                ), // Example URL, replace with actual avatar URL
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                child: Text(
+                                  data.nickname[0],
+                                  style: const TextStyle(fontSize: 40),
+                                ),
+                              ),
+                        Gaps.v16,
+                        Text(
+                          data.nickname,
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        Gaps.v16,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size16,
+                          ),
                           child: Text(
-                            _userProfile.nickname[0],
-                            style: const TextStyle(fontSize: 40),
+                            data.bio,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: Sizes.size16,
+                            ),
                           ),
                         ),
-                  Gaps.v16,
-                  Text(
-                    _userProfile.nickname,
-                    style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Gaps.v16,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size16,
-                    ),
-                    child: Text(
-                      _userProfile.bio,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: Sizes.size16,
-                      ),
+                        Gaps.v16,
+                      ],
                     ),
                   ),
-                  Gaps.v16,
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                    ),
+                    itemCount: _posts.length,
+                    itemBuilder: (context, index) {
+                      ref.read(usersProvider.notifier).fetchUserPosts();
+
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(_posts[index]['imageUrl']),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-              ),
-              itemCount: _posts.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(_posts[index]),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
   }
 }

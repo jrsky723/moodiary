@@ -5,7 +5,7 @@ import 'package:moodiary/features/authentication/repos/authentication_repo.dart'
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
 
-class DashboardViewModel extends AsyncNotifier<List<MoodEntry>> {
+class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
   late final DiaryRepository _repo;
   late List<MoodEntry> _list;
 
@@ -48,6 +48,6 @@ class DashboardViewModel extends AsyncNotifier<List<MoodEntry>> {
 }
 
 final dashboardProvider =
-    AsyncNotifierProvider<DashboardViewModel, List<MoodEntry>>(
+    AutoDisposeAsyncNotifierProvider<DashboardViewModel, List<MoodEntry>>(
   () => DashboardViewModel(),
 );
