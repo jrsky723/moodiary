@@ -15,6 +15,7 @@ class AvatarViewModel extends AutoDisposeAsyncNotifier<void> {
   }
 
   Future<void> uploadAvatar(File file) async {
+    state = const AsyncValue.loading();
     if (state.isLoading) return;
     final uid = ref.read(authRepo).user!.uid;
     state = await AsyncValue.guard(

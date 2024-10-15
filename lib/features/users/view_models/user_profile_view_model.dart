@@ -44,6 +44,7 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
   }
 
   Future<void> onAvatarUploaded() async {
+    state = const AsyncValue.loading();
     if (state.value == null) return;
     state = AsyncValue.data(state.value!.copyWith(
       hasAvatar: true,
