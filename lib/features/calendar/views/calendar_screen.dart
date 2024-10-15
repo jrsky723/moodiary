@@ -37,7 +37,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     super.initState();
     _now = DateTime.now();
     _selectedDate = _now;
-    print("Autodispose test");
   }
 
   @override
