@@ -7,7 +7,6 @@ class AuthButton extends StatefulWidget {
   final String text;
   final FaIcon icon;
 
-  // 임시로 null값 가능하도록 만듦
   final Function()? onTap;
   const AuthButton({
     super.key,

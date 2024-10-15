@@ -17,26 +17,17 @@ class LoginFormScreen extends ConsumerStatefulWidget {
 class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController _passwordController;
-  String _password = "";
   bool _isObscure = true;
-
   Map<String, String> formData = {};
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _passwordController = TextEditingController();
-    _passwordController.addListener(() {
-      setState(() {
-        _password = _passwordController.text;
-      });
-    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _passwordController.dispose();
     super.dispose();
   }
@@ -111,7 +102,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
                     ],
                   ),
                 ),
-                onChanged: (value) => _password = value,
+                onChanged: (value) => formData['password'] = value,
                 validator: (value) {
                   return null;
                 },

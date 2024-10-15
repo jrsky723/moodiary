@@ -44,27 +44,11 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
   }
 
   Future<void> onAvatarUploaded() async {
+    state = const AsyncValue.loading();
     if (state.value == null) return;
     state = AsyncValue.data(state.value!.copyWith(
       hasAvatar: true,
     ));
-  }
-
-  Future<List<Map<String, dynamic>>> fetchUserPosts() async {
-    final user = ref.read(authRepo).user;
-    final uid = user?.uid;
-    final diaries = await _diaryRepo.fetchDiariesByUId(uid!);
-
-    final result = diaries.docs.map((doc) {
-      final data = doc.data();
-      final imageUrls = data['imageUrls'] as List<dynamic>? ?? [];
-      final firstImageUrl = imageUrls.isNotEmpty ? imageUrls[0] : null;
-      return {
-        'diaryId': doc.id,
-        'imageUrl': firstImageUrl,
-      };
-    }).toList();
-    return result;
   }
 
   Future<void> updateUserProfile(Map<String, dynamic> profile) async {
