@@ -50,7 +50,6 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
       });
 
       File imageFile = File(pickedFile.path);
-
       // 이미지 업로드
       await ref.read(avatarProvider.notifier).uploadAvatar(imageFile);
       // 이미지 업로드 성공 시 hasAvatar를 true로 설정
@@ -129,6 +128,10 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String avatarUrl =
+        "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${_userProfile.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}";
+    print(avatarUrl);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).editProfile),
@@ -139,7 +142,6 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
           padding: const EdgeInsets.all(Sizes.size16),
           children: [
             // 이미지 선택 및 업로드 로딩 상태 관리
-
             FormField<bool>(
               initialValue: _userProfile.hasAvatar,
               builder: (state) {
@@ -152,11 +154,8 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                       children: [
                         CircleAvatar(
                           radius: 75,
-                          backgroundImage: hasAvatar
-                              ? NetworkImage(
-                                  "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${_userProfile.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
-                                )
-                              : null,
+                          backgroundImage:
+                              hasAvatar ? NetworkImage(avatarUrl) : null,
                           child: Text(
                             hasAvatar ? "" : _userProfile.nickname[0],
                             style: const TextStyle(fontSize: Sizes.size44),

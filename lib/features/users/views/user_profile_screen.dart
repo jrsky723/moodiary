@@ -31,12 +31,15 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     return ref.read(userPostsProvider.notifier).refresh();
   }
 
-  void _onUserPostTap(int index) {
+  void _onUserPostTap(int index, String username) {
     // 사용자의 게시물을 탭했을 때, 해당 위치 (인덱스정보)를 전달하고,
     // 사용자의 게시물 화면으로 이동
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const UserPostsScreen(),
+        builder: (context) => UserPostsScreen(
+          index: index,
+          username: username,
+        ),
       ),
     );
   }
@@ -144,7 +147,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       itemCount: posts.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () => _onUserPostTap(index),
+                          onTap: () => _onUserPostTap(
+                              index, posts[index].owner.username),
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(

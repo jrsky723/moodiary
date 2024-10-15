@@ -8,7 +8,7 @@ import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
+class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   late final DiaryRepository _diaryRepo;
@@ -84,6 +84,6 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
 }
 
 final userProfileProvider =
-    AsyncNotifierProvider<UserProfileViewModel, UserProfileModel>(
+    AutoDisposeAsyncNotifierProvider<UserProfileViewModel, UserProfileModel>(
   () => UserProfileViewModel(),
 );

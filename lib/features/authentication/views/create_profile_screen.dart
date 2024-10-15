@@ -122,9 +122,9 @@ class _ProfileEditScreenState extends ConsumerState<CreateProfileScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        ref.read(usersProvider.notifier).updateUserProfile(_formData);
+        ref.read(userProfileProvider.notifier).updateUserProfile(_formData);
         ref
-            .read(usersProvider.notifier)
+            .read(userProfileProvider.notifier)
             .updateCommunityOwnerByDiaryId(_formData);
         context.go('/${MainNavigationScreen.initialTab}');
       }
