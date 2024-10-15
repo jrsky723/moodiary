@@ -43,7 +43,7 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
       imageUrls: imageUrls,
       isPublic: isPublic,
       date: date,
-      createAt: DateTime.now().millisecondsSinceEpoch,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
     );
 
     await _Repo.createDiary(diary);

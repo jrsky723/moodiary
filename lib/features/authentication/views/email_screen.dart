@@ -38,7 +38,8 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
 
   void _onSubmit() {
     if (_isButtonDisabled) return;
-    ref.read(signUpForm.notifier).state = {"email": _email};
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {...state, "email": _email};
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -87,7 +88,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
             children: [
               Gaps.v10,
               Text(
-                "What is your email?, ${widget.username}?",
+                "What is your email, ${widget.username}?",
                 style: const TextStyle(
                   fontSize: Sizes.size20,
                   fontWeight: FontWeight.w600,

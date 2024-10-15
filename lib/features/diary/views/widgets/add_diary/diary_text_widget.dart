@@ -33,7 +33,7 @@ class _DiaryTextWidgetState extends ConsumerState<DiaryTextWidget> {
         child: TextField(
           controller: widget.controller,
           focusNode: widget.focusNode,
-          minLines: 1,
+          minLines: 10,
           maxLines: null,
           keyboardType: TextInputType.multiline,
           decoration: InputDecoration(
