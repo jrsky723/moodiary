@@ -8,7 +8,7 @@ import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
 
-class UserPostsViewModel extends AsyncNotifier<List<CommunityPost>> {
+class UserPostsViewModel extends AutoDisposeAsyncNotifier<List<CommunityPost>> {
   late final DiaryRepository _diaryRepo;
   late final UserRepository _userRepo;
   late List<CommunityPost> _list;
@@ -46,13 +46,6 @@ class UserPostsViewModel extends AsyncNotifier<List<CommunityPost>> {
     return diaries.toList();
   }
 
-  Future<void> loadMore() async {
-    state = const AsyncValue.loading();
-    final nextPosts = await _fetchUserPosts(_user.uid);
-    _list = [..._list, ...nextPosts];
-    state = AsyncValue.data(_list);
-  }
-
   Future<void> refresh() async {
     state = const AsyncValue.loading();
     final posts = await _fetchUserPosts(_user.uid);
@@ -62,6 +55,6 @@ class UserPostsViewModel extends AsyncNotifier<List<CommunityPost>> {
 }
 
 final userPostsProvider =
-    AsyncNotifierProvider<UserPostsViewModel, List<CommunityPost>>(
+    AutoDisposeAsyncNotifierProvider<UserPostsViewModel, List<CommunityPost>>(
   () => UserPostsViewModel(),
 );
