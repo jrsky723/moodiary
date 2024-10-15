@@ -20,7 +20,6 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
     _diaryRepo = ref.read(diaryRepo);
     _userRepo = ref.read(userRepo);
     _authRepo = ref.read(authRepo);
-
     if (_authRepo.isLoggedIn) {
       final profile = await _userRepo.findProfile(_authRepo.user!.uid);
       if (profile != null) {
@@ -30,13 +29,13 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
     return UserProfileModel.empty();
   }
 
-  Future<void> createProfile(UserCredential user) async {
+  Future<void> createProfile(UserCredential credential) async {
     state = const AsyncValue.loading();
     final profile = UserProfileModel(
-      uid: user.user!.uid,
-      bio: 'bio',
-      nickname: 'nickname',
-      username: user.user!.displayName ?? 'username',
+      uid: credential.user!.uid,
+      bio: 'undefined',
+      nickname: 'undefined',
+      username: credential.user!.displayName ?? 'username',
       hasAvatar: false,
     );
     await _userRepo.createProfile(profile);
