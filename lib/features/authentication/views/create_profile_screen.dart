@@ -135,7 +135,7 @@ class _ProfileEditScreenState extends ConsumerState<CreateProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).editProfile),
+        title: const Text('프로필 만들기'),
       ),
       body: Form(
         key: _formKey,

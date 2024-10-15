@@ -88,7 +88,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
             children: [
               Gaps.v10,
               Text(
-                "What is your email?, ${widget.username}?",
+                "What is your email, ${widget.username}?",
                 style: const TextStyle(
                   fontSize: Sizes.size20,
                   fontWeight: FontWeight.w600,
