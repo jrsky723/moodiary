@@ -29,9 +29,23 @@ class UserPostsViewModel extends AsyncNotifier<List<DiaryModel>> {
     );
     return diaries.toList();
   }
+
+  Future<void> loadMore() async {
+    state = const AsyncValue.loading();
+    final nextPosts = await _fetchUserPosts();
+    _list = [..._list, ...nextPosts];
+    state = AsyncValue.data(_list);
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    final posts = await _fetchUserPosts();
+    _list = posts;
+    state = AsyncValue.data(_list);
+  }
 }
 
-final userPostProvider =
+final userPostsProvider =
     AsyncNotifierProvider<UserPostsViewModel, List<DiaryModel>>(
   () => UserPostsViewModel(),
 );
