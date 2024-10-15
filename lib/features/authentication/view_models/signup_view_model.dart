@@ -32,7 +32,6 @@ class SignUpViewModel extends AsyncNotifier<void> {
     if (state.hasError) {
       showFirebaseErrorSnack(context, state.error);
     }
-    print('${form['username']}');
     context.goNamed(
       CreateProfileScreen.routeName,
       extra: form['username'],

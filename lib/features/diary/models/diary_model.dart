@@ -9,7 +9,7 @@ class DiaryModel {
   final DateTime date;
   final double xOffset;
   final double yOffset;
-  final int createAt;
+  final int createdAt;
 
   DiaryModel({
     required this.uid,
@@ -20,7 +20,7 @@ class DiaryModel {
     required this.date,
     this.xOffset = 0.0,
     this.yOffset = 0.0,
-    this.createAt = 0,
+    this.createdAt = 0,
   });
 
   DiaryModel.empty()
@@ -32,7 +32,7 @@ class DiaryModel {
         date = DateTime.now(),
         xOffset = 0.0,
         yOffset = 0.0,
-        createAt = 0;
+        createdAt = 0;
 
   Map<String, dynamic> toJson() {
     return {
@@ -44,7 +44,7 @@ class DiaryModel {
       'date': date,
       'xOffset': xOffset,
       'yOffset': yOffset,
-      'createAt': createAt,
+      'createdAt': createdAt,
     };
   }
 
@@ -62,7 +62,7 @@ class DiaryModel {
         ),
         xOffset = json['xOffset'],
         yOffset = json['yOffset'],
-        createAt = json['createAt'];
+        createdAt = json['createdAt'];
 
   DiaryModel copyWith({
     String? content,
@@ -72,7 +72,6 @@ class DiaryModel {
     double? xOffset,
     double? yOffset,
     int? createAt,
-    int? updateAt,
   }) {
     return DiaryModel(
       uid: uid,
@@ -83,7 +82,7 @@ class DiaryModel {
       date: date ?? this.date,
       xOffset: xOffset ?? this.xOffset,
       yOffset: yOffset ?? this.yOffset,
-      createAt: createAt ?? this.createAt,
+      createdAt: createdAt,
     );
   }
 }
