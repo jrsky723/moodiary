@@ -79,6 +79,11 @@ class DiaryRepository {
     return query.get();
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUId(String uid) {
+    final query = _db.collection('users').doc(uid).collection('diaries');
+    return query.get();
+  }
+
   Future<String> getImageUrl(String url) async {
     return await _storage.ref().child(url).getDownloadURL();
   }

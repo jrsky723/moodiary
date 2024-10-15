@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/community/models/community_post.dart';
 import 'package:moodiary/features/community/repos/community_post_repo.dart';
 
-class CommunityPostViewModel extends AsyncNotifier<List<CommunityPost>> {
+class CommunityPostViewModel
+    extends AutoDisposeAsyncNotifier<List<CommunityPost>> {
   late final CommunityPostRepo _repo;
   late List<CommunityPost> _list;
 
@@ -42,7 +43,7 @@ class CommunityPostViewModel extends AsyncNotifier<List<CommunityPost>> {
   }
 }
 
-final communityPostProvider =
-    AsyncNotifierProvider<CommunityPostViewModel, List<CommunityPost>>(
+final communityPostProvider = AutoDisposeAsyncNotifierProvider<
+    CommunityPostViewModel, List<CommunityPost>>(
   () => CommunityPostViewModel(),
 );

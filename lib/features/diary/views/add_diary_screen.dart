@@ -32,7 +32,6 @@ class AddDiaryScreen extends ConsumerStatefulWidget {
 class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   late final ScrollController _scrollController;
   late final TextEditingController _textController;
-  final bool _isSnackBarVisible = false;
   bool _isFocused = false;
   bool _isPublic = true;
   bool _isLoading = false;

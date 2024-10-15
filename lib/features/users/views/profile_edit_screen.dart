@@ -7,10 +7,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
+import 'package:moodiary/features/users/view_models/avatar_view_model.dart';
+import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class ProfileEditScreen extends ConsumerStatefulWidget {
-  const ProfileEditScreen({super.key});
+  final UserProfileModel userProfile;
+  const ProfileEditScreen({
+    super.key,
+    required this.userProfile,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -22,14 +28,13 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   final Map<String, dynamic> _formData = {};
 
   // 임시 유저 프로필
-  final UserProfileModel _userProfile = UserProfileModel(
-    uid: '123456',
-    username: 'Hong111',
-    bio: '안녕하세요! 저는 홍길동입니다. 저는 개발밖에 안해요',
-    hasAvatar: false,
-    avatarUrl: 'https://picsum.photos/id/${1}/200/200',
-    nickname: '홍길동',
-  );
+  late final UserProfileModel _userProfile;
+
+  @override
+  void initState() {
+    super.initState();
+    _userProfile = widget.userProfile;
+  }
 
   bool _isLoading = false; // 로딩 상태를 관리
   final ImagePicker _picker = ImagePicker();
@@ -45,12 +50,13 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
       });
 
       File imageFile = File(pickedFile.path);
-      // TODO: 서버로 이미지 업로드 후 hasAvatar true로 변경
-      await Future.delayed(const Duration(seconds: 2)); // 업로드 중이라고 가정
 
+      // 이미지 업로드
+      await ref.read(avatarProvider.notifier).uploadAvatar(imageFile);
       // 이미지 업로드 성공 시 hasAvatar를 true로 설정
       setState(() {
         state.didChange(true); // FormField의 값 변경
+        // _formData['avatarUrl'] = _formData['avatarUrl']; // formData에 저장
         _formData['hasAvatar'] = true; // formData에 저장
         _isLoading = false;
       });
@@ -112,7 +118,10 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        print(_formData); // 여기서 서버로 전송하거나 로컬에 저장하는 로직 추가
+        ref.read(usersProvider.notifier).updateUserProfile(_formData);
+        ref
+            .read(usersProvider.notifier)
+            .updateCommunityOwnerByDiaryId(_formData);
         context.pop();
       }
     }
@@ -130,10 +139,10 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
           padding: const EdgeInsets.all(Sizes.size16),
           children: [
             // 이미지 선택 및 업로드 로딩 상태 관리
+
             FormField<bool>(
               initialValue: _userProfile.hasAvatar,
               builder: (state) {
-                final imageUrl = _userProfile.avatarUrl;
                 final hasAvatar = state.value ?? false;
                 return Center(
                   child: SizedBox(
@@ -143,8 +152,11 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                       children: [
                         CircleAvatar(
                           radius: 75,
-                          backgroundImage:
-                              hasAvatar ? NetworkImage(imageUrl) : null,
+                          backgroundImage: hasAvatar
+                              ? NetworkImage(
+                                  "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${_userProfile.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
+                                )
+                              : null,
                           child: Text(
                             hasAvatar ? "" : _userProfile.nickname[0],
                             style: const TextStyle(fontSize: Sizes.size44),
@@ -192,7 +204,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 return null;
               },
               onSaved: (newValue) {
-                if (newValue != null) _formData['userName'] = newValue;
+                if (newValue != null) _formData['username'] = newValue;
               },
             ),
             Gaps.v16,
@@ -208,7 +220,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 return null;
               },
               onSaved: (newValue) {
-                if (newValue != null) _formData['name'] = newValue;
+                if (newValue != null) _formData['nickname'] = newValue;
               },
             ),
             Gaps.v16,

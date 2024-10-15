@@ -52,7 +52,11 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
   Widget _buildUserSection(UserProfileModel owner, DateTime date) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: owner.hasAvatar ? NetworkImage(owner.avatarUrl) : null,
+        backgroundImage: owner.hasAvatar
+            ? NetworkImage(
+                "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${owner.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
+              )
+            : null,
         child: Text(
           owner.hasAvatar
               ? ''

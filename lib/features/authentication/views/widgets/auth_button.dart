@@ -46,7 +46,7 @@ class _AuthButtonState extends State<AuthButton> {
           decoration: BoxDecoration(
             color: _isPressed
                 ? customPrimarySwatch.shade600
-                : customPrimarySwatch.shade300,
+                : customPrimarySwatch.shade300.withOpacity(0.5),
             borderRadius: BorderRadius.circular(
               Sizes.size5,
             ),
