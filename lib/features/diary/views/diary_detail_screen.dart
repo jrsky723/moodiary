@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/diary/view_models/diary_detail_view_model.dart';
+import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
+import 'package:moodiary/features/diary/views/edit_diary_screen.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
@@ -27,15 +28,17 @@ class DiaryDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
-  @override
-  void initState() {
-    super.initState();
+  void _onEdit() async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditDiaryScreen(
+          diaryId: widget.diaryId,
+        ),
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  void _onDelete() {}
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +51,19 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: _onEdit,
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: _onDelete,
+          ),
+        ],
         surfaceTintColor: Colors.transparent,
       ),
-      body: ref.watch(diaryDetailProvider(widget.diaryId)).when(
+      body: ref.watch(diaryProvider(widget.diaryId)).when(
             loading: () => const Center(
               child: CircularProgressIndicator.adaptive(),
             ),

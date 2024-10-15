@@ -26,7 +26,7 @@ class UserProfileModel {
   UserProfileModel.fromJson(Map<String, dynamic> data)
       : uid = data['uid'],
         username = data['username'],
-        nickname = data['name'],
+        nickname = data['nickname'],
         bio = data['bio'],
         avatarUrl = data['avatarUrl'],
         hasAvatar = data['hasAvatar'];
