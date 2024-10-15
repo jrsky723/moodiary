@@ -18,6 +18,7 @@ class UserPostsViewModel extends AsyncNotifier<List<DiaryModel>> {
   }
 
   Future<List<DiaryModel>> _fetchUserPosts() async {
+    state = const AsyncValue.loading();
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
 
@@ -27,6 +28,7 @@ class UserPostsViewModel extends AsyncNotifier<List<DiaryModel>> {
         json: doc.data(),
       ),
     );
+    state = AsyncValue.data(diaries.toList());
     return diaries.toList();
   }
 
