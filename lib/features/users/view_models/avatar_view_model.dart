@@ -7,7 +7,7 @@ import 'package:moodiary/features/users/repos/user_repo.dart';
 import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 
 class AvatarViewModel extends AutoDisposeAsyncNotifier<void> {
-  late final UserRepoSitory _repo;
+  late final UserRepository _repo;
 
   @override
   FutureOr<void> build() {
@@ -21,7 +21,7 @@ class AvatarViewModel extends AutoDisposeAsyncNotifier<void> {
     state = await AsyncValue.guard(
       () async {
         await _repo.uploadAvatar(file: file, filename: uid);
-        await ref.read(usersProvider.notifier).onAvatarUploaded();
+        await ref.read(userProfileProvider.notifier).onAvatarUploaded();
       },
     );
   }

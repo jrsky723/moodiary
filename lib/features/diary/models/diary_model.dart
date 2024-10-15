@@ -71,7 +71,7 @@ class DiaryModel {
     DateTime? date,
     double? xOffset,
     double? yOffset,
-    int? createAt,
+    int? createdAt,
   }) {
     return DiaryModel(
       uid: uid,
@@ -82,7 +82,7 @@ class DiaryModel {
       date: date ?? this.date,
       xOffset: xOffset ?? this.xOffset,
       yOffset: yOffset ?? this.yOffset,
-      createdAt: createdAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

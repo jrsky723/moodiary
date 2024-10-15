@@ -12,7 +12,7 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   late final DiaryRepository _diaryRepo;
-  late final UserRepoSitory _userRepo;
+  late final UserRepository _userRepo;
   late final AuthenticationRepository _authRepo;
 
   @override
@@ -83,7 +83,7 @@ class UserProfileViewModel extends AsyncNotifier<UserProfileModel> {
   }
 }
 
-final usersProvider =
+final userProfileProvider =
     AsyncNotifierProvider<UserProfileViewModel, UserProfileModel>(
   () => UserProfileViewModel(),
 );

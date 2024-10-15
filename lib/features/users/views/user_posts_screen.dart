@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/sizes.dart';
-import 'package:moodiary/features/community/view_models/community_post_view_model.dart';
 import 'package:moodiary/features/community/views/widgets/post_widget.dart';
+import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 
-class CommunityScreen extends ConsumerStatefulWidget {
-  const CommunityScreen({super.key});
+class UserPostsScreen extends ConsumerStatefulWidget {
+  const UserPostsScreen({super.key});
 
   @override
-  ConsumerState<CommunityScreen> createState() => _CommunityScreenState();
+  ConsumerState<UserPostsScreen> createState() => _UserPostsScreenState();
 }
 
-class _CommunityScreenState extends ConsumerState<CommunityScreen> {
+class _UserPostsScreenState extends ConsumerState<UserPostsScreen> {
   int _itemCount = 0;
   final bool _isLoadingMore = false;
   final ScrollController _scrollController = ScrollController();
@@ -32,11 +32,11 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
   }
 
   Future<void> _loadMorePosts() async {
-    return ref.read(communityPostProvider.notifier).loadMore();
+    return ref.read(userPostsProvider.notifier).loadMore();
   }
 
   Future<void> _onRefresh() {
-    return ref.read(communityPostProvider.notifier).refresh();
+    return ref.read(userPostsProvider.notifier).refresh();
   }
 
   @override
@@ -62,7 +62,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
               ),
             ];
           },
-          body: ref.watch(communityPostProvider).when(
+          body: ref.watch(userPostsProvider).when(
             data: (posts) {
               _itemCount = posts.length;
               return RefreshIndicator(
