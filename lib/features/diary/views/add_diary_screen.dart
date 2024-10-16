@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
 import 'package:moodiary/features/diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/calendar.dart';
@@ -221,6 +222,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
             date: _selectedDate,
           );
       _hideKeyboard();
+      // 달력 화면 갱신
+      ref.read(calendarProvider.notifier).refresh(_selectedDate);
       Navigator.pop(context);
     } finally {
       setState(() {
