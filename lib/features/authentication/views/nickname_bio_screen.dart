@@ -42,20 +42,20 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
     if (_nickname.isEmpty) {
       return null;
     }
-    if (_isButtonDisabled) return "Nickname have to be at least 3 characters";
+    if (_isButtonDisabled) return S.of(context).nicknameValidError;
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return CommonFormScreen(
-      appBarTitle: "Sign Up",
-      title: "Create Profile",
-      description: "You can always change this later",
+      appBarTitle: S.of(context).signUp,
+      title: S.of(context).createProfile,
+      description: S.of(context).nickBioDiscription,
       children: [
         CommonInputField(
           controller: _nicknameController,
-          hintText: "Nickname",
+          hintText: S.of(context).nickname,
           onChanged: (value) {
             setState(() {
               _nickname = value;
@@ -67,7 +67,7 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
         Gaps.v20,
         CommonInputField(
           controller: _bioController,
-          hintText: "Bio",
+          hintText: S.of(context).bio,
           onChanged: (value) {
             setState(() {
               _bio = value;

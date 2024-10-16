@@ -131,7 +131,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   formattedDate = DateFormat('yyyy-MM-dd').format(_now);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text("미래날짜입니다."),
+                      content: Text(S.of(context).thisIsFutureDiary),
                       backgroundColor: Colors.grey.shade700,
                     ),
                   );
@@ -175,7 +175,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: isFutureDate
-              ? const Text("미래날짜입니다.")
+              ? Text(S.of(context).thisIsFutureDiary)
               : Text(S.of(context).selectedDate(formattedDate)),
           backgroundColor: Colors.grey.shade700,
         ),
@@ -183,8 +183,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     } catch (e) {
       Navigator.pop(context); // 로딩 인디케이터 닫기
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('데이터를 가져오는 중 오류가 발생했습니다.'),
+        SnackBar(
+          content: Text(S.of(context).fetchDataError),
           backgroundColor: Colors.red,
         ),
       );
@@ -202,9 +202,8 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
 
     if (_textController.text.isEmpty || _images.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          // TODO:  에러별로 text 다르게 설정
-          content: Text("Please write a diary or add a photo at least."),
+        SnackBar(
+          content: Text(S.of(context).pleaseWriteDiaryOrAddPhoto),
           backgroundColor: Colors.red,
         ),
       );
@@ -378,7 +377,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                     ),
                     _isFocused
                         ? FormActionButton(
-                            text: "text save",
+                            text: S.of(context).textSave,
                             onPressed: _hideKeyboard,
                           )
                         : FormActionButton(

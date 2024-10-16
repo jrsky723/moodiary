@@ -95,12 +95,12 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
   @override
   Widget build(BuildContext context) {
     return CommonFormScreen(
-      appBarTitle: "Sign Up",
-      title: "What is your email and password, ${widget.username}?",
+      appBarTitle: S.of(context).signUp,
+      title: S.of(context).usernameTitle(widget.username),
       children: [
         CommonInputField(
           controller: _emailController,
-          hintText: "Email",
+          hintText: S.of(context).email,
           onChanged: (value) {
             setState(() {
               _email = value;
@@ -112,7 +112,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
         Gaps.v20,
         CommonInputField(
           controller: _passwordController,
-          hintText: "Password",
+          hintText: S.of(context).password,
           obscureText: _isObscure,
           suffix: Row(
             mainAxisSize: MainAxisSize.min,

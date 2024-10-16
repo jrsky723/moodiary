@@ -54,7 +54,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
             children: [
               CommonInputField(
                 controller: _emailController,
-                hintText: 'Email',
+                hintText: S.of(context).email,
                 onChanged: (value) {
                   formData['email'] = value;
                 },
@@ -62,7 +62,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
               Gaps.v16,
               CommonInputField(
                 controller: _passwordController,
-                hintText: 'Password',
+                hintText: S.of(context).password,
                 obscureText: _isObscure,
                 onChanged: (value) {
                   formData['password'] = value;
