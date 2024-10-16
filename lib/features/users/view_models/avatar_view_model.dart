@@ -10,7 +10,7 @@ class AvatarViewModel extends AsyncNotifier<void> {
   late final UserRepository _repo;
 
   @override
-  FutureOr<void> build() {
+  FutureOr<void> build() async {
     _repo = ref.read(userRepo);
   }
 
@@ -20,7 +20,7 @@ class AvatarViewModel extends AsyncNotifier<void> {
     state = await AsyncValue.guard(
       () async {
         await _repo.uploadAvatar(file: file, filename: uid);
-        ref.read(userProfileProvider.notifier).onAvatarUploaded();
+        ref.read(userProfileProvider.notifier).onAvatarUpload();
       },
     );
   }

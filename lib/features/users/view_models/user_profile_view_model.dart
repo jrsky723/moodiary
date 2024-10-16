@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
+import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
@@ -29,25 +29,26 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     return UserProfileModel.empty();
   }
 
-  Future<void> createProfile(UserCredential credential) async {
+  Future<UserProfileModel> createProfile() async {
     state = const AsyncValue.loading();
+    final form = ref.read(signUpForm);
     final profile = UserProfileModel(
-      uid: credential.user!.uid,
-      bio: 'undefined',
-      nickname: 'undefined',
-      username: credential.user!.displayName ?? 'username',
-      hasAvatar: false,
+      uid: form['uid'],
+      bio: form['bio'],
+      nickname: form['nickname'],
+      username: form['username'],
+      hasAvatar: form['hasAvatar'],
     );
     await _userRepo.createProfile(profile);
     state = AsyncValue.data(profile);
+    return profile;
   }
 
-  Future<void> onAvatarUploaded() async {
-    state = const AsyncValue.loading();
+  Future<void> onAvatarUpload() async {
     if (state.value == null) return;
-    state = AsyncValue.data(state.value!.copyWith(
-      hasAvatar: true,
-    ));
+    state = AsyncValue.data(state.value!.copyWith(hasAvatar: true));
+    await _userRepo
+        .updateUser(uid: state.value!.uid, data: {'hasAvatar': true});
   }
 
   Future<void> updateUserProfile(Map<String, dynamic> profile) async {
@@ -57,7 +58,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     state = const AsyncValue.loading();
     await _userRepo.updateUser(
       uid: uid,
-      user: profile,
+      data: profile,
     );
     state = AsyncValue.data(state.value!.copyWith(
       username: profile['username'],

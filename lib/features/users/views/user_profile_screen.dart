@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
@@ -46,6 +47,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final uid = ref.read(authRepo).user!.uid;
+
+    final avatarUrl = dotenv.env['AVATAR_URL']!
+        .replaceAll('{uid}', uid)
+        .replaceAll(
+            '{timestamp}', DateTime.now().millisecondsSinceEpoch.toString());
     return Scaffold(
       appBar: ref.watch(userProfileProvider).when(
             loading: () => AppBar(
@@ -95,20 +102,22 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           user.hasAvatar
                               ? CircleAvatar(
                                   radius: 50,
-                                  backgroundImage: NetworkImage(
-                                    "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${user.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
+                                  foregroundImage: NetworkImage(
+                                    avatarUrl,
                                   ),
                                 )
                               : CircleAvatar(
                                   radius: 50,
                                   child: Text(
-                                    user.nickname[0],
+                                    user.username == ''
+                                        ? 'U'
+                                        : user.username[0],
                                     style: const TextStyle(fontSize: 40),
                                   ),
                                 ),
                           Gaps.v16,
                           Text(
-                            user.nickname,
+                            user.nickname == '' ? 'undefined' : user.nickname,
                             style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
