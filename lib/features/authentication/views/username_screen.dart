@@ -52,13 +52,13 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
   @override
   Widget build(BuildContext context) {
     return CommonFormScreen(
-      appBarTitle: 'Sign Up',
-      title: 'Create username',
-      description: 'You do not change this later',
+      appBarTitle: S.of(context).signUp,
+      title: S.of(context).createProfile,
+      description: S.of(context).usernameDiscription,
       children: [
         CommonInputField(
           controller: _usernameController,
-          hintText: 'Username',
+          hintText: S.of(context).userName,
           onChanged: (value) {
             setState(() {
               _isButtonDisabled = value.length < 3;

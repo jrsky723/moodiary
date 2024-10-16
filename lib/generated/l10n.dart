@@ -560,10 +560,10 @@ class S {
     );
   }
 
-  /// `Today's mood analysis.`
+  /// `Today's mood analysis`
   String get moodAnalysisExplanation {
     return Intl.message(
-      'Today\'s mood analysis.',
+      'Today\'s mood analysis',
       name: 'moodAnalysisExplanation',
       desc: '',
       args: [],
@@ -680,10 +680,10 @@ class S {
     );
   }
 
-  /// `Only {days} of Mood data are displayed.`
+  /// `Only {days} of Mood data are displayed`
   String dashboardDescription(Object days) {
     return Intl.message(
-      'Only $days of Mood data are displayed.',
+      'Only $days of Mood data are displayed',
       name: 'dashboardDescription',
       desc: '',
       args: [days],
@@ -740,10 +740,10 @@ class S {
     );
   }
 
-  /// `User name must be at least 2 characters.`
+  /// `User name must be at least 2 characters`
   String get userNameMinError {
     return Intl.message(
-      'User name must be at least 2 characters.',
+      'User name must be at least 2 characters',
       name: 'userNameMinError',
       desc: '',
       args: [],
@@ -790,10 +790,10 @@ class S {
     );
   }
 
-  /// `Please enter your name.`
+  /// `Please enter your name`
   String get pleaseEnterName {
     return Intl.message(
-      'Please enter your name.',
+      'Please enter your name',
       name: 'pleaseEnterName',
       desc: '',
       args: [],
@@ -1015,6 +1015,266 @@ class S {
     return Intl.message(
       'Delete',
       name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Profile`
+  String get createProfile {
+    return Intl.message(
+      'Create Profile',
+      name: 'createProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What is your email and password, {username}?`
+  String usernameTitle(Object username) {
+    return Intl.message(
+      'What is your email and password, $username?',
+      name: 'usernameTitle',
+      desc: '',
+      args: [username],
+    );
+  }
+
+  /// `Emotion Analysis Diary App`
+  String get appDiscription {
+    return Intl.message(
+      'Emotion Analysis Diary App',
+      name: 'appDiscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account yet?  `
+  String get doYouHaveAccount {
+    return Intl.message(
+      'Don\'t have an account yet?  ',
+      name: 'doYouHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `goto Sign Up`
+  String get gotoSignUp {
+    return Intl.message(
+      'goto Sign Up',
+      name: 'gotoSignUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can always change this later`
+  String get nickBioDiscription {
+    return Intl.message(
+      'You can always change this later',
+      name: 'nickBioDiscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nickname have to be at least 3 characters`
+  String get nicknameValidError {
+    return Intl.message(
+      'Nickname have to be at least 3 characters',
+      name: 'nicknameValidError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?  `
+  String get doYouHaveAnAccountAlready {
+    return Intl.message(
+      'Already have an account?  ',
+      name: 'doYouHaveAnAccountAlready',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `goto Login`
+  String get gotoLogin {
+    return Intl.message(
+      'goto Login',
+      name: 'gotoLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You do not change this later`
+  String get usernameDiscription {
+    return Intl.message(
+      'You do not change this later',
+      name: 'usernameDiscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `see More`
+  String get seeMore {
+    return Intl.message(
+      'see More',
+      name: 'seeMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Data`
+  String get noData {
+    return Intl.message(
+      'No Data',
+      name: 'noData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This is a Future Diary`
+  String get thisIsFutureDiary {
+    return Intl.message(
+      'This is a Future Diary',
+      name: 'thisIsFutureDiary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while fetching data`
+  String get fetchDataError {
+    return Intl.message(
+      'An error occurred while fetching data',
+      name: 'fetchDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please write a diary or add a photo at least`
+  String get pleaseWriteDiaryOrAddPhoto {
+    return Intl.message(
+      'Please write a diary or add a photo at least',
+      name: 'pleaseWriteDiaryOrAddPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `text save`
+  String get textSave {
+    return Intl.message(
+      'text save',
+      name: 'textSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `At least one image must be kept`
+  String get OneImageMustBeKept {
+    return Intl.message(
+      'At least one image must be kept',
+      name: 'OneImageMustBeKept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Diary`
+  String get editDiary {
+    return Intl.message(
+      'Edit Diary',
+      name: 'editDiary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diary Content`
+  String get diaryContent {
+    return Intl.message(
+      'Diary Content',
+      name: 'diaryContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Images`
+  String get images {
+    return Intl.message(
+      'Images',
+      name: 'images',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit`
+  String get submit {
+    return Intl.message(
+      'Submit',
+      name: 'submit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your diary content`
+  String get enterYourDiaryContent {
+    return Intl.message(
+      'Enter your diary content',
+      name: 'enterYourDiaryContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter some content`
+  String get pleaseEnterSomeContent {
+    return Intl.message(
+      'Please enter some content',
+      name: 'pleaseEnterSomeContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No images available`
+  String get noImagesAvailable {
+    return Intl.message(
+      'No images available',
+      name: 'noImagesAvailable',
       desc: '',
       args: [],
     );

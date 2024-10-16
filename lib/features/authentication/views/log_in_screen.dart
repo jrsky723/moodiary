@@ -9,6 +9,7 @@ import 'package:moodiary/features/authentication/view_models/social_auth_view_mo
 import 'package:moodiary/features/authentication/views/login_form_screen.dart';
 import 'package:moodiary/features/authentication/views/username_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/auth_button.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class LogInScreen extends ConsumerWidget {
   static const String routeName = 'login';
@@ -66,9 +67,9 @@ class LogInScreen extends ConsumerWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    const Text(
-                      '감정 분석 일기앱',
-                      style: TextStyle(
+                    Text(
+                      S.of(context).appDiscription,
+                      style: const TextStyle(
                         fontSize: Sizes.size20,
                         color: Colors.black,
                         fontWeight: FontWeight.w300,
@@ -81,15 +82,15 @@ class LogInScreen extends ConsumerWidget {
                     RichText(
                       text: TextSpan(
                         children: [
-                          const TextSpan(
-                            text: '이미 계정이 없으신가요?  ',
-                            style: TextStyle(
+                          TextSpan(
+                            text: S.of(context).doYouHaveAccount,
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: Sizes.size14,
                             ),
                           ),
                           TextSpan(
-                            text: '회원가입하기',
+                            text: S.of(context).gotoSignUp,
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: Sizes.size14,
@@ -102,6 +103,8 @@ class LogInScreen extends ConsumerWidget {
                       ),
                     ),
                     Gaps.v32,
+                    // TODO : 버튼 텍스트를 다국어화
+
                     AuthButton(
                       text: "login with email",
                       icon: const FaIcon(

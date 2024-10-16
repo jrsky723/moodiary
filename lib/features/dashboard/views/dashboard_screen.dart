@@ -241,7 +241,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           if (_isDataEmpty)
             Center(
               child: Text(
-                "데이터가 없습니다.",
+                S.of(context).noData,
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Colors.grey.shade300,
                     ),

@@ -128,7 +128,7 @@ class _AvatarScreenState extends ConsumerState<AvatarScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Profile"),
+        title: Text(S.of(context).createProfile),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
