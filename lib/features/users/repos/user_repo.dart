@@ -22,14 +22,14 @@ class UserRepository {
     required File file,
     required String filename,
   }) async {
-    String baseUrl = 'avatars/$filename';
-    final ref = _storage.ref().child(baseUrl);
+    String avatarUrl = 'avatars/$filename';
+    final ref = _storage.ref().child(avatarUrl);
     await ref.putFile(file);
   }
 
   Future<void> updateUser(
-      {required String uid, required Map<String, dynamic> user}) async {
-    await _db.collection('users').doc(uid).update(user);
+      {required String uid, required Map<String, dynamic> data}) async {
+    await _db.collection('users').doc(uid).update(data);
   }
 }
 
