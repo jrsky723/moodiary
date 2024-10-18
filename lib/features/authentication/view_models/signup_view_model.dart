@@ -19,7 +19,7 @@ class SignUpViewModel extends AsyncNotifier<void> {
   Future<void> signUp(BuildContext context) async {
     state = const AsyncValue.loading();
     final form = ref.read(signUpForm);
-    final user = ref.read(usersProvider.notifier);
+    final user = ref.read(userProfileProvider.notifier);
     state = await AsyncValue.guard(
       () async {
         final userCredential = await _authRepo.emailSignUp(
