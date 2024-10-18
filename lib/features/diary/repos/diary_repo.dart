@@ -1,5 +1,3 @@
-// 데이터 유지및 데이터 가져오기만 하는 클래스
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,7 +18,6 @@ class DiaryRepository {
     required String diaryId,
     required List<File> images,
   }) async {
-    // 이미지들을 업로드 하고, 이미지 url을 반환
     List<String> imageUrls = [];
     String baseUrl = 'users/$uid/diaries/$diaryId';
     final fileRef = _storage.ref().child(baseUrl);
@@ -79,17 +76,67 @@ class DiaryRepository {
     return query.get();
   }
 
-  Future<void> deleteDiary(String uid, String diaryId) async {
-    await _db
+  Future<void> deleteUserDiariesByDiaryIds(
+      String uid, List<String> diaryIds) async {
+    List<String> imagePaths = [];
+
+    final diaries = await _db
         .collection('users')
         .doc(uid)
         .collection('diaries')
-        .doc(diaryId)
-        .delete();
+        .where('diaryId', whereIn: diaryIds)
+        .get();
+
+    for (final diary in diaries.docs) {
+      final imageUrls =
+          (diary.data()['imageUrls'] as List<dynamic>).cast<String>();
+
+      // 이미지 삭제
+      for (final imageUrl in imageUrls) {
+        final path = extractPathFromUrl(imageUrl);
+        imagePaths.add(path);
+      }
+
+      // 다이어리 문서 삭제
+      await _db
+          .collection('users')
+          .doc(uid)
+          .collection('diaries')
+          .doc(diary.data()['diaryId'])
+          .delete();
+    }
+    imagePaths.forEach((imageUrl) async {
+      await _storage.ref().child(imageUrl).delete();
+    });
   }
 
-  Future<void> deleteCommunityDiary(String diaryId) async {
-    await _db.collection('community').doc(diaryId).delete();
+  String extractPathFromUrl(String url) {
+    final regex = RegExp(r'o\/(.*?)\?');
+    final match = regex.firstMatch(url);
+    if (match != null) {
+      // 경로 추출 후 디코딩
+      return Uri.decodeComponent(match.group(1)!);
+    }
+    return '';
+  }
+
+  Future<void> deleteCommunityDiariesByDiaryIds(List<String> diaryIds) async {
+    final batch = _db.batch();
+
+    final diaries = await _db
+        .collection('community')
+        .where(
+          'diaryId',
+          whereIn: diaryIds,
+        )
+        .get();
+
+    for (final diary in diaries.docs) {
+      final diaryId = diary.data()['diaryId'];
+      final ref = _db.collection('community').doc(diaryId);
+      batch.delete(ref);
+    }
+    await batch.commit();
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUId(String uid) {

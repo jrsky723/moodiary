@@ -46,7 +46,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
         _isPwdValid.toString().isNotEmpty) {
       return null;
     }
-    return "Email and Password are not valid";
+    return S.of(context).emailAndPasswordAreNotValid;
   }
 
   String? _isEmailValid() {
@@ -57,7 +57,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
     final regExp = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (!regExp.hasMatch(_email)) {
-      return "Email not valid";
+      return S.of(context).emailNotValid;
     }
     return null;
   }

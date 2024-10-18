@@ -170,5 +170,7 @@
   "deleteDiaryMessage": "Are you sure you want to delete your diary?",
   "deleteDiary": "Delete Diary",
   "deleteDiarySuccessMessage": "Diary has been successfully deleted",
-  "deleteDiaryErrorMessage": "An error occurred while deleting the diary"
+  "deleteDiaryErrorMessage": "An error occurred while deleting the diary",
+  "emailNotValid": "Email is not valid",
+  "emailAndPasswordAreNotValid": "Email and Password are not valid"
 }

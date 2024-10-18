@@ -90,6 +90,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "editDiary": MessageLookupByLibrary.simpleMessage("Edit Diary"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailAndPasswordAreNotValid": MessageLookupByLibrary.simpleMessage(
+            "Email and Password are not valid"),
+        "emailNotValid":
+            MessageLookupByLibrary.simpleMessage("Email is not valid"),
         "emotion": MessageLookupByLibrary.simpleMessage("Emotion"),
         "englishModeSubtitle": MessageLookupByLibrary.simpleMessage(
             "Change the language to English"),

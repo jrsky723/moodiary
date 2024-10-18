@@ -87,6 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "editDiary": MessageLookupByLibrary.simpleMessage("일기 수정"),
         "editProfile": MessageLookupByLibrary.simpleMessage("프로필 수정"),
         "email": MessageLookupByLibrary.simpleMessage("이메일"),
+        "emailAndPasswordAreNotValid":
+            MessageLookupByLibrary.simpleMessage("이메일과 비밀번호가 유효하지 않습니다"),
+        "emailNotValid": MessageLookupByLibrary.simpleMessage("이메일 형태가 아닙니다"),
         "emotion": MessageLookupByLibrary.simpleMessage("감정"),
         "englishModeSubtitle":
             MessageLookupByLibrary.simpleMessage("언어를 영어로 전환합니다"),

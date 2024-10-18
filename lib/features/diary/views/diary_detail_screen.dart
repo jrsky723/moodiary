@@ -49,8 +49,6 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   }
 
   void _onDeletePressed() {
-    // 탈퇴 버튼을 눌렀을 때, 정말로 탈퇴할 것인지 확인하는 다이얼로그 후에 탈퇴
-
     showDialog(
       context: context,
       builder: (context) {
@@ -59,7 +57,9 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           content: Text(S.of(context).deleteDiaryMessage),
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: Text(S.of(context).cancel),
             ),
             TextButton(
@@ -73,8 +73,6 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   }
 
   void _onDelete() async {
-    // 삭제 확인 시 다이어리 삭제 로직 실행
-
     try {
       await ref
           .read(diaryProvider(widget.diaryId).notifier)
