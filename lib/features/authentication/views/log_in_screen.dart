@@ -1,21 +1,19 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/social_auth_view_model.dart';
 import 'package:moodiary/features/authentication/views/login_form_screen.dart';
-import 'package:moodiary/features/authentication/views/username_screen.dart';
-import 'package:moodiary/features/authentication/views/widgets/auth_button.dart';
+import 'package:moodiary/features/authentication/views/widgets/auth_title.dart';
+import 'package:moodiary/features/authentication/views/widgets/common_auth_buttons.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class LogInScreen extends ConsumerWidget {
   static const String routeName = 'login';
   static const String routeUrl = '/login';
 
-  // 임시 image asset URL
   final String imagePath = 'assets/images/login_title_img.png';
 
   const LogInScreen({super.key});
@@ -29,15 +27,6 @@ class LogInScreen extends ConsumerWidget {
       context,
       MaterialPageRoute(
         builder: (context) => const LoginFormScreen(),
-      ),
-    );
-  }
-
-  void _onEmailTap(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
       ),
     );
   }
@@ -57,25 +46,9 @@ class LogInScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'MOODIARY',
-                      style: TextStyle(
-                        fontSize: Sizes.size64,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      S.of(context).appDiscription,
-                      style: const TextStyle(
-                        fontSize: Sizes.size20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
+                AuthTitle(
+                  title: 'MOODIARY',
+                  description: S.of(context).appDiscription,
                 ),
                 Column(
                   children: [
@@ -103,31 +76,11 @@ class LogInScreen extends ConsumerWidget {
                       ),
                     ),
                     Gaps.v32,
-                    // TODO : 버튼 텍스트를 다국어화
-
-                    AuthButton(
-                      text: "login with email",
-                      icon: const FaIcon(
-                        FontAwesomeIcons.user,
-                      ),
-                      onTap: () => _onLocalLoginTap(context),
-                    ),
-                    Gaps.v14,
-                    AuthButton(
-                      text: "Google",
-                      icon: const FaIcon(
-                        FontAwesomeIcons.google,
-                      ),
-                      onTap: () => ref
+                    AuthButtons(
+                      onLocalTap: () => _onLocalLoginTap(context),
+                      onGoogleTap: () => ref
                           .read(socialAuthProvider.notifier)
                           .googleSignIn(context),
-                    ),
-                    Gaps.v14,
-                    const AuthButton(
-                      text: "Apple",
-                      icon: FaIcon(
-                        FontAwesomeIcons.apple,
-                      ),
                     ),
                   ],
                 ),

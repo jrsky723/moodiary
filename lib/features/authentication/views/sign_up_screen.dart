@@ -1,24 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/social_auth_view_model.dart';
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
 import 'package:moodiary/features/authentication/views/username_screen.dart';
-import 'package:moodiary/features/authentication/views/widgets/auth_button.dart';
+import 'package:moodiary/features/authentication/views/widgets/auth_title.dart';
+import 'package:moodiary/features/authentication/views/widgets/common_auth_buttons.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class SignUpScreen extends ConsumerWidget {
   static const String routeName = 'signup';
   static const String routeUrl = '/signup';
 
-  // 임시 image asset URL
-  final String imagePath = 'assets/images/signup_title_img.png';
-
   const SignUpScreen({super.key});
+
+  final String imagePath = 'assets/images/signup_title_img.png';
 
   void _onLoginTap(BuildContext context) {
     context.pushNamed(LogInScreen.routeName);
@@ -48,25 +47,9 @@ class SignUpScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'MOODIARY',
-                      style: TextStyle(
-                        fontSize: Sizes.size64,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      S.of(context).appDiscription,
-                      style: const TextStyle(
-                        fontSize: Sizes.size20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
+                AuthTitle(
+                  title: 'MOODIARY',
+                  description: S.of(context).appDiscription,
                 ),
                 Column(
                   children: [
@@ -94,30 +77,11 @@ class SignUpScreen extends ConsumerWidget {
                       ),
                     ),
                     Gaps.v32,
-                    // 버튼 텍스트를 다국어화
-                    AuthButton(
-                      text: "Sign up with email",
-                      icon: const FaIcon(
-                        FontAwesomeIcons.user,
-                      ),
-                      onTap: () => _onEmailTap(context),
-                    ),
-                    Gaps.v14,
-                    AuthButton(
-                      text: "Google",
-                      icon: const FaIcon(
-                        FontAwesomeIcons.google,
-                      ),
-                      onTap: () => ref
+                    AuthButtons(
+                      onLocalTap: () => _onEmailTap(context), // 회원가입 로직 추가
+                      onGoogleTap: () => ref
                           .read(socialAuthProvider.notifier)
                           .googleSignIn(context),
-                    ),
-                    Gaps.v14,
-                    const AuthButton(
-                      text: "Apple",
-                      icon: FaIcon(
-                        FontAwesomeIcons.apple,
-                      ),
                     ),
                   ],
                 ),
