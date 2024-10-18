@@ -4,13 +4,11 @@ import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 
 class AuthButton extends StatefulWidget {
-  final String text;
   final FaIcon icon;
 
   final Function()? onTap;
   const AuthButton({
     super.key,
-    required this.text,
     required this.icon,
     this.onTap,
   });
@@ -59,21 +57,13 @@ class _AuthButtonState extends State<AuthButton> {
                   ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(Sizes.size10),
+            padding: const EdgeInsets.all(Sizes.size20),
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: widget.icon,
-                ),
-                Text(
-                  widget.text,
-                  style: const TextStyle(
-                    fontSize: Sizes.size20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),

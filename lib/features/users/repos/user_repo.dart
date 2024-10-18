@@ -18,11 +18,8 @@ class UserRepository {
     return doc.data();
   }
 
-  // TODO:   delete 테스트 해보기
-  //  users 뿐만 아니라 community에 있는 것들도 지워야되는데 diaryId를 가져와서 지워야되나?
   Future<void> deleteProfile(String uid) async {
     await _db.collection('users').doc(uid).delete();
-    //  user avatar 삭제
     await _storage.ref().child('avatars/$uid').delete();
   }
 
