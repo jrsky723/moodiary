@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 
-class UserRepoSitory {
+class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -34,5 +34,5 @@ class UserRepoSitory {
 }
 
 final userRepo = Provider(
-  (ref) => UserRepoSitory(),
+  (ref) => UserRepository(),
 );

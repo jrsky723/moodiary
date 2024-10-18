@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/community/view_models/community_post_view_model.dart';
-import 'package:moodiary/features/community/views/widgets/post_page_view.dart';
-import 'package:moodiary/features/community/views/widgets/post_content.dart';
-import 'package:moodiary/features/users/models/user_profile_model.dart';
+import 'package:moodiary/features/community/views/widgets/post_widget.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class CommunityScreen extends ConsumerStatefulWidget {
@@ -47,34 +43,6 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  Widget _buildUserSection(UserProfileModel owner, DateTime date) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: owner.hasAvatar
-            ? NetworkImage(
-                "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${owner.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}",
-              )
-            : null,
-        child: Text(
-          owner.hasAvatar
-              ? ''
-              : owner.username == ''
-                  ? 'U'
-                  : owner.username[0],
-          style: const TextStyle(fontSize: Sizes.size24),
-        ),
-      ),
-      title: Text(owner.username),
-      subtitle: Text(
-        DateFormat.yMMMd().format(date),
-        style: const TextStyle(
-          color: Colors.grey,
-          fontSize: Sizes.size12,
-        ),
-      ),
-    );
   }
 
   @override
@@ -118,41 +86,8 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
                         return const SizedBox.shrink();
                       }
                     }
-                    final owner = posts[postIndex].owner;
-                    final imageUrls = posts[postIndex].imageUrls;
-                    final content = posts[postIndex].content;
-                    final date = posts[postIndex].date;
-                    return Column(
-                      children: [
-                        // UserSection
-                        _buildUserSection(owner, date),
-                        // PostPageView
-                        SizedBox(
-                          height:
-                              MediaQuery.of(context).size.width - Sizes.size16,
-                          child: PostPageView(
-                            imageUrls: imageUrls,
-                          ),
-                        ),
-                        Gaps.v10,
-                        // PostContent
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: Sizes.size16,
-                          ),
-                          child: PostContent(
-                            username: owner.username,
-                            content: content,
-                          ),
-                        ),
-                        Gaps.v20,
-                        const Divider(
-                          height: Sizes.size1,
-                          thickness: 1,
-                          color: Colors.white,
-                        ),
-                      ],
-                    );
+                    final post = posts[postIndex];
+                    return PostWidget(post: post);
                   },
                 ),
               );

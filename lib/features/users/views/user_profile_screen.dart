@@ -5,9 +5,10 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/settings/views/settings_screen.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
-import 'package:moodiary/features/users/view_models/user_posts.dart';
+import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 import 'package:moodiary/features/users/views/profile_edit_screen.dart';
+import 'package:moodiary/features/users/views/user_posts_screen.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
   const UserProfileScreen({super.key});
@@ -16,28 +17,6 @@ class UserProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
-  _onScroll() async {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    if (maxScroll * 0.85 < currentScroll) {
-      ref.read(userPostsProvider.notifier).refresh();
-    }
-  }
-
-  @override
-  dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   void _onEditProfile(UserProfileModel user) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -52,10 +31,23 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     return ref.read(userPostsProvider.notifier).refresh();
   }
 
+  void _onUserPostTap(int index, String username) {
+    // 사용자의 게시물을 탭했을 때, 해당 위치 (인덱스정보)를 전달하고,
+    // 사용자의 게시물 화면으로 이동
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => UserPostsScreen(
+          index: index,
+          username: username,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ref.watch(usersProvider).when(
+      appBar: ref.watch(userProfileProvider).when(
             loading: () => AppBar(
               title: const Text('Loading...'),
             ),
@@ -88,12 +80,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          controller: _scrollController,
           child: Column(
             children: <Widget>[
-              // 3. 사용자 프로필 정보를 표시하는 위젯
-              ref.watch(usersProvider).when(
+              ref.watch(userProfileProvider).when(
                     loading: () => const Center(
                       child: CircularProgressIndicator.adaptive(),
                     ),
@@ -157,11 +146,15 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       ),
                       itemCount: posts.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(posts[index].imageUrls[0]),
-                              fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () => _onUserPostTap(
+                              index, posts[index].owner.username),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(posts[index].imageUrls[0]),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         );

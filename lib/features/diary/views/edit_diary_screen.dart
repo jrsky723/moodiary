@@ -18,7 +18,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Map<String, String> formData = {};
-  final List<bool> _isImageDeleted = List.filled(10, false);
+  List<bool> _isImageDeleted = [];
   bool _isSnackBarVisible = false;
 
   // 수정된 일기 저장
@@ -81,6 +81,9 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
         ),
         body: ref.watch(diaryProvider(widget.diaryId)).when(
               data: (diary) {
+                if (_isImageDeleted.length != diary.imageUrls.length) {
+                  _isImageDeleted = List.filled(diary.imageUrls.length, false);
+                }
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
                   child: Form(
