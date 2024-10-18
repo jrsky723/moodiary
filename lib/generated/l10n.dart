@@ -1319,6 +1319,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Email is not valid`
+  String get emailNotValid {
+    return Intl.message(
+      'Email is not valid',
+      name: 'emailNotValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email and Password are not valid`
+  String get emailAndPasswordAreNotValid {
+    return Intl.message(
+      'Email and Password are not valid',
+      name: 'emailAndPasswordAreNotValid',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

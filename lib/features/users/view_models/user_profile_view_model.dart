@@ -41,11 +41,20 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     return profile;
   }
 
-  //  TODO : deleteProfile 테스트 해보기
-
   Future<void> deleteProfile() async {
-    final user = ref.read(authRepo).user;
-    final uid = user!.uid;
+    state = const AsyncValue.loading();
+    final uid = ref.read(authRepo).user!.uid;
+
+    await _authRepo.deleteAccount();
+
+    final diaries = await _diaryRepo.fetchDiariesByUId(uid);
+
+    List<String> diaryIds =
+        diaries.docs.map((diary) => diary['diaryId'] as String).toList();
+
+    await _diaryRepo.deleteUserDiariesByDiaryIds(uid, diaryIds);
+    await _diaryRepo.deleteCommunityDiariesByDiaryIds(diaryIds);
+
     await _userRepo.deleteProfile(uid);
   }
 
