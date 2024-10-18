@@ -71,6 +71,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteAccountMessage": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete your account?"),
+        "deleteDiary": MessageLookupByLibrary.simpleMessage("Delete Diary"),
+        "deleteDiaryErrorMessage": MessageLookupByLibrary.simpleMessage(
+            "An error occurred while deleting the diary"),
+        "deleteDiaryMessage": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete your diary?"),
+        "deleteDiarySuccessMessage": MessageLookupByLibrary.simpleMessage(
+            "Diary has been successfully deleted"),
         "delighted": MessageLookupByLibrary.simpleMessage("Delighted"),
         "diary": MessageLookupByLibrary.simpleMessage("Diary"),
         "diaryContent": MessageLookupByLibrary.simpleMessage("Diary Content"),

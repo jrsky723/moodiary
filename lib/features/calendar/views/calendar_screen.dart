@@ -49,9 +49,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     setState(() {
       _now = DateTime.now();
     });
-    ref.read(calendarProvider.notifier).refresh(
-          _selectedDate,
-        );
+    ref.read(calendarProvider.notifier).refresh(_selectedDate);
   }
 
   void _onSwipeChangeMonth(bool isNext) {

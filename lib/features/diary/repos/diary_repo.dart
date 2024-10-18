@@ -79,6 +79,19 @@ class DiaryRepository {
     return query.get();
   }
 
+  Future<void> deleteDiary(String uid, String diaryId) async {
+    await _db
+        .collection('users')
+        .doc(uid)
+        .collection('diaries')
+        .doc(diaryId)
+        .delete();
+  }
+
+  Future<void> deleteCommunityDiary(String diaryId) async {
+    await _db.collection('community').doc(diaryId).delete();
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUId(String uid) {
     final query = _db.collection('users').doc(uid).collection('diaries');
     return query.get();

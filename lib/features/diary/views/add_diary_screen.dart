@@ -9,6 +9,7 @@ import 'package:moodiary/common/widgets/p_info_button.dart';
 import 'package:moodiary/constants/colors.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
+import 'package:moodiary/features/community/view_models/community_post_view_model.dart';
 import 'package:moodiary/features/diary/view_models/add_diary_view_model.dart';
 import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/calendar.dart';
@@ -16,6 +17,7 @@ import 'package:moodiary/features/diary/views/widgets/add_diary/diary_container.
 import 'package:moodiary/features/diary/views/widgets/add_diary/diary_text_widget.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/form_action_button.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/image_picker_button.dart';
+import 'package:moodiary/features/users/view_models/user_posts.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
@@ -72,6 +74,12 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     super.dispose();
   }
 
+  void refresh() {
+    ref.read(calendarProvider.notifier).refresh(widget.date ?? _now);
+    ref.read(userPostsProvider.notifier).refresh();
+    ref.read(communityPostProvider.notifier).refresh();
+  }
+
   void _scrollToTop() {
     _scrollController.animateTo(
       0,
@@ -96,7 +104,6 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   .read(addDiaryProvider.notifier)
                   .fetchDiaryByDate(selectedDate);
               Navigator.pop(context);
-              print(diary);
               if (diary != null) {
                 Navigator.pop(context);
                 context.pushNamed(
@@ -223,7 +230,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
           );
       _hideKeyboard();
       // 달력 화면 갱신
-      ref.read(calendarProvider.notifier).refresh(_selectedDate);
+      refresh();
       Navigator.pop(context);
     } finally {
       setState(() {

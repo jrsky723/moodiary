@@ -1279,6 +1279,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure you want to delete your diary?`
+  String get deleteDiaryMessage {
+    return Intl.message(
+      'Are you sure you want to delete your diary?',
+      name: 'deleteDiaryMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Diary`
+  String get deleteDiary {
+    return Intl.message(
+      'Delete Diary',
+      name: 'deleteDiary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diary has been successfully deleted`
+  String get deleteDiarySuccessMessage {
+    return Intl.message(
+      'Diary has been successfully deleted',
+      name: 'deleteDiarySuccessMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while deleting the diary`
+  String get deleteDiaryErrorMessage {
+    return Intl.message(
+      'An error occurred while deleting the diary',
+      name: 'deleteDiaryErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

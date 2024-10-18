@@ -166,5 +166,9 @@
   "submit": "저장",
   "enterYourDiaryContent": "일기 내용을 입력해주세요",
   "pleaseEnterSomeContent": "내용을 입력해주세요",
-  "noImagesAvailable": "이미지가 없습니다"
+  "noImagesAvailable": "이미지가 없습니다",
+  "deleteDiaryMessage": "정말 지우시겠습니까?",
+  "deleteDiary": "일기 삭제",
+  "deleteDiarySuccessMessage": "다이어리가 성공적으로 삭제되었습니다",
+  "deleteDiaryErrorMessage": "다이어리 삭제 중 오류가 발생했습니다"
 }

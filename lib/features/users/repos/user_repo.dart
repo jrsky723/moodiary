@@ -18,6 +18,12 @@ class UserRepository {
     return doc.data();
   }
 
+  // TODO:   delete 테스트 해보기
+  //  users 뿐만 아니라 community에 있는 것들도 지워야되는데 diaryId를 가져와서 지워야되나?
+  Future<void> deleteProfile(String uid) async {
+    await _db.collection('users').doc(uid).delete();
+  }
+
   Future<void> uploadAvatar({
     required File file,
     required String filename,
@@ -27,9 +33,23 @@ class UserRepository {
     await ref.putFile(file);
   }
 
-  Future<void> updateUser(
-      {required String uid, required Map<String, dynamic> data}) async {
+  Future<void> updateUser({
+    required String uid,
+    required Map<String, dynamic> data,
+  }) async {
     await _db.collection('users').doc(uid).update(data);
+  }
+
+  Future<void> updateCommunityOwnerByDiaryIds({
+    required Map<String, dynamic> profile,
+    required QuerySnapshot<Map<String, dynamic>> diaries,
+  }) async {
+    final batch = _db.batch();
+    for (final doc in diaries.docs) {
+      final diaryDocRef = _db.collection('community').doc(doc.id);
+
+      batch.update(diaryDocRef, {'owner': profile});
+    }
   }
 }
 
