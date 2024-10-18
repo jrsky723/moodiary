@@ -6,11 +6,8 @@ import 'package:moodiary/features/authentication/view_models/signup_view_model.d
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
   late final DiaryRepository _diaryRepo;
   late final UserRepository _userRepo;
   late final AuthenticationRepository _authRepo;
@@ -44,6 +41,14 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     return profile;
   }
 
+  //  TODO : deleteProfile 테스트 해보기
+
+  Future<void> deleteProfile() async {
+    final user = ref.read(authRepo).user;
+    final uid = user!.uid;
+    await _userRepo.deleteProfile(uid);
+  }
+
   Future<void> onAvatarUpload() async {
     if (state.value == null) return;
     state = AsyncValue.data(state.value!.copyWith(hasAvatar: true));
@@ -60,27 +65,19 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
       uid: uid,
       data: profile,
     );
+
+    final diaries = await _diaryRepo.fetchDiariesByUId(uid);
+    await _userRepo.updateCommunityOwnerByDiaryIds(
+      profile: profile,
+      diaries: diaries,
+    );
+
     state = AsyncValue.data(state.value!.copyWith(
       username: profile['username'],
       nickname: profile['nickname'],
       bio: profile['bio'],
       hasAvatar: profile['hasAvatar'],
     ));
-  }
-
-  Future<void> updateCommunityOwnerByDiaryId(
-      Map<String, dynamic> profile) async {
-    final user = ref.read(authRepo).user;
-    final uid = user!.uid;
-
-    final diaries = await _diaryRepo.fetchDiariesByUId(uid);
-
-    final batch = _db.batch();
-    for (final doc in diaries.docs) {
-      final diaryDocRef = _db.collection('community').doc(doc.id);
-
-      batch.update(diaryDocRef, {'owner': profile});
-    }
   }
 }
 

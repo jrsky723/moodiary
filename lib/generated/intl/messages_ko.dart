@@ -68,6 +68,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAccount": MessageLookupByLibrary.simpleMessage("계정 삭제"),
         "deleteAccountMessage":
             MessageLookupByLibrary.simpleMessage("정말 계정을 삭제하시겠습니까?"),
+        "deleteDiary": MessageLookupByLibrary.simpleMessage("일기 삭제"),
+        "deleteDiaryErrorMessage":
+            MessageLookupByLibrary.simpleMessage("다이어리 삭제 중 오류가 발생했습니다"),
+        "deleteDiaryMessage":
+            MessageLookupByLibrary.simpleMessage("정말 지우시겠습니까?"),
+        "deleteDiarySuccessMessage":
+            MessageLookupByLibrary.simpleMessage("다이어리가 성공적으로 삭제되었습니다"),
         "delighted": MessageLookupByLibrary.simpleMessage("즐거운"),
         "diary": MessageLookupByLibrary.simpleMessage("일기"),
         "diaryContent": MessageLookupByLibrary.simpleMessage("일기 내용"),

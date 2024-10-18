@@ -166,5 +166,9 @@
   "submit": "Submit",
   "enterYourDiaryContent": "Enter your diary content",
   "pleaseEnterSomeContent": "Please enter some content",
-  "noImagesAvailable": "No images available"
+  "noImagesAvailable": "No images available",
+  "deleteDiaryMessage": "Are you sure you want to delete your diary?",
+  "deleteDiary": "Delete Diary",
+  "deleteDiarySuccessMessage": "Diary has been successfully deleted",
+  "deleteDiaryErrorMessage": "An error occurred while deleting the diary"
 }
