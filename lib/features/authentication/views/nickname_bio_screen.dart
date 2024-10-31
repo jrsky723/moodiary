@@ -34,7 +34,7 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
       "nickname": _nickname,
       "bio": _bio,
     };
-    await ref.read(usersProvider.notifier).createProfile();
+    await ref.read(userProfileProvider.notifier).createProfile();
     context.go('/${MainNavigationScreen.initialTab}');
   }
 

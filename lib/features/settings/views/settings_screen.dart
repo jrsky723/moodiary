@@ -48,7 +48,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _onDelete() {
-    ref.read(usersProvider.notifier).deleteProfile();
+    ref.read(userProfileProvider.notifier).deleteProfile();
     context.go(SignUpScreen.routeUrl);
   }
 

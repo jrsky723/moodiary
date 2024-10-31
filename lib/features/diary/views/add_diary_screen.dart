@@ -17,7 +17,7 @@ import 'package:moodiary/features/diary/views/widgets/add_diary/diary_container.
 import 'package:moodiary/features/diary/views/widgets/add_diary/diary_text_widget.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/form_action_button.dart';
 import 'package:moodiary/features/diary/views/widgets/add_diary/image_picker_button.dart';
-import 'package:moodiary/features/users/view_models/user_posts.dart';
+import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
