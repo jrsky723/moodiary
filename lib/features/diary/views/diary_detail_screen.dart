@@ -12,7 +12,7 @@ import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/text_page_view.dart.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/word_cloud_card.dart';
-import 'package:moodiary/features/users/view_models/user_posts.dart';
+import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
