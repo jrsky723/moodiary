@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,7 +52,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
 
       File imageFile = File(pickedFile.path);
       // 이미지 업로드
-      await ref.read(avatarProvider.notifier).uploadAvatar(imageFile);
+      ref.read(avatarProvider.notifier).uploadAvatar(imageFile);
       // 이미지 업로드 성공 시 hasAvatar를 true로 설정
       setState(() {
         state.didChange(true); // FormField의 값 변경
@@ -118,9 +119,6 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
         ref.read(userProfileProvider.notifier).updateUserProfile(_formData);
-        ref
-            .read(userProfileProvider.notifier)
-            .updateCommunityOwnerByDiaryId(_formData);
         context.pop();
       }
     }
@@ -128,9 +126,11 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String avatarUrl =
-        "https://firebasestorage.googleapis.com/v0/b/moodiary-b37ca.appspot.com/o/avatars%2F${_userProfile.uid}?alt=media&test=${DateTime.now().millisecondsSinceEpoch}";
-    print(avatarUrl);
+    final avatarUrl = dotenv.env['AVATAR_URL']!
+        .replaceAll('{uid}', _userProfile.uid)
+        .replaceAll(
+            '{timestamp}', DateTime.now().millisecondsSinceEpoch.toString());
+    final isLoading = ref.watch(avatarProvider).isLoading;
 
     return Scaffold(
       appBar: AppBar(
@@ -154,10 +154,13 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                       children: [
                         CircleAvatar(
                           radius: 75,
-                          backgroundImage:
-                              hasAvatar ? NetworkImage(avatarUrl) : null,
+                          foregroundImage: hasAvatar
+                              ? NetworkImage(
+                                  avatarUrl,
+                                )
+                              : null,
                           child: Text(
-                            hasAvatar ? "" : _userProfile.nickname[0],
+                            hasAvatar ? "" : _userProfile.username[0],
                             style: const TextStyle(fontSize: Sizes.size44),
                           ),
                         ),
@@ -238,7 +241,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
             Gaps.v16,
             // 저장 버튼
             ElevatedButton(
-              onPressed: onSubmitTap,
+              onPressed: isLoading ? null : onSubmitTap,
               child: Text(S.of(context).save),
             ),
           ],

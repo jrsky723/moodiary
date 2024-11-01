@@ -20,7 +20,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(days) => "Only ${days} of Mood data are displayed.";
+  static String m0(days) => "Only ${days} of Mood data are displayed";
 
   static String m1(value) => "${value}D";
 
@@ -31,12 +31,18 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m4(hours, minutes) =>
       "Sleep Duration : ${hours} hours ${minutes} minutes";
 
+  static String m5(username) => "What is your email and password, ${username}?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "OneImageMustBeKept": MessageLookupByLibrary.simpleMessage(
+            "At least one image must be kept"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "activeness": MessageLookupByLibrary.simpleMessage("activeness"),
         "alarmed": MessageLookupByLibrary.simpleMessage("Alarmed"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
+        "appDiscription":
+            MessageLookupByLibrary.simpleMessage("Emotion Analysis Diary App"),
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
         "bio": MessageLookupByLibrary.simpleMessage("Bio"),
         "bored": MessageLookupByLibrary.simpleMessage("Bored"),
@@ -54,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "completeBtn": MessageLookupByLibrary.simpleMessage("Complete"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "content": MessageLookupByLibrary.simpleMessage("Content"),
+        "createProfile": MessageLookupByLibrary.simpleMessage("Create Profile"),
         "darkModeSubtitle":
             MessageLookupByLibrary.simpleMessage("Change to dark mode"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("Dark mode"),
@@ -64,11 +71,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteAccountMessage": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete your account?"),
+        "deleteDiary": MessageLookupByLibrary.simpleMessage("Delete Diary"),
+        "deleteDiaryErrorMessage": MessageLookupByLibrary.simpleMessage(
+            "An error occurred while deleting the diary"),
+        "deleteDiaryMessage": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete your diary?"),
+        "deleteDiarySuccessMessage": MessageLookupByLibrary.simpleMessage(
+            "Diary has been successfully deleted"),
         "delighted": MessageLookupByLibrary.simpleMessage("Delighted"),
         "diary": MessageLookupByLibrary.simpleMessage("Diary"),
+        "diaryContent": MessageLookupByLibrary.simpleMessage("Diary Content"),
         "diarySearchHint": MessageLookupByLibrary.simpleMessage("Diary Search"),
         "distressed": MessageLookupByLibrary.simpleMessage("Distressed"),
+        "doYouHaveAccount": MessageLookupByLibrary.simpleMessage(
+            "Don\'t have an account yet?  "),
+        "doYouHaveAnAccountAlready":
+            MessageLookupByLibrary.simpleMessage("Already have an account?  "),
+        "editDiary": MessageLookupByLibrary.simpleMessage("Edit Diary"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailAndPasswordAreNotValid": MessageLookupByLibrary.simpleMessage(
+            "Email and Password are not valid"),
+        "emailNotValid":
+            MessageLookupByLibrary.simpleMessage("Email is not valid"),
         "emotion": MessageLookupByLibrary.simpleMessage("Emotion"),
         "englishModeSubtitle": MessageLookupByLibrary.simpleMessage(
             "Change the language to English"),
@@ -76,13 +101,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("English Mode"),
         "enterContentPrompt":
             MessageLookupByLibrary.simpleMessage("Enter your content here"),
+        "enterYourDiaryContent":
+            MessageLookupByLibrary.simpleMessage("Enter your diary content"),
         "excited": MessageLookupByLibrary.simpleMessage("Excited"),
+        "fetchDataError": MessageLookupByLibrary.simpleMessage(
+            "An error occurred while fetching data"),
         "glad": MessageLookupByLibrary.simpleMessage("Glad"),
         "gloomy": MessageLookupByLibrary.simpleMessage("Gloomy"),
+        "gotoLogin": MessageLookupByLibrary.simpleMessage("goto Login"),
+        "gotoSignUp": MessageLookupByLibrary.simpleMessage("goto Sign Up"),
         "happiness": MessageLookupByLibrary.simpleMessage("happiness"),
         "hour": MessageLookupByLibrary.simpleMessage("h"),
         "howWasYourDay":
             MessageLookupByLibrary.simpleMessage("How was your day?"),
+        "images": MessageLookupByLibrary.simpleMessage("Images"),
         "login": MessageLookupByLibrary.simpleMessage("login"),
         "minute": MessageLookupByLibrary.simpleMessage("m"),
         "miserable": MessageLookupByLibrary.simpleMessage("Miserable"),
@@ -95,7 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Month"),
         "moodAnalysis": MessageLookupByLibrary.simpleMessage("Mood Analysis"),
         "moodAnalysisExplanation":
-            MessageLookupByLibrary.simpleMessage("Today\'s mood analysis."),
+            MessageLookupByLibrary.simpleMessage("Today\'s mood analysis"),
         "moodCloud": MessageLookupByLibrary.simpleMessage("Mood Cloud"),
         "moodDistribution":
             MessageLookupByLibrary.simpleMessage("Mood Distribution"),
@@ -103,11 +135,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "negative": MessageLookupByLibrary.simpleMessage("Negative"),
         "neutral": MessageLookupByLibrary.simpleMessage("Neutral"),
         "nextBtn": MessageLookupByLibrary.simpleMessage("next"),
+        "nickBioDiscription": MessageLookupByLibrary.simpleMessage(
+            "You can always change this later"),
         "nickname": MessageLookupByLibrary.simpleMessage("Nickname"),
+        "nicknameValidError": MessageLookupByLibrary.simpleMessage(
+            "Nickname have to be at least 3 characters"),
+        "noData": MessageLookupByLibrary.simpleMessage("No Data"),
+        "noImagesAvailable":
+            MessageLookupByLibrary.simpleMessage("No images available"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "pleaseEnterName":
-            MessageLookupByLibrary.simpleMessage("Please enter your name."),
+            MessageLookupByLibrary.simpleMessage("Please enter your name"),
+        "pleaseEnterSomeContent":
+            MessageLookupByLibrary.simpleMessage("Please enter some content"),
+        "pleaseWriteDiaryOrAddPhoto": MessageLookupByLibrary.simpleMessage(
+            "Please write a diary or add a photo at least"),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
         "pwdlengtherror":
             MessageLookupByLibrary.simpleMessage("8 to 20 characters"),
@@ -122,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reset to default profile"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
+        "seeMore": MessageLookupByLibrary.simpleMessage("see More"),
         "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
         "selectFromGallery":
             MessageLookupByLibrary.simpleMessage("Select from gallery"),
@@ -140,8 +185,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "sleepDuration": m4,
         "sleepiness": MessageLookupByLibrary.simpleMessage("sleepiness"),
         "sleepy": MessageLookupByLibrary.simpleMessage("Sleepy"),
+        "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "takePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
         "tense": MessageLookupByLibrary.simpleMessage("Tense"),
+        "textSave": MessageLookupByLibrary.simpleMessage("text save"),
+        "thisIsFutureDiary":
+            MessageLookupByLibrary.simpleMessage("This is a Future Diary"),
         "tired": MessageLookupByLibrary.simpleMessage("Tired"),
         "todaysPhoto": MessageLookupByLibrary.simpleMessage("Today\'s Photo"),
         "unhappiness": MessageLookupByLibrary.simpleMessage("unhappiness"),
@@ -149,7 +198,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "upset": MessageLookupByLibrary.simpleMessage("Upset"),
         "userName": MessageLookupByLibrary.simpleMessage("User Name"),
         "userNameMinError": MessageLookupByLibrary.simpleMessage(
-            "User name must be at least 2 characters."),
+            "User name must be at least 2 characters"),
+        "usernameDiscription": MessageLookupByLibrary.simpleMessage(
+            "You do not change this later"),
+        "usernameTitle": m5,
         "wakeUpTime": MessageLookupByLibrary.simpleMessage("wake up time"),
         "yearlyDateSelectTitle":
             MessageLookupByLibrary.simpleMessage("Select Year"),

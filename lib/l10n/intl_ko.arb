@@ -7,7 +7,7 @@
   "darkModeTitle": "다크 모드",
   "darkModeSubtitle": "어두운 모드로 전환",
   "englishModeTitle": "영어 모드",
-  "englishModeSubtitle": "언어를 영어로 전환합니다.",
+  "englishModeSubtitle": "언어를 영어로 전환합니다",
   "diarySearchHint": "다이어리 검색",
   "monthlyTab": "월간",
   "yearlyTab": "연간",
@@ -67,7 +67,7 @@
   "selectMonthDay": "월 및 일 선택",
   "communityTitle": "이야기",
   "moodAnalysis": "감정 분석",
-  "moodAnalysisExplanation": "오늘의 감정을 분석한 결과입니다.",
+  "moodAnalysisExplanation": "오늘의 감정을 분석한 결과입니다",
   "happiness": "행복",
   "unhappiness": "불행",
   "activeness": "활발",
@@ -79,7 +79,7 @@
   "negative": "부정",
   "active": "활동",
   "passive": "수동",
-  "dashboardDescription": "전체 중 {days}개의 감정정보만 표시됩니다.",
+  "dashboardDescription": "전체 중 {days}개의 감정정보만 표시됩니다",
   "@dashboardDescription": {
     "variables": {
       "days": {
@@ -99,7 +99,7 @@
   },
   "editProfile": "프로필 수정",
   "userName": "사용자 이름",
-  "userNameMinError": "사용자 이름은 2자 이상이어야 합니다.",
+  "userNameMinError": "사용자 이름은 2자 이상이어야 합니다",
   "nickname": "닉네임",
   "takePhoto": "사진 촬영",
   "selectFromGallery": "갤러리에서 선택",
@@ -129,9 +129,48 @@
   "completeBtn": "완료",
   "login": "로그인",
   "signOut": "로그아웃",
-  "cantAccessFutureDiary": "미래의 일기는 접근할 수 없습니다.",
+  "cantAccessFutureDiary": "미래의 일기는 접근할 수 없습니다",
   "deleteAccount": "계정 삭제",
   "deleteAccountMessage": "정말 계정을 삭제하시겠습니까?",
   "cancel": "취소",
-  "delete": "삭제"
+  "delete": "삭제",
+  "createProfile": "프로필 생성",
+  "email": "이메일",
+  "password": "비밀번호",
+  "usernameTitle": "{username}님 당신의 메일과 비밀번호를 작성해주세요",
+  "@usernameTitle": {
+    "variables": {
+      "username": {
+        "type": "string"
+      }
+    }
+  },
+  "appDiscription": "감정 분석 일기앱",
+  "doYouHaveAccount": "이미 계정이 없으신가요?  ",
+  "gotoSignUp": "회원가입하기",
+  "nickBioDiscription": "나중에 변경할 수 있습니다",
+  "nicknameValidError": "닉네임은 3자 이상이어야 합니다",
+  "doYouHaveAnAccountAlready": "이미 계정이 있으신가요?  ",
+  "gotoLogin": "로그인하기",
+  "usernameDiscription": "나중에 변경할 수 없습니다",
+  "seeMore": "더보기",
+  "noData": "데이터가 없습니다.",
+  "thisIsFutureDiary": "미래날짜입니다.",
+  "fetchDataError": "데이터를 가져오는 중 오류가 발생했습니다",
+  "pleaseWriteDiaryOrAddPhoto": "일기를 작성하거나 사진을 추가해주세요",
+  "textSave": "저장",
+  "OneImageMustBeKept": "최소 하나의 이미지를 유지해야 합니다",
+  "editDiary": "일기 수정",
+  "diaryContent": "일기 내용",
+  "images": "이미지",
+  "submit": "저장",
+  "enterYourDiaryContent": "일기 내용을 입력해주세요",
+  "pleaseEnterSomeContent": "내용을 입력해주세요",
+  "noImagesAvailable": "이미지가 없습니다",
+  "deleteDiaryMessage": "정말 지우시겠습니까?",
+  "deleteDiary": "일기 삭제",
+  "deleteDiarySuccessMessage": "다이어리가 성공적으로 삭제되었습니다",
+  "deleteDiaryErrorMessage": "다이어리 삭제 중 오류가 발생했습니다",
+  "emailNotValid": "이메일 형태가 아닙니다",
+  "emailAndPasswordAreNotValid": "이메일과 비밀번호가 유효하지 않습니다"
 }

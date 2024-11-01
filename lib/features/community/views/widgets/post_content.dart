@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
 class PostContent extends StatefulWidget {
@@ -95,7 +96,7 @@ class _PostContentState extends State<PostContent> {
                       });
                     },
                     child: Text(
-                      '더보기',
+                      S.of(context).seeMore,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,

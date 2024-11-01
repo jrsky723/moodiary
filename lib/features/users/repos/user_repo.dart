@@ -18,18 +18,37 @@ class UserRepository {
     return doc.data();
   }
 
+  Future<void> deleteProfile(String uid) async {
+    await _db.collection('users').doc(uid).delete();
+    await _storage.ref().child('avatars/$uid').delete();
+  }
+
   Future<void> uploadAvatar({
     required File file,
     required String filename,
   }) async {
-    String baseUrl = 'avatars/$filename';
-    final ref = _storage.ref().child(baseUrl);
+    String avatarUrl = 'avatars/$filename';
+    final ref = _storage.ref().child(avatarUrl);
     await ref.putFile(file);
   }
 
-  Future<void> updateUser(
-      {required String uid, required Map<String, dynamic> user}) async {
-    await _db.collection('users').doc(uid).update(user);
+  Future<void> updateUser({
+    required String uid,
+    required Map<String, dynamic> data,
+  }) async {
+    await _db.collection('users').doc(uid).update(data);
+  }
+
+  Future<void> updateCommunityOwnerByDiaryIds({
+    required Map<String, dynamic> profile,
+    required QuerySnapshot<Map<String, dynamic>> diaries,
+  }) async {
+    final batch = _db.batch();
+    for (final doc in diaries.docs) {
+      final diaryDocRef = _db.collection('community').doc(doc.id);
+
+      batch.update(diaryDocRef, {'owner': profile});
+    }
   }
 }
 

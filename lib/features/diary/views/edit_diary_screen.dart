@@ -4,6 +4,7 @@ import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
+import 'package:moodiary/generated/l10n.dart';
 
 class EditDiaryScreen extends ConsumerStatefulWidget {
   final String diaryId;
@@ -55,9 +56,9 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
     } else {
       if (_isSnackBarVisible) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('At least one image must be kept'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(S.of(context).OneImageMustBeKept),
+          duration: const Duration(seconds: 2),
         ),
       );
       _isSnackBarVisible = true;
@@ -77,7 +78,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit Diary"),
+          title: Text(S.of(context).editDiary),
         ),
         body: ref.watch(diaryProvider(widget.diaryId)).when(
               data: (diary) {
@@ -92,7 +93,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                       children: [
                         Gaps.v20,
                         Text(
-                          "Diary Content",
+                          S.of(context).diaryContent,
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         Gaps.v12,
@@ -101,7 +102,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                         ),
                         Gaps.v32,
                         Text(
-                          "Images",
+                          S.of(context).images,
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         Gaps.v20,
@@ -112,7 +113,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                         ElevatedButton(
                           onPressed: () => _onSubmitTap(diary),
                           child: Text(
-                            "Submit",
+                            S.of(context).save,
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                             ),
@@ -151,7 +152,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
         initialValue: content,
         maxLines: 5,
         decoration: InputDecoration(
-          hintText: "Enter your diary content",
+          hintText: S.of(context).enterYourDiaryContent,
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               color: Theme.of(context).primaryColor,
@@ -165,7 +166,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter some content';
+            return S.of(context).pleaseEnterSomeContent;
           }
           return null;
         },
@@ -178,7 +179,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
     required List<String> imageUrls,
   }) {
     if (imageUrls.isEmpty) {
-      return const Text('No images available');
+      return Text(S.of(context).noImagesAvailable);
     }
     const sectionHeight = 120.0;
     return SizedBox(

@@ -67,7 +67,7 @@
   "selectMonthDay": "Select Month & Day",
   "communityTitle": "Community",
   "moodAnalysis": "Mood Analysis",
-  "moodAnalysisExplanation": "Today's mood analysis.",
+  "moodAnalysisExplanation": "Today's mood analysis",
   "happiness": "happiness",
   "unhappiness": "unhappiness",
   "activeness": "activeness",
@@ -79,7 +79,7 @@
   "negative": "Negative",
   "active": "Active",
   "passive": "Passive",
-  "dashboardDescription": "Only {days} of Mood data are displayed.",
+  "dashboardDescription": "Only {days} of Mood data are displayed",
   "@dashboardDescription": {
     "variables": {
       "days": {
@@ -99,12 +99,12 @@
   },
   "editProfile": "Edit Profile",
   "userName": "User Name",
-  "userNameMinError": "User name must be at least 2 characters.",
+  "userNameMinError": "User name must be at least 2 characters",
   "nickname": "Nickname",
   "takePhoto": "Take a photo",
   "selectFromGallery": "Select from gallery",
   "resetToDefaultProfile": "Reset to default profile",
-  "pleaseEnterName": "Please enter your name.",
+  "pleaseEnterName": "Please enter your name",
   "bio": "Bio",
   "save": "Save",
   "selectDate": "Select a Date",
@@ -133,5 +133,44 @@
   "deleteAccount": "Delete Account",
   "deleteAccountMessage": "Are you sure you want to delete your account?",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "createProfile": "Create Profile",
+  "email": "Email",
+  "password": "Password",
+  "usernameTitle": "What is your email and password, {username}?",
+  "@usernameTitle": {
+    "variables": {
+      "username": {
+        "type": "string"
+      }
+    }
+  },
+  "appDiscription": "Emotion Analysis Diary App",
+  "doYouHaveAccount": "Don't have an account yet?  ",
+  "gotoSignUp": "goto Sign Up",
+  "nickBioDiscription": "You can always change this later",
+  "nicknameValidError": "Nickname have to be at least 3 characters",
+  "doYouHaveAnAccountAlready": "Already have an account?  ",
+  "gotoLogin": "goto Login",
+  "usernameDiscription": "You do not change this later",
+  "seeMore": "see More",
+  "noData": "No Data",
+  "thisIsFutureDiary": "This is a Future Diary",
+  "fetchDataError": "An error occurred while fetching data",
+  "pleaseWriteDiaryOrAddPhoto": "Please write a diary or add a photo at least",
+  "textSave": "text save",
+  "OneImageMustBeKept": "At least one image must be kept",
+  "editDiary": "Edit Diary",
+  "diaryContent": "Diary Content",
+  "images": "Images",
+  "submit": "Submit",
+  "enterYourDiaryContent": "Enter your diary content",
+  "pleaseEnterSomeContent": "Please enter some content",
+  "noImagesAvailable": "No images available",
+  "deleteDiaryMessage": "Are you sure you want to delete your diary?",
+  "deleteDiary": "Delete Diary",
+  "deleteDiarySuccessMessage": "Diary has been successfully deleted",
+  "deleteDiaryErrorMessage": "An error occurred while deleting the diary",
+  "emailNotValid": "Email is not valid",
+  "emailAndPasswordAreNotValid": "Email and Password are not valid"
 }
