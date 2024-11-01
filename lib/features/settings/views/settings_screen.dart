@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
 import 'package:moodiary/features/settings/view_models/settings_view_model.dart';
+import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -37,15 +38,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: Text(S.of(context).cancel),
             ),
             TextButton(
-              onPressed: () {
-                // todo: 탈퇴 로직
-              },
+              onPressed: _onDelete,
               child: Text(S.of(context).delete),
             ),
           ],
         );
       },
     );
+  }
+
+  void _onDelete() {
+    ref.read(userProfileProvider.notifier).deleteProfile();
+    context.go(SignUpScreen.routeUrl);
   }
 
   @override

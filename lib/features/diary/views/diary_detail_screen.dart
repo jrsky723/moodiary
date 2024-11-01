@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
+import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
+import 'package:moodiary/features/community/view_models/community_post_view_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
 import 'package:moodiary/features/diary/views/edit_diary_screen.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/insight_pages.dart';
@@ -10,6 +12,8 @@ import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/text_page_view.dart.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/word_cloud_card.dart';
+import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
 class DiaryDetailScreen extends ConsumerStatefulWidget {
@@ -38,7 +42,65 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     );
   }
 
-  void _onDelete() {}
+  void refresh() {
+    ref.read(calendarProvider.notifier).refresh(widget.date);
+    ref.read(userPostsProvider.notifier).refresh();
+    ref.read(communityPostProvider.notifier).refresh();
+  }
+
+  void _onDeletePressed() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(S.of(context).deleteDiary),
+          content: Text(S.of(context).deleteDiaryMessage),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(S.of(context).cancel),
+            ),
+            TextButton(
+              onPressed: _onDelete,
+              child: Text(S.of(context).delete),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _onDelete() async {
+    try {
+      await ref
+          .read(diaryProvider(widget.diaryId).notifier)
+          .deleteDiary(widget.diaryId);
+
+      // 삭제 성공 메시지 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).deleteDiarySuccessMessage),
+        ),
+      );
+      //  캘린더 refresh
+      refresh();
+
+      // AlertDialog 닫기
+      Navigator.pop(context);
+
+      // 다이어리 상세 화면 닫기
+      Navigator.pop(context);
+    } catch (e) {
+      // 삭제 실패 시 에러 메시지 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).deleteDiaryErrorMessage),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +120,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: _onDelete,
+            onPressed: _onDeletePressed,
           ),
         ],
         surfaceTintColor: Colors.transparent,

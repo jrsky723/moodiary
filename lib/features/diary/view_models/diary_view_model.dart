@@ -7,7 +7,6 @@ import 'package:moodiary/features/diary/repos/diary_repo.dart';
 class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
   late final DiaryRepository _repo;
   late DiaryModel _diary;
-
   @override
   FutureOr<DiaryModel> build(String arg) async {
     _repo = ref.read(diaryRepo);
@@ -57,6 +56,16 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
       imageUrls: imageUrls,
     );
     state = AsyncValue.data(_diary);
+  }
+
+  Future<void> deleteDiary(String diaryId) async {
+    state = const AsyncValue.loading();
+    final uid = ref.read(authRepo).user!.uid;
+
+    List<String> diaryIds = [diaryId];
+
+    await _repo.deleteUserDiariesByDiaryIds(uid, diaryIds);
+    await _repo.deleteCommunityDiariesByDiaryIds(diaryIds);
   }
 }
 
