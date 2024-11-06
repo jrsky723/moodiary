@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
@@ -30,7 +31,8 @@ class UserPostsViewModel extends AutoDisposeAsyncNotifier<List<CommunityPost>> {
   }
 
   Future<List<CommunityPost>> _fetchUserPosts(String uid) async {
-    final diariesData = await _diaryRepo.fetchDiariesByUId(uid);
+    final diariesData = await _diaryRepo.fetchDiariesByUid(uid);
+
     final diaries = diariesData.docs.map(
       (doc) {
         final diary = DiaryModel.fromJson(json: doc.data());

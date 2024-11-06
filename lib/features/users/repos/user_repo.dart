@@ -15,8 +15,9 @@ class UserRepository {
   final apiBaseUrl = '${dotenv.env['API_BASE_URL']!}/client';
 
   Future<void> createProfile(UserProfileModel profile) async {
-    String url = '$apiBaseUrl/create-user';
+    String url = '$apiBaseUrl/create-profile';
     try {
+      log("createProfile: ${profile.toJson()}");
       final response = await http.post(
         Uri.parse(url),
         headers: {
@@ -24,7 +25,7 @@ class UserRepository {
         },
         body: jsonEncode(profile.toJson()),
       );
-      log(response.body);
+      log("createProfile: ${response.body}");
       if (response.statusCode != 200) {
         throw Exception('Failed to create user');
       }
@@ -67,11 +68,11 @@ class UserRepository {
     await ref.putFile(file);
   }
 
-  Future<void> updateUser({
+  Future<void> updateProfile({
     required String uid,
     required Map<String, dynamic> data,
   }) async {
-    String url = '$apiBaseUrl/update-user';
+    String url = '$apiBaseUrl/update-profile';
     try {
       final response = await http.put(
         Uri.parse(url),

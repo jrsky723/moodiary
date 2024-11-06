@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
@@ -17,7 +18,6 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     _diaryRepo = ref.read(diaryRepo);
     _userRepo = ref.read(userRepo);
     _authRepo = ref.read(authRepo);
-
     if (_authRepo.isLoggedIn) {
       final profile = await _userRepo.findProfile(_authRepo.user!.uid);
       if (profile != null) {
@@ -49,7 +49,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
 
     await _authRepo.deleteAccount();
 
-    final diaries = await _diaryRepo.fetchDiariesByUId(uid);
+    final diaries = await _diaryRepo.fetchDiariesByUid(uid);
 
     List<String> diaryIds =
         diaries.docs.map((diary) => diary['diaryId'] as String).toList();
@@ -64,7 +64,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     if (state.value == null) return;
     state = AsyncValue.data(state.value!.copyWith(hasAvatar: true));
     final uid = state.value!.uid;
-    await _userRepo.updateUser(uid: uid, data: {'hasAvatar': true});
+    await _userRepo.updateProfile(uid: uid, data: {'hasAvatar': true});
   }
 
   Future<void> updateUserProfile(Map<String, dynamic> profile) async {
@@ -72,12 +72,12 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     final user = ref.read(authRepo).user;
     final uid = user!.uid;
     state = const AsyncValue.loading();
-    await _userRepo.updateUser(
+    await _userRepo.updateProfile(
       uid: uid,
       data: profile,
     );
 
-    final diaries = await _diaryRepo.fetchDiariesByUId(uid);
+    final diaries = await _diaryRepo.fetchDiariesByUid(uid);
     await _userRepo.updateCommunityOwnerByDiaryIds(
       profile: profile,
       diaries: diaries,

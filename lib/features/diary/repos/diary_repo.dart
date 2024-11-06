@@ -139,7 +139,7 @@ class DiaryRepository {
     await batch.commit();
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUId(String uid) {
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUid(String uid) {
     final query = _db.collection('users').doc(uid).collection('diaries');
     return query.get();
   }
