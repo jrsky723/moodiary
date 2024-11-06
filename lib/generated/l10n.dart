@@ -1339,6 +1339,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Create Username`
+  String get createUsername {
+    return Intl.message(
+      'Create Username',
+      name: 'createUsername',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

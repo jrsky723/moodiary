@@ -17,7 +17,7 @@ class SignUpScreen extends ConsumerWidget {
 
   const SignUpScreen({super.key});
 
-  final String imagePath = 'assets/images/signup_title_img.png';
+  final String imagePath = 'assets/images/main.png';
 
   void _onLoginTap(BuildContext context) {
     context.pushNamed(LogInScreen.routeName);

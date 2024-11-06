@@ -77,7 +77,8 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
         ),
         Gaps.v20,
         FormButton(
-          disabled: _isButtonDisabled,
+          disabled:
+              _isButtonDisabled || ref.watch(userProfileProvider).isLoading,
           onTap: _onNextTap,
           text: S.of(context).completeBtn,
         ),
