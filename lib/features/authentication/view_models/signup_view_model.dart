@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,25 @@ class SignUpViewModel extends AsyncNotifier<void> {
     _authRepo = ref.read(authRepo);
   }
 
+  Future<bool> checkUsername(BuildContext context, String username) async {
+    state = const AsyncValue.loading();
+
+    state = await AsyncValue.guard(
+      () async {
+        final exists = await _authRepo.checkUsername(username);
+
+        if (exists) {
+          throw Exception('Username already exists');
+        }
+      },
+    );
+    if (state.hasError) {
+      showFirebaseErrorSnack(context, state.error);
+      return false;
+    }
+    return true;
+  }
+
   Future<void> signUp(BuildContext context) async {
     state = const AsyncValue.loading();
 
@@ -22,10 +42,10 @@ class SignUpViewModel extends AsyncNotifier<void> {
     state = await AsyncValue.guard(
       () async {
         final user = await _authRepo.emailSignUp(
+          form["username"],
           form["email"],
           form["password"],
         );
-
         form["uid"] = user.user!.uid;
       },
     );

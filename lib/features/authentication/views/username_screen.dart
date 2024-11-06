@@ -39,8 +39,12 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
     super.dispose();
   }
 
-  void _onNextTap() {
+  void _onNextTap() async {
     if (_isButtonDisabled) return;
+    final isValid = await ref
+        .read(signUpProvider.notifier)
+        .checkUsername(context, _username);
+    if (!isValid) return;
     ref.read(signUpForm.notifier).state = {"username": _username};
     Navigator.of(context).push(
       MaterialPageRoute(

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
@@ -23,6 +22,9 @@ class AvatarViewModel extends AsyncNotifier<void> {
         ref.read(userProfileProvider.notifier).onAvatarUpload();
       },
     );
+    if (state.hasError) {
+      throw state.error!;
+    }
   }
 }
 
