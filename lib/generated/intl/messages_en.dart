@@ -61,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "content": MessageLookupByLibrary.simpleMessage("Content"),
         "createProfile": MessageLookupByLibrary.simpleMessage("Create Profile"),
+        "createUsername":
+            MessageLookupByLibrary.simpleMessage("Create Username"),
         "darkModeSubtitle":
             MessageLookupByLibrary.simpleMessage("Change to dark mode"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("Dark mode"),

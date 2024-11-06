@@ -172,5 +172,6 @@
   "deleteDiarySuccessMessage": "다이어리가 성공적으로 삭제되었습니다",
   "deleteDiaryErrorMessage": "다이어리 삭제 중 오류가 발생했습니다",
   "emailNotValid": "이메일 형태가 아닙니다",
-  "emailAndPasswordAreNotValid": "이메일과 비밀번호가 유효하지 않습니다"
+  "emailAndPasswordAreNotValid": "이메일과 비밀번호가 유효하지 않습니다",
+  "createUsername": "사용자 이름 생성"
 }

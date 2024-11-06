@@ -14,7 +14,7 @@ class LogInScreen extends ConsumerWidget {
   static const String routeName = 'login';
   static const String routeUrl = '/login';
 
-  final String imagePath = 'assets/images/login_title_img.png';
+  final String imagePath = 'assets/images/main.png';
 
   const LogInScreen({super.key});
 

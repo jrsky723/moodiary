@@ -57,7 +57,7 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
   Widget build(BuildContext context) {
     return CommonFormScreen(
       appBarTitle: S.of(context).signUp,
-      title: S.of(context).createProfile,
+      title: S.of(context).createUsername,
       description: S.of(context).usernameDiscription,
       children: [
         CommonInputField(

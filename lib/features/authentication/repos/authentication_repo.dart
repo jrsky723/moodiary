@@ -17,7 +17,9 @@ class AuthenticationRepository {
 
   Future<bool> checkUsername(String username) async {
     String url = '$baseUrl/check-username?username=$username';
+
     final response = await http.get(Uri.parse(url));
+
     if (response.statusCode != 200) {
       log('Failed to check username');
       throw Exception('Failed to check username');

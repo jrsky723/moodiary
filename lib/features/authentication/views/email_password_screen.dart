@@ -42,11 +42,10 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
 
   //  pwd valid 와 email valid 둘다 체크해서 error message 띄우기
   String? _isValid() {
-    if (_isEmailValid.toString().isNotEmpty ||
-        _isPwdValid.toString().isNotEmpty) {
-      return null;
+    if (_isEmailValid() != null || _isPwdValid() != null) {
+      return S.of(context).emailAndPasswordAreNotValid;
     }
-    return S.of(context).emailAndPasswordAreNotValid;
+    return null;
   }
 
   String? _isEmailValid() {

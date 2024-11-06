@@ -42,7 +42,7 @@ class CalendarEntryWidget extends StatelessWidget {
                     imageUrl: entry.thumbnailUrl!,
                   )
                 : Image.asset(
-                    'assets/images/expressionless.png',
+                    'assets/images/moody.png',
                     fit: BoxFit.cover,
                   ),
           ),
