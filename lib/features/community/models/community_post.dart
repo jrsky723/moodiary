@@ -6,14 +6,14 @@ class CommunityPost {
   final UserProfileModel owner;
   final String content;
   final List<String> imageUrls;
-  final int createdAt;
+  final DateTime createdTime;
 
   const CommunityPost({
     required this.date,
     required this.owner,
     required this.content,
     required this.imageUrls,
-    required this.createdAt,
+    required this.createdTime,
   });
 
   CommunityPost.fromJson({
@@ -25,7 +25,8 @@ class CommunityPost {
         owner = UserProfileModel.fromJson(json['owner']),
         content = json['content'],
         imageUrls = List<String>.from(json['imageUrls']),
-        createdAt = json['createdAt'];
+        createdTime = DateTime.fromMillisecondsSinceEpoch(
+            (json['createdAt'] as Timestamp).millisecondsSinceEpoch);
 
   Map<String, dynamic> toJson() {
     return {
@@ -33,7 +34,7 @@ class CommunityPost {
       'owner': owner.toJson(),
       'content': content,
       'imageUrls': imageUrls,
-      'createdAt': createdAt,
+      'createdTime': createdTime,
     };
   }
 }

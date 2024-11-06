@@ -1,14 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
+import 'package:http/http.dart' as http;
 
 class DiaryRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
+  final String _apiBaseUrl = '${dotenv.env['API_BASE_URL']}/diary';
   String generateDiaryId(String uid) {
     return _db.collection('users').doc(uid).collection('diaries').doc().id;
   }
@@ -41,7 +44,7 @@ class DiaryRepository {
         .collection('users')
         .doc(diary.uid)
         .collection('diaries')
-        .doc(diary.diaryId)
+        .doc(diary.diaryId.toString())
         .set({
       ...diary.toJson(),
     });
@@ -139,9 +142,23 @@ class DiaryRepository {
     await batch.commit();
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUid(String uid) {
-    final query = _db.collection('users').doc(uid).collection('diaries');
-    return query.get();
+  Future<List<Map<String, dynamic>>> fetchDiariesByUid(String uid) async {
+    // final query = _db.collection('users').doc(uid).collection('diaries');
+    // return query.get();
+    String url = '$_apiBaseUrl/fetch-user-diaries';
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'uid': uid,
+      },
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Failed to fetch diaries');
+    }
+    // JSON 배열을 List<Map<String, dynamic>> 타입으로 명시적으로 변환
+    final List<dynamic> data = jsonDecode(response.body);
+    return data.map((item) => item as Map<String, dynamic>).toList();
   }
 
   Future<String> getImageUrl(String url) async {

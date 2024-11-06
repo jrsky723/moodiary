@@ -30,7 +30,7 @@ class CommunityPostViewModel
 
   Future<void> loadMore() async {
     final nextPosts = await _fetchPosts(
-      lastItemCreatedAt: _list.last.createdAt,
+      lastItemCreatedAt: _list.last.createdTime.millisecondsSinceEpoch,
     );
     _list = [..._list, ...nextPosts];
     state = AsyncValue.data(_list);

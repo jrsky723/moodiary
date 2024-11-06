@@ -38,12 +38,11 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
 
     final diary = DiaryModel(
       uid: userId,
-      diaryId: diaryId,
       content: content,
       imageUrls: imageUrls,
       isPublic: isPublic,
       date: date,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
+      createdTime: DateTime.now(),
     );
 
     await _Repo.createDiary(diary);
@@ -57,7 +56,7 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
         owner: user,
         content: content,
         imageUrls: imageUrls,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
+        createdTime: DateTime.now(),
       );
 
       await _communityPostRepo.uploadPost(
