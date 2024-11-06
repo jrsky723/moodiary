@@ -26,8 +26,7 @@ class AuthenticationRepository {
     return data['isExists'];
   }
 
-  Future<UserCredential> emailSignUp(
-      String username, String email, String password) async {
+  Future<UserCredential> emailSignUp(String email, String password) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,

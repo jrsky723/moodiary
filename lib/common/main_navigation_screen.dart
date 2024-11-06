@@ -66,7 +66,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const SettingsScreen(),
+            child: const UserProfileScreen(),
           ),
         ],
       ),

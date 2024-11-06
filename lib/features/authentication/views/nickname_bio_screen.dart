@@ -28,6 +28,7 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
 
   void _onNextTap() async {
     if (_isButtonDisabled) return;
+
     final state = ref.read(signUpForm.notifier).state;
     ref.read(signUpForm.notifier).state = {
       ...state,
