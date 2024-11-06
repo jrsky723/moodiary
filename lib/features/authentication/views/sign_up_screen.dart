@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/social_auth_view_model.dart';
+import 'package:moodiary/features/authentication/views/email_password_screen.dart';
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
 import 'package:moodiary/features/authentication/views/username_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/auth_title.dart';
@@ -27,7 +28,8 @@ class SignUpScreen extends ConsumerWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
+        // builder: (context) => const UsernameScreen(),
+        builder: (context) => const EmailScreen(username: "test"),
       ),
     );
   }

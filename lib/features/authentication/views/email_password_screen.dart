@@ -29,6 +29,11 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
   bool _isButtonDisabled = true;
   bool _isObscure = true;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _onSubmit() {
     if (_isButtonDisabled) return;
     final state = ref.read(signUpForm.notifier).state;
@@ -40,45 +45,34 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
     ref.read(signUpProvider.notifier).signUp(context);
   }
 
-  //  pwd valid 와 email valid 둘다 체크해서 error message 띄우기
-  String? _isValid() {
-    if (_isEmailValid() != null || _isPwdValid() != null) {
-      return S.of(context).emailAndPasswordAreNotValid;
-    }
-    return null;
+  void _isButtonValid() {
+    setState(() {
+      _email = _emailController.text;
+      _password = _passwordController.text;
+      _isButtonDisabled = _email.isEmpty ||
+          _password.isEmpty ||
+          _isEmailValid() != null ||
+          _isPwdValid() != null;
+    });
   }
 
   String? _isEmailValid() {
-    if (_email.isEmpty) {
-      return null;
-    }
-
+    if (_email.isEmpty) return null;
     final regExp = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return S.of(context).emailNotValid;
-    }
-    return null;
+    return regExp.hasMatch(_email) ? null : S.of(context).emailNotValid;
   }
 
   String? _isPwdValid() {
-    // TODO : submit 보낼떄만 error 메시지 나오도록 수정
-
     List<String> errors = [];
 
-    if (_password.isEmpty) {
-      return null;
-    }
+    if (_password.isEmpty) return null;
 
     if (_password.length < 8 || _password.length > 20) {
       errors.add(S.of(context).pwdlengtherror);
     }
 
-    if (errors.isEmpty) {
-      return null;
-    } else {
-      return errors.join('\n');
-    }
+    return errors.isEmpty ? null : errors.join('\n');
   }
 
   void _onClearTap() {
@@ -101,10 +95,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
           controller: _emailController,
           hintText: S.of(context).email,
           onChanged: (value) {
-            setState(() {
-              _email = value;
-              _isButtonDisabled = _isValid() != null;
-            });
+            _isButtonValid();
           },
           errorText: _isEmailValid(),
         ),
@@ -124,16 +115,13 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
               GestureDetector(
                 onTap: _toggleObscrueText,
                 child: _isObscure
-                    ? const FaIcon(FontAwesomeIcons.eye)
-                    : const FaIcon(FontAwesomeIcons.eyeSlash),
+                    ? const FaIcon(FontAwesomeIcons.eyeSlash)
+                    : const FaIcon(FontAwesomeIcons.eye),
               ),
             ],
           ),
           onChanged: (value) {
-            setState(() {
-              _password = value;
-              _isButtonDisabled = _isValid() != null;
-            });
+            _isButtonValid();
           },
           errorText: _isPwdValid(),
         ),
