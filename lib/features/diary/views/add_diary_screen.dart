@@ -109,7 +109,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                 context.pushNamed(
                   DiaryDetailScreen.routeName,
                   pathParameters: {
-                    'diaryId': diary.diaryId,
+                    'diaryId': diary.diaryId.toString(),
                   },
                   extra: selectedDate,
                 );
@@ -174,7 +174,7 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
         context.pushNamed(
           DiaryDetailScreen.routeName,
           pathParameters: {
-            'diaryId': diary.diaryId,
+            'diaryId': diary.diaryId.toString(),
           },
           extra: selectedDate,
         );

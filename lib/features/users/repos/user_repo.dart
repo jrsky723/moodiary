@@ -12,10 +12,10 @@ import 'package:http/http.dart' as http;
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final apiBaseUrl = '${dotenv.env['API_BASE_URL']!}/client';
+  final _apiBaseUrl = '${dotenv.env['API_BASE_URL']!}/client';
 
   Future<void> createProfile(UserProfileModel profile) async {
-    String url = '$apiBaseUrl/create-profile';
+    String url = '$_apiBaseUrl/create-profile';
     try {
       log("createProfile: ${profile.toJson()}");
       final response = await http.post(
@@ -35,7 +35,7 @@ class UserRepository {
   }
 
   Future<Map<String, dynamic>?> findProfile(String uid) async {
-    String url = '$apiBaseUrl/find-profile';
+    String url = '$_apiBaseUrl/find-profile';
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -72,7 +72,7 @@ class UserRepository {
     required String uid,
     required Map<String, dynamic> data,
   }) async {
-    String url = '$apiBaseUrl/update-profile';
+    String url = '$_apiBaseUrl/update-profile';
     try {
       final response = await http.put(
         Uri.parse(url),
@@ -93,11 +93,11 @@ class UserRepository {
 
   Future<void> updateCommunityOwnerByDiaryIds({
     required Map<String, dynamic> profile,
-    required QuerySnapshot<Map<String, dynamic>> diaries,
+    required List<Map<String, dynamic>> diaries,
   }) async {
     final batch = _db.batch();
-    for (final doc in diaries.docs) {
-      final diaryDocRef = _db.collection('community').doc(doc.id);
+    for (final json in diaries) {
+      final diaryDocRef = _db.collection('community').doc(json['diaryId']);
 
       batch.update(diaryDocRef, {'owner': profile});
     }
