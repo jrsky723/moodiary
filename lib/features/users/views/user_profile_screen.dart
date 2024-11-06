@@ -139,37 +139,37 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       ),
                     ),
                   ),
-              ref.watch(userPostsProvider).when(
-                    loading: () => const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
-                    error: (error, stackTrace) => Center(
-                      child: Text('Error: $error'),
-                    ),
-                    data: (posts) => GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                      ),
-                      itemCount: posts.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => _onUserPostTap(
-                              index, posts[index].owner.username),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(posts[index].imageUrls[0]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+              // ref.watch(userPostsProvider).when(
+              //       loading: () => const Center(
+              //         child: CircularProgressIndicator.adaptive(),
+              //       ),
+              //       error: (error, stackTrace) => Center(
+              //         child: Text('Error: $error'),
+              //       ),
+              //       data: (posts) => GridView.builder(
+              //         shrinkWrap: true,
+              //         physics: const NeverScrollableScrollPhysics(),
+              //         gridDelegate:
+              //             const SliverGridDelegateWithFixedCrossAxisCount(
+              //           crossAxisCount: 3,
+              //         ),
+              //         itemCount: posts.length,
+              //         itemBuilder: (context, index) {
+              //           return GestureDetector(
+              //             onTap: () => _onUserPostTap(
+              //                 index, posts[index].owner.username),
+              //             child: Container(
+              //               decoration: BoxDecoration(
+              //                 image: DecorationImage(
+              //                   image: NetworkImage(posts[index].imageUrls[0]),
+              //                   fit: BoxFit.cover,
+              //                 ),
+              //               ),
+              //             ),
+              //           );
+              //         },
+              //       ),
+              //     ),
             ],
           ),
         ),

@@ -17,6 +17,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     _diaryRepo = ref.read(diaryRepo);
     _userRepo = ref.read(userRepo);
     _authRepo = ref.read(authRepo);
+
     if (_authRepo.isLoggedIn) {
       final profile = await _userRepo.findProfile(_authRepo.user!.uid);
       if (profile != null) {
@@ -36,6 +37,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
       username: form['username'],
       hasAvatar: form['hasAvatar'],
     );
+    // aws 인스턴스의 유저에 업데이트를 해야함
     await _userRepo.createProfile(profile);
     state = AsyncValue.data(profile);
     return profile;
@@ -61,8 +63,8 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
   Future<void> onAvatarUpload() async {
     if (state.value == null) return;
     state = AsyncValue.data(state.value!.copyWith(hasAvatar: true));
-    await _userRepo
-        .updateUser(uid: state.value!.uid, data: {'hasAvatar': true});
+    final uid = state.value!.uid;
+    await _userRepo.updateUser(uid: uid, data: {'hasAvatar': true});
   }
 
   Future<void> updateUserProfile(Map<String, dynamic> profile) async {
