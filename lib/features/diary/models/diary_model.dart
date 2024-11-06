@@ -1,38 +1,36 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class DiaryModel {
   final String uid;
-  final String diaryId;
+  final int diaryId;
   final String content;
   List<String> imageUrls;
   final bool isPublic;
   final DateTime date;
   final double xOffset;
   final double yOffset;
-  final int createdAt;
+  final DateTime createdTime;
 
   DiaryModel({
     required this.uid,
-    this.diaryId = "0",
+    this.diaryId = 0,
     required this.content,
     required this.imageUrls,
     required this.isPublic,
     required this.date,
     this.xOffset = 0.0,
     this.yOffset = 0.0,
-    this.createdAt = 0,
+    required this.createdTime,
   });
 
   DiaryModel.empty()
       : uid = '',
-        diaryId = '',
+        diaryId = 0,
         content = '',
         imageUrls = [],
         isPublic = true,
         date = DateTime.now(),
         xOffset = 0.0,
         yOffset = 0.0,
-        createdAt = 0;
+        createdTime = DateTime.now();
 
   Map<String, dynamic> toJson() {
     return {
@@ -44,7 +42,7 @@ class DiaryModel {
       'date': date,
       'xOffset': xOffset,
       'yOffset': yOffset,
-      'createdAt': createdAt,
+      'createdTime': createdTime,
     };
   }
 
@@ -53,16 +51,21 @@ class DiaryModel {
   })  : uid = json['uid'],
         diaryId = json['diaryId'],
         content = json['content'],
-        // List<dynamic>를 List<String>으로 변환
-        imageUrls = List<String>.from(json['imageUrls']),
-        isPublic = json['isPublic'],
+        // List<Map<String, dynamic>> 을 List<String>으로 변환
+        imageUrls = List<Map<String, dynamic>>.from(json['imageUrls'])
+            .map((e) => e['url'] as String)
+            .toList(),
+        isPublic = json['public'],
         // timestamp를 DateTime으로 변환
-        date = DateTime.fromMillisecondsSinceEpoch(
-          (json['date'] as Timestamp).millisecondsSinceEpoch,
-        ),
-        xOffset = json['xOffset'],
-        yOffset = json['yOffset'],
-        createdAt = json['createdAt'];
+        // json['createdDate']가 String type(2024-11-05)이면, 아래와 같이 변환
+        date = DateTime.parse(json['createdDate']),
+        // date = DateTime.fromMillisecondsSinceEpoch(
+        //   (json['createdDate'] as Timestamp).millisecondsSinceEpoch,
+        // ),
+        xOffset = json['offsetX'],
+        yOffset = json['offsetY'],
+        createdTime =
+            DateTime.parse(json['createdDate'] + ' ' + json['createdTime']);
 
   DiaryModel copyWith({
     String? content,
@@ -71,7 +74,7 @@ class DiaryModel {
     DateTime? date,
     double? xOffset,
     double? yOffset,
-    int? createdAt,
+    DateTime? createdTime,
   }) {
     return DiaryModel(
       uid: uid,
@@ -82,7 +85,7 @@ class DiaryModel {
       date: date ?? this.date,
       xOffset: xOffset ?? this.xOffset,
       yOffset: yOffset ?? this.yOffset,
-      createdAt: createdAt ?? this.createdAt,
+      createdTime: createdTime ?? this.createdTime,
     );
   }
 }

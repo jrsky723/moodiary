@@ -32,16 +32,15 @@ class UserPostsViewModel extends AutoDisposeAsyncNotifier<List<CommunityPost>> {
 
   Future<List<CommunityPost>> _fetchUserPosts(String uid) async {
     final diariesData = await _diaryRepo.fetchDiariesByUid(uid);
-
-    final diaries = diariesData.docs.map(
-      (doc) {
-        final diary = DiaryModel.fromJson(json: doc.data());
+    final diaries = diariesData.map(
+      (json) {
+        final diary = DiaryModel.fromJson(json: json);
         return CommunityPost(
           date: diary.date,
           owner: _user,
           content: diary.content,
           imageUrls: diary.imageUrls,
-          createdAt: diary.createdAt,
+          createdTime: diary.createdTime,
         );
       },
     );
