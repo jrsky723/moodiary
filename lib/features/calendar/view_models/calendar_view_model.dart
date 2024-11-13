@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/calendar/models/calendar_entry.dart';
@@ -42,23 +43,22 @@ class CalendarViewModel extends AutoDisposeAsyncNotifier<List<CalendarEntry>> {
   }) async {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
-    final month = date ?? DateTime.now(); // date가 없으면 현재 달
-    final start = DateTime(month.year, month.month, 1);
-    final end = DateTime(month.year, month.month + 1, 0);
-    final result = await _repo!.fetchDiariesByUserAndDateRange(
-      uid: uid!,
-      start: start,
-      end: end,
+    final yearMonth = date ?? DateTime.now();
+    final result =
+        await _repo!.fetchDiariesByYearMonth(uid: uid!, date: yearMonth);
+
+    // List<Map<String, dynamic>> 를 List<CalendarEntry> 로 변환
+
+    final fetchedEntries = result.map(
+      (map) {
+        return CalendarEntry.fromJson(
+          json: map,
+        );
+      },
     );
 
-    List<CalendarEntry> fetchedEntries = result.docs
-        .map(
-          (doc) => CalendarEntry.fromJson(json: doc.data()),
-        )
-        .toList();
-
     final dates =
-        _generateDatesForYearMonth(month); // 캘린더 한 화면안에 있는 날짜들 (이전달 포함)
+        _generateDatesForYearMonth(yearMonth); // 캘린더 한 화면안에 있는 날짜들 (이전달 포함)
 
     final entries = dates.map((date) {
       final entry = fetchedEntries.firstWhere(

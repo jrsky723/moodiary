@@ -161,7 +161,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(posts[index].imageUrls[0]),
+                                image: NetworkImage(
+                                    posts[index].imageUrls.isEmpty
+                                        ? 'https://via.placeholder.com/150'
+                                        : posts[index].imageUrls[0]),
                                 fit: BoxFit.cover,
                               ),
                             ),

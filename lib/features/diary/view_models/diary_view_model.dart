@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
@@ -14,14 +15,12 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
     return _diary;
   }
 
-  Future<DiaryModel> _fetchDiaryById(String diaryId) async {
+  Future<DiaryModel> _fetchDiaryById(diaryId) async {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
     final result = await _repo.fetchDiaryByUserAndId(uid!, diaryId);
-    if (result.docs.isEmpty) {
-      throw Exception('Diary not found');
-    }
-    final diary = DiaryModel.fromJson(json: result.docs.first.data());
+
+    final diary = DiaryModel.fromJson(json: result);
     return diary;
   }
 

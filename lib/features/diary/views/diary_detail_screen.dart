@@ -131,7 +131,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
             ),
             error: (error, stackTrace) => Center(child: Text('Error: $error')),
             data: (diary) {
-              final offset = Offset(diary.xOffset, diary.yOffset);
+              final offset = Offset(diary.offsetX, diary.offsetY);
               // final moodCloudUrl = diary.moodCloudUrl;
               return Padding(
                 padding: const EdgeInsets.symmetric(
