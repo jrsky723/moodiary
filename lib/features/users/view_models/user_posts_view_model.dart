@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
@@ -39,7 +40,7 @@ class UserPostsViewModel extends AutoDisposeAsyncNotifier<List<CommunityPost>> {
           owner: _user,
           content: diary.content,
           imageUrls: diary.imageUrls,
-          createdTime: diary.createdTime,
+          createdTime: diary.date,
         );
       },
     );

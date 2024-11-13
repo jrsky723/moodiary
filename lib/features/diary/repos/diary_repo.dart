@@ -1,15 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
-import 'package:http/http.dart' as http;
 
 class DiaryRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final Dio _dio = Dio();
   final String _apiBaseUrl = '${dotenv.env['API_BASE_URL']}/diary';
   String generateDiaryId(String uid) {
     return _db.collection('users').doc(uid).collection('diaries').doc().id;
@@ -39,14 +39,21 @@ class DiaryRepository {
   }
 
   Future<void> createDiary(DiaryModel diary) async {
-    await _db
-        .collection('users')
-        .doc(diary.uid)
-        .collection('diaries')
-        .doc(diary.diaryId.toString())
-        .set({
-      ...diary.toJson(),
-    });
+    String url = '$_apiBaseUrl/add-diary';
+    try {
+      final response = await _dio.post(
+        url,
+        data: diary.toJson(),
+        options: Options(
+          headers: {
+            'uid': diary.uid,
+          },
+        ),
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception('Failed to create diary: $e');
+    }
   }
 
   Future<void> updateDiary(
@@ -66,16 +73,27 @@ class DiaryRepository {
     await _db.collection('community').doc(diaryId).update(data);
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiaryByUserAndId(
+  Future<Map<String, dynamic>> fetchDiaryByUserAndId(
     String uid,
     String diaryId,
   ) async {
-    final query = _db
-        .collection('users')
-        .doc(uid)
-        .collection('diaries')
-        .where('diaryId', isEqualTo: diaryId);
-    return query.get();
+    String url = '$_apiBaseUrl/fetch-detail';
+    try {
+      final response = await _dio.get(
+        url,
+        queryParameters: {
+          'diaryId': diaryId,
+        },
+        options: Options(
+          headers: {
+            'uid': uid,
+          },
+        ),
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception('Failed to fetch diary: $e');
+    }
   }
 
   Future<void> deleteUserDiariesByDiaryIds(
@@ -142,22 +160,21 @@ class DiaryRepository {
   }
 
   Future<List<Map<String, dynamic>>> fetchDiariesByUid(String uid) async {
-    // final query = _db.collection('users').doc(uid).collection('diaries');
-    // return query.get();
     String url = '$_apiBaseUrl/fetch-user-diaries';
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'uid': uid,
-      },
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Failed to fetch diaries');
+    try {
+      final response = await _dio.get(
+        url,
+        options: Options(
+          headers: {
+            'uid': uid,
+          },
+        ),
+      );
+      final List<dynamic> data = response.data;
+      return data.map((item) => item as Map<String, dynamic>).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch diaries: $e');
     }
-    // JSON 배열을 List<Map<String, dynamic>> 타입으로 명시적으로 변환
-    final List<dynamic> data = jsonDecode(response.body);
-    return data.map((item) => item as Map<String, dynamic>).toList();
   }
 
   Future<String> getImageUrl(String url) async {
@@ -181,6 +198,33 @@ class DiaryRepository {
         .where('date', isGreaterThanOrEqualTo: startDate)
         .where('date', isLessThan: endDate);
     return query.get();
+  }
+
+  Future<List<Map<String, dynamic>>> fetchDiariesByYearMonth({
+    required String uid,
+    required DateTime date, // year, month 정보가 있는 date
+  }) async {
+    // http://192.168.45.53:8080/api/diary/fetch-diaries-by-year-month?date=2024-11-12T00:00:00
+    String url = '$_apiBaseUrl/fetch-diaries-by-year-month';
+    try {
+      final response = await _dio.get(
+        url,
+        queryParameters: {
+          'date': date.toIso8601String(),
+        },
+        options: Options(
+          headers: {
+            'uid': uid,
+          },
+        ),
+      );
+
+      final List<dynamic> data = response.data;
+
+      return data.map((item) => item as Map<String, dynamic>).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch diaries: $e');
+    }
   }
 }
 

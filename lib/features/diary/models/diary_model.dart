@@ -4,10 +4,10 @@ class DiaryModel {
   final String content;
   List<String> imageUrls;
   final bool isPublic;
+  final bool isAnalyzed;
   final DateTime date;
-  final double xOffset;
-  final double yOffset;
-  final DateTime createdTime;
+  final double offsetX;
+  final double offsetY;
 
   DiaryModel({
     required this.uid,
@@ -15,10 +15,10 @@ class DiaryModel {
     required this.content,
     required this.imageUrls,
     required this.isPublic,
+    required this.isAnalyzed,
     required this.date,
-    this.xOffset = 0.0,
-    this.yOffset = 0.0,
-    required this.createdTime,
+    this.offsetX = 0.0,
+    this.offsetY = 0.0,
   });
 
   DiaryModel.empty()
@@ -26,11 +26,11 @@ class DiaryModel {
         diaryId = 0,
         content = '',
         imageUrls = [],
-        isPublic = true,
+        isPublic = false,
+        isAnalyzed = false,
         date = DateTime.now(),
-        xOffset = 0.0,
-        yOffset = 0.0,
-        createdTime = DateTime.now();
+        offsetX = 0.0,
+        offsetY = 0.0;
 
   Map<String, dynamic> toJson() {
     return {
@@ -39,10 +39,10 @@ class DiaryModel {
       'content': content,
       'imageUrls': imageUrls,
       'isPublic': isPublic,
-      'date': date,
-      'xOffset': xOffset,
-      'yOffset': yOffset,
-      'createdTime': createdTime,
+      'isAnalyzed': isAnalyzed,
+      'date': date.toIso8601String(),
+      'offsetX': offsetX,
+      'offsetY': offsetY,
     };
   }
 
@@ -52,29 +52,28 @@ class DiaryModel {
         diaryId = json['diaryId'],
         content = json['content'],
         // List<Map<String, dynamic>> 을 List<String>으로 변환
-        imageUrls = List<Map<String, dynamic>>.from(json['imageUrls'])
-            .map((e) => e['url'] as String)
-            .toList(),
-        isPublic = json['public'],
+        imageUrls = json['images'].map<String>((image) {
+          return image['url'].toString();
+        }).toList(),
+        isPublic = json['isPublic'],
+        isAnalyzed = json['isAnalyzed'],
         // timestamp를 DateTime으로 변환
         // json['createdDate']가 String type(2024-11-05)이면, 아래와 같이 변환
-        date = DateTime.parse(json['createdDate']),
+        date = DateTime.parse(json['createdAt']),
         // date = DateTime.fromMillisecondsSinceEpoch(
         //   (json['createdDate'] as Timestamp).millisecondsSinceEpoch,
         // ),
-        xOffset = json['offsetX'],
-        yOffset = json['offsetY'],
-        createdTime =
-            DateTime.parse(json['createdDate'] + ' ' + json['createdTime']);
+        offsetX = json['offsetX'],
+        offsetY = json['offsetY'];
 
   DiaryModel copyWith({
     String? content,
     List<String>? imageUrls,
     bool? isPublic,
+    bool? isAnalyzed,
     DateTime? date,
     double? xOffset,
     double? yOffset,
-    DateTime? createdTime,
   }) {
     return DiaryModel(
       uid: uid,
@@ -82,10 +81,10 @@ class DiaryModel {
       content: content ?? this.content,
       imageUrls: imageUrls ?? this.imageUrls,
       isPublic: isPublic ?? this.isPublic,
+      isAnalyzed: isAnalyzed ?? this.isAnalyzed,
       date: date ?? this.date,
-      xOffset: xOffset ?? this.xOffset,
-      yOffset: yOffset ?? this.yOffset,
-      createdTime: createdTime ?? this.createdTime,
+      offsetX: xOffset ?? offsetX,
+      offsetY: yOffset ?? offsetY,
     );
   }
 }

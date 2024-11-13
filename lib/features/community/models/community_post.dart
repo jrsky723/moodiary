@@ -18,13 +18,10 @@ class CommunityPost {
 
   CommunityPost.fromJson({
     required Map<String, dynamic> json,
-  })  :
-        // TimeStamp를 DateTime으로 변환
-        date = DateTime.fromMillisecondsSinceEpoch(
-            (json['date'] as Timestamp).millisecondsSinceEpoch),
+  })  : date = DateTime.parse(json['date']),
         owner = UserProfileModel.fromJson(json['owner']),
         content = json['content'],
-        imageUrls = List<String>.from(json['imageUrls']),
+        imageUrls = List<String>.from(json['images']),
         createdTime = DateTime.fromMillisecondsSinceEpoch(
             (json['createdAt'] as Timestamp).millisecondsSinceEpoch);
 

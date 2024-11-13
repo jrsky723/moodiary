@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -128,7 +127,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     if (entry.hasDiary) {
       context.pushNamed(
         DiaryDetailScreen.routeName,
-        pathParameters: {'diaryId': entry.diaryId!},
+        pathParameters: {'diaryId': entry.diaryId!.toString()},
         extra: date,
       );
     } else {

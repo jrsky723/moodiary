@@ -6,12 +6,12 @@ class ImageNetwork extends StatelessWidget {
     required this.imageUrl,
   });
 
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      imageUrl,
+      imageUrl ?? '',
       fit: BoxFit.cover,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
         if (wasSynchronouslyLoaded) {

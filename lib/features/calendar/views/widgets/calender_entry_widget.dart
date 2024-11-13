@@ -39,7 +39,7 @@ class CalendarEntryWidget extends StatelessWidget {
             ),
             child: entry.hasDiary
                 ? ImageNetwork(
-                    imageUrl: entry.thumbnailUrl!,
+                    imageUrl: entry.thumbnailUrl,
                   )
                 : Image.asset(
                     'assets/images/moody.png',
