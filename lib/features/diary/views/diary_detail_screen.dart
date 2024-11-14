@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
-import 'package:moodiary/features/community/view_models/community_post_view_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
 import 'package:moodiary/features/diary/views/edit_diary_screen.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/insight_pages.dart';
@@ -45,7 +44,6 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   void refresh() {
     ref.read(calendarProvider.notifier).refresh(widget.date);
     ref.read(userPostsProvider.notifier).refresh();
-    ref.read(communityPostProvider.notifier).refresh();
   }
 
   void _onDeletePressed() {
@@ -76,22 +74,22 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     try {
       await ref
           .read(diaryProvider(widget.diaryId).notifier)
-          .deleteDiary(widget.diaryId);
+          .deleteDiary(int.parse(widget.diaryId));
 
-      // 삭제 성공 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(S.of(context).deleteDiarySuccessMessage),
         ),
       );
+
       //  캘린더 refresh
       refresh();
 
       // AlertDialog 닫기
       Navigator.pop(context);
-
-      // 다이어리 상세 화면 닫기
+      // // 다이어리 상세 화면 닫기
       Navigator.pop(context);
+      // 삭제 성공 메시지 표시
     } catch (e) {
       // 삭제 실패 시 에러 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
