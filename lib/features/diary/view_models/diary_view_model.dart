@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
@@ -25,7 +24,7 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
   }
 
   Future<void> updateDiary({
-    required String diaryId,
+    required int diaryId,
     required String content,
     required List<String> imageUrls,
     required bool isPublic,
@@ -33,38 +32,36 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
     state = const AsyncValue.loading();
     final user = ref.read(authRepo).user;
     final uid = user!.uid;
-    await _repo.updateDiary(
-      uid,
-      diaryId,
-      {
-        'content': content,
-        'imageUrls': imageUrls,
-      },
-    );
-    if (isPublic) {
-      await _repo.updateCommunityDiary(
+    try {
+      await _repo.updateDiary(
+        uid,
         diaryId,
         {
           'content': content,
           'imageUrls': imageUrls,
+          'isPublic': isPublic,
         },
       );
+      _diary = _diary.copyWith(
+        content: content,
+        imageUrls: imageUrls,
+        isPublic: isPublic,
+      );
+      state = AsyncValue.data(_diary);
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
     }
-    _diary = _diary.copyWith(
-      content: content,
-      imageUrls: imageUrls,
-    );
-    state = AsyncValue.data(_diary);
   }
 
-  Future<void> deleteDiary(String diaryId) async {
+  Future<void> deleteDiary(int diaryId) async {
     state = const AsyncValue.loading();
     final uid = ref.read(authRepo).user!.uid;
-
-    List<String> diaryIds = [diaryId];
-
-    await _repo.deleteUserDiariesByDiaryIds(uid, diaryIds);
-    await _repo.deleteCommunityDiariesByDiaryIds(diaryIds);
+    try {
+      await _repo.deleteDiary(uid, diaryId);
+      state = AsyncValue.data(DiaryModel.empty());
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
   }
 }
 

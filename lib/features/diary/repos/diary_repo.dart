@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -57,13 +58,25 @@ class DiaryRepository {
   }
 
   Future<void> updateDiary(
-      String uid, String diaryId, Map<String, dynamic> data) async {
-    await _db
-        .collection('users')
-        .doc(uid)
-        .collection('diaries')
-        .doc(diaryId)
-        .update(data);
+      String uid, int diaryId, Map<String, dynamic> data) async {
+    String url = '$_apiBaseUrl/update-diary';
+    log('updateDiary: $data');
+    try {
+      final response = await _dio.post(
+        url,
+        data: data,
+        options: Options(
+          headers: {
+            'uid': uid,
+            'diaryId': diaryId,
+          },
+        ),
+      );
+      log('updateDiary response: $response');
+      return;
+    } catch (e) {
+      throw Exception('Failed to update diary: $e');
+    }
   }
 
   Future<void> updateCommunityDiary(
@@ -71,6 +84,24 @@ class DiaryRepository {
     Map<String, dynamic> data,
   ) async {
     await _db.collection('community').doc(diaryId).update(data);
+  }
+
+  Future<void> deleteDiary(String uid, int diaryId) async {
+    String url = '$_apiBaseUrl/delete-diary';
+    try {
+      final response = await _dio.delete(
+        url,
+        options: Options(
+          headers: {
+            'uid': uid,
+            'diaryId': diaryId,
+          },
+        ),
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception('Failed to delete diary: $e');
+    }
   }
 
   Future<Map<String, dynamic>> fetchDiaryByUserAndId(
@@ -204,7 +235,6 @@ class DiaryRepository {
     required String uid,
     required DateTime date, // year, month 정보가 있는 date
   }) async {
-    // http://192.168.45.53:8080/api/diary/fetch-diaries-by-year-month?date=2024-11-12T00:00:00
     String url = '$_apiBaseUrl/fetch-diaries-by-year-month';
     try {
       final response = await _dio.get(
@@ -218,7 +248,6 @@ class DiaryRepository {
           },
         ),
       );
-
       final List<dynamic> data = response.data;
 
       return data.map((item) => item as Map<String, dynamic>).toList();

@@ -3,19 +3,15 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
-import 'package:moodiary/features/community/models/community_post.dart';
-import 'package:moodiary/features/community/repos/community_post_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
-import 'package:moodiary/features/users/models/user_profile_model.dart';
 
 class AddDiaryViewModel extends AsyncNotifier<void> {
   late final DiaryRepository _repo;
-  late final CommunityPostRepo _communityPostRepo;
+
   @override
   FutureOr<void> build() {
     _repo = ref.read(diaryRepo);
-    _communityPostRepo = ref.read(communityPostRepo);
   }
 
   Future<void> createDiary({
@@ -50,24 +46,6 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
-
-    // if (isPublic) {
-    //   // userprofile model과 diary를 연결해서, communityPost 객체로 만들어서, communityPostRepo에 저장
-
-    //   final user = UserProfileModel.empty();
-    //   final communityPost = CommunityPost(
-    //     date: date,
-    //     owner: user,
-    //     content: content,
-    //     imageUrls: imageUrls,
-    //     createdTime: DateTime.now(),
-    //   );
-
-    //   await _communityPostRepo.uploadPost(
-    //     post: communityPost,
-    //     diaryId: diaryId,
-    //   );
-    // }
   }
 
   Future<DiaryModel?> fetchDiaryByDate(DateTime date) async {

@@ -123,6 +123,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     setState(() {
       _selectedDate = date;
     });
+    if (Navigator.of(context).canPop()) {
+      return; // 스택에 화면이 이미 있으면 추가 전환 방지
+    }
     // 다이어리가 있으면 DiaryDetail Screen
     if (entry.hasDiary) {
       context.pushNamed(
