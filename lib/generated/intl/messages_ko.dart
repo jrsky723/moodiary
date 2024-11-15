@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nicknameValidError":
             MessageLookupByLibrary.simpleMessage("닉네임은 3자 이상이어야 합니다"),
         "noData": MessageLookupByLibrary.simpleMessage("데이터가 없습니다."),
+        "none": MessageLookupByLibrary.simpleMessage("없음"),
         "noImagesAvailable": MessageLookupByLibrary.simpleMessage("이미지가 없습니다"),
         "passive": MessageLookupByLibrary.simpleMessage("수동"),
         "password": MessageLookupByLibrary.simpleMessage("비밀번호"),

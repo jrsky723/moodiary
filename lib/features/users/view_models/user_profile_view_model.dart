@@ -53,10 +53,10 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     List<String> diaryIds =
         diaries.map((diary) => diary['diaryId'] as String).toList();
 
-    await _diaryRepo.deleteUserDiariesByDiaryIds(uid, diaryIds);
-    await _diaryRepo.deleteCommunityDiariesByDiaryIds(diaryIds);
+    // await _diaryRepo.deleteUserDiariesByDiaryIds(uid, diaryIds);
+    // await _diaryRepo.deleteCommunityDiariesByDiaryIds(diaryIds);
 
-    await _userRepo.deleteProfile(uid);
+    // await _userRepo.deleteProfile(uid);
   }
 
   Future<void> onAvatarUpload() async {

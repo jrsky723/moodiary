@@ -143,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nicknameValidError": MessageLookupByLibrary.simpleMessage(
             "Nickname have to be at least 3 characters"),
         "noData": MessageLookupByLibrary.simpleMessage("No Data"),
+        "none": MessageLookupByLibrary.simpleMessage("None"),
         "noImagesAvailable":
             MessageLookupByLibrary.simpleMessage("No images available"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),

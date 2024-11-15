@@ -31,6 +31,9 @@ double calculateDistance(Offset a, Offset b) {
 }
 
 Mood findClosestMood(Offset offset) {
+  if (offset == Offset.zero) {
+    return Mood.none;
+  }
   Mood closestMood = Mood.values.first;
   double minDistance = double.infinity;
 

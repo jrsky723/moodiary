@@ -12,17 +12,13 @@ class DiaryRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final Dio _dio = Dio();
   final String _apiBaseUrl = '${dotenv.env['API_BASE_URL']}/diary';
-  String generateDiaryId(String uid) {
-    return _db.collection('users').doc(uid).collection('diaries').doc().id;
-  }
 
   Future<List<String>> uploadImages({
     required String uid,
-    required String diaryId,
     required List<File> images,
   }) async {
     List<String> imageUrls = [];
-    String baseUrl = 'users/$uid/diaries/$diaryId';
+    String baseUrl = 'users/$uid/images';
     final fileRef = _storage.ref().child(baseUrl);
 
     for (int i = 0; i < images.length; i++) {
@@ -125,40 +121,6 @@ class DiaryRepository {
     } catch (e) {
       throw Exception('Failed to fetch diary: $e');
     }
-  }
-
-  Future<void> deleteUserDiariesByDiaryIds(
-      String uid, List<String> diaryIds) async {
-    List<String> imagePaths = [];
-
-    final diaries = await _db
-        .collection('users')
-        .doc(uid)
-        .collection('diaries')
-        .where('diaryId', whereIn: diaryIds)
-        .get();
-
-    for (final diary in diaries.docs) {
-      final imageUrls =
-          (diary.data()['imageUrls'] as List<dynamic>).cast<String>();
-
-      // 이미지 삭제
-      for (final imageUrl in imageUrls) {
-        final path = extractPathFromUrl(imageUrl);
-        imagePaths.add(path);
-      }
-
-      // 다이어리 문서 삭제
-      await _db
-          .collection('users')
-          .doc(uid)
-          .collection('diaries')
-          .doc(diary.data()['diaryId'])
-          .delete();
-    }
-    imagePaths.forEach((imageUrl) async {
-      await _storage.ref().child(imageUrl).delete();
-    });
   }
 
   String extractPathFromUrl(String url) {

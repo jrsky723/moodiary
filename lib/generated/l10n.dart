@@ -1160,6 +1160,16 @@ class S {
     );
   }
 
+  // 'none'
+  String get none {
+    return Intl.message(
+      'none',
+      name: 'none',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `This is a Future Diary`
   String get thisIsFutureDiary {
     return Intl.message(
