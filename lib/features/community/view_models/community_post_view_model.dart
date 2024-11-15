@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/community/models/community_post.dart';
 import 'package:moodiary/features/community/repos/community_post_repo.dart';
 
@@ -17,20 +18,21 @@ class CommunityPostViewModel
   }
 
   Future<List<CommunityPost>> _fetchPosts({
-    int? lastItemCreatedAt,
+    DateTime? lastItemCreatedAt,
   }) async {
-    final result = await _repo.fetchPosts(lastItemCreatedAt);
-    final posts = result.docs.map(
-      (doc) => CommunityPost.fromJson(
-        json: doc.data(),
-      ),
-    );
+    final uid = ref.read(authRepo).user!.uid;
+    final createdAt = lastItemCreatedAt ?? DateTime.now();
+    final result = await _repo.fetchRelatedPosts(createdAt, uid);
+
+    final posts = result.map((post) {
+      return CommunityPost.fromJson(post);
+    });
     return posts.toList();
   }
 
   Future<void> loadMore() async {
     final nextPosts = await _fetchPosts(
-      lastItemCreatedAt: _list.last.createdTime.millisecondsSinceEpoch,
+      lastItemCreatedAt: _list.last.createdAt,
     );
     _list = [..._list, ...nextPosts];
     state = AsyncValue.data(_list);

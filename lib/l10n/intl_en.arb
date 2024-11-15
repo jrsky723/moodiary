@@ -173,5 +173,6 @@
   "deleteDiaryErrorMessage": "An error occurred while deleting the diary",
   "emailNotValid": "Email is not valid",
   "emailAndPasswordAreNotValid": "Email and Password are not valid",
-  "createUsername": "Create Username"
+  "createUsername": "Create Username",
+  "none": "none"
 }

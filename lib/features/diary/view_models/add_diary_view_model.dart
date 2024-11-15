@@ -24,11 +24,9 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
 
     final user = ref.read(authRepo).user;
     final userId = user?.uid;
-    final diaryId = _repo.generateDiaryId(userId!);
 
     final imageUrls = await _repo.uploadImages(
-      uid: userId,
-      diaryId: diaryId,
+      uid: userId!,
       images: images,
     );
 

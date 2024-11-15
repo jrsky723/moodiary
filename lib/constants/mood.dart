@@ -19,6 +19,7 @@ enum Mood {
   relaxed,
   serene,
   content,
+  none,
 }
 
 extension MoodExtension on Mood {
@@ -56,6 +57,8 @@ extension MoodExtension on Mood {
         return S.of(context).serene;
       case Mood.content:
         return S.of(context).content;
+      case Mood.none:
+        return S.of(context).none;
     }
   }
 }

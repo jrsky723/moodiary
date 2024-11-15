@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moodiary/constants/mood.dart';
 import 'package:moodiary/utils/mood_utils.dart';
@@ -14,11 +13,9 @@ class MoodEntry {
     required this.closestMood,
   });
 
-  MoodEntry.fromJson({
-    required Map<String, dynamic> json,
-  })  : // timestamp를 DateTime으로 변환
-        date = DateTime.fromMillisecondsSinceEpoch(
-            (json['date'] as Timestamp).millisecondsSinceEpoch),
-        offset = Offset(json['xOffset'], json['yOffset']),
-        closestMood = findClosestMood(Offset(json['xOffset'], json['yOffset']));
+  MoodEntry.fromJson(Map<String, dynamic> json)
+      : // datetime parse
+        date = DateTime.parse(json['createdAt']),
+        offset = Offset(json['offsetX'], json['offsetY']),
+        closestMood = findClosestMood(Offset(json['offsetX'], json['offsetY']));
 }
