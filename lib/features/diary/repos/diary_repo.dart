@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,7 +8,6 @@ import 'package:moodiary/features/diary/models/diary_model.dart';
 
 class DiaryRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final Dio _dio = Dio();
   final String _apiBaseUrl = '${dotenv.env['API_BASE_URL']}/diary';
 
@@ -75,13 +73,6 @@ class DiaryRepository {
     }
   }
 
-  Future<void> updateCommunityDiary(
-    String diaryId,
-    Map<String, dynamic> data,
-  ) async {
-    await _db.collection('community').doc(diaryId).update(data);
-  }
-
   Future<void> deleteDiary(String uid, int diaryId) async {
     String url = '$_apiBaseUrl/delete-diary';
     try {
@@ -123,35 +114,6 @@ class DiaryRepository {
     }
   }
 
-  String extractPathFromUrl(String url) {
-    final regex = RegExp(r'o\/(.*?)\?');
-    final match = regex.firstMatch(url);
-    if (match != null) {
-      // 경로 추출 후 디코딩
-      return Uri.decodeComponent(match.group(1)!);
-    }
-    return '';
-  }
-
-  Future<void> deleteCommunityDiariesByDiaryIds(List<String> diaryIds) async {
-    final batch = _db.batch();
-
-    final diaries = await _db
-        .collection('community')
-        .where(
-          'diaryId',
-          whereIn: diaryIds,
-        )
-        .get();
-
-    for (final diary in diaries.docs) {
-      final diaryId = diary.data()['diaryId'];
-      final ref = _db.collection('community').doc(diaryId);
-      batch.delete(ref);
-    }
-    await batch.commit();
-  }
-
   Future<List<Map<String, dynamic>>> fetchDiariesByUid(String uid) async {
     String url = '$_apiBaseUrl/fetch-user-diaries';
     try {
@@ -165,32 +127,41 @@ class DiaryRepository {
       );
       final List<dynamic> data = response.data;
       return data.map((item) => item as Map<String, dynamic>).toList();
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        return [];
+      } else {
+        throw Exception('Failed to fetch diaries: $e');
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>?> fetchDiaryByDate(
+      String uid, DateTime date) async {
+    String url = '$_apiBaseUrl/fetch-diary-by-date';
+    try {
+      final response = await _dio.get(
+        url,
+        queryParameters: {
+          'date': date.toIso8601String(),
+        },
+        options: Options(
+          headers: {
+            'uid': uid,
+          },
+        ),
+      );
+      if (response.data["status"] == "error") {
+        return null;
+      }
+      return response.data;
     } catch (e) {
-      throw Exception('Failed to fetch diaries: $e');
+      throw Exception('Failed to fetch diary: $e');
     }
   }
 
   Future<String> getImageUrl(String url) async {
     return await _storage.ref().child(url).getDownloadURL();
-  }
-
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchDiariesByUserAndDateRange({
-    required String uid,
-    required DateTime start,
-    required DateTime end,
-  }) {
-    // 사용자의 uid와 시작일과 끝일을 받아서 해당 기간에 해당하는 일기들을 가져옴
-    // startDate는 그 날의 00:00:00, endDate는 그 다음날의 00:00:00
-    final startDate = DateTime(start.year, start.month, start.day);
-    final endDate = DateTime(end.year, end.month, end.day + 1); // 다음날 00:00:00
-
-    final query = _db
-        .collection('users')
-        .doc(uid)
-        .collection('diaries')
-        .where('date', isGreaterThanOrEqualTo: startDate)
-        .where('date', isLessThan: endDate);
-    return query.get();
   }
 
   Future<List<Map<String, dynamic>>> fetchDiariesByYearMonth({

@@ -40,7 +40,7 @@ class AuthenticationRepository {
   }
 
   Future<void> deleteAccount() async {
-    await _firebaseAuth.currentUser?.delete();
+    await _firebaseAuth.currentUser!.delete();
   }
 
   Future<void> signIn(String email, String password) async {

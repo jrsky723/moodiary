@@ -53,37 +53,41 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         .replaceAll('{uid}', uid)
         .replaceAll(
             '{timestamp}', DateTime.now().millisecondsSinceEpoch.toString());
+
+    final userProfileState = ref.watch(userProfileProvider);
     return Scaffold(
-      appBar: ref.watch(userProfileProvider).when(
-            loading: () => AppBar(
-              title: const Text('Loading...'),
-            ),
-            error: (error, stackTrace) => AppBar(
-              title: Text('Error: $error'),
-            ),
-            data: (user) => AppBar(
-              surfaceTintColor: Colors.transparent,
-              title: Text(user.username),
-              actions: [
-                if (user.uid == ref.watch(authRepo).user!.uid) ...[
-                  IconButton(
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => _onEditProfile(user),
-                  ),
-                ]
-              ],
-            ),
+      appBar: AppBar(
+        title: userProfileState.when(
+          loading: () => const Text('Loading...'),
+          error: (error, stackTrace) => const Text('Error'),
+          data: (user) => Text(user.username),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
           ),
+          userProfileState.when(
+            loading: () => const SizedBox.shrink(),
+            error: (error, stackTrace) => const SizedBox.shrink(),
+            data: (user) {
+              if (user.uid == ref.read(authRepo).user!.uid) {
+                return IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => _onEditProfile(user),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: SingleChildScrollView(

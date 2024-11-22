@@ -49,15 +49,11 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
   Future<DiaryModel?> fetchDiaryByDate(DateTime date) async {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
-    final result = await _repo.fetchDiariesByUserAndDateRange(
-      uid: uid!,
-      start: date,
-      end: date,
-    );
-    if (result.docs.isEmpty) {
+    final result = await _repo.fetchDiaryByDate(uid!, date);
+    if (result == null) {
       return null;
     }
-    final diary = DiaryModel.fromJson(json: result.docs.first.data());
+    final diary = DiaryModel.fromJson(json: result);
     return diary;
   }
 }

@@ -144,6 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseWriteDiaryOrAddPhoto":
             MessageLookupByLibrary.simpleMessage("일기를 작성하거나 사진을 추가해주세요"),
         "positive": MessageLookupByLibrary.simpleMessage("긍정"),
+        "profile": MessageLookupByLibrary.simpleMessage("프로필"),
         "pwdlengtherror":
             MessageLookupByLibrary.simpleMessage("비밀번호는 8자에서 20자 사이여야 합니다"),
         "pwdnumbererror":

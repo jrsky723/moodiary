@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +8,6 @@ import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final _apiBaseUrl = '${dotenv.env['API_BASE_URL']!}/client';
 
@@ -54,11 +51,6 @@ class UserRepository {
     }
   }
 
-  Future<void> deleteProfile(String uid) async {
-    await _db.collection('users').doc(uid).delete();
-    await _storage.ref().child('avatars/$uid').delete();
-  }
-
   Future<void> uploadAvatar({
     required File file,
     required String filename,
@@ -91,15 +83,22 @@ class UserRepository {
     }
   }
 
-  Future<void> updateCommunityOwnerByDiaryIds({
-    required Map<String, dynamic> profile,
-    required List<Map<String, dynamic>> diaries,
-  }) async {
-    final batch = _db.batch();
-    for (final json in diaries) {
-      final diaryDocRef = _db.collection('community').doc(json['diaryId']);
-
-      batch.update(diaryDocRef, {'owner': profile});
+  Future<void> deleteProfile(String uid) async {
+    String url = '$_apiBaseUrl/delete-profile';
+    try {
+      final response = await http.delete(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'uid': uid,
+        },
+      );
+      log(response.body);
+      if (response.statusCode != 200) {
+        throw Exception('Failed to delete user');
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

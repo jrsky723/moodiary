@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/community/models/community_post.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
@@ -30,19 +31,18 @@ class UserPostsViewModel extends AutoDisposeAsyncNotifier<List<CommunityPost>> {
 
   Future<List<CommunityPost>> _fetchUserPosts(String uid) async {
     final diariesData = await _diaryRepo.fetchDiariesByUid(uid);
-    // final diaries = diariesData.map(
-    //   (json) {
-    //     final diary = DiaryModel.fromJson(json: json);
-    //     return CommunityPost(
-    //       date: diary.date,
-    //       owner: _user,
-    //       content: diary.content,
-    //       imageUrls: diary.imageUrls,
-    //       createdTime: diary.date,
-    //     );
-    //   },
-    // );
-    return [];
+    final diaries = diariesData.map(
+      (json) {
+        final diary = DiaryModel.fromJson(json: json);
+        return CommunityPost(
+          createdAt: diary.date,
+          owner: _user,
+          content: diary.content,
+          imageUrls: diary.imageUrls,
+        );
+      },
+    );
+    return diaries.toList();
   }
 
   Future<void> refresh() async {
