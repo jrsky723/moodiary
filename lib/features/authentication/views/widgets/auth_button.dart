@@ -6,11 +6,11 @@ import 'package:moodiary/constants/sizes.dart';
 class AuthButton extends StatefulWidget {
   final FaIcon icon;
 
-  final Function()? onTap;
+  final Function() onTap;
   const AuthButton({
     super.key,
     required this.icon,
-    this.onTap,
+    required this.onTap,
   });
 
   @override
@@ -30,7 +30,7 @@ class _AuthButtonState extends State<AuthButton> {
         setState(() {
           _isPressed = false;
         });
-        widget.onTap!();
+        widget.onTap();
       },
       onTapCancel: () => setState(() {
         _isPressed = false;

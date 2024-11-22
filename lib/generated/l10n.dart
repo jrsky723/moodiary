@@ -1180,6 +1180,16 @@ class S {
     );
   }
 
+  /// 'profile'
+  String get profile {
+    return Intl.message(
+      'profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `An error occurred while fetching data`
   String get fetchDataError {
     return Intl.message(

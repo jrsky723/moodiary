@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
+import 'package:moodiary/features/authentication/views/avatar_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_form_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/form_button.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_input_field.dart';
@@ -34,7 +36,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
     super.initState();
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
     if (_isButtonDisabled) return;
     final state = ref.read(signUpForm.notifier).state;
     ref.read(signUpForm.notifier).state = {
@@ -42,7 +44,14 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
       "email": _email,
       "password": _password
     };
-    ref.read(signUpProvider.notifier).signUp(context);
+
+    await ref.read(signUpProvider.notifier).signUp(context);
+    if (mounted) {
+      context.goNamed(
+        AvatarScreen.routeName,
+        extra: widget.username,
+      );
+    }
   }
 
   void _isButtonValid() {

@@ -3,18 +3,15 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
-import 'package:moodiary/features/diary/repos/diary_repo.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/repos/user_repo.dart';
 
 class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
-  late final DiaryRepository _diaryRepo;
   late final UserRepository _userRepo;
   late final AuthenticationRepository _authRepo;
 
   @override
   FutureOr<UserProfileModel> build() async {
-    _diaryRepo = ref.read(diaryRepo);
     _userRepo = ref.read(userRepo);
     _authRepo = ref.read(authRepo);
     if (_authRepo.isLoggedIn) {
@@ -47,16 +44,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     final uid = ref.read(authRepo).user!.uid;
 
     await _authRepo.deleteAccount();
-
-    final diaries = await _diaryRepo.fetchDiariesByUid(uid);
-
-    List<String> diaryIds =
-        diaries.map((diary) => diary['diaryId'] as String).toList();
-
-    // await _diaryRepo.deleteUserDiariesByDiaryIds(uid, diaryIds);
-    // await _diaryRepo.deleteCommunityDiariesByDiaryIds(diaryIds);
-
-    // await _userRepo.deleteProfile(uid);
+    await _userRepo.deleteProfile(uid);
   }
 
   Future<void> onAvatarUpload() async {
@@ -74,12 +62,6 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     await _userRepo.updateProfile(
       uid: uid,
       data: profile,
-    );
-
-    final diaries = await _diaryRepo.fetchDiariesByUid(uid);
-    await _userRepo.updateCommunityOwnerByDiaryIds(
-      profile: profile,
-      diaries: diaries,
     );
 
     state = AsyncValue.data(state.value!.copyWith(

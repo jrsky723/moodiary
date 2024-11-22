@@ -156,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseWriteDiaryOrAddPhoto": MessageLookupByLibrary.simpleMessage(
             "Please write a diary or add a photo at least"),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "pwdlengtherror":
             MessageLookupByLibrary.simpleMessage("8 to 20 characters"),
         "pwdnumbererror": MessageLookupByLibrary.simpleMessage(

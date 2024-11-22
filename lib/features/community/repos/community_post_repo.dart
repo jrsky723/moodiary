@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moodiary/features/community/models/community_post.dart';
 
 class CommunityPostRepo {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final Dio _dio = Dio();
   final String _apiBaseUrl = '${dotenv.env['API_BASE_URL']}/community';
 
@@ -34,10 +29,6 @@ class CommunityPostRepo {
     } catch (e) {
       throw Exception('Failed to fetch related posts: $e');
     }
-  }
-
-  uploadPost({required CommunityPost post, required String diaryId}) async {
-    await _db.collection('community').doc(diaryId).set(post.toJson());
   }
 }
 
