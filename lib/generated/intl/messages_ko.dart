@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmBtn": MessageLookupByLibrary.simpleMessage("확인"),
         "content": MessageLookupByLibrary.simpleMessage("만족한"),
         "createProfile": MessageLookupByLibrary.simpleMessage("프로필 생성"),
+        "createAccount": MessageLookupByLibrary.simpleMessage("계정 생성"),
         "createUsername": MessageLookupByLibrary.simpleMessage("사용자 이름 생성"),
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("다크 모드"),

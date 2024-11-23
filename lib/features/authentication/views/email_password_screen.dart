@@ -4,17 +4,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
-import 'package:moodiary/features/authentication/views/avatar_screen.dart';
+import 'package:moodiary/features/authentication/views/username_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_form_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/form_button.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_input_field.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class EmailScreen extends ConsumerStatefulWidget {
-  final String username;
   const EmailScreen({
     super.key,
-    required this.username,
   });
 
   @override
@@ -48,8 +46,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
     await ref.read(signUpProvider.notifier).signUp(context);
     if (mounted) {
       context.goNamed(
-        AvatarScreen.routeName,
-        extra: widget.username,
+        UsernameScreen.routeName,
       );
     }
   }
@@ -98,7 +95,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
   Widget build(BuildContext context) {
     return CommonFormScreen(
       appBarTitle: S.of(context).signUp,
-      title: S.of(context).usernameTitle(widget.username),
+      title: S.of(context).createAccount,
       children: [
         CommonInputField(
           controller: _emailController,

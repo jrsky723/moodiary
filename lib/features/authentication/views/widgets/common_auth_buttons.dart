@@ -35,14 +35,6 @@ class AuthButtons extends ConsumerWidget {
           ),
           onTap: onGoogleTap,
         ),
-        Gaps.h14,
-        AuthButton(
-          onTap: () {},
-          icon: const FaIcon(
-            FontAwesomeIcons.apple,
-            size: Sizes.size30,
-          ),
-        ),
       ],
     );
   }

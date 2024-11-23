@@ -5,6 +5,7 @@ import 'package:moodiary/features/authentication/repos/authentication_repo.dart'
 import 'package:moodiary/features/authentication/views/avatar_screen.dart';
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
 import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
+import 'package:moodiary/features/authentication/views/username_screen.dart';
 import 'package:moodiary/features/diary/views/add_diary_screen.dart';
 import 'package:moodiary/features/diary/views/diary_detail_screen.dart';
 
@@ -41,11 +42,10 @@ final routerProvider = Provider<GoRouter>(
 
         //  AvatarScreen 전에 페이지 하나 보여줘서 profile 생성한다는것을 알려주기
         GoRoute(
-          path: AvatarScreen.routeUrl,
-          name: AvatarScreen.routeName,
+          path: UsernameScreen.routeUrl,
+          name: UsernameScreen.routeName,
           builder: (context, state) {
-            final username = state.extra as String;
-            return AvatarScreen(username: username);
+            return const UsernameScreen();
           },
         ),
         GoRoute(
