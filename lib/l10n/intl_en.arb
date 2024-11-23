@@ -175,5 +175,6 @@
   "emailAndPasswordAreNotValid": "Email and Password are not valid",
   "createUsername": "Create Username",
   "none": "none",
-  "profile": "Profile"
+  "profile": "Profile",
+  "createAccount": "Create an account"
 }

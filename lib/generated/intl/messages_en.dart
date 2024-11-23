@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completeBtn": MessageLookupByLibrary.simpleMessage("Complete"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "content": MessageLookupByLibrary.simpleMessage("Content"),
+        "createAccount":
+            MessageLookupByLibrary.simpleMessage("Create an Account"),
         "createProfile": MessageLookupByLibrary.simpleMessage("Create Profile"),
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create Username"),

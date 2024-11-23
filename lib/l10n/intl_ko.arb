@@ -175,5 +175,6 @@
   "emailAndPasswordAreNotValid": "이메일과 비밀번호가 유효하지 않습니다",
   "createUsername": "사용자 이름 생성",
   "none": "none",
-  "profile": "프로필"
+  "profile": "프로필",
+  "createAccount": "계정 생성"
 }
