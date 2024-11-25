@@ -5,6 +5,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils/build_utils.dart';
 
 class EditDiaryScreen extends ConsumerStatefulWidget {
   final String diaryId;
@@ -46,7 +47,6 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
         newImageUrls.add(diary.imageUrls[i]);
       }
     }
-
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       ref.read(diaryProvider(widget.diaryId).notifier).updateDiary(
@@ -55,7 +55,6 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
             imageUrls: newImageUrls,
             isPublic: _isPublic, // 현재 공개 여부 전달
           );
-
       if (context.mounted) {
         Navigator.of(context).pop();
       }
@@ -89,6 +88,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final darkmode = isDarkMode(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -115,6 +115,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                         ),
                         Gaps.v12,
                         _buildDiarySection(
+                          darkmode: darkmode,
                           content: diary.content,
                         ),
                         Gaps.v32,
@@ -152,10 +153,13 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
     );
   }
 
-  Widget _buildDiarySection({required String content}) {
+  Widget _buildDiarySection({
+    required bool darkmode,
+    required String content,
+  }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: darkmode ? Colors.transparent : Colors.white,
         border: Border.all(
           color: Theme.of(context).primaryColor,
         ),

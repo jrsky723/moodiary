@@ -201,18 +201,13 @@ class DiaryRepository {
           },
         ),
         data: {
-          'diary': diary.diaryId,
+          'diaryId': diary.diaryId,
           'content': diary.content,
         },
       );
-      log('analizeDiary response: $response');
       return response.data;
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 404) {
-        return {};
-      } else {
-        throw Exception('Failed to analize diary: $e');
-      }
+    } catch (e) {
+      throw Exception('Failed to analize diary: $e');
     }
   }
 }

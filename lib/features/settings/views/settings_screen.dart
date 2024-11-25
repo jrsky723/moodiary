@@ -103,7 +103,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: TextButton(
                 onPressed: _onDeletePressed,
                 child: Text(
-                  "탈퇴",
+                  S.of(context).deleteAccount,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Colors.grey,
                       ),

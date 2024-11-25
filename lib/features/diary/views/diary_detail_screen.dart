@@ -102,7 +102,9 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   }
 
   void _onAnalysis() {
-    ref.read(diaryProvider(widget.diaryId).notifier).analizeDiary();
+    ref.read(diaryProvider(widget.diaryId).notifier).analizeDiary(
+          context,
+        );
   }
 
   @override
@@ -244,10 +246,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
 
   Widget _buildAnaylsisButton(DiaryModel diary) {
     return AnalysisButton(
-      text: diary.isAnalyzed
-          ? S.of(context).analysisComplete
-          : S.of(context).analyzeMood,
-      disabled: diary.isAnalyzed,
+      analyzed: diary.isAnalyzed,
       onPressed: _onAnalysis,
     );
   }

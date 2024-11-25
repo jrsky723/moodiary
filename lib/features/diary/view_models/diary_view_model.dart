@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
@@ -43,6 +44,7 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
         },
       );
       _diary = _diary.copyWith(
+        isAnalyzed: false,
         content: content,
         imageUrls: imageUrls,
         isPublic: isPublic,
@@ -64,11 +66,36 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
     }
   }
 
-  Future<void> analizeDiary() async {
+  Future<void> analizeDiary(BuildContext context) async {
     state = const AsyncValue.loading();
     final uid = ref.read(authRepo).user!.uid;
     try {
-      await _repo.analizeDiary(uid, _diary);
+      final result = await _repo.analizeDiary(uid, _diary);
+      if (result['status'] == 'error') {
+        final snackBarController = ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result['message']),
+          ),
+        );
+        // SnackBar가 닫힐 때 상태를 업데이트
+        snackBarController.closed.then((reason) {
+          if (reason == SnackBarClosedReason.timeout ||
+              reason == SnackBarClosedReason.swipe ||
+              reason == SnackBarClosedReason.action) {
+            state = AsyncValue.data(_diary);
+          }
+        });
+        return;
+      }
+      _diary = _diary.copyWith(
+        offsetX: result['offsetX'],
+        offsetY: result['offsetY'],
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result['message']),
+        ),
+      );
       state = AsyncValue.data(_diary);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);

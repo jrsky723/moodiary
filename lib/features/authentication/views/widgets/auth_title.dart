@@ -25,11 +25,7 @@ class AuthTitle extends StatelessWidget {
         ),
         Text(
           description,
-          style: const TextStyle(
-            fontSize: Sizes.size20,
-            color: Colors.black,
-            fontWeight: FontWeight.w300,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ],
     );

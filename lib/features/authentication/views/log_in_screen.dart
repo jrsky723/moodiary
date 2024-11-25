@@ -52,15 +52,17 @@ class LogInScreen extends ConsumerWidget {
                 ),
                 Column(
                   children: [
+                    Text(
+                      S.of(context).login,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Gaps.v32,
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
                             text: S.of(context).doYouHaveAccount,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: Sizes.size14,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           TextSpan(
                             text: S.of(context).gotoSignUp,

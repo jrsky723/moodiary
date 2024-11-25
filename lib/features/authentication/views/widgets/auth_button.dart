@@ -42,8 +42,8 @@ class _AuthButtonState extends State<AuthButton> {
           duration: const Duration(milliseconds: 150),
           decoration: BoxDecoration(
             color: _isPressed
-                ? customPrimarySwatch.shade600
-                : customPrimarySwatch.shade300.withOpacity(0.5),
+                ? customPrimarySwatch.shade500
+                : customPrimarySwatch.shade600.withOpacity(0.5),
             borderRadius: BorderRadius.circular(
               Sizes.size5,
             ),
