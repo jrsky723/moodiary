@@ -72,8 +72,8 @@ class DiaryModel {
     bool? isPublic,
     bool? isAnalyzed,
     DateTime? date,
-    double? xOffset,
-    double? yOffset,
+    double? offsetX,
+    double? offsetY,
   }) {
     return DiaryModel(
       uid: uid,
@@ -83,8 +83,8 @@ class DiaryModel {
       isPublic: isPublic ?? this.isPublic,
       isAnalyzed: isAnalyzed ?? this.isAnalyzed,
       date: date ?? this.date,
-      offsetX: xOffset ?? offsetX,
-      offsetY: yOffset ?? offsetY,
+      offsetX: offsetX ?? this.offsetX,
+      offsetY: offsetY ?? this.offsetY,
     );
   }
 }

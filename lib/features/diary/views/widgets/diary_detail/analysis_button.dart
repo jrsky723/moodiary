@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
 
 class AnalysisButton extends StatelessWidget {
-  final String text;
-  final bool disabled;
+  final bool analyzed;
   final VoidCallback onPressed;
 
   const AnalysisButton({
     super.key,
-    required this.disabled,
+    required this.analyzed,
     required this.onPressed,
-    required this.text,
   });
 
   @override
@@ -23,10 +22,10 @@ class AnalysisButton extends StatelessWidget {
         darkMode ? Colors.transparent : Theme.of(context).primaryColor;
     const textColor = Colors.white;
 
-    final disabledColor = darkMode ? Colors.transparent : Colors.grey.shade400;
-    final disabledBorderColor =
+    final analyzedColor = darkMode ? Colors.transparent : Colors.grey.shade400;
+    final analyzedBorderColor =
         darkMode ? Colors.grey.shade500 : Colors.transparent;
-    final disabledTextColor = Colors.grey.shade600;
+    final analyzedTextColor = Colors.grey.shade600;
 
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
@@ -35,25 +34,27 @@ class AnalysisButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          key: ValueKey<bool>(disabled), // 상태를 추적
-          onPressed: disabled ? null : onPressed,
+          key: ValueKey<bool>(analyzed), // 상태를 추적
+          onPressed: analyzed ? null : onPressed,
 
           style: ButtonStyle(
             // 테두리 색상 추가
             side: WidgetStateProperty.resolveWith<BorderSide>(
               (states) => BorderSide(
-                color: disabled ? disabledBorderColor : borderColor,
+                color: analyzed ? analyzedBorderColor : borderColor,
                 width: 2.0,
               ),
             ),
             backgroundColor: WidgetStateProperty.resolveWith<Color>(
-              (states) => disabled ? disabledColor : backgroundColor,
+              (states) => analyzed ? analyzedColor : backgroundColor,
             ),
           ),
           child: Text(
-            text,
+            analyzed
+                ? S.of(context).analysisComplete
+                : S.of(context).analyzeMood,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: disabled ? disabledTextColor : textColor,
+                  color: analyzed ? analyzedTextColor : textColor,
                 ),
           ),
         ),
