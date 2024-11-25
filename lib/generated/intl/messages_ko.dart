@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alarmed": MessageLookupByLibrary.simpleMessage("(나쁜) 놀란"),
         "alert": MessageLookupByLibrary.simpleMessage("(좋은) 놀란"),
         "appDiscription": MessageLookupByLibrary.simpleMessage("감정 분석 일기앱"),
+        "analysisComplete": MessageLookupByLibrary.simpleMessage("분석 완료"),
+        "analyzeMood": MessageLookupByLibrary.simpleMessage("감정 분석"),
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "bio": MessageLookupByLibrary.simpleMessage("소개"),
         "bored": MessageLookupByLibrary.simpleMessage("지루한"),

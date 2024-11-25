@@ -41,6 +41,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeness": MessageLookupByLibrary.simpleMessage("activeness"),
         "alarmed": MessageLookupByLibrary.simpleMessage("Alarmed"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
+        "analysisComplete":
+            MessageLookupByLibrary.simpleMessage("Analysis Complete"),
+        "analyzeMood": MessageLookupByLibrary.simpleMessage("Analyze Mood"),
         "appDiscription":
             MessageLookupByLibrary.simpleMessage("Emotion Analysis Diary App"),
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),

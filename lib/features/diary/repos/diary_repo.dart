@@ -188,6 +188,33 @@ class DiaryRepository {
       throw Exception('Failed to fetch diaries: $e');
     }
   }
+
+  Future<Map<String, dynamic>> analizeDiary(
+      String uid, DiaryModel diary) async {
+    String url = '${dotenv.env['API_BASE_URL']}/analysis/analyze-diary';
+    try {
+      final response = await _dio.post(
+        url,
+        options: Options(
+          headers: {
+            'uid': uid,
+          },
+        ),
+        data: {
+          'diary': diary.diaryId,
+          'content': diary.content,
+        },
+      );
+      log('analizeDiary response: $response');
+      return response.data;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        return {};
+      } else {
+        throw Exception('Failed to analize diary: $e');
+      }
+    }
+  }
 }
 
 final diaryRepo = Provider((ref) => DiaryRepository());

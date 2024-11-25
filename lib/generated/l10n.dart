@@ -1379,6 +1379,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Analysis Complete`
+  String get analysisComplete {
+    return Intl.message(
+      'Analysis Complete',
+      name: 'analysisComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyze Mood`
+  String get analyzeMood {
+    return Intl.message(
+      'Analyze Mood',
+      name: 'analyzeMood',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

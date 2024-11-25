@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/common/main_navigation_screen.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
-import 'package:moodiary/features/authentication/views/avatar_screen.dart';
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
 import 'package:moodiary/features/authentication/views/sign_up_screen.dart';
 import 'package:moodiary/features/authentication/views/username_screen.dart';
@@ -39,8 +38,6 @@ final routerProvider = Provider<GoRouter>(
             return const SignUpScreen();
           },
         ),
-
-        //  AvatarScreen 전에 페이지 하나 보여줘서 profile 생성한다는것을 알려주기
         GoRoute(
           path: UsernameScreen.routeUrl,
           name: UsernameScreen.routeName,
