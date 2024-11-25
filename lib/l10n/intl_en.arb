@@ -176,5 +176,7 @@
   "createUsername": "Create Username",
   "none": "none",
   "profile": "Profile",
-  "createAccount": "Create an account"
+  "createAccount": "Create an account",
+  "analysisComplete": "Analysis Complete",
+  "analyzeMood": "Analyze Mood"
 }

@@ -176,5 +176,7 @@
   "createUsername": "사용자 이름 생성",
   "none": "none",
   "profile": "프로필",
-  "createAccount": "계정 생성"
+  "createAccount": "계정 생성",
+  "analysisComplete": "분석 완료",
+  "analyzeMood": "감정 분석"
 }

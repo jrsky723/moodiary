@@ -63,6 +63,17 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
       state = AsyncValue.error(e, StackTrace.current);
     }
   }
+
+  Future<void> analizeDiary() async {
+    state = const AsyncValue.loading();
+    final uid = ref.read(authRepo).user!.uid;
+    try {
+      await _repo.analizeDiary(uid, _diary);
+      state = AsyncValue.data(_diary);
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
+  }
 }
 
 final diaryProvider =

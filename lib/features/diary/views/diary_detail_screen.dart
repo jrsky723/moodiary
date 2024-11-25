@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
 import 'package:moodiary/features/diary/views/edit_diary_screen.dart';
+import 'package:moodiary/features/diary/views/widgets/diary_detail/analysis_button.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/text_page_view.dart.dart';
-import 'package:moodiary/features/diary/views/widgets/diary_detail/word_cloud_card.dart';
 import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
@@ -100,6 +101,10 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     }
   }
 
+  void _onAnalysis() {
+    ref.read(diaryProvider(widget.diaryId).notifier).analizeDiary();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +144,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                   children: [
                     Gaps.v16,
                     _buildDiarySection(context,
-                        height: 300.0, content: diary.content),
+                        height: 270.0, content: diary.content),
                     _buildImageSection(
                         height: 100.0, imageUrls: diary.imageUrls),
                     Gaps.v4,
@@ -148,6 +153,8 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                       offset: offset,
                       // moodCloudUrl: moodCloudUrl,
                     ),
+                    Gaps.v20,
+                    _buildAnaylsisButton(diary),
                   ],
                 ),
               );
@@ -230,11 +237,18 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           MoodAnalysisCard(
             moodOffset: offset,
           ),
-          const WorldCloudCard(
-            imageUrl: 'assets/images/wordcloud.png',
-          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAnaylsisButton(DiaryModel diary) {
+    return AnalysisButton(
+      text: diary.isAnalyzed
+          ? S.of(context).analysisComplete
+          : S.of(context).analyzeMood,
+      disabled: diary.isAnalyzed,
+      onPressed: _onAnalysis,
     );
   }
 }
