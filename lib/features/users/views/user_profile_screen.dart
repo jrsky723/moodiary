@@ -100,48 +100,50 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     error: (error, stackTrace) => Center(
                       child: Text('Error: $error'),
                     ),
-                    data: (user) => Center(
-                      child: Column(
-                        children: <Widget>[
-                          user.hasAvatar
-                              ? CircleAvatar(
-                                  radius: 50,
-                                  foregroundImage: NetworkImage(
-                                    avatarUrl,
+                    data: (user) {
+                      return Center(
+                        child: Column(
+                          children: <Widget>[
+                            user.hasAvatar
+                                ? CircleAvatar(
+                                    radius: 50,
+                                    foregroundImage: NetworkImage(
+                                      avatarUrl,
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 50,
+                                    child: Text(
+                                      user.username == ''
+                                          ? 'U'
+                                          : user.username[0],
+                                      style: const TextStyle(fontSize: 40),
+                                    ),
                                   ),
-                                )
-                              : CircleAvatar(
-                                  radius: 50,
-                                  child: Text(
-                                    user.username == ''
-                                        ? 'U'
-                                        : user.username[0],
-                                    style: const TextStyle(fontSize: 40),
-                                  ),
-                                ),
-                          Gaps.v16,
-                          Text(
-                            user.nickname == '' ? 'undefined' : user.nickname,
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          Gaps.v16,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Sizes.size16,
-                            ),
-                            child: Text(
-                              user.bio,
-                              textAlign: TextAlign.center,
+                            Gaps.v16,
+                            Text(
+                              user.nickname == '' ? 'undefined' : user.nickname,
                               style: const TextStyle(
-                                fontSize: Sizes.size16,
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            Gaps.v16,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: Sizes.size16,
+                              ),
+                              child: Text(
+                                user.bio,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: Sizes.size16,
+                                ),
                               ),
                             ),
-                          ),
-                          Gaps.v16,
-                        ],
-                      ),
-                    ),
+                            Gaps.v16,
+                          ],
+                        ),
+                      );
+                    },
                   ),
               ref.watch(userPostsProvider).when(
                     loading: () => const Center(

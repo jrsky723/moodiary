@@ -22,6 +22,7 @@ class CommunityPostViewModel
   }) async {
     final uid = ref.read(authRepo).user!.uid;
     final createdAt = lastItemCreatedAt ?? DateTime.now();
+
     final result = await _repo.fetchRelatedPosts(createdAt, uid);
 
     final posts = result.map((post) {
@@ -34,6 +35,7 @@ class CommunityPostViewModel
     final nextPosts = await _fetchPosts(
       lastItemCreatedAt: _list.last.createdAt,
     );
+
     _list = [..._list, ...nextPosts];
     state = AsyncValue.data(_list);
   }

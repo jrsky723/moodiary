@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
@@ -16,6 +17,7 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     _authRepo = ref.read(authRepo);
     if (_authRepo.isLoggedIn) {
       final profile = await _userRepo.findProfile(_authRepo.user!.uid);
+      log('profile: $profile');
       if (profile != null) {
         return UserProfileModel.fromJson(profile);
       }
@@ -25,7 +27,8 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
 
   Future<UserProfileModel> createProfile() async {
     state = const AsyncValue.loading();
-    final form = ref.read(signUpForm);
+    final form = ref.read(signUpForm.notifier).state;
+    log('form: $form');
     final profile = UserProfileModel(
       uid: form['uid'],
       bio: form['bio'],

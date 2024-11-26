@@ -76,7 +76,7 @@ class DiaryRepository {
   Future<void> deleteDiary(String uid, int diaryId) async {
     String url = '$_apiBaseUrl/delete-diary';
     try {
-      final response = await _dio.delete(
+      await _dio.delete(
         url,
         options: Options(
           headers: {
@@ -85,7 +85,8 @@ class DiaryRepository {
           },
         ),
       );
-      return response.data;
+    } on DioException catch (e) {
+      // format exception
     } catch (e) {
       throw Exception('Failed to delete diary: $e');
     }
@@ -125,14 +126,23 @@ class DiaryRepository {
           },
         ),
       );
+      // 다이어리가 없을때는 response.data가 List<dynamic>이 아니라 Map<String, dynamic>이다.
+      if (response.data is Map<String, dynamic>) {
+        if (response.data["status"] == 404) {
+          return [];
+        }
+      }
       final List<dynamic> data = response.data;
       return data.map((item) => item as Map<String, dynamic>).toList();
     } on DioException catch (e) {
-      if (e.response?.statusCode == 404) {
+      log(e.response.toString());
+      if (e.response!.statusCode == 404) {
         return [];
       } else {
-        throw Exception('Failed to fetch diaries: $e');
+        throw Exception('Failed to fetch diaries (DioException): $e');
       }
+    } catch (e) {
+      throw Exception('Failed to fetch diaries: $e');
     }
   }
 

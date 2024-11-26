@@ -48,7 +48,11 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
         .read(signUpProvider.notifier)
         .checkUsername(context, _username);
     if (!isValid) return;
-    ref.read(signUpForm.notifier).state = {"username": _username};
+    final singUpForm = ref.read(signUpForm);
+    ref.read(signUpForm.notifier).state = {
+      ...singUpForm,
+      "username": _username
+    };
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => AvatarScreen(username: _username),
