@@ -69,7 +69,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '436974429429',
     projectId: 'moodiary-b37ca',
     storageBucket: 'moodiary-b37ca.appspot.com',
-    androidClientId: '436974429429-uo7ib4u99p3fmv6jkdnm757rlcrk8qn2.apps.googleusercontent.com',
+    androidClientId: '436974429429-tcmjeeci4dlogvplcpb5qvvd2hdau271.apps.googleusercontent.com',
     iosClientId: '436974429429-67rminqsrbvnphgd8k9e5jfq7ba3if9t.apps.googleusercontent.com',
     iosBundleId: 'com.example.moodiary',
   );

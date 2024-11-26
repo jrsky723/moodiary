@@ -32,12 +32,6 @@ class _TextPageViewState extends State<TextPageView> {
     );
   }
 
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
-
   List<String> _splitTextToPages(
       String text, TextStyle style, BoxConstraints constraints) {
     List<String> pages = [];
@@ -81,6 +75,12 @@ class _TextPageViewState extends State<TextPageView> {
   }
 
   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -102,16 +102,6 @@ class _TextPageViewState extends State<TextPageView> {
         ),
         SizedBox(
           height: widget.constraints.maxHeight * 0.1,
-          // child: Align(
-          //   alignment: Alignment.bottomCenter,
-          //   // child: Text(
-          //   //   '${index + 1}/${_pages.length}',
-          //   //   style: TextStyle(
-          //   //     fontSize: Sizes.size12,
-          //   //     color: Theme.of(context).primaryColor,
-          //   //   ),
-          //   // ),
-          // ),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Opacity(

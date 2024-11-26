@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "436974429429-tcmjeeci4dlogvplcpb5qvvd2hdau271.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moodiary",
+            "certificate_hash": "08164a26046a6a98f419aa92ed1fcce40fd21d1f"
+          }
+        },
+        {
           "client_id": "436974429429-uo7ib4u99p3fmv6jkdnm757rlcrk8qn2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

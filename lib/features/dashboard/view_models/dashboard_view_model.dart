@@ -29,7 +29,6 @@ class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
     final entries = result.map((entry) {
       return MoodEntry.fromJson(entry);
     });
-
     return entries.toList();
   }
 

@@ -175,7 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reset to default profile"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
-        "seeMore": MessageLookupByLibrary.simpleMessage("see More"),
+        "seeMore": MessageLookupByLibrary.simpleMessage("See More"),
         "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
         "selectFromGallery":
             MessageLookupByLibrary.simpleMessage("Select from gallery"),

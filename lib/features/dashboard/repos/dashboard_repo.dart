@@ -27,6 +27,9 @@ class DashboardRepository {
       );
 
       List<dynamic> data = response.data;
+      if (data.isEmpty) {
+        return [];
+      }
       return data.map((e) => Map<String, dynamic>.from(e)).toList();
     } catch (e) {
       throw Exception('Failed to fetch offset list: $e');
