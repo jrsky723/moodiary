@@ -96,7 +96,7 @@ class CustomTextThemes {
     ),
     bodyMedium: TextStyle(
       fontFamily: 'NotoSansKR',
-      fontSize: Sizes.size14,
+      fontSize: 15,
       fontVariations: [
         FontVariation('wght', 400), // Regular weight
       ],

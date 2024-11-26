@@ -182,7 +182,7 @@ class DiaryRepository {
         ),
       );
       final List<dynamic> data = response.data;
-
+      if (data.isEmpty) return [];
       return data.map((item) => item as Map<String, dynamic>).toList();
     } catch (e) {
       throw Exception('Failed to fetch diaries: $e');

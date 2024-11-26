@@ -338,31 +338,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               S.of(context).dashboardDescription(
                     moodEntries.length > 30 ? 30 : moodEntries.length,
                   ),
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             moodOffsets: [
               for (final moodEntry in moodEntries) moodEntry.offset,
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                S.of(context).moodCloud,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Gaps.v8,
-              Expanded(
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        'assets/images/wordcloud.png',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ],
