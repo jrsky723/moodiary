@@ -46,7 +46,6 @@ class CommonFormScreen extends StatelessWidget {
                         description!,
                         style: const TextStyle(
                           fontSize: Sizes.size16,
-                          color: Colors.black54,
                         ),
                       )
                     : const SizedBox(),

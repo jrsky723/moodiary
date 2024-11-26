@@ -14,7 +14,7 @@ class CommunityScreen extends ConsumerStatefulWidget {
 
 class _CommunityScreenState extends ConsumerState<CommunityScreen> {
   int _itemCount = 0;
-  final bool _isLoadingMore = false;
+  bool _isLoadingMore = false;
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -26,17 +26,28 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
   void _onScroll() async {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    if (maxScroll * 0.85 < currentScroll && !_isLoadingMore) {
+    if (maxScroll * 0.9 < currentScroll && !_isLoadingMore) {
       _loadMorePosts();
     }
   }
 
   Future<void> _loadMorePosts() async {
-    return ref.read(communityPostProvider.notifier).loadMore();
+    if (_itemCount == 0) {
+      return;
+    }
+    setState(() {
+      _isLoadingMore = true;
+    });
+    await ref.read(communityPostProvider.notifier).loadMore();
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _isLoadingMore = false;
+      });
+    });
   }
 
-  Future<void> _onRefresh() {
-    return ref.read(communityPostProvider.notifier).refresh();
+  Future<void> _onRefresh() async {
+    await ref.read(communityPostProvider.notifier).refresh();
   }
 
   @override
@@ -65,6 +76,12 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
           body: ref.watch(communityPostProvider).when(
             data: (posts) {
               _itemCount = posts.length;
+              if (_itemCount == 0) {
+                return const Center(
+                  child: Text('No posts'),
+                );
+              }
+              // 게시물이 있을 때의 ListView
               return RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
