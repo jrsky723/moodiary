@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -204,7 +205,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Widget _buildCalendar() {
     double width = MediaQuery.of(context).size.width;
     double scrollThreshold = 0.25;
-
     return SizedBox(
       height: 500,
       child: NotificationListener<ScrollNotification>(
