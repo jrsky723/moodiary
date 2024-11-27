@@ -23,7 +23,7 @@ class SignUpScreen extends ConsumerWidget {
     context.pushNamed(LogInScreen.routeName);
   }
 
-  void _onEmailTap(BuildContext context) {
+  void _onLocalTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -84,7 +84,7 @@ class SignUpScreen extends ConsumerWidget {
                     ),
                     Gaps.v32,
                     AuthButtons(
-                        onLocalTap: () => _onEmailTap(context), // 회원가입 로직 추가
+                        onLocalTap: () => _onLocalTap(context), // 회원가입 로직 추가
                         onGoogleTap: () => _onGoogleTap(context, ref)),
                   ],
                 ),
