@@ -90,6 +90,7 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
       _diary = _diary.copyWith(
         offsetX: result['offsetX'],
         offsetY: result['offsetY'],
+        isAnalyzed: true,
       );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
