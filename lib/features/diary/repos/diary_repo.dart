@@ -21,7 +21,7 @@ class DiaryRepository {
 
     for (int i = 0; i < images.length; i++) {
       final file = images[i];
-      String fileName = 'image$i';
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
       // 이미지 업로드
       await fileRef.child(fileName).putFile(file);
 
