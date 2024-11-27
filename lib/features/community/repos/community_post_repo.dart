@@ -24,6 +24,7 @@ class CommunityPostRepo {
           },
         ),
       );
+      // If there is no data, return an empty list
       if (response.data is Map<String, dynamic>) {
         return [];
       }

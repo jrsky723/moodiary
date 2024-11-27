@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -103,7 +104,9 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
               final diary = await ref
                   .read(addDiaryProvider.notifier)
                   .fetchDiaryByDate(selectedDate);
+              log('diary: $diary');
               Navigator.pop(context);
+
               if (diary != null) {
                 Navigator.pop(context);
                 context.pushNamed(
@@ -114,22 +117,22 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   extra: selectedDate,
                 );
               }
+
               setState(() {
                 isFutureDate = selectedDate.millisecondsSinceEpoch >
                     _now.millisecondsSinceEpoch;
+
+                // ScaffoldMessenger에서 기존 메시지 제거
+                final messenger = ScaffoldMessenger.of(context);
+                messenger.hideCurrentSnackBar();
+
                 if (!isFutureDate) {
                   _selectedDate = selectedDate;
                   formattedDate =
                       DateFormat('yyyy-MM-dd').format(_selectedDate);
 
-                  //  선택한 날짜에 diary가 있는지 확인
-                  //  있으면 해당 diary의 detail screen으로 이동
-                  //  없으면 add diary screen으로 이동
-
-                  // 미래날짜 선택 시 에러 메시지 띄우기
-                  // delayed 1초 후 에러 메시지 사라지게 하기
-                  // 여러번 안띄우게 하기
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  // 새 메시지 표시
+                  messenger.showSnackBar(
                     SnackBar(
                       content: Text(S.of(context).selectedDate(formattedDate)),
                       backgroundColor: Colors.grey.shade700,
@@ -137,7 +140,9 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   );
                 } else {
                   formattedDate = DateFormat('yyyy-MM-dd').format(_now);
-                  ScaffoldMessenger.of(context).showSnackBar(
+
+                  // 새 메시지 표시
+                  messenger.showSnackBar(
                     SnackBar(
                       content: Text(S.of(context).thisIsFutureDiary),
                       backgroundColor: Colors.grey.shade700,
@@ -150,53 +155,6 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
         );
       },
     );
-  }
-
-  Future<void> _fetchDiaryAndNavigate(
-      DateTime selectedDate, BuildContext context) async {
-    bool isFutureDate =
-        selectedDate.millisecondsSinceEpoch > _now.millisecondsSinceEpoch;
-    String formattedDate = DateFormat('yyyy-MM-dd').format(
-      isFutureDate ? _now : selectedDate,
-    );
-
-    try {
-      final diary = await ref
-          .read(addDiaryProvider.notifier)
-          .fetchDiaryByDate(selectedDate);
-
-      if (!mounted) return;
-
-      Navigator.pop(context); // 로딩 인디케이터 닫기
-      Navigator.pop(context); // 다이얼로그 닫기
-
-      if (diary != null) {
-        context.pushNamed(
-          DiaryDetailScreen.routeName,
-          pathParameters: {
-            'diaryId': diary.diaryId.toString(),
-          },
-          extra: selectedDate,
-        );
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: isFutureDate
-              ? Text(S.of(context).thisIsFutureDiary)
-              : Text(S.of(context).selectedDate(formattedDate)),
-          backgroundColor: Colors.grey.shade700,
-        ),
-      );
-    } catch (e) {
-      Navigator.pop(context); // 로딩 인디케이터 닫기
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).fetchDataError),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
   }
 
   void _hideKeyboard() {

@@ -41,10 +41,11 @@ class UserRepository {
           'uid': uid,
         },
       );
+      final decodedBody = utf8.decode(response.bodyBytes);
       if (response.statusCode != 200) {
         throw Exception('Failed to find user');
       }
-      return jsonDecode(response.body);
+      return jsonDecode(decodedBody);
     } catch (e) {
       log(e.toString());
       return null;

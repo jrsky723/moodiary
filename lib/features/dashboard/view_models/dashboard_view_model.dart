@@ -25,10 +25,10 @@ class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
     final uid = user?.uid;
     final result =
         await _repo.fetchOffsetList(uid: uid!, start: startDate, end: endDate);
-
     final entries = result.map((entry) {
       return MoodEntry.fromJson(entry);
-    });
+    }).toList();
+
     return entries.toList();
   }
 
@@ -37,8 +37,10 @@ class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
     required DateTime end,
   }) async {
     state = const AsyncValue.loading();
-    final entries = await _fetchMoodEntries(start: start, end: end);
-    state = AsyncValue.data(entries);
+    state = await AsyncValue.guard(() async {
+      final entries = await _fetchMoodEntries(start: start, end: end);
+      return entries;
+    });
   }
 }
 

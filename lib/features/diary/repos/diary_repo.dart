@@ -160,10 +160,18 @@ class DiaryRepository {
           },
         ),
       );
+
       if (response.data["status"] == "error") {
         return null;
       }
       return response.data;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 403) {
+        log('response: ${e.response}');
+        return null;
+      } else {
+        throw Exception('Failed to fetch diary (DioException): $e');
+      }
     } catch (e) {
       throw Exception('Failed to fetch diary: $e');
     }
