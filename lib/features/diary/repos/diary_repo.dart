@@ -85,8 +85,6 @@ class DiaryRepository {
           },
         ),
       );
-    } on DioException catch (e) {
-      // format exception
     } catch (e) {
       throw Exception('Failed to delete diary: $e');
     }

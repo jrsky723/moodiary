@@ -42,7 +42,6 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
       "email": _email,
       "password": _password
     };
-
     await ref.read(signUpProvider.notifier).signUp(context);
     if (mounted) {
       context.goNamed(
@@ -133,7 +132,7 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
         ),
         Gaps.v20,
         FormButton(
-          disabled: _isButtonDisabled,
+          disabled: _isButtonDisabled || ref.watch(signUpProvider).isLoading,
           onTap: _onSubmit,
           text: S.of(context).completeBtn,
         ),

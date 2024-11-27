@@ -78,7 +78,7 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
         ),
         Gaps.v20,
         FormButton(
-          disabled: _isButtonDisabled,
+          disabled: _isButtonDisabled || ref.watch(signUpProvider).isLoading,
           onTap: _onNextTap,
           text: S.of(context).nextBtn,
         ),

@@ -17,7 +17,6 @@ class UserProfileViewModel extends AutoDisposeAsyncNotifier<UserProfileModel> {
     _authRepo = ref.read(authRepo);
     if (_authRepo.isLoggedIn) {
       final profile = await _userRepo.findProfile(_authRepo.user!.uid);
-      log('profile: $profile');
       if (profile != null) {
         return UserProfileModel.fromJson(profile);
       }

@@ -76,17 +76,18 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
           body: ref.watch(communityPostProvider).when(
             data: (posts) {
               _itemCount = posts.length;
-              if (_itemCount == 0) {
-                return const Center(
-                  child: Text('No posts'),
-                );
-              }
               // 게시물이 있을 때의 ListView
               return RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
                   itemCount: _itemCount + 1, // +1 for loading indicator
                   itemBuilder: (context, postIndex) {
+                    if (_itemCount == 0) {
+                      return const Expanded(
+                          child: Center(
+                        child: Text('No posts'),
+                      ));
+                    }
                     if (postIndex == _itemCount) {
                       if (_isLoadingMore) {
                         return const Padding(

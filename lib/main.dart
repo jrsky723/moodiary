@@ -44,6 +44,7 @@ class Moodiary extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: ref.read(routerProvider),
       title: 'Moodiary',
       themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
