@@ -32,6 +32,10 @@ class SignUpScreen extends ConsumerWidget {
     );
   }
 
+  void _onGoogleTap(BuildContext context, WidgetRef ref) {
+    ref.read(socialAuthProvider.notifier).googleSignIn(context);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -80,11 +84,8 @@ class SignUpScreen extends ConsumerWidget {
                     ),
                     Gaps.v32,
                     AuthButtons(
-                      onLocalTap: () => _onEmailTap(context), // 회원가입 로직 추가
-                      onGoogleTap: () => ref
-                          .read(socialAuthProvider.notifier)
-                          .googleSignIn(context),
-                    ),
+                        onLocalTap: () => _onEmailTap(context), // 회원가입 로직 추가
+                        onGoogleTap: () => _onGoogleTap(context, ref)),
                   ],
                 ),
               ],
