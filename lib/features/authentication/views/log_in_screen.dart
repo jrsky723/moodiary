@@ -22,13 +22,17 @@ class LogInScreen extends ConsumerWidget {
     context.pop();
   }
 
-  void _onLocalLoginTap(BuildContext context) {
+  void _onLocalTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const LoginFormScreen(),
       ),
     );
+  }
+
+  void _onGoogleTap(BuildContext context, WidgetRef ref) {
+    ref.read(socialAuthProvider.notifier).googleSignIn(context);
   }
 
   @override
@@ -79,10 +83,8 @@ class LogInScreen extends ConsumerWidget {
                     ),
                     Gaps.v32,
                     AuthButtons(
-                      onLocalTap: () => _onLocalLoginTap(context),
-                      onGoogleTap: () => ref
-                          .read(socialAuthProvider.notifier)
-                          .googleSignIn(context),
+                      onLocalTap: () => _onLocalTap(context),
+                      onGoogleTap: () => _onGoogleTap(context, ref),
                     ),
                   ],
                 ),
