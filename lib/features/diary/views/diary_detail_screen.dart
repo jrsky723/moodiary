@@ -102,7 +102,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   }
 
   void _onAnalysis() {
-    ref.read(diaryProvider(widget.diaryId).notifier).analizeDiary(
+    ref.read(diaryProvider(widget.diaryId).notifier).analyzeDiary(
           context,
         );
   }

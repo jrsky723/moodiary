@@ -197,7 +197,7 @@ class DiaryRepository {
     }
   }
 
-  Future<Map<String, dynamic>> analizeDiary(
+  Future<Map<String, dynamic>> analyzeDiary(
       String uid, DiaryModel diary) async {
     String url = '${dotenv.env['API_BASE_URL']}/analysis/analyze-diary';
     try {

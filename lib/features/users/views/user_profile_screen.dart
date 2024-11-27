@@ -8,7 +8,7 @@ import 'package:moodiary/features/settings/views/settings_screen.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
-import 'package:moodiary/features/users/views/profile_edit_screen.dart';
+import 'package:moodiary/features/users/views/edit_profile_screen.dart';
 import 'package:moodiary/features/users/views/user_posts_screen.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -21,7 +21,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   void _onEditProfile(UserProfileModel user) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ProfileEditScreen(
+        builder: (context) => EditProfileScreen(
           userProfile: user,
         ),
       ),

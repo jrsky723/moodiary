@@ -66,11 +66,11 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
     }
   }
 
-  Future<void> analizeDiary(BuildContext context) async {
+  Future<void> analyzeDiary(BuildContext context) async {
     state = const AsyncValue.loading();
     final uid = ref.read(authRepo).user!.uid;
     try {
-      final result = await _repo.analizeDiary(uid, _diary);
+      final result = await _repo.analyzeDiary(uid, _diary);
       if (result['status'] == 'error') {
         final snackBarController = ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
