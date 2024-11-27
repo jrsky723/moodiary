@@ -34,7 +34,6 @@ class SignUpViewModel extends AsyncNotifier<void> {
 
   Future<void> signUp(BuildContext context) async {
     state = const AsyncValue.loading();
-
     final form = ref.read(signUpForm);
     state = await AsyncValue.guard(
       () async {
