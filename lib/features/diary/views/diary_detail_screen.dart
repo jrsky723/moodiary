@@ -146,7 +146,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                   children: [
                     Gaps.v16,
                     _buildDiarySection(context,
-                        height: 270.0, content: diary.content),
+                        height: 400.0, content: diary.content),
                     _buildImageSection(
                         height: 100.0, imageUrls: diary.imageUrls),
                     Gaps.v4,
@@ -193,7 +193,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
             text: content,
             textStyle: const TextStyle(
               fontSize: Sizes.size16,
-              height: 1.3,
+              height: 1.4,
             ),
             constraints: constraints,
           );
