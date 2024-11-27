@@ -52,6 +52,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     context.go(SignUpScreen.routeUrl);
   }
 
+  void _setDarkMode(bool value) {
+    ref.read(settingsProvider.notifier).setDarkMode(value);
+  }
+
+  void _setEnglish(bool value) {
+    ref.read(settingsProvider.notifier).setEnglish(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +80,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
               ),
               value: ref.watch(settingsProvider).isDarkMode,
-              onChanged: (value) =>
-                  ref.read(settingsProvider.notifier).setDarkMode(value),
+              onChanged: (value) => _setDarkMode(value), // 다크모드 설정 변경
             ),
             SwitchListTile.adaptive(
               title: Text(S.of(context).englishModeTitle),
@@ -83,7 +90,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               value: ref.watch(settingsProvider).isEnglish,
               onChanged: (value) {
-                ref.read(settingsProvider.notifier).setEnglish(value);
+                _setEnglish(value);
               },
             ),
             // Sign out 버튼
