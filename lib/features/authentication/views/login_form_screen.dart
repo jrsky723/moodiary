@@ -21,6 +21,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final TextEditingController _emailController = TextEditingController();
   bool _isObscure = true;
   Map<String, String> formData = {};
+  bool _isButtonDisabled = true;
 
   void _onSubmitTap() {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
@@ -43,6 +44,13 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
     });
   }
 
+  void _isButtonValid() {
+    setState(() {
+      _isButtonDisabled =
+          _emailController.text.isEmpty || _passwordController.text.isEmpty;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CommonFormScreen(
@@ -57,6 +65,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
                 hintText: S.of(context).email,
                 onChanged: (value) {
                   formData['email'] = value;
+                  _isButtonValid();
                 },
               ),
               Gaps.v16,
@@ -66,6 +75,7 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
                 obscureText: _isObscure,
                 onChanged: (value) {
                   formData['password'] = value;
+                  _isButtonValid();
                 },
                 suffix: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -88,7 +98,8 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
               ),
               Gaps.v28,
               FormButton(
-                disabled: ref.watch(loginProvider).isLoading,
+                disabled:
+                    ref.watch(loginProvider).isLoading || _isButtonDisabled,
                 onTap: _onSubmitTap,
                 text: S.of(context).login,
               ),
