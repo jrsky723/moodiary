@@ -5,6 +5,9 @@ import 'package:moodiary/constants/mood.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
 
 Offset getMoodOffset(Mood mood) {
+  if (mood == Mood.none) {
+    return Offset.zero;
+  }
   const int numPositions = 16;
   const double angleOffset = 2 * pi / numPositions;
   const double startAngle = pi / 8;
@@ -31,10 +34,16 @@ double calculateDistance(Offset a, Offset b) {
 }
 
 Mood findClosestMood(Offset offset) {
+  if (offset == Offset.zero) {
+    return Mood.none;
+  }
   Mood closestMood = Mood.values.first;
   double minDistance = double.infinity;
 
   for (var mood in Mood.values) {
+    if (mood == Mood.none) {
+      continue;
+    }
     final moodOffset = getMoodOffset(mood);
     final distance = calculateDistance(offset, moodOffset);
     if (distance < minDistance) {

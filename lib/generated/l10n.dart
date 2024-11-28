@@ -1160,11 +1160,31 @@ class S {
     );
   }
 
+  // 'none'
+  String get none {
+    return Intl.message(
+      'none',
+      name: 'none',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `This is a Future Diary`
   String get thisIsFutureDiary {
     return Intl.message(
       'This is a Future Diary',
       name: 'thisIsFutureDiary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// 'profile'
+  String get profile {
+    return Intl.message(
+      'profile',
+      name: 'profile',
       desc: '',
       args: [],
     );
@@ -1335,6 +1355,46 @@ class S {
     return Intl.message(
       'Email and Password are not valid',
       name: 'emailAndPasswordAreNotValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Username`
+  String get createUsername {
+    return Intl.message(
+      'Create Username',
+      name: 'createUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// 'Create Account'
+  String get createAccount {
+    return Intl.message(
+      'Create Account',
+      name: 'createAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analysis Complete`
+  String get analysisComplete {
+    return Intl.message(
+      'Analysis Complete',
+      name: 'analysisComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyze Mood`
+  String get analyzeMood {
+    return Intl.message(
+      'Analyze Mood',
+      name: 'analyzeMood',
       desc: '',
       args: [],
     );

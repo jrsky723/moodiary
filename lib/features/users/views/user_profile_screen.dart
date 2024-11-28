@@ -8,7 +8,7 @@ import 'package:moodiary/features/settings/views/settings_screen.dart';
 import 'package:moodiary/features/users/models/user_profile_model.dart';
 import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
-import 'package:moodiary/features/users/views/profile_edit_screen.dart';
+import 'package:moodiary/features/users/views/edit_profile_screen.dart';
 import 'package:moodiary/features/users/views/user_posts_screen.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -21,7 +21,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   void _onEditProfile(UserProfileModel user) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ProfileEditScreen(
+        builder: (context) => EditProfileScreen(
           userProfile: user,
         ),
       ),
@@ -53,37 +53,41 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         .replaceAll('{uid}', uid)
         .replaceAll(
             '{timestamp}', DateTime.now().millisecondsSinceEpoch.toString());
+
+    final userProfileState = ref.watch(userProfileProvider);
     return Scaffold(
-      appBar: ref.watch(userProfileProvider).when(
-            loading: () => AppBar(
-              title: const Text('Loading...'),
-            ),
-            error: (error, stackTrace) => AppBar(
-              title: Text('Error: $error'),
-            ),
-            data: (user) => AppBar(
-              surfaceTintColor: Colors.transparent,
-              title: Text(user.username),
-              actions: [
-                if (user.uid == ref.watch(authRepo).user!.uid) ...[
-                  IconButton(
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => _onEditProfile(user),
-                  ),
-                ]
-              ],
-            ),
+      appBar: AppBar(
+        title: userProfileState.when(
+          loading: () => const Text('Loading...'),
+          error: (error, stackTrace) => const Text('Error'),
+          data: (user) => Text(user.username),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
           ),
+          userProfileState.when(
+            loading: () => const SizedBox.shrink(),
+            error: (error, stackTrace) => const SizedBox.shrink(),
+            data: (user) {
+              if (user.uid == ref.read(authRepo).user!.uid) {
+                return IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => _onEditProfile(user),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: SingleChildScrollView(
@@ -96,48 +100,50 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     error: (error, stackTrace) => Center(
                       child: Text('Error: $error'),
                     ),
-                    data: (user) => Center(
-                      child: Column(
-                        children: <Widget>[
-                          user.hasAvatar
-                              ? CircleAvatar(
-                                  radius: 50,
-                                  foregroundImage: NetworkImage(
-                                    avatarUrl,
+                    data: (user) {
+                      return Center(
+                        child: Column(
+                          children: <Widget>[
+                            user.hasAvatar
+                                ? CircleAvatar(
+                                    radius: 50,
+                                    foregroundImage: NetworkImage(
+                                      avatarUrl,
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 50,
+                                    child: Text(
+                                      user.username == ''
+                                          ? 'U'
+                                          : user.username[0],
+                                      style: const TextStyle(fontSize: 40),
+                                    ),
                                   ),
-                                )
-                              : CircleAvatar(
-                                  radius: 50,
-                                  child: Text(
-                                    user.username == ''
-                                        ? 'U'
-                                        : user.username[0],
-                                    style: const TextStyle(fontSize: 40),
-                                  ),
-                                ),
-                          Gaps.v16,
-                          Text(
-                            user.nickname == '' ? 'undefined' : user.nickname,
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          Gaps.v16,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Sizes.size16,
-                            ),
-                            child: Text(
-                              user.bio,
-                              textAlign: TextAlign.center,
+                            Gaps.v16,
+                            Text(
+                              user.nickname == '' ? 'undefined' : user.nickname,
                               style: const TextStyle(
-                                fontSize: Sizes.size16,
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            Gaps.v16,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: Sizes.size16,
+                              ),
+                              child: Text(
+                                user.bio,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: Sizes.size16,
+                                ),
                               ),
                             ),
-                          ),
-                          Gaps.v16,
-                        ],
-                      ),
-                    ),
+                            Gaps.v16,
+                          ],
+                        ),
+                      );
+                    },
                   ),
               ref.watch(userPostsProvider).when(
                     loading: () => const Center(
@@ -161,7 +167,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(posts[index].imageUrls[0]),
+                                image: NetworkImage(
+                                    posts[index].imageUrls.isEmpty
+                                        ? 'https://via.placeholder.com/150'
+                                        : posts[index].imageUrls[0]),
                                 fit: BoxFit.cover,
                               ),
                             ),

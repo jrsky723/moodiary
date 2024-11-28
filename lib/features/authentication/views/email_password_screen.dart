@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
+import 'package:moodiary/features/authentication/views/username_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_form_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/form_button.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_input_field.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class EmailScreen extends ConsumerStatefulWidget {
-  final String username;
   const EmailScreen({
     super.key,
-    required this.username,
   });
 
   @override
@@ -29,7 +29,12 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
   bool _isButtonDisabled = true;
   bool _isObscure = true;
 
-  void _onSubmit() {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _onSubmit() async {
     if (_isButtonDisabled) return;
     final state = ref.read(signUpForm.notifier).state;
     ref.read(signUpForm.notifier).state = {
@@ -37,49 +42,42 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
       "email": _email,
       "password": _password
     };
-    ref.read(signUpProvider.notifier).signUp(context);
+    await ref.read(signUpProvider.notifier).signUp(context);
+    if (mounted) {
+      context.goNamed(
+        UsernameScreen.routeName,
+      );
+    }
   }
 
-  //  pwd valid 와 email valid 둘다 체크해서 error message 띄우기
-  String? _isValid() {
-    if (_isEmailValid.toString().isNotEmpty ||
-        _isPwdValid.toString().isNotEmpty) {
-      return null;
-    }
-    return S.of(context).emailAndPasswordAreNotValid;
+  void _isButtonValid() {
+    setState(() {
+      _email = _emailController.text;
+      _password = _passwordController.text;
+      _isButtonDisabled = _email.isEmpty ||
+          _password.isEmpty ||
+          _isEmailValid() != null ||
+          _isPwdValid() != null;
+    });
   }
 
   String? _isEmailValid() {
-    if (_email.isEmpty) {
-      return null;
-    }
-
+    if (_email.isEmpty) return null;
     final regExp = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return S.of(context).emailNotValid;
-    }
-    return null;
+    return regExp.hasMatch(_email) ? null : S.of(context).emailNotValid;
   }
 
   String? _isPwdValid() {
-    // TODO : submit 보낼떄만 error 메시지 나오도록 수정
-
     List<String> errors = [];
 
-    if (_password.isEmpty) {
-      return null;
-    }
+    if (_password.isEmpty) return null;
 
     if (_password.length < 8 || _password.length > 20) {
       errors.add(S.of(context).pwdlengtherror);
     }
 
-    if (errors.isEmpty) {
-      return null;
-    } else {
-      return errors.join('\n');
-    }
+    return errors.isEmpty ? null : errors.join('\n');
   }
 
   void _onClearTap() {
@@ -96,16 +94,13 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
   Widget build(BuildContext context) {
     return CommonFormScreen(
       appBarTitle: S.of(context).signUp,
-      title: S.of(context).usernameTitle(widget.username),
+      title: S.of(context).createAccount,
       children: [
         CommonInputField(
           controller: _emailController,
           hintText: S.of(context).email,
           onChanged: (value) {
-            setState(() {
-              _email = value;
-              _isButtonDisabled = _isValid() != null;
-            });
+            _isButtonValid();
           },
           errorText: _isEmailValid(),
         ),
@@ -125,22 +120,19 @@ class _EmailScreenState extends ConsumerState<EmailScreen> {
               GestureDetector(
                 onTap: _toggleObscrueText,
                 child: _isObscure
-                    ? const FaIcon(FontAwesomeIcons.eye)
-                    : const FaIcon(FontAwesomeIcons.eyeSlash),
+                    ? const FaIcon(FontAwesomeIcons.eyeSlash)
+                    : const FaIcon(FontAwesomeIcons.eye),
               ),
             ],
           ),
           onChanged: (value) {
-            setState(() {
-              _password = value;
-              _isButtonDisabled = _isValid() != null;
-            });
+            _isButtonValid();
           },
           errorText: _isPwdValid(),
         ),
         Gaps.v20,
         FormButton(
-          disabled: _isButtonDisabled,
+          disabled: _isButtonDisabled || ref.watch(signUpProvider).isLoading,
           onTap: _onSubmit,
           text: S.of(context).completeBtn,
         ),

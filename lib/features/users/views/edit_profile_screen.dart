@@ -12,19 +12,19 @@ import 'package:moodiary/features/users/view_models/avatar_view_model.dart';
 import 'package:moodiary/features/users/view_models/user_profile_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 
-class ProfileEditScreen extends ConsumerStatefulWidget {
+class EditProfileScreen extends ConsumerStatefulWidget {
   final UserProfileModel userProfile;
-  const ProfileEditScreen({
+  const EditProfileScreen({
     super.key,
     required this.userProfile,
   });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProfileEditScreenState();
+      _EditProfileScreenState();
 }
 
-class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {};
 

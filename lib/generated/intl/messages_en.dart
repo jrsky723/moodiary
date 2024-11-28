@@ -41,6 +41,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeness": MessageLookupByLibrary.simpleMessage("activeness"),
         "alarmed": MessageLookupByLibrary.simpleMessage("Alarmed"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
+        "analysisComplete":
+            MessageLookupByLibrary.simpleMessage("Analysis Complete"),
+        "analyzeMood": MessageLookupByLibrary.simpleMessage("Analyze Mood"),
         "appDiscription":
             MessageLookupByLibrary.simpleMessage("Emotion Analysis Diary App"),
         "bedtime": MessageLookupByLibrary.simpleMessage("bedtime"),
@@ -60,7 +63,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "completeBtn": MessageLookupByLibrary.simpleMessage("Complete"),
         "confirmBtn": MessageLookupByLibrary.simpleMessage("Confirm"),
         "content": MessageLookupByLibrary.simpleMessage("Content"),
+        "createAccount":
+            MessageLookupByLibrary.simpleMessage("Create an Account"),
         "createProfile": MessageLookupByLibrary.simpleMessage("Create Profile"),
+        "createUsername":
+            MessageLookupByLibrary.simpleMessage("Create Username"),
         "darkModeSubtitle":
             MessageLookupByLibrary.simpleMessage("Change to dark mode"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("Dark mode"),
@@ -141,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nicknameValidError": MessageLookupByLibrary.simpleMessage(
             "Nickname have to be at least 3 characters"),
         "noData": MessageLookupByLibrary.simpleMessage("No Data"),
+        "none": MessageLookupByLibrary.simpleMessage("None"),
         "noImagesAvailable":
             MessageLookupByLibrary.simpleMessage("No images available"),
         "passive": MessageLookupByLibrary.simpleMessage("Passive"),
@@ -153,6 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseWriteDiaryOrAddPhoto": MessageLookupByLibrary.simpleMessage(
             "Please write a diary or add a photo at least"),
         "positive": MessageLookupByLibrary.simpleMessage("Positive"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "pwdlengtherror":
             MessageLookupByLibrary.simpleMessage("8 to 20 characters"),
         "pwdnumbererror": MessageLookupByLibrary.simpleMessage(
@@ -166,7 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reset to default profile"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "scrollToTop": MessageLookupByLibrary.simpleMessage("go to top"),
-        "seeMore": MessageLookupByLibrary.simpleMessage("see More"),
+        "seeMore": MessageLookupByLibrary.simpleMessage("See More"),
         "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
         "selectFromGallery":
             MessageLookupByLibrary.simpleMessage("Select from gallery"),

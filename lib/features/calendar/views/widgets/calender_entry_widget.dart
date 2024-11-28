@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:moodiary/common/widgets/image_network.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
@@ -39,10 +39,10 @@ class CalendarEntryWidget extends StatelessWidget {
             ),
             child: entry.hasDiary
                 ? ImageNetwork(
-                    imageUrl: entry.thumbnailUrl!,
+                    imageUrl: entry.thumbnailUrl,
                   )
                 : Image.asset(
-                    'assets/images/expressionless.png',
+                    'assets/images/moody.png',
                     fit: BoxFit.cover,
                   ),
           ),

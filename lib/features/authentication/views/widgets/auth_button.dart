@@ -6,11 +6,11 @@ import 'package:moodiary/constants/sizes.dart';
 class AuthButton extends StatefulWidget {
   final FaIcon icon;
 
-  final Function()? onTap;
+  final Function() onTap;
   const AuthButton({
     super.key,
     required this.icon,
-    this.onTap,
+    required this.onTap,
   });
 
   @override
@@ -30,7 +30,7 @@ class _AuthButtonState extends State<AuthButton> {
         setState(() {
           _isPressed = false;
         });
-        widget.onTap!();
+        widget.onTap();
       },
       onTapCancel: () => setState(() {
         _isPressed = false;
@@ -42,8 +42,8 @@ class _AuthButtonState extends State<AuthButton> {
           duration: const Duration(milliseconds: 150),
           decoration: BoxDecoration(
             color: _isPressed
-                ? customPrimarySwatch.shade600
-                : customPrimarySwatch.shade300.withOpacity(0.5),
+                ? customPrimarySwatch.shade500
+                : customPrimarySwatch.shade600.withOpacity(0.5),
             borderRadius: BorderRadius.circular(
               Sizes.size5,
             ),

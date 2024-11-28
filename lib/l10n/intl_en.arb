@@ -153,7 +153,7 @@
   "doYouHaveAnAccountAlready": "Already have an account?  ",
   "gotoLogin": "goto Login",
   "usernameDiscription": "You do not change this later",
-  "seeMore": "see More",
+  "seeMore": "See More",
   "noData": "No Data",
   "thisIsFutureDiary": "This is a Future Diary",
   "fetchDataError": "An error occurred while fetching data",
@@ -172,5 +172,11 @@
   "deleteDiarySuccessMessage": "Diary has been successfully deleted",
   "deleteDiaryErrorMessage": "An error occurred while deleting the diary",
   "emailNotValid": "Email is not valid",
-  "emailAndPasswordAreNotValid": "Email and Password are not valid"
+  "emailAndPasswordAreNotValid": "Email and Password are not valid",
+  "createUsername": "Create Username",
+  "none": "none",
+  "profile": "Profile",
+  "createAccount": "Create an account",
+  "analysisComplete": "Analysis Complete",
+  "analyzeMood": "Analyze Mood"
 }

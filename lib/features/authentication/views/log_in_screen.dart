@@ -14,7 +14,7 @@ class LogInScreen extends ConsumerWidget {
   static const String routeName = 'login';
   static const String routeUrl = '/login';
 
-  final String imagePath = 'assets/images/login_title_img.png';
+  final String imagePath = 'assets/images/main.png';
 
   const LogInScreen({super.key});
 
@@ -22,13 +22,17 @@ class LogInScreen extends ConsumerWidget {
     context.pop();
   }
 
-  void _onLocalLoginTap(BuildContext context) {
+  void _onLocalTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const LoginFormScreen(),
       ),
     );
+  }
+
+  void _onGoogleTap(BuildContext context, WidgetRef ref) {
+    ref.read(socialAuthProvider.notifier).googleSignIn(context);
   }
 
   @override
@@ -52,15 +56,17 @@ class LogInScreen extends ConsumerWidget {
                 ),
                 Column(
                   children: [
+                    Text(
+                      S.of(context).login,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Gaps.v32,
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
                             text: S.of(context).doYouHaveAccount,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: Sizes.size14,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           TextSpan(
                             text: S.of(context).gotoSignUp,
@@ -77,10 +83,8 @@ class LogInScreen extends ConsumerWidget {
                     ),
                     Gaps.v32,
                     AuthButtons(
-                      onLocalTap: () => _onLocalLoginTap(context),
-                      onGoogleTap: () => ref
-                          .read(socialAuthProvider.notifier)
-                          .googleSignIn(context),
+                      onLocalTap: () => _onLocalTap(context),
+                      onGoogleTap: () => _onGoogleTap(context, ref),
                     ),
                   ],
                 ),

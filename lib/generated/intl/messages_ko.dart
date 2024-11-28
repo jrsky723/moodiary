@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "alarmed": MessageLookupByLibrary.simpleMessage("(나쁜) 놀란"),
         "alert": MessageLookupByLibrary.simpleMessage("(좋은) 놀란"),
         "appDiscription": MessageLookupByLibrary.simpleMessage("감정 분석 일기앱"),
+        "analysisComplete": MessageLookupByLibrary.simpleMessage("분석 완료"),
+        "analyzeMood": MessageLookupByLibrary.simpleMessage("감정 분석"),
         "bedtime": MessageLookupByLibrary.simpleMessage("취침"),
         "bio": MessageLookupByLibrary.simpleMessage("소개"),
         "bored": MessageLookupByLibrary.simpleMessage("지루한"),
@@ -59,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmBtn": MessageLookupByLibrary.simpleMessage("확인"),
         "content": MessageLookupByLibrary.simpleMessage("만족한"),
         "createProfile": MessageLookupByLibrary.simpleMessage("프로필 생성"),
+        "createAccount": MessageLookupByLibrary.simpleMessage("계정 생성"),
+        "createUsername": MessageLookupByLibrary.simpleMessage("사용자 이름 생성"),
         "darkModeSubtitle": MessageLookupByLibrary.simpleMessage("어두운 모드로 전환"),
         "darkModeTitle": MessageLookupByLibrary.simpleMessage("다크 모드"),
         "dashboard": MessageLookupByLibrary.simpleMessage("분석"),
@@ -132,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nicknameValidError":
             MessageLookupByLibrary.simpleMessage("닉네임은 3자 이상이어야 합니다"),
         "noData": MessageLookupByLibrary.simpleMessage("데이터가 없습니다."),
+        "none": MessageLookupByLibrary.simpleMessage("없음"),
         "noImagesAvailable": MessageLookupByLibrary.simpleMessage("이미지가 없습니다"),
         "passive": MessageLookupByLibrary.simpleMessage("수동"),
         "password": MessageLookupByLibrary.simpleMessage("비밀번호"),
@@ -142,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseWriteDiaryOrAddPhoto":
             MessageLookupByLibrary.simpleMessage("일기를 작성하거나 사진을 추가해주세요"),
         "positive": MessageLookupByLibrary.simpleMessage("긍정"),
+        "profile": MessageLookupByLibrary.simpleMessage("프로필"),
         "pwdlengtherror":
             MessageLookupByLibrary.simpleMessage("비밀번호는 8자에서 20자 사이여야 합니다"),
         "pwdnumbererror":

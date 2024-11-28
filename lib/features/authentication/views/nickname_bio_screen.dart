@@ -28,6 +28,7 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
 
   void _onNextTap() async {
     if (_isButtonDisabled) return;
+
     final state = ref.read(signUpForm.notifier).state;
     ref.read(signUpForm.notifier).state = {
       ...state,
@@ -35,7 +36,7 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
       "bio": _bio,
     };
     await ref.read(userProfileProvider.notifier).createProfile();
-    context.go('/${MainNavigationScreen.initialTab}');
+    if (mounted) context.go('/${MainNavigationScreen.initialTab}');
   }
 
   String? _isValid() {
@@ -76,7 +77,8 @@ class _NicknameBioScreenState extends ConsumerState<NicknameBioScreen> {
         ),
         Gaps.v20,
         FormButton(
-          disabled: _isButtonDisabled,
+          disabled:
+              _isButtonDisabled || ref.watch(userProfileProvider).isLoading,
           onTap: _onNextTap,
           text: S.of(context).completeBtn,
         ),

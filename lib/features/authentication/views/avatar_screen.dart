@@ -42,11 +42,17 @@ class _AvatarScreenState extends ConsumerState<AvatarScreen> {
       });
 
       File imageFile = File(pickedFile.path);
-
-      // 이미지 업로드
-      await ref.read(avatarProvider.notifier).uploadAvatar(imageFile);
-      // 이미지 업로드 성공 시 hasAvatar를 true로 설정
-
+      try {
+        // 이미지 업로드
+        await ref.read(avatarProvider.notifier).uploadAvatar(imageFile);
+        // 이미지 업로드 성공 시 hasAvatar를 true로 설정
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
       setState(() {
         _hasAvatar = true;
         _isLoading = false;

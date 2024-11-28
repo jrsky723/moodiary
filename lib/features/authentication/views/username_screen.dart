@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/features/authentication/view_models/signup_view_model.dart';
-import 'package:moodiary/features/authentication/views/email_password_screen.dart';
+import 'package:moodiary/features/authentication/views/avatar_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_form_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_input_field.dart';
 import 'package:moodiary/features/authentication/views/widgets/form_button.dart';
 import 'package:moodiary/generated/l10n.dart';
 
 class UsernameScreen extends ConsumerStatefulWidget {
+  static const String routeName = 'username';
+  static const String routeUrl = '/username';
+
   const UsernameScreen({super.key});
 
   @override
@@ -39,12 +42,20 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
     super.dispose();
   }
 
-  void _onNextTap() {
+  void _onNextTap() async {
     if (_isButtonDisabled) return;
-    ref.read(signUpForm.notifier).state = {"username": _username};
+    final isValid = await ref
+        .read(signUpProvider.notifier)
+        .checkUsername(context, _username);
+    if (!isValid) return;
+    final singUpForm = ref.read(signUpForm);
+    ref.read(signUpForm.notifier).state = {
+      ...singUpForm,
+      "username": _username
+    };
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => EmailScreen(username: _username),
+        builder: (context) => AvatarScreen(username: _username),
       ),
     );
   }
@@ -53,7 +64,7 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
   Widget build(BuildContext context) {
     return CommonFormScreen(
       appBarTitle: S.of(context).signUp,
-      title: S.of(context).createProfile,
+      title: S.of(context).createUsername,
       description: S.of(context).usernameDiscription,
       children: [
         CommonInputField(
@@ -67,7 +78,7 @@ class _UsernameScreenState extends ConsumerState<UsernameScreen> {
         ),
         Gaps.v20,
         FormButton(
-          disabled: _isButtonDisabled,
+          disabled: _isButtonDisabled || ref.watch(signUpProvider).isLoading,
           onTap: _onNextTap,
           text: S.of(context).nextBtn,
         ),

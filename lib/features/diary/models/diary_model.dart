@@ -1,38 +1,36 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class DiaryModel {
   final String uid;
-  final String diaryId;
+  final int diaryId;
   final String content;
   List<String> imageUrls;
   final bool isPublic;
+  final bool isAnalyzed;
   final DateTime date;
-  final double xOffset;
-  final double yOffset;
-  final int createdAt;
+  final double offsetX;
+  final double offsetY;
 
   DiaryModel({
     required this.uid,
-    this.diaryId = "0",
+    this.diaryId = 0,
     required this.content,
     required this.imageUrls,
     required this.isPublic,
+    required this.isAnalyzed,
     required this.date,
-    this.xOffset = 0.0,
-    this.yOffset = 0.0,
-    this.createdAt = 0,
+    this.offsetX = 0.0,
+    this.offsetY = 0.0,
   });
 
   DiaryModel.empty()
       : uid = '',
-        diaryId = '',
+        diaryId = 0,
         content = '',
         imageUrls = [],
-        isPublic = true,
+        isPublic = false,
+        isAnalyzed = false,
         date = DateTime.now(),
-        xOffset = 0.0,
-        yOffset = 0.0,
-        createdAt = 0;
+        offsetX = 0.0,
+        offsetY = 0.0;
 
   Map<String, dynamic> toJson() {
     return {
@@ -41,10 +39,10 @@ class DiaryModel {
       'content': content,
       'imageUrls': imageUrls,
       'isPublic': isPublic,
-      'date': date,
-      'xOffset': xOffset,
-      'yOffset': yOffset,
-      'createdAt': createdAt,
+      'isAnalyzed': isAnalyzed,
+      'date': date.toIso8601String(),
+      'offsetX': offsetX,
+      'offsetY': offsetY,
     };
   }
 
@@ -53,25 +51,29 @@ class DiaryModel {
   })  : uid = json['uid'],
         diaryId = json['diaryId'],
         content = json['content'],
-        // List<dynamic>를 List<String>으로 변환
-        imageUrls = List<String>.from(json['imageUrls']),
+        // List<Map<String, dynamic>> 을 List<String>으로 변환
+        imageUrls = json['images'].map<String>((image) {
+          return image['url'].toString();
+        }).toList(),
         isPublic = json['isPublic'],
+        isAnalyzed = json['isAnalyzed'],
         // timestamp를 DateTime으로 변환
-        date = DateTime.fromMillisecondsSinceEpoch(
-          (json['date'] as Timestamp).millisecondsSinceEpoch,
-        ),
-        xOffset = json['xOffset'],
-        yOffset = json['yOffset'],
-        createdAt = json['createdAt'];
+        // json['createdDate']가 String type(2024-11-05)이면, 아래와 같이 변환
+        date = DateTime.parse(json['createdAt']),
+        // date = DateTime.fromMillisecondsSinceEpoch(
+        //   (json['createdDate'] as Timestamp).millisecondsSinceEpoch,
+        // ),
+        offsetX = json['offsetX'],
+        offsetY = json['offsetY'];
 
   DiaryModel copyWith({
     String? content,
     List<String>? imageUrls,
     bool? isPublic,
+    bool? isAnalyzed,
     DateTime? date,
-    double? xOffset,
-    double? yOffset,
-    int? createdAt,
+    double? offsetX,
+    double? offsetY,
   }) {
     return DiaryModel(
       uid: uid,
@@ -79,10 +81,10 @@ class DiaryModel {
       content: content ?? this.content,
       imageUrls: imageUrls ?? this.imageUrls,
       isPublic: isPublic ?? this.isPublic,
+      isAnalyzed: isAnalyzed ?? this.isAnalyzed,
       date: date ?? this.date,
-      xOffset: xOffset ?? this.xOffset,
-      yOffset: yOffset ?? this.yOffset,
-      createdAt: createdAt ?? this.createdAt,
+      offsetX: offsetX ?? this.offsetX,
+      offsetY: offsetY ?? this.offsetY,
     );
   }
 }

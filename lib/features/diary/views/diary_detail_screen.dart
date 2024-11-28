@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
-import 'package:moodiary/features/community/view_models/community_post_view_model.dart';
+import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
 import 'package:moodiary/features/diary/views/edit_diary_screen.dart';
+import 'package:moodiary/features/diary/views/widgets/diary_detail/analysis_button.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/insight_pages.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/image_slider.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/mood_analysis_card.dart';
 import 'package:moodiary/features/diary/views/widgets/diary_detail/text_page_view.dart.dart';
-import 'package:moodiary/features/diary/views/widgets/diary_detail/word_cloud_card.dart';
 import 'package:moodiary/features/users/view_models/user_posts_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
 import 'package:moodiary/utils/build_utils.dart';
@@ -45,7 +45,6 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
   void refresh() {
     ref.read(calendarProvider.notifier).refresh(widget.date);
     ref.read(userPostsProvider.notifier).refresh();
-    ref.read(communityPostProvider.notifier).refresh();
   }
 
   void _onDeletePressed() {
@@ -76,22 +75,22 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     try {
       await ref
           .read(diaryProvider(widget.diaryId).notifier)
-          .deleteDiary(widget.diaryId);
+          .deleteDiary(int.parse(widget.diaryId));
 
-      // 삭제 성공 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(S.of(context).deleteDiarySuccessMessage),
         ),
       );
+
       //  캘린더 refresh
       refresh();
 
       // AlertDialog 닫기
       Navigator.pop(context);
-
-      // 다이어리 상세 화면 닫기
+      // // 다이어리 상세 화면 닫기
       Navigator.pop(context);
+      // 삭제 성공 메시지 표시
     } catch (e) {
       // 삭제 실패 시 에러 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
@@ -100,6 +99,12 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
         ),
       );
     }
+  }
+
+  void _onAnalysis() {
+    ref.read(diaryProvider(widget.diaryId).notifier).analyzeDiary(
+          context,
+        );
   }
 
   @override
@@ -131,7 +136,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
             ),
             error: (error, stackTrace) => Center(child: Text('Error: $error')),
             data: (diary) {
-              final offset = Offset(diary.xOffset, diary.yOffset);
+              final offset = Offset(diary.offsetX, diary.offsetY);
               // final moodCloudUrl = diary.moodCloudUrl;
               return Padding(
                 padding: const EdgeInsets.symmetric(
@@ -141,7 +146,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                   children: [
                     Gaps.v16,
                     _buildDiarySection(context,
-                        height: 300.0, content: diary.content),
+                        height: 400.0, content: diary.content),
                     _buildImageSection(
                         height: 100.0, imageUrls: diary.imageUrls),
                     Gaps.v4,
@@ -150,6 +155,8 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                       offset: offset,
                       // moodCloudUrl: moodCloudUrl,
                     ),
+                    Gaps.v20,
+                    _buildAnaylsisButton(diary),
                   ],
                 ),
               );
@@ -186,7 +193,7 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
             text: content,
             textStyle: const TextStyle(
               fontSize: Sizes.size16,
-              height: 1.3,
+              height: 1.4,
             ),
             constraints: constraints,
           );
@@ -232,11 +239,15 @@ class _DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           MoodAnalysisCard(
             moodOffset: offset,
           ),
-          const WorldCloudCard(
-            imageUrl: 'assets/images/wordcloud.png',
-          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAnaylsisButton(DiaryModel diary) {
+    return AnalysisButton(
+      analyzed: diary.isAnalyzed,
+      onPressed: _onAnalysis,
     );
   }
 }

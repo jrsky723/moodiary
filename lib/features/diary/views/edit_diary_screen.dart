@@ -5,6 +5,7 @@ import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/view_models/diary_view_model.dart';
 import 'package:moodiary/generated/l10n.dart';
+import 'package:moodiary/utils/build_utils.dart';
 
 class EditDiaryScreen extends ConsumerStatefulWidget {
   final String diaryId;
@@ -21,26 +22,39 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
   Map<String, String> formData = {};
   List<bool> _isImageDeleted = [];
   bool _isSnackBarVisible = false;
+  bool _isPublic = false; // 공개 여부를 저장할 변수
+
+  @override
+  void initState() {
+    super.initState();
+    // 초기 값을 설정
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final diary = ref.read(diaryProvider(widget.diaryId)).asData?.value;
+      if (diary != null) {
+        setState(() {
+          _isPublic = diary.isPublic;
+        });
+      }
+    });
+  }
 
   // 수정된 일기 저장
   void _onSubmitTap(DiaryModel diary) {
-    // isImageDeleted로 새로운 이미지 URL 목록 생성
-    List<String> newImageUrs = [];
+    // 삭제되지 않은 이미지 URL 목록 생성
+    List<String> newImageUrls = [];
     for (int i = 0; i < diary.imageUrls.length; i++) {
       if (!_isImageDeleted[i]) {
-        newImageUrs.add(diary.imageUrls[i]);
+        newImageUrls.add(diary.imageUrls[i]);
       }
     }
-
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       ref.read(diaryProvider(widget.diaryId).notifier).updateDiary(
-            diaryId: widget.diaryId,
+            diaryId: int.parse(widget.diaryId),
             content: formData['content']!,
-            imageUrls: newImageUrs,
-            isPublic: diary.isPublic,
+            imageUrls: newImageUrls,
+            isPublic: _isPublic, // 현재 공개 여부 전달
           );
-
       if (context.mounted) {
         Navigator.of(context).pop();
       }
@@ -63,15 +77,18 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
       );
       _isSnackBarVisible = true;
       Future.delayed(const Duration(seconds: 2), () {
-        setState(() {
-          _isSnackBarVisible = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isSnackBarVisible = false;
+          });
+        }
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final darkmode = isDarkMode(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -98,6 +115,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                         ),
                         Gaps.v12,
                         _buildDiarySection(
+                          darkmode: darkmode,
                           content: diary.content,
                         ),
                         Gaps.v32,
@@ -109,6 +127,8 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                         _buildImageSection(
                           imageUrls: diary.imageUrls,
                         ),
+                        Gaps.v20,
+                        _buildIsPublicSection(), // 공개 여부 섹션 추가
                         Gaps.v20,
                         ElevatedButton(
                           onPressed: () => _onSubmitTap(diary),
@@ -134,11 +154,12 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
   }
 
   Widget _buildDiarySection({
+    required bool darkmode,
     required String content,
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: darkmode ? Colors.transparent : Colors.white,
         border: Border.all(
           color: Theme.of(context).primaryColor,
         ),
@@ -175,9 +196,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
   }
 
   // 이미지 섹션 (삭제 상태를 시각적으로 표현)
-  Widget _buildImageSection({
-    required List<String> imageUrls,
-  }) {
+  Widget _buildImageSection({required List<String> imageUrls}) {
     if (imageUrls.isEmpty) {
       return Text(S.of(context).noImagesAvailable);
     }
@@ -185,7 +204,7 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
     return SizedBox(
       height: sectionHeight,
       child: ListView.builder(
-        scrollDirection: Axis.horizontal, // 가로 스크롤
+        scrollDirection: Axis.horizontal,
         itemCount: imageUrls.length,
         itemBuilder: (context, index) {
           final imageUrl = imageUrls[index];
@@ -193,10 +212,9 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
             builder: (context, setState) {
               return Stack(
                 children: [
-                  // 이미지 컨테이너
                   Container(
-                    width: sectionHeight, // 이미지의 가로 크기 (정사각형으로 설정)
-                    height: sectionHeight, // 이미지의 세로 크기 (정사각형으로 설정)
+                    width: sectionHeight,
+                    height: sectionHeight,
                     margin: const EdgeInsets.symmetric(horizontal: Sizes.size2),
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -205,14 +223,14 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                       ),
                       image: DecorationImage(
                         image: NetworkImage(imageUrl),
-                        fit: BoxFit.cover, // 이미지를 정사각형에 맞게 채움
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    child: _isImageDeleted[index] // 이미지 삭제 상태일 때
+                    child: _isImageDeleted[index]
                         ? Container(
                             width: sectionHeight,
                             height: sectionHeight,
-                            color: Colors.black.withOpacity(0.5), // 어두운 레이어 추가
+                            color: Colors.black.withOpacity(0.5),
                             child: Center(
                               child: Icon(
                                 Icons.delete,
@@ -223,8 +241,6 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
                           )
                         : null,
                   ),
-
-                  // 삭제 버튼
                   Positioned(
                     top: -3,
                     right: -3,
@@ -243,6 +259,20 @@ class _EditDiaryScreenState extends ConsumerState<EditDiaryScreen> {
           );
         },
       ),
+    );
+  }
+
+  // 공개 여부 섹션
+  Widget _buildIsPublicSection() {
+    return SwitchListTile(
+      title: Text(S.of(context).communityBtn),
+      subtitle: Text(S.of(context).communityBtnSubtitle),
+      value: _isPublic,
+      onChanged: (value) {
+        setState(() {
+          _isPublic = value;
+        });
+      },
     );
   }
 }

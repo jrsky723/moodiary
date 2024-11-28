@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:moodiary/constants/gaps.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/authentication/view_models/social_auth_view_model.dart';
+import 'package:moodiary/features/authentication/views/email_password_screen.dart';
 import 'package:moodiary/features/authentication/views/log_in_screen.dart';
-import 'package:moodiary/features/authentication/views/username_screen.dart';
 import 'package:moodiary/features/authentication/views/widgets/auth_title.dart';
 import 'package:moodiary/features/authentication/views/widgets/common_auth_buttons.dart';
 import 'package:moodiary/generated/l10n.dart';
@@ -17,19 +17,23 @@ class SignUpScreen extends ConsumerWidget {
 
   const SignUpScreen({super.key});
 
-  final String imagePath = 'assets/images/signup_title_img.png';
+  final String imagePath = 'assets/images/main.png';
 
   void _onLoginTap(BuildContext context) {
     context.pushNamed(LogInScreen.routeName);
   }
 
-  void _onEmailTap(BuildContext context) {
+  void _onLocalTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
+        builder: (context) => const EmailScreen(),
       ),
     );
+  }
+
+  void _onGoogleTap(BuildContext context, WidgetRef ref) {
+    ref.read(socialAuthProvider.notifier).googleSignIn(context);
   }
 
   @override
@@ -53,15 +57,17 @@ class SignUpScreen extends ConsumerWidget {
                 ),
                 Column(
                   children: [
+                    Text(
+                      S.of(context).signUp,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Gaps.v32,
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
                             text: S.of(context).doYouHaveAnAccountAlready,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: Sizes.size14,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           TextSpan(
                             text: S.of(context).gotoLogin,
@@ -78,11 +84,8 @@ class SignUpScreen extends ConsumerWidget {
                     ),
                     Gaps.v32,
                     AuthButtons(
-                      onLocalTap: () => _onEmailTap(context), // 회원가입 로직 추가
-                      onGoogleTap: () => ref
-                          .read(socialAuthProvider.notifier)
-                          .googleSignIn(context),
-                    ),
+                        onLocalTap: () => _onLocalTap(context), // 회원가입 로직 추가
+                        onGoogleTap: () => _onGoogleTap(context, ref)),
                   ],
                 ),
               ],

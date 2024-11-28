@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/dashboard/models/mood_entry.dart';
-import 'package:moodiary/features/diary/repos/diary_repo.dart';
+import 'package:moodiary/features/dashboard/repos/dashboard_repo.dart';
 
 class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
-  late final DiaryRepository _repo;
+  late final DashboardRepository _repo;
   late List<MoodEntry> _list;
 
   @override
   FutureOr<List<MoodEntry>> build() async {
-    _repo = ref.read(diaryRepo);
+    _repo = ref.read(dashboardRepo);
     _list = await _fetchMoodEntries();
     return _list;
   }
@@ -24,17 +23,13 @@ class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
 
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
-    final result = await _repo.fetchDiariesByUserAndDateRange(
-      uid: uid!,
-      start: startDate,
-      end: endDate,
-    );
-    final entries = result.docs
-        .map(
-          (doc) => MoodEntry.fromJson(json: doc.data()),
-        )
-        .toList();
-    return entries;
+    final result =
+        await _repo.fetchOffsetList(uid: uid!, start: startDate, end: endDate);
+    final entries = result.map((entry) {
+      return MoodEntry.fromJson(entry);
+    }).toList();
+
+    return entries.toList();
   }
 
   Future<void> fetchMoodEntries({
@@ -42,8 +37,10 @@ class DashboardViewModel extends AutoDisposeAsyncNotifier<List<MoodEntry>> {
     required DateTime end,
   }) async {
     state = const AsyncValue.loading();
-    final entries = await _fetchMoodEntries(start: start, end: end);
-    state = AsyncValue.data(entries);
+    state = await AsyncValue.guard(() async {
+      final entries = await _fetchMoodEntries(start: start, end: end);
+      return entries;
+    });
   }
 }
 

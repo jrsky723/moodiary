@@ -19,7 +19,7 @@ class PostWidget extends StatelessWidget {
     final owner = post.owner;
     final imageUrls = post.imageUrls;
     final content = post.content;
-    final date = post.date;
+    final date = post.createdAt;
     return Column(
       children: [
         // UserSection

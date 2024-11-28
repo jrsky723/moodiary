@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/generated/l10n.dart';
-import 'package:moodiary/utils/build_utils.dart';
 
 class PostContent extends StatefulWidget {
   final String username;
@@ -21,22 +19,32 @@ class _PostContentState extends State<PostContent> {
   bool _isExpanded = false;
   static const int overflowLimit = 101;
 
+  double _calculateLineHeight(TextStyle style, BuildContext context) {
+    final span = TextSpan(text: "Sample Text", style: style);
+    final painter = TextPainter(
+      text: span,
+      textDirection: TextDirection.ltr,
+    );
+    painter.layout(maxWidth: MediaQuery.of(context).size.width);
+    return painter.size.height; // 한 줄의 높이를 반환
+  }
+
   @override
   Widget build(BuildContext context) {
-    final darkmode = isDarkMode(context);
-    final usernameStyle = TextStyle(
-      color: darkmode ? Colors.white : Colors.black,
-      fontWeight: FontWeight.bold,
-    );
-    final contentStyle = TextStyle(
-      height: 1.8,
-      color: darkmode ? Colors.white : Colors.black,
-    );
+    final usernameStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.bold,
+        );
+    final contentStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
+          height: 1.8,
+        );
 
     String displayContent = widget.content;
     if (!_isExpanded && widget.content.length > overflowLimit) {
       displayContent = widget.content.substring(0, overflowLimit);
     }
+
+    // 텍스트 높이 계산
+    final lineHeight = _calculateLineHeight(contentStyle, context);
 
     // TextPainter로 줄 수 계산
     final textSpan = TextSpan(
@@ -63,11 +71,11 @@ class _PostContentState extends State<PostContent> {
           children: List.generate(
             lineCount,
             (index) => Container(
-              margin: const EdgeInsets.only(
-                top: Sizes.size24,
-              ), // 텍스트와 밑줄 사이 간격
+              margin: EdgeInsets.only(
+                top: lineHeight - 1, // 텍스트 높이에 따라 동적으로 설정, 밑줄의 두께만큼 빼줌
+              ),
               height: 1, // 밑줄의 두께
-              color: Colors.grey, // 밑줄 색상
+              color: Colors.grey.withOpacity(0.7),
             ),
           ),
         ),
@@ -85,7 +93,7 @@ class _PostContentState extends State<PostContent> {
               ),
               if (!_isExpanded && widget.content.length > overflowLimit) ...[
                 TextSpan(
-                  text: ' ...',
+                  text: ' ... ',
                   style: contentStyle,
                 ),
                 WidgetSpan(

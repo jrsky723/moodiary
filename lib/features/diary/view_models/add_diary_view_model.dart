@@ -3,19 +3,15 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
-import 'package:moodiary/features/community/models/community_post.dart';
-import 'package:moodiary/features/community/repos/community_post_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
 import 'package:moodiary/features/diary/repos/diary_repo.dart';
-import 'package:moodiary/features/users/models/user_profile_model.dart';
 
 class AddDiaryViewModel extends AsyncNotifier<void> {
-  late final DiaryRepository _Repo;
-  late final CommunityPostRepo _communityPostRepo;
+  late final DiaryRepository _repo;
+
   @override
   FutureOr<void> build() {
-    _Repo = ref.read(diaryRepo);
-    _communityPostRepo = ref.read(communityPostRepo);
+    _repo = ref.read(diaryRepo);
   }
 
   Future<void> createDiary({
@@ -28,57 +24,36 @@ class AddDiaryViewModel extends AsyncNotifier<void> {
 
     final user = ref.read(authRepo).user;
     final userId = user?.uid;
-    final diaryId = _Repo.generateDiaryId(userId!);
 
-    final imageUrls = await _Repo.uploadImages(
-      uid: userId,
-      diaryId: diaryId,
+    final imageUrls = await _repo.uploadImages(
+      uid: userId!,
       images: images,
     );
 
     final diary = DiaryModel(
       uid: userId,
-      diaryId: diaryId,
       content: content,
       imageUrls: imageUrls,
       isPublic: isPublic,
+      isAnalyzed: false,
       date: date,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
     );
-
-    await _Repo.createDiary(diary);
-
-    if (isPublic) {
-      // userprofile model과 diary를 연결해서, communityPost 객체로 만들어서, communityPostRepo에 저장
-
-      final user = UserProfileModel.empty();
-      final communityPost = CommunityPost(
-        date: date,
-        owner: user,
-        content: content,
-        imageUrls: imageUrls,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-      );
-
-      await _communityPostRepo.uploadPost(
-        post: communityPost,
-        diaryId: diaryId,
-      );
+    try {
+      await _repo.createDiary(diary);
+      state = const AsyncValue.data(null);
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
     }
   }
 
   Future<DiaryModel?> fetchDiaryByDate(DateTime date) async {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
-    final result = await _Repo.fetchDiariesByUserAndDateRange(
-      uid: uid!,
-      start: date,
-      end: date,
-    );
-    if (result.docs.isEmpty) {
+    final result = await _repo.fetchDiaryByDate(uid!, date);
+    if (result == null) {
       return null;
     }
-    final diary = DiaryModel.fromJson(json: result.docs.first.data());
+    final diary = DiaryModel.fromJson(json: result);
     return diary;
   }
 }

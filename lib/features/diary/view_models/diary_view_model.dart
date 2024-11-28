@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moodiary/features/authentication/repos/authentication_repo.dart';
 import 'package:moodiary/features/diary/models/diary_model.dart';
@@ -14,19 +15,17 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
     return _diary;
   }
 
-  Future<DiaryModel> _fetchDiaryById(String diaryId) async {
+  Future<DiaryModel> _fetchDiaryById(diaryId) async {
     final user = ref.read(authRepo).user;
     final uid = user?.uid;
     final result = await _repo.fetchDiaryByUserAndId(uid!, diaryId);
-    if (result.docs.isEmpty) {
-      throw Exception('Diary not found');
-    }
-    final diary = DiaryModel.fromJson(json: result.docs.first.data());
+
+    final diary = DiaryModel.fromJson(json: result);
     return diary;
   }
 
   Future<void> updateDiary({
-    required String diaryId,
+    required int diaryId,
     required String content,
     required List<String> imageUrls,
     required bool isPublic,
@@ -34,38 +33,74 @@ class DiaryViewModel extends FamilyAsyncNotifier<DiaryModel, String> {
     state = const AsyncValue.loading();
     final user = ref.read(authRepo).user;
     final uid = user!.uid;
-    await _repo.updateDiary(
-      uid,
-      diaryId,
-      {
-        'content': content,
-        'imageUrls': imageUrls,
-      },
-    );
-    if (isPublic) {
-      await _repo.updateCommunityDiary(
+    try {
+      await _repo.updateDiary(
+        uid,
         diaryId,
         {
           'content': content,
           'imageUrls': imageUrls,
+          'isPublic': isPublic,
         },
       );
+      _diary = _diary.copyWith(
+        isAnalyzed: false,
+        content: content,
+        imageUrls: imageUrls,
+        isPublic: isPublic,
+      );
+      state = AsyncValue.data(_diary);
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
     }
-    _diary = _diary.copyWith(
-      content: content,
-      imageUrls: imageUrls,
-    );
-    state = AsyncValue.data(_diary);
   }
 
-  Future<void> deleteDiary(String diaryId) async {
+  Future<void> deleteDiary(int diaryId) async {
     state = const AsyncValue.loading();
     final uid = ref.read(authRepo).user!.uid;
+    try {
+      await _repo.deleteDiary(uid, diaryId);
+      state = AsyncValue.data(DiaryModel.empty());
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
+  }
 
-    List<String> diaryIds = [diaryId];
-
-    await _repo.deleteUserDiariesByDiaryIds(uid, diaryIds);
-    await _repo.deleteCommunityDiariesByDiaryIds(diaryIds);
+  Future<void> analyzeDiary(BuildContext context) async {
+    state = const AsyncValue.loading();
+    final uid = ref.read(authRepo).user!.uid;
+    try {
+      final result = await _repo.analyzeDiary(uid, _diary);
+      if (result['status'] == 'error') {
+        final snackBarController = ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result['message']),
+          ),
+        );
+        // SnackBar가 닫힐 때 상태를 업데이트
+        snackBarController.closed.then((reason) {
+          if (reason == SnackBarClosedReason.timeout ||
+              reason == SnackBarClosedReason.swipe ||
+              reason == SnackBarClosedReason.action) {
+            state = AsyncValue.data(_diary);
+          }
+        });
+        return;
+      }
+      _diary = _diary.copyWith(
+        offsetX: result['offsetX'],
+        offsetY: result['offsetY'],
+        isAnalyzed: true,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result['message']),
+        ),
+      );
+      state = AsyncValue.data(_diary);
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
   }
 }
 

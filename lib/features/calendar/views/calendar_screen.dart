@@ -1,8 +1,6 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moodiary/common/widgets/date_selector_tab.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +8,6 @@ import 'package:moodiary/constants/date.dart';
 import 'package:moodiary/constants/sizes.dart';
 import 'package:moodiary/features/calendar/models/calendar_entry.dart';
 import 'package:moodiary/features/calendar/view_models/calendar_view_model.dart';
-import 'package:moodiary/features/calendar/views/search_screen.dart';
 import 'package:moodiary/features/calendar/views/widgets/calender_entry_widget.dart';
 import 'package:moodiary/features/calendar/views/widgets/year_month_select_dialog.dart';
 import 'package:moodiary/features/diary/views/add_diary_screen.dart';
@@ -124,11 +121,14 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     setState(() {
       _selectedDate = date;
     });
+    if (Navigator.of(context).canPop()) {
+      return; // 스택에 화면이 이미 있으면 추가 전환 방지
+    }
     // 다이어리가 있으면 DiaryDetail Screen
     if (entry.hasDiary) {
       context.pushNamed(
         DiaryDetailScreen.routeName,
-        pathParameters: {'diaryId': entry.diaryId!},
+        pathParameters: {'diaryId': entry.diaryId!.toString()},
         extra: date,
       );
     } else {
@@ -153,20 +153,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 pinned: true,
                 surfaceTintColor: Colors.transparent,
                 title: Text(S.of(context).calendar),
-                actions: [
-                  IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
-                    onPressed: () {
-                      // open search screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SearchScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
               ),
               SliverToBoxAdapter(
                 child: DateSelectorTab(
@@ -218,7 +204,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Widget _buildCalendar() {
     double width = MediaQuery.of(context).size.width;
     double scrollThreshold = 0.25;
-
     return SizedBox(
       height: 500,
       child: NotificationListener<ScrollNotification>(
