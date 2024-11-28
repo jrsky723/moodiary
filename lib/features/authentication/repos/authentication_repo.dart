@@ -50,20 +50,29 @@ class AuthenticationRepository {
   }
 
   Future<UserCredential?> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: ['email'],
     );
 
-    // Once signed in, return the UserCredential
+    // 로그아웃을 명시적으로 호출하여 계정 선택 화면 표시
+    await googleSignIn.signOut();
+
+    // 계정 선택 화면 표시
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+    if (googleUser == null) {
+      // 사용자가 로그인 취소
+      return null;
+    }
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
