@@ -55,7 +55,6 @@ class DiaryRepository {
   Future<void> updateDiary(
       String uid, int diaryId, Map<String, dynamic> data) async {
     String url = '$_apiBaseUrl/update-diary';
-    log('updateDiary: $data');
     try {
       final response = await _dio.post(
         url,
